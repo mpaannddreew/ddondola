@@ -1,0 +1,88 @@
+type Shop implements Converser {
+    id: ID!
+    code: String!
+    name: String!
+    owner: User!
+    type: String! @method(name: "type")
+    products(offset: Int, limit: Int): [Product!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\ShoppieResolver@shopProducts")
+    followers(offset: Int, limit: Int): [User!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\ShoppieResolver@followers")
+    followerCount: Int! @method(name: "followerCount")
+    category: ShopCategory!
+    active: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Product {
+    id: ID!
+    code: String!
+    name: String!
+    price: String!
+    description: String
+    shop: Shop!
+    category: ProductCategory!
+    stock(offset: Int, limit: Int): [Stock!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\ShoppieResolver@stock")
+    quantity: Int! @method(name: "quantity")
+    active: Boolean! @method(name: "active")
+    hasStock: Boolean! @method(name: "hasStock")
+    published: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Order {
+    id: ID!
+    by: User!
+    product: Product!
+    code: String!
+    quantity: String!
+    amount: String!
+    cancelled: Boolean! @method(name: "cancelled")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Stock {
+    id: ID!
+    product: Product!
+    addedBy: User @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\ShoppieResolver@addedBy")
+    quantity: String!
+    type: String!
+    note: String
+    isOut: Boolean! @method(name: "isOut")
+    isIn: Boolean! @method(name: "isIn")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+input NewShop {
+    name: String!
+}
+
+input NewProduct {
+    name: String!
+    price: String!
+    description: String
+}
+
+extend type Query {
+    shop(id: ID! @eq): Shop @find(model: "Shoppie\\Shop")
+    shopByCode(code: String! @eq): Shop @first(model: "Shoppie\\Shop")
+    shops(offset: Int, limit: Int, active: Boolean, random: Boolean): [Shop!]
+
+    product(id: ID @eq): Product @find(model: "Shoppie\\Product")
+    productByCode(code: String! @eq): Product @first(model: "Shoppie\\Product")
+    products(offset: Int, limit: Int, random: Boolean): [Product!]
+}
+
+extend type Mutation {
+    createShop(categoryCode: String!, shop: NewShop!): Shop! @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\ShoppieMutator@createShop")
+    followShop(shopId: ID!): Boolean @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\ShoppieMutator@follow")
+    unFollowShop(shopId: ID!): Boolean @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\ShoppieMutator@unFollow")
+
+    createProduct(shopId: String!, categoryCode: String!, product: NewProduct!): Product! @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\ShoppieMutator@createProduct")
+    favouriteProduct(productId: ID!): Boolean! @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\ShoppieMutator@favouriteProduct")
+    unFavouriteProduct(productId: ID!): Boolean! @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\ShoppieMutator@unFavouriteProduct")
+
+    addStock(productId: ID!, quantity: String!, note: String): Stock! @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\ShoppieMutator@addStock")
+}

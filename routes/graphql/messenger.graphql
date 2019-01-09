@@ -1,0 +1,4 @@
+interface Converser @interface(resolver: "Ddondola\\Http\\GraphQL\\Interfaces\\Converser@resolveType") {
+    id: ID!
+    type: String!
+}
