@@ -32,7 +32,8 @@
         "psr-4": {
             "Ddondola\\": "app/",
             "Shoppie\\": "extensions/ddondola/shoppie/src",
-            "Messenger\\": "extensions/ddondola/messenger/src"
+            "Messenger\\": "extensions/ddondola/messenger/src",
+            "Thoughts\\": "extensions/ddondola/thoughts/src"
         }
     },
     "autoload-dev": {

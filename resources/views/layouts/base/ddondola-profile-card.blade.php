@@ -1,9 +1,9 @@
 @extends('layouts.base.ddondola')
 @section('main')
-    <div class="row" id="page-sidebar">
-        <div class="col-md-3 pt-4 page-sidebar">
+    <div class="row my-4">
+        <div class="col-md-3 mb-4 page-sidebar">
             <profile-card profile-url="{{ route('my.profile') }}"></profile-card>
-            <div class="widget categories">
+            <div class="widget categories border">
                 <ul class="categories-list">
                     <li>
                         <a href="{{ route('home') }}">
@@ -69,10 +69,10 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-6 pt-4">
+        <div class="col-md-6 mb-4">
             @yield('page-content')
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 mb-4">
 
         </div>
     </div>

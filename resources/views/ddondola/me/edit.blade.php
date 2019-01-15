@@ -1,12 +1,15 @@
-@extends('ddondola.me.base.account-admin-icon-side-nav')
+@extends('ddondola.me.base.profile-admin')
 @section('title')@parent Edit @endsection
-@section('main')
-    <div class="container">
-        <div class="page-header row no-gutters py-4">
-            <div class="col">
-                <span class="text-uppercase page-subtitle">Account</span>
-                <h3 class="page-title">Edit Profile</h3>
-            </div>
-        </div>
-    </div>
+@section('edit-active') active @endsection
+@section('profile-info')
+    <ul class="edit-menu m-4">
+        <li class="@yield('info-active')">
+            <i class="icon ion-ios-information-outline"></i>
+            <a href="{{ route('my.profile.edit') }}">Basic Information</a>
+        </li>
+        <li class="@yield('settings-active')">
+            <i class="icon ion-ios-settings"></i>
+            <a href="{{ route('my.profile.edit.settings') }}"> Settings</a>
+        </li>
+    </ul>
 @endsection

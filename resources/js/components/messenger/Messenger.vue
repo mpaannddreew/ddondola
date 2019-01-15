@@ -16,7 +16,7 @@
         name: "Messenger",
         components: {ChatProfile, ChatArea, ChatList},
         mounted() {
-            this.initScroll();
+            // this.initScroll();
         },
         data() {
             return {

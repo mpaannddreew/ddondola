@@ -53,7 +53,8 @@
 .page-sidebar .widget {
     margin-bottom: 30px;
     background-color: #ffffff;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+    border-radius: 2px;
 }
 
 .page-sidebar .widget .widget-title {
@@ -117,3 +118,321 @@
 .activity-list > li .activity-content .timeline-content {color: #9e9e9e;}
 .activity-list > li .activity-content .timeline-content a.name {color: #000;}
 .activity-list > li .time {color: #bdbdbd;display: block;font-size: 12px;line-height: 1.35;}
+
+.tab-feed {
+    width: 100%;
+    margin-bottom: 47px;
+}
+.tab-feed ul {
+    width: 100%;
+}
+.tab-feed ul li {
+    display: inline-block;
+    margin-right: 35px;
+    text-align: center;
+}
+.tab-feed.st2 ul li {
+    margin-right: 30px;
+}
+.tab-feed ul li:last-child {
+    margin-right: 0;
+}
+.tab-feed ul li.active img {
+    filter: grayscale(0);
+}
+.tab-feed ul li.active span {
+    color: #b31e5a;
+}
+.tab-feed ul li img {
+    float: none;
+    margin-bottom: 5px;
+    filter: grayscale(100%);
+}
+.tab-feed ul li span {
+    display: block;
+    color: #b2b2b2;
+    font-weight: 400;
+    font-size: 18px;
+}
+.tab-feed ul li:last-child {
+    margin-right: 0;
+}
+
+
+.product-feed-tab {
+    width: 100%;
+    display: none;
+}
+.product-feed-tab.current {
+    display: block;
+}
+
+.user-profile-ov {
+    width: 100%;
+    background-color: #fff;
+    padding: 30px 20px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.user-profile-ov h3 {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.user-profile-ov h3 a {
+    color: #000000;
+}
+.user-profile-ov i {
+    color: #000000;
+    font-size: 13px;
+    padding-left: 5px;
+}
+.user-profile-ov h4 {
+    font-size: 16px;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.user-profile-ov p {
+    color: #686868;
+    font-size: 14px;
+    line-height: 24px;
+}
+.user-profile-ov.st2 p {
+    margin-bottom: 23px;
+}
+.no-margin {
+    margin: 0 !important;
+}
+.user-profile-ov > span {
+    color: #686868;
+    font-size: 14px;
+    float: left;
+    width: 100%;
+    margin-bottom: 8px;
+    margin-top: 3px;
+}
+.user-profile-ov ul {
+    float: left;
+    width: 100%;
+}
+.user-profile-ov ul li {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 0 2px;
+}
+.user-profile-ov ul li a {
+    display: inline-block;
+    color: #b2b2b2;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #e5e5e5;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    border-radius: 30px;
+    padding: 10px 15px;
+}
+
+/* Edit Profile Menu */
+
+ul.edit-menu{
+    padding: 0 20px;
+}
+
+ul.edit-menu li{
+    list-style: none;
+    border-bottom: 1px solid #f1f2f2;
+    padding: 15px 0;
+    position: relative;
+}
+
+ul.edit-menu li:last-child{
+    border-bottom: none;
+}
+
+ul.edit-menu li.active::before{
+    content: "";
+    background: #b31e5a;
+    width: 2px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    transform: translate(-50%,-50%);
+}
+
+ul.edit-menu li i.icon{
+    font-size: 16px;
+}
+
+ul.edit-menu li.active i.icon{
+    color: #b31e5a;
+}
+
+ul.edit-menu li a{
+    color: #6d6e71;
+    margin-left: 20px;
+}
+
+ul.edit-menu li.active a{
+    color: #b31e5a;
+}
+
+/* Edit Profile Contents */
+
+.edit-profile-container h4 i{
+    margin-right: 15px;
+    color: #27aae1;
+}
+
+.edit-block{
+    margin-bottom: 30px;
+}
+
+.edit-block .form-group{
+    margin-bottom: 15px;
+}
+
+.edit-block select.form-control{
+    background: rgba(0, 0, 0, 0) url(../images/down-arrow.png) no-repeat scroll calc(100% - 10px) center / 8px auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.edit-block ul.interests{
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.edit-block ul.interests li{
+    background: #b31e5a;
+    color: #fff;
+    padding: 5px 15px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 40px;
+}
+
+.edit-block ul.interests li a{
+    color: #fff;
+}
+
+.edit-block ul.interests li a i.icon{
+    font-size: 18px;
+}
+
+.edit-block .btn-primary{
+    width: 100%;
+}
+
+.gender .custom-label{
+    padding-left: 0;
+}
+
+/* Toggle Notification Switch */
+
+.toggle-switch{
+    text-align: right;
+}
+
+.toggle-switch .switch{
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-top: 9px;
+}
+
+.toggle-switch .switch input{
+    display:none;
+}
+
+.toggle-switch .slider{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f2f2f2;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.toggle-switch .slider:before{
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider{
+    background-color: #b31e5a;
+}
+
+input:focus + .slider{
+    box-shadow: 0 0 1px #b31e5a;
+}
+
+input:checked + .slider:before{
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round{
+    border-radius: 34px;
+}
+
+.slider.round:before{
+    border-radius: 50%;
+}
+
+.line {
+
+    background: #f1f2f2;
+    height: 1px;
+    width: 100%;
+    margin-bottom: 10px;
+
+}
+
+.friend-list .friend-card{
+    border-radius: 4px;
+    border-bottom: 1px solid #f1f2f2;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.friend-list .friend-card img.img-responsive.cover{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+}
+
+.friend-list .friend-card .card-info{
+    padding: 0 20px 10px;
+}
+
+
+.friend-list .friend-card .card-info img.profile-photo-lg{
+    margin-top: -60px;
+    border: 7px solid #fff;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    vertical-align: middle;
+}

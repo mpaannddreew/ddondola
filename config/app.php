@@ -161,7 +161,8 @@ return [
         Ddondola\Providers\RouteServiceProvider::class,
 
         Shoppie\ShoppieServiceProvider::class,
-        Messenger\MessengerServiceProvider::class
+        Messenger\MessengerServiceProvider::class,
+        Thoughts\ThoughtsServiceProvider::class
 
     ],
 

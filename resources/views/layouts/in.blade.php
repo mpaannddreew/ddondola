@@ -29,39 +29,37 @@
     <script src="{{ asset('js/libs/Sharrre/2.0.1/jquery.sharrre.min.js') }}"></script>
     <script src="{{ asset('js/extras.1.2.0.min.js') }}"></script>
     <script src="{{ asset('js/shards-dashboards.1.2.0.min.js') }}"></script>
-    <script src="{{ asset('chosen/chosen.jquery.js') }}"></script>
     <script src="{{ asset('light-gallery/js/lightgallery-all.min.js') }}"></script>
     <script>
-        // $(function () {
-        //     $('select').chosen();
-        //
-        //     // Product thumb images
-        //
-        //     if ($('.proimage-thumb li a').length > 0) {
-        //         var full_image = $(this).attr("href");
-        //         $(".proimage-thumb li a").click(function() {
-        //             full_image = $(this).attr("href");
-        //             $(".pro-image img").attr("src", full_image);
-        //             return false;
-        //         });
-        //     }
-        //
-        //     // Lightgallery
-        //
-        //     if ($('#pro_popup').length > 0) {
-        //         $('#pro_popup').lightGallery({
-        //             thumbnail: true,
-        //             selector: 'a'
-        //         });
-        //     }
-        //
-        //     if ($('#lightgallery').length > 0) {
-        //         $('#lightgallery').lightGallery({
-        //             thumbnail: true,
-        //             selector: 'a'
-        //         });
-        //     }
-        // });
+        $(function () {
+
+            // Product thumb images
+
+            if ($('.proimage-thumb li a').length > 0) {
+                var full_image = $(this).attr("href");
+                $(".proimage-thumb li a").click(function() {
+                    full_image = $(this).attr("href");
+                    $(".pro-image img").attr("src", full_image);
+                    return false;
+                });
+            }
+
+            // Lightgallery
+
+            if ($('#pro_popup').length > 0) {
+                $('#pro_popup').lightGallery({
+                    thumbnail: true,
+                    selector: 'a'
+                });
+            }
+
+            if ($('#lightgallery').length > 0) {
+                $('#lightgallery').lightGallery({
+                    thumbnail: true,
+                    selector: 'a'
+                });
+            }
+        });
 
     </script>
 @endsection

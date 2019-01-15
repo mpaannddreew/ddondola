@@ -34,7 +34,8 @@ Vue.component(
 );
 
 Vue.component('nav-messenger', require('./components/messenger/NavMessenger.vue'));
-Vue.component('nav-cart', require('./components/shoppie/NavCart.vue'));
+Vue.component('nav-cart', require('./components/shoppie/cart/NavCart.vue'));
+Vue.component('cart', require('./components/shoppie/cart/Cart.vue'));
 Vue.component('nav-tray', require('./components/ddondola/NavTray.vue'));
 Vue.component('alert', require('./components/ddondola/Alert.vue'));
 let Messenger = require('./components/messenger/Messenger.vue');
@@ -43,6 +44,15 @@ Vue.component('messenger', Messenger);
 Vue.component('notifications', require('./components/ddondola/Notifications.vue'));
 Vue.component('profile-card', require('./components/ddondola/ProfileCard.vue'));
 Vue.component('user-shops', require('./components/shoppie/UserShops'));
+Vue.component('shop-products', require('./components/shoppie/ShopProducts'));
+Vue.component('profile-tabs', require('./components/ddondola/profile/ProfileTabs'));
+Vue.component('profile-info', require('./components/ddondola/profile/ProfileInfo'));
+Vue.component('shops', require('./components/shoppie/Shops'));
+Vue.component('products', require('./components/shoppie/Products'));
+Vue.component('shop-inventory', require('./components/shoppie/ShopInventory'));
+Vue.component('reviews', require('./components/thoughts/reviews/Reviews'));
+Vue.component('followers', require('./components/ddondola/users/Followers'));
+Vue.component('product-details', require('./components/shoppie/ProductDetails'));
 
 const router = new VueRouter({
     mode: 'history',

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('stylesheets')
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}"/>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!--Google Font-->

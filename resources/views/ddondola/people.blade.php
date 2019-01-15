@@ -1,4 +1,4 @@
-@extends('layouts.base.ddondola-profile-card')
+@extends('layouts.base.ddondola')
 @section('title')@parent People @endsection
 @section('page-content')
     <div class="page-header row no-gutters py-4">

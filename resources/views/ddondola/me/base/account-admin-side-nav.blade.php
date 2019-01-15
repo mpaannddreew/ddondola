@@ -27,12 +27,6 @@
                 <span>Profile</span>
             </a>
         </li>
-        <li class="nav-item {{ $profile_edit }}">
-            <a class="nav-link" href="{{ route('my.profile.edit') }}">
-                <i class="material-icons">edit</i>
-                <span>Edit profile</span>
-            </a>
-        </li>
     </ul>
     <h6 class="main-sidebar__nav-title">Apps</h6>
     <ul class="nav nav--no-borders flex-column">
@@ -47,7 +41,7 @@
     <ul class="nav nav--no-borders flex-column">
         <li class="nav-item {{ $shops }}">
             <a class="nav-link" href="{{ route('my.shops') }}">
-                <i class="material-icons">shops</i>
+                <i class="material-icons">shop</i>
                 <span>Shops</span>
             </a>
         </li>

@@ -15,7 +15,7 @@
         components: {Notification},
         data() {
             return {
-                notifications: [1]
+                notifications: [1, 2, 3, 4]
             }
         }
     }

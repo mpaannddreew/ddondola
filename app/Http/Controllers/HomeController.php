@@ -3,6 +3,8 @@
 namespace Ddondola\Http\Controllers;
 
 
+use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
     protected $params = ['dashboard' => '', 'profile' => '', 'profile_edit' => '', 'messenger' => '', 'orders' => '', 'cart' => '', 'shops' => '', 'wishlist' => ''];
@@ -40,15 +42,31 @@ class HomeController extends Controller
         return view('ddondola.people');
     }
 
-    public function profile() {
+    public function profile(Request $request) {
         $params = $this->params;
         $params['profile'] = 'active';
+        $params['user'] = $request->user();
         return view('ddondola.me.profile', $params);
     }
 
-    public function editProfile() {
+    public function followers(Request $request) {
         $params = $this->params;
-        $params['profile_edit'] = 'active';
-        return view('ddondola.me.edit', $params);
+        $params['profile'] = 'active';
+        $params['user'] = $request->user();
+        return view('ddondola.me.followers', $params);
+    }
+
+    public function editProfile(Request $request) {
+        $params = $this->params;
+        $params['profile'] = 'active';
+        $params['user'] = $request->user();
+        return view('ddondola.me.edit-info', $params);
+    }
+
+    public function editProfileSettings(Request $request) {
+        $params = $this->params;
+        $params['profile'] = 'active';
+        $params['user'] = $request->user();
+        return view('ddondola.me.edit-settings', $params);
     }
 }
