@@ -1,7 +1,7 @@
 <template>
     <div class=" pt-4">
-        <div class="card card-small mb-3 border">
-            <div class="row no-gutters p-2">
+        <div class="card card-small mb-3 background-0">
+            <div class="row no-gutters">
                 <div class="col-lg-3 mb-2 mb-lg-0 pr-2">
                     <form action="POST">
                         <div class="input-group input-group-seamless">

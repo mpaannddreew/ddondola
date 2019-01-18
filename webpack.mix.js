@@ -15,8 +15,6 @@ let mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js');
 
 // chosen js resources
-mix.copy('node_modules/chosen-js/chosen.jquery.js', 'public/chosen');
-mix.copy('node_modules/chosen-js/chosen.css', 'public/chosen');
-mix.copy('node_modules/chosen-js/chosen-sprite.png', 'public/chosen');
-mix.copy('node_modules/chosen-js/chosen-sprite@2x.png', 'public/chosen');
-mix.copy('node_modules/jquery-slimscroll/jquery.slimscroll.js', 'public/jquery-slimscroll/jquery.slimscroll.js');
+mix.copy('node_modules/slick-carousel/slick/slick.min.js', 'public/slick');
+mix.copy('node_modules//slick-carousel/slick/slick.css', 'public/slick');
+mix.copy('node_modules//slick-carousel/slick/slick-theme.css', 'public/slick');

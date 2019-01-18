@@ -1,7 +1,7 @@
 <template>
-    <div class="pt-4">
-        <div class="card card-small mb-3 border">
-            <div class="row no-gutters p-2">
+    <div class="pb-4">
+        <div class="card card-small mb-3 background-0">
+            <div class="row no-gutters">
                 <div class="col-lg-3 mb-2 mb-lg-0 pr-2">
                     <div class="input-group input-group-seamless">
                         <div class="input-group-prepend">
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4" v-for="(indx, shop) in shops">
+            <div class="col-md-6" v-for="(indx, shop) in shops">
                 <div is="shop"></div>
             </div>
         </div>

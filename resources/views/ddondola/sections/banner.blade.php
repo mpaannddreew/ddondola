@@ -7,7 +7,7 @@
         </span>
     </div>
 </div>
-<nav class="secondary_nav sticky_horizontal_2">
+<nav class="secondary_nav sticky_horizontal_2 border-bottom border-top">
     <div class="container">
         <ul class="clearfix">
             @if(Auth::user()->is($user))

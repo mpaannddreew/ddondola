@@ -3,7 +3,7 @@
     <div class="row my-4">
         <div class="col-md-3 mb-4 page-sidebar">
             <profile-card profile-url="{{ route('my.profile') }}"></profile-card>
-            <div class="widget categories border">
+            <div class="widget categories">
                 <ul class="categories-list">
                     <li>
                         <a href="{{ route('home') }}">
@@ -69,11 +69,13 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-6 mb-4">
-            @yield('page-content')
-        </div>
-        <div class="col-md-3 mb-4">
+        @section('right-side')
+            <div class="col-md-6 mb-4">
+                @yield('page-content')
+            </div>
+            <div class="col-md-3 mb-4">
 
-        </div>
+            </div>
+            @show
     </div>
 @endsection

@@ -4,7 +4,11 @@
         </figure>
         <div class="rev-content border">
             <div class="rating">
-                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                <i class="fa fa-star voted"></i>
+                <i class="fa fa-star voted"></i>
+                <i class="fa fa-star voted"></i>
+                <i class="fa fa-star voted"></i>
+                <i class="fa fa-star-o"></i>
             </div>
             <div class="rev-info">
                 Admin – April 03, 2016:

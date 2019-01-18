@@ -9,6 +9,7 @@
     </div>
 </form>
 <ul class="navbar-nav border-left flex-row border-right ml-auto">
+    @section('nav-items')
     <li is="nav-messenger"></li>
     <li is="nav-cart"></li>
     <li is="nav-tray"></li>
@@ -30,6 +31,7 @@
             </form>
         </div>
     </li>
+    @show
 </ul>
 <nav class="nav">
     <a href="#" class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center " data-toggle="collapse" data-target=".header-navbar" aria-expanded="false" aria-controls="header-navbar">

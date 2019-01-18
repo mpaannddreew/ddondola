@@ -15,7 +15,7 @@
                 </form>
             </div>
             <div class="card-body d-flex flex-column">
-                <ul class="chat-user-list">
+                <ul class="contact-list">
                     <li is="chat-user" v-for="(chatUser, indx) in chatUsers" :key="indx" :home-url="homeUrl"></li>
                 </ul>
             </div>
@@ -30,7 +30,7 @@
         components: {ChatUser},
         data() {
             return {
-                chatUsers: [1, 2]
+                chatUsers: [1]
             }
         },
         props: {

@@ -13,10 +13,11 @@ use Overtrue\LaravelFollow\Traits\CanFollow;
 use Shoppie\Shop;
 use Shoppie\Traits\Buyer;
 use Shoppie\Traits\Seller;
+use Thoughts\Traits\Reviewer;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Seller, Buyer, CanBeFollowed, CanFollow, CanFavorite, Converser, HasApiTokens;
+    use Notifiable, Seller, Buyer, CanBeFollowed, CanFollow, CanFavorite, Converser, HasApiTokens, Reviewer;
 
     /**
      * The attributes that are mass assignable.

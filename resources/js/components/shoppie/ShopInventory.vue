@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card card-small mb-3 border">
+        <div class="card card-small mb-4 border">
             <div class="row no-gutters p-2">
                 <div class="col-lg-3 mb-2 mb-lg-0">
                     <form action="POST">

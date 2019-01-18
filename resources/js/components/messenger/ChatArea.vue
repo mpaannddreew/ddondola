@@ -264,25 +264,16 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer border-top">
-                <div class="message-bar">
-                    <div class="message-inner">
-                        <div class="message-area">
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <button class="btn btn-white" type="button">
-                                        <i class="material-icons">add_photo_alternate</i>
-                                    </button>
-                                </div>
-                                <textarea class="form-control" placeholder="Type message..."></textarea>
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="material-icons">send</i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="card-footer border-top p-0">
+                <div class="typing-msg border-0">
+                    <form>
+                        <textarea placeholder="Type a message here" class="pr-5"></textarea>
+                        <button type="submit"><i class="fa fa-send"></i></button>
+                    </form>
+                    <ul class="ft-options">
+                        <li><a href="#" title=""><i class="fa fa-camera"></i></a></li>
+                        <li><a href="#" title=""><i class="fa fa-paperclip"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>

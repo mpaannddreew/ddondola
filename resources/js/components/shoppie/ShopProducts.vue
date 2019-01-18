@@ -1,6 +1,6 @@
 <template>
     <div class="products-grid p-0">
-        <div class="card card-small mb-4 p-1 border">
+        <div class="card card-small mb-4 background-0">
             <div class="row no-gutters">
                 <div class="col-lg-3 mr-2 mb-2 mb-lg-0">
                     <div class="input-group input-group-seamless">

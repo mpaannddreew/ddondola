@@ -1,6 +1,6 @@
 <template>
     <div class="products-grid p-0">
-        <div class="card card-small my-4 p-1 border">
+        <div class="card card-small mb-4 background-0">
             <div class="row no-gutters">
                 <div class="col-lg-3 mr-2 mb-2 mb-lg-0">
                     <div class="input-group input-group-seamless">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="item col-xl-3 col-md-6" v-for="(indx, product) in products">
+            <div class="item col-xl-4 col-md-6" v-for="(indx, product) in products">
                 <div is="shop-product"></div>
             </div>
         </div>

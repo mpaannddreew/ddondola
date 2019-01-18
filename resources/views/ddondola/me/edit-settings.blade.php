@@ -2,108 +2,57 @@
 @section('title')@parent Settings @endsection
 @section('settings-active') active @endsection
 @section('profile')
-    <div class="edit-profile-container card border p-4">
-        <div class="block-title">
-            <h4 class="grey"><i class="icon ion-ios-settings"></i>Account Settings</h4>
-            <div class="line"></div>
-            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate</p>
-            <div class="line"></div>
-        </div>
-        <div class="edit-block">
-            <div class="settings-block">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="switch-description">
-                            <div><strong>Enable follow me</strong></div>
-                            <p>Enable this if you want people to follow you</p>
-                        </div>
+    <div class="card card-small edit-user-details border">
+        <div class="card-body p-0">
+            <form action="#" class="py-4">
+                <div class="form-row mx-4">
+                    <div class="col mb-3">
+                        <h6 class="form-text m-0">Notifications</h6>
+                        <p class="form-text text-muted m-0">Setup which notifications would you like to receive.</p>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="toggle-switch">
-                            <label class="switch">
-                                <input type="checkbox" checked="">
-                                <span class="slider round"></span>
-                            </label>
+                </div>
+                <div class="form-row mx-4">
+                    <label for="conversationsEmailsToggle" class="col col-form-label"> Conversations
+                        <small class="form-text text-muted"> Sends notification emails with updates for the
+                            conversations you are participating in or if someone mentions you.
+                        </small>
+                    </label>
+                    <div class="col d-flex">
+                        <div class="custom-control custom-toggle ml-auto my-auto">
+                            <input type="checkbox" id="conversationsEmailsToggle" class="custom-control-input"
+                                   checked="">
+                            <label class="custom-control-label" for="conversationsEmailsToggle"></label>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="line"></div>
-            <div class="settings-block">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="switch-description">
-                            <div><strong>Send me notifications</strong></div>
-                            <p>Send me notification emails my friends like, share or message me</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="toggle-switch">
-                            <label class="switch">
-                                <input type="checkbox" checked="">
-                                <span class="slider round"></span>
-                            </label>
+                <div class="form-row mx-4">
+                    <label for="newProjectsEmailsToggle" class="col col-form-label"> New Projects
+                        <small class="form-text text-muted"> Sends notification emails when you are invited to a new
+                            project.
+                        </small>
+                    </label>
+                    <div class="col d-flex">
+                        <div class="custom-control custom-toggle ml-auto my-auto">
+                            <input type="checkbox" id="newProjectsEmailsToggle" class="custom-control-input">
+                            <label class="custom-control-label" for="newProjectsEmailsToggle"></label>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="line"></div>
-            <div class="settings-block">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="switch-description">
-                            <div><strong>Text messages</strong></div>
-                            <p>Send me messages to my cell phone</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="toggle-switch">
-                            <label class="switch">
-                                <input type="checkbox">
-                                <span class="slider round"></span>
-                            </label>
+                <div class="form-row mx-4">
+                    <label for="vulnerabilitiesEmailsToggle" class="col col-form-label"> Vulnerability Alerts
+                        <small class="form-text text-muted"> Sends notification emails when everything goes down and
+                            there's no hope left whatsoever.
+                        </small>
+                    </label>
+                    <div class="col d-flex">
+                        <div class="custom-control custom-toggle ml-auto my-auto">
+                            <input type="checkbox" id="vulnerabilitiesEmailsToggle" class="custom-control-input"
+                                   checked="">
+                            <label class="custom-control-label" for="vulnerabilitiesEmailsToggle"></label>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="line"></div>
-            <div class="settings-block">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="switch-description">
-                            <div><strong>Enable tagging</strong></div>
-                            <p>Enable my friends to tag me on their posts</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="toggle-switch">
-                            <label class="switch">
-                                <input type="checkbox" checked="">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="line"></div>
-            <div class="settings-block">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="switch-description">
-                            <div><strong>Enable sound</strong></div>
-                            <p>You'll hear notification sound when someone sends you a private message</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="toggle-switch">
-                            <label class="switch">
-                                <input type="checkbox" checked="">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 @endsection

@@ -112,3 +112,40 @@ body {
         display: block;
     }
 }
+
+.section-heading {
+
+    display: inline-block;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+
+}
+
+.section-heading::before {
+
+    bottom: -15px;
+    content: "";
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
+    transform: translate(-50%);
+    width: 50px;
+    background: #b31e5a;
+
+}
+
+.background-0 {
+    background: none !important;
+}
+
+.card.edit-user-details {
+
+    border-radius: .625rem .625rem 0 0;
+
+}
+

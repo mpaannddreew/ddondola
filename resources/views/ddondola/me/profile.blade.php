@@ -4,7 +4,7 @@
 @section('profile')
     <div class="row">
         <div class="col-md-8">
-            <profile-tabs></profile-tabs>
+            <activity></activity>
         </div>
         <div class="col-md-4">
 

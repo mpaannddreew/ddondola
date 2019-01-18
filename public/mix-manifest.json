@@ -1,8 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
-    "/chosen/chosen.jquery.js": "/chosen/chosen.jquery.js",
-    "/chosen/chosen.css": "/chosen/chosen.css",
-    "/chosen/chosen-sprite.png": "/chosen/chosen-sprite.png",
-    "/chosen/chosen-sprite@2x.png": "/chosen/chosen-sprite@2x.png",
-    "/jquery-slimscroll/jquery.slimscroll.js": "/jquery-slimscroll/jquery.slimscroll.js"
+    "/slick/slick.min.js": "/slick/slick.min.js",
+    "/slick/slick.css": "/slick/slick.css",
+    "/slick/slick-theme.css": "/slick/slick-theme.css"
 }
