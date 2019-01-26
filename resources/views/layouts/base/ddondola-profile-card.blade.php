@@ -58,14 +58,6 @@
                             <span class="category-counter"><i class="fa fa-search"></i></span>
                         </a>
                     </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="{{ route('people') }}">
-                            <i class="fa fa-users"></i>
-                            Find people
-                            <span class="category-counter"><i class="fa fa-search"></i></span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -73,9 +65,7 @@
             <div class="col-md-6 mb-4">
                 @yield('page-content')
             </div>
-            <div class="col-md-3 mb-4">
-
-            </div>
+            <div class="col-md-3 mb-4"></div>
             @show
     </div>
 @endsection

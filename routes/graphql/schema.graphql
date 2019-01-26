@@ -1,30 +1,11 @@
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 type Query {
-    me: User @auth
-    user(id: ID @eq): User @find(model: "Ddondola\\User")
-    userByCode(code: String! @eq): User @first(model: "Ddondola\\User")
-    users(offset: Int, limit: Int, active: Boolean): [User!]
+
 }
 
 type Mutation {
-    createUser(
-        first_name: String!
-        last_name: String!
-        email: String! @rules(apply: ["email", "unique:users,email"])
-        password: String! @bcrypt
-    ): User @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\UserMutator@create")
 
-    updateUser(
-        id: ID!
-        first_name: String
-        last_name: String
-        email: String @rules(apply: ["email", "unique:users,email"])
-    ): User @update(model: "Ddondola\\User")
-
-    followUser(userId: Int!): Boolean @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\UserMutator@follow")
-
-    unFollowUser(userId: Int!): Boolean @field(resolver: "Ddondola\\Http\\GraphQL\\Mutators\\UserMutator@unFollow")
 }
 
 

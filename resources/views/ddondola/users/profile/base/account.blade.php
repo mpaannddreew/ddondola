@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-3">
                 @section('profile-info')
-                    <profile-info></profile-info>
+                    <user-info></user-info>
                 @show
             </div>
             <div class="col-md-9">

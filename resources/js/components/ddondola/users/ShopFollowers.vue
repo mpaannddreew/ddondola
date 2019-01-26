@@ -11,7 +11,7 @@
 <script>
     import UserCard from "./UserCard";
     export default {
-        name: "Followers",
+        name: "ShopFollowers",
         components: {UserCard},
         data() {
             return {

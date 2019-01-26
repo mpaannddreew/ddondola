@@ -10,7 +10,7 @@
                                     <i class="material-icons"></i>
                                 </div>
                             </div>
-                            <input type="text" class="form-control form-control-sm file-manager-cards__search" placeholder="Search files">
+                            <input type="text" class="form-control form-control-sm file-manager-cards__search" placeholder="Filter products">
                         </div>
                     </form>
                 </div>

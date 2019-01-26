@@ -32,7 +32,7 @@
 
 <script>
     export default {
-        name: "ProfileInfo"
+        name: "ShopInfo"
     }
 </script>
 

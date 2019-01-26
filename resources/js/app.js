@@ -46,12 +46,14 @@ Vue.component('profile-card', require('./components/ddondola/ProfileCard.vue'));
 Vue.component('user-shops', require('./components/shoppie/UserShops'));
 Vue.component('shop-products', require('./components/shoppie/ShopProducts'));
 Vue.component('activity', require('./components/ddondola/profile/Activity'));
-Vue.component('profile-info', require('./components/ddondola/profile/ProfileInfo'));
+Vue.component('user-info', require('./components/ddondola/profile/UserInfo'));
+Vue.component('shop-info', require('./components/shoppie/ShopInfo'));
 Vue.component('shops', require('./components/shoppie/Shops'));
 Vue.component('products', require('./components/shoppie/Products'));
 Vue.component('shop-inventory', require('./components/shoppie/ShopInventory'));
 Vue.component('reviews', require('./components/thoughts/reviews/Reviews'));
-Vue.component('followers', require('./components/ddondola/users/Followers'));
+Vue.component('shop-followers', require('./components/ddondola/users/ShopFollowers'));
+Vue.component('user-following', require('./components/ddondola/users/UserFollowing'));
 Vue.component('product-details', require('./components/shoppie/ProductDetails'));
 Vue.component('related-products', require('./components/shoppie/RelatedProducts'));
 

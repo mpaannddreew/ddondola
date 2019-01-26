@@ -28,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::get('/', 'HomeController@profile')->name('my.profile');
         Route::get('/edit', 'HomeController@editProfile')->name('my.profile.edit');
         Route::get('/edit/settings', 'HomeController@editProfileSettings')->name('my.profile.edit.settings');
-        Route::get('/followers', 'HomeController@followers')->name('my.followers');
+        Route::get('/following', 'HomeController@following')->name('my.following');
         Route::get('/dashboard', 'HomeController@dashboard')->name('my.dashboard');
         Route::get('/messenger/{any?}', 'HomeController@messenger')->name('my.messenger');
     });
@@ -36,9 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::prefix('users')->group(function (){
         Route::get('/', 'UserController@index')->name('users.index');
         Route::get('{user}', 'UserController@userProfile')->name('user.profile');
-        Route::get('{user}/followers', 'UserController@userFollowers')->name('user.followers');
+        Route::get('{user}/following', 'UserController@userFollowing')->name('user.following');
     });
 
     Route::get('/notifications', 'HomeController@notifications')->name('my.notifications');
-    Route::get('/people', 'HomeController@people')->name('people');
 });

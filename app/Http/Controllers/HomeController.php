@@ -49,11 +49,11 @@ class HomeController extends Controller
         return view('ddondola.me.profile', $params);
     }
 
-    public function followers(Request $request) {
+    public function following(Request $request) {
         $params = $this->params;
         $params['profile'] = 'active';
         $params['user'] = $request->user();
-        return view('ddondola.me.followers', $params);
+        return view('ddondola.me.following', $params);
     }
 
     public function editProfile(Request $request) {

@@ -22,10 +22,10 @@ class UserController extends Controller
         return view('ddondola.users.profile.index', ['user' => $user]);
     }
 
-    public function userFollowers(Request $request, User $user) {
+    public function userFollowing(Request $request, User $user) {
         if ($user->is($request->user()))
-            return redirect()->route('my.followers');
+            return redirect()->route('my.following');
 
-        return view('ddondola.users.profile.followers', ['user' => $user]);
+        return view('ddondola.users.profile.following', ['user' => $user]);
     }
 }

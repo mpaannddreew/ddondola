@@ -1,6 +1,6 @@
 @extends('layouts.base.admin')
 @section('title') {{ Auth::user()->name() }} - @endsection
-@section('name') Account Management @endsection
+@section('name') Account Admin @endsection
 @section('nav-wrapper')
     <ul class="nav nav--no-borders flex-column">
         <li class="nav-item">
