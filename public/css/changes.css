@@ -46,8 +46,12 @@ body {
     z-index: 9999999;
 }
 
+.navbar.align-items-stretch.navbar-light.bg-white.flex-md-nowrap.border-bottom.p-0 {
+    height: 61px;
+}
+
 .main-content .header-navbar, .main-content > .main-navbar {
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: none;
 }
 
 .dropdown-menu-small {

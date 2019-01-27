@@ -2,8 +2,8 @@
 @section('main')
     <div class="row my-4">
         <div class="col-md-3 mb-4 page-sidebar">
-            <profile-card profile-url="{{ route('my.profile') }}"></profile-card>
-            <div class="widget categories">
+            <div class="widget categories card border">
+                <h6 class="mx-4 py-4 my-0 text-uppercase border-bottom">Shortcuts</h6>
                 <ul class="categories-list">
                     <li>
                         <a href="{{ route('home') }}">
