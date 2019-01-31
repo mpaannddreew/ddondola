@@ -2,3 +2,11 @@ interface Converser @interface(resolver: "Ddondola\\Http\\GraphQL\\Interfaces\\C
     id: ID!
     type: String!
 }
+
+extend type Query {
+
+}
+
+extend type Mutation {
+
+}

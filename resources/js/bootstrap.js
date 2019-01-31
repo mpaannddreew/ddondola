@@ -3,6 +3,7 @@ window._ = require('lodash');
 window.Popper = require('popper.js').default;
 window.Moment = require('moment');
 window.Collect = require('collect.js');
+window.Bloodhound = require('bloodhound-js');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support

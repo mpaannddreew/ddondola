@@ -38,30 +38,15 @@
                     <p>
                         Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor
                     </p>
-                    <a class="shopnow" title="" href="#"><i class="fa fa-cart-plus"></i> Add To Cart</a>
-                    <div class="delivery-guide">
-                        <a href="#" title="">Size Guide</a>
-                        <a href="#" title="">Delivery & Return</a>
+                    <div>
+                        <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2"><i class="fa fa-cart-plus mr-1"></i> Add to cart</button>
+                        <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2"><i class="fa fa-heart mr-1"></i> Add to wishlist</button>
                     </div>
-                    <a class="add_to_wishlist" href="#" title=""><i class="fa fa-heart-o"></i></a>
                     <div class="prod categories">
-                                <span class="cat-heading">Categories:
-                                    <a href="#" title="">Women</a>
-                                    <a href="#" title="">Shoes</a>
-                                </span>
-                    </div>
-                    <div class="prod tags">
-                                <span class="cat-heading">Tags:
-                                    <a href="#" title="">Jeanz</a>
-                                    <a href="#" title="">Women</a>
-                                    <a href="#" title="">Shoes</a>
-                                </span>
-                    </div>
-                    <div class="share mb-4">
-                        <span>share</span>
-                        <a href="#" title=""><i class="fa fa-facebook-square"></i></a>
-                        <a href="#" title=""><i class="fa fa-twitter-square"></i></a>
-                        <a href="#" title=""><i class="fa fa-google-plus-square"></i></a>
+                        <span class="cat-heading">Categories:
+                            <a href="#" title="">Women</a>
+                            <a href="#" title="">Shoes</a>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -72,9 +57,75 @@
 <script>
     export default {
         name: "ProductDetails",
+        mounted() {
+            this.loadImages();
+        },
         data() {
             return {
 
+            }
+        },
+        methods: {
+            loadImages() {
+                $('.slider-for-gold').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    slide: 'li',
+                    fade: false,
+                    asNavFor: '.slider-nav-gold'
+                });
+
+                $('.slider-nav-gold').slick({
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    asNavFor: '.slider-for-gold',
+                    dots: false,
+                    arrows: true,
+                    slide: 'li',
+                    vertical: true,
+                    centerMode: true,
+                    centerPadding: '0',
+                    focusOnSelect: true,
+                    responsive: [
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                vertical: false,
+                                centerMode: true,
+                                dots: false,
+                                arrows: false
+                            }
+                        },
+                        {
+                            breakpoint: 641,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                vertical: true,
+                                centerMode: true,
+                                dots: false,
+                                arrows: false
+                            }
+                        },
+                        {
+                            breakpoint: 420,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                vertical: false,
+                                centerMode: true,
+                                dots: false,
+                                arrows: false
+                            }
+                        }
+                    ]
+                });
             }
         }
     }

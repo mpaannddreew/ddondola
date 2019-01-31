@@ -46,19 +46,6 @@ class ShoppieResolver extends Resolver
     }
 
     /**
-     * Shops under a tag
-     *
-     * @param Tag $tag
-     * @param $args
-     * @param Context $context
-     * @param ResolveInfo $info
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
-     */
-    public function shops(Tag $tag, $args, Context $context, ResolveInfo $info) {
-        return $this->withArgs($tag->shops(), $args);
-    }
-
-    /**
      * products for a shop
      *
      * @param Shop $shop
@@ -69,19 +56,6 @@ class ShoppieResolver extends Resolver
      */
     public function shopProducts(Shop $shop, $args, Context $context, ResolveInfo $info) {
         return $this->withArgs($shop->products(), $args, 'created_at', 'desc');
-    }
-
-    /**
-     * products under a tag
-     *
-     * @param Tag $tag
-     * @param $args
-     * @param Context $context
-     * @param ResolveInfo $info
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
-     */
-    public function tagProducts(Tag $tag, $args, Context $context, ResolveInfo $info) {
-        return $this->withArgs($tag->products(), $args);
     }
 
     /**

@@ -11,16 +11,7 @@
             </a>
         </nav>
     </div>
-    <form action="#" class="main-sidebar__search w-100 border-right d-sm-flex d-md-none d-lg-none">
-        <div class="input-group input-group-seamless ml-3">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <i class="material-icons">search</i>
-                </div>
-            </div>
-            <input class="navbar-search form-control" type="text" placeholder="Search" aria-label="Search">
-        </div>
-    </form>
+    {{--<search :side-search="true"></search>--}}
     <div class="nav-wrapper">
         @yield('nav-wrapper')
     </div>

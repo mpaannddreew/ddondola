@@ -17,7 +17,7 @@ use Thoughts\Traits\Reviewer;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Seller, Buyer, CanBeFollowed, CanFollow, CanFavorite, Converser, HasApiTokens, Reviewer;
+    use Notifiable, Seller, Buyer, CanFollow, CanFavorite, Converser, HasApiTokens, Reviewer;
 
     /**
      * The attributes that are mass assignable.
@@ -59,29 +59,20 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Number of followers
+     * Shops this user is following
      *
-     * @return int
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function followerCount() {
-        return $this->followers()->get()->count();
+    public function following() {
+        return $this->followings(Shop::class)->get();
     }
 
     /**
-     * User following
+     * Shop following count
      *
      * @return int
      */
-    public function userFollowingCount() {
-        return $this->followings()->get()->count();
-    }
-
-    /**
-     * Shop following
-     *
-     * @return int
-     */
-    public function shopFollowingCount() {
+    public function followingCount() {
         return $this->followings(Shop::class)->get()->count();
     }
 

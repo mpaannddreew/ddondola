@@ -8,13 +8,18 @@ type User implements Converser {
     type: String! @method(name: "type")
     active: Boolean!
     shops(offset: Int, limit: Int): [Shop!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\UserResolver@shops")
-    followers(offset: Int, limit: Int): [User!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\UserResolver@followers")
-    followerCount: Int! @method(name: "followerCount")
-    userFollowing(offset: Int, limit: Int): [User!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\UserResolver@userFollowing")
-    userFollowingCount: Int! @method(name: "userFollowingCount")
-    shopFollowing(offset: Int, limit: Int): [Shop!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\UserResolver@shopFollowing")
-    shopFollowingCount: Int! @method(name: "shopFollowingCount")
+    following(offset: Int, limit: Int): [Shop!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\UserResolver@following")
+    followingCount: Int!
     favouriteProducts(offset: Int, limit: Int): [Product!] @field(resolver: "Ddondola\\Http\\GraphQL\\Resolvers\\UserResolver@favouriteProducts")
+    cart: Cart!
     created_at: DateTime!
     updated_at: DateTime!
+}
+
+extend type Query {
+
+}
+
+extend type Mutation {
+
 }

@@ -1,0 +1,14 @@
+type Review {
+    id: ID!
+    reviewer: User!
+    rating: Int!
+    message: String!
+}
+
+extend type Query {
+
+}
+
+extend type Mutation {
+
+}

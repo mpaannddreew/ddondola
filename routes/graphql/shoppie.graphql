@@ -48,3 +48,28 @@ type Product {
     created_at: DateTime!
     updated_at: DateTime!
 }
+
+type Stock {
+    id: ID!
+    product: Product!
+    added_by: User
+    type: String!
+}
+
+type Cart {
+    id: ID!
+    empty: Boolean!
+    sum: Int! @method(name: "sum")
+}
+
+type Order {
+    id: ID!
+}
+
+extend type Query {
+
+}
+
+extend type Mutation {
+
+}

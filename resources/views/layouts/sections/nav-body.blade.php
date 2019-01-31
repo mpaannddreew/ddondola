@@ -1,13 +1,4 @@
-<form action="#" class="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
-    <div class="input-group input-group-seamless ml-3">
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                <i class="material-icons">search</i>
-            </div>
-        </div>
-        <input class="navbar-search form-control" type="text" placeholder="Search" aria-label="Search">
-    </div>
-</form>
+<search></search>
 <ul class="navbar-nav border-left flex-row border-right ml-auto">
     @section('nav-items')
     <li is="nav-messenger"></li>

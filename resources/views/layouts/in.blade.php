@@ -31,97 +31,10 @@
     <script src="{{ asset('js/extras.min.js') }}"></script>
     <script src="{{ asset('js/theme-extra.min.js') }}"></script>
     <script src="{{ asset('slick/slick.min.js') }}"></script>
+    <script src="{{ asset('js/typeahead.bundle.js') }}"></script>
+    <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script>
-        $(function () {
-
-            // Product thumb images
-
-            if ($('.proimage-thumb li a').length > 0) {
-                var full_image = $(this).attr("href");
-                $(".proimage-thumb li a").click(function () {
-                    full_image = $(this).attr("href");
-                    $(".pro-image img").attr("src", full_image);
-                    return false;
-                });
-            }
-
-            // Lightgallery
-
-            if ($('#pro_popup').length > 0) {
-                $('#pro_popup').lightGallery({
-                    thumbnail: true,
-                    selector: 'a'
-                });
-            }
-
-            if ($('#lightgallery').length > 0) {
-                $('#lightgallery').lightGallery({
-                    thumbnail: true,
-                    selector: 'a'
-                });
-            }
-
-            $('.slider-for-gold').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false,
-                slide: 'li',
-                fade: false,
-                asNavFor: '.slider-nav-gold'
-            });
-
-            $('.slider-nav-gold').slick({
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                asNavFor: '.slider-for-gold',
-                dots: false,
-                arrows: true,
-                slide: 'li',
-                vertical: true,
-                centerMode: true,
-                centerPadding: '0',
-                focusOnSelect: true,
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1,
-                            infinite: true,
-                            vertical: false,
-                            centerMode: true,
-                            dots: false,
-                            arrows: false
-                        }
-                    },
-                    {
-                        breakpoint: 641,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1,
-                            infinite: true,
-                            vertical: true,
-                            centerMode: true,
-                            dots: false,
-                            arrows: false
-                        }
-                    },
-                    {
-                        breakpoint: 420,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1,
-                            infinite: true,
-                            vertical: false,
-                            centerMode: true,
-                            dots: false,
-                            arrows: false
-                        }
-                    }
-                ]
-            });
-        });
-
+        $(function () {});
     </script>
 @endsection
 

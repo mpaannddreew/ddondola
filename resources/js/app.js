@@ -56,6 +56,7 @@ Vue.component('shop-followers', require('./components/ddondola/users/ShopFollowe
 Vue.component('user-following', require('./components/ddondola/users/UserFollowing'));
 Vue.component('product-details', require('./components/shoppie/ProductDetails'));
 Vue.component('related-products', require('./components/shoppie/RelatedProducts'));
+Vue.component('search', require('./components/ddondola/Search'));
 
 const router = new VueRouter({
     mode: 'history',
