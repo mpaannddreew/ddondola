@@ -1,9 +1,9 @@
 <?php
 
+use GraphQL\Error\Debug;
 use GraphQL\Validator\Rules\DisableIntrospection;
 
 return [
-    
     /*
     |--------------------------------------------------------------------------
     | GraphQL endpoint
@@ -13,8 +13,8 @@ return [
     | The default route endpoint is "yourdomain.com/graphql".
     |
     */
-    'route_name' => 'v1',
-    
+    'route_name' => 'graphql',
+
     /*
     |--------------------------------------------------------------------------
     | Enable GET requests
@@ -24,7 +24,7 @@ return [
     |
     */
     'route_enable_get' => true,
-    
+
     /*
     |--------------------------------------------------------------------------
     | Route configuration
@@ -33,11 +33,16 @@ return [
     | Additional configuration for the route group.
     | Check options here https://lumen.laravel.com/docs/routing#route-groups
     |
+    | Beware that middleware defined here runs before the GraphQL execution phase.
+    | This means that errors will cause the whole query to abort and return a
+    | response that is not spec-compliant. It is preferable to use directives
+    | to add middleware to single fields in the schema.
+    | Read more about this in the docs https://lighthouse-php.netlify.com/docs/auth.html#apply-auth-middleware
+    |
     */
     'route' => [
-        'prefix' => 'api',
-        'middleware' => ['auth:api']
-        // 'middleware' => ['web','api'],    // [ 'loghttp']
+        'prefix' => '',
+        // 'middleware' => ['loghttp']
     ],
 
     /*
@@ -77,7 +82,7 @@ return [
     | List directories that will be scanned for custom server-side directives.
     |
     */
-    'directives' => [__DIR__ . '/../app/Http/GraphQL/Directives'],
+    'directives' => [__DIR__.'/../app/Http/GraphQL/Directives'],
 
     /*
     |--------------------------------------------------------------------------
@@ -90,8 +95,10 @@ return [
     */
     'namespaces' => [
         'models' => 'Ddondola\\Models',
-        'mutations' => 'Ddondola\\Http\\GraphQL\\Mutators',
         'queries' => 'Ddondola\\Http\\GraphQL\\Queries',
+        'mutations' => 'Ddondola\\Http\\GraphQL\\Mutations',
+        'interfaces' => 'Ddondola\\Http\\GraphQL\\Interfaces',
+        'unions' => 'Ddondola\\Http\\GraphQL\\Unions',
         'scalars' => 'Ddondola\\Http\\GraphQL\\Scalars',
     ],
 
@@ -111,6 +118,43 @@ return [
         'disable_introspection' => DisableIntrospection::DISABLED,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Debug
+    |--------------------------------------------------------------------------
+    |
+    | Control the debug level as described in http://webonyx.github.io/graphql-php/error-handling/
+    | Debugging is only applied if the global Laravel debug config is set to true.
+    |
+    */
+    'debug' => Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Error Handlers
+    |--------------------------------------------------------------------------
+    |
+    | Register error handlers that receive the Errors that occur during execution and
+    | handle them. You may use this to log, filter or format the errors.
+    | The classes must implement Nuwave\Lighthouse\Execution\ErrorHandler
+    |
+    */
+    'error_handlers' => [
+        \Nuwave\Lighthouse\Execution\ExtensionErrorHandler::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Extensions
+    |--------------------------------------------------------------------------
+    |
+    | Register extension classes that extend \Nuwave\Lighthouse\Schema\Extensions\GraphQLExtension
+    |
+    */
+    'extensions' => [
+        // \Nuwave\Lighthouse\Schema\Extensions\TracingExtension::class
+    ],
+
      /*
      |--------------------------------------------------------------------------
      | GraphQL Controller
@@ -126,9 +170,20 @@ return [
     | Global ID
     |--------------------------------------------------------------------------
     |
-    | When creating a GraphQL type that is Relay compliant, provide a named field
-    | for the Node identifier.
+    | The name that is used for the global id field on the Node interface.
+    | When creating a Relay compliant server, this must be named "id".
     |
     */
-    'global_id_field' => '_id',
+    'global_id_field' => 'id',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Batched Queries
+    |--------------------------------------------------------------------------
+    |
+    | GraphQL query batching means sending multiple queries to the server in one request,
+    | You may set this flag to process/deny batched queries.
+    |
+     */
+    'batched_queries' => true,
 ];
