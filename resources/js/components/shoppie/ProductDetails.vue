@@ -18,35 +18,30 @@
                 </div>
             </div>
             <div class="col-lg-6 py-5">
-                <div class="full-postmeta">
+                <div class="product_description">
+                    <div class="product_category">Laptops</div>
+                    <div class="product_name">MacBook Air 13</div>
+                    <div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="product_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum. laoreet turpis, nec sollicitudin dolor cursus at. Maecenas aliquet, dolor a faucibus efficitur, nisi tellus cursus urna, eget dictum lacus turpis.</p></div>
+                    <div class="order_info d-flex flex-row">
+                        <form action="#">
+                            <div class="clearfix" style="z-index: 1000;">
 
-                            <span class="prices style2">
-                                <ins>
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">$</span>122.00
-                                    </span>
-                                </ins>
-                                <del>
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">$</span>150.00
-                                    </span>
-                                </del>
-                            </span>
+                                <div class="quantity_filter" style="margin: 0;">
+                                    <button type="button" class="minus btn btn-sm btn-pill btn-outline-primary border-bottom-right-radius-0 border-top-right-radius-0" @click="minus">-</button>
+                                    <input class="quantity-number qty" type="text" v-model="quantity" min="1" max="10">
+                                    <button type="button" class="plus btn btn-sm btn-pill btn-outline-primary border-bottom-left-radius-0 border-top-left-radius-0" @click="plus">+</button>
+                                </div>
 
-                    <h4>Shoes for <span>Men</span> Black</h4>
-                    <i>INSPIRED LIVING</i>
-                    <p>
-                        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor
-                    </p>
-                    <div>
-                        <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2"><i class="fa fa-cart-plus mr-1"></i> Add to cart</button>
-                        <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2"><i class="fa fa-heart mr-1"></i> Add to wishlist</button>
-                    </div>
-                    <div class="prod categories">
-                        <span class="cat-heading">Categories:
-                            <a href="#" title="">Women</a>
-                            <a href="#" title="">Shoes</a>
-                        </span>
+                            </div>
+
+                            <div class="product_price my-5">$2000</div>
+                            <div class="button_container">
+                                <button type="button" class="btn btn-sm btn-pill btn-outline-primary"><i class="fa fa-cart-plus"></i> Add to Cart</button>
+                                <button type="button" class="btn btn-sm btn-pill btn-outline-primary"><i class="fa fa-heart"></i> Add to Favourites</button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>

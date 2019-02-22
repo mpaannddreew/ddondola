@@ -51,7 +51,6 @@ Vue.component('shop-info', require('./components/shoppie/ShopInfo'));
 Vue.component('shops', require('./components/shoppie/Shops'));
 Vue.component('products', require('./components/shoppie/Products'));
 Vue.component('shop-inventory', require('./components/shoppie/ShopInventory'));
-Vue.component('reviews', require('./components/thoughts/reviews/Reviews'));
 Vue.component('shop-followers', require('./components/ddondola/users/ShopFollowers'));
 Vue.component('user-following', require('./components/ddondola/users/UserFollowing'));
 Vue.component('product-details', require('./components/shoppie/ProductDetails'));

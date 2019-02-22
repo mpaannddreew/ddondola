@@ -32,7 +32,7 @@
                 </div>
             </div>
         </section>
-        <section class="cart-box-section my-5">
+        <section class="cart-box-section py-4">
             <div class="row justify-content-between">
                 <div class="col-lg-4 col-md-6">
                     <div class="box-1 text-center card border">

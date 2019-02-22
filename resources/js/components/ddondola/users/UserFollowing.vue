@@ -1,18 +1,18 @@
 <template>
-    <div class="pb-4">
+    <div class="friend-list">
         <div class="row">
-            <div class="col-md-6" v-for="(indx, shop) in shops">
-                <div is="shop"></div>
+            <div class="col-md-4 col-sm-4" v-for="(indx, shop) in shops" :key="indx">
+                <div is="shop-card"></div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Shop from "../../shoppie/shops/Shop";
+    import ShopCard from "../../shoppie/shops/ShopCard";
     export default {
         name: "UserFollowing",
-        components: {Shop},
+        components: {ShopCard},
         data() {
             return {
                 shops: [1, 2, 3, 4]

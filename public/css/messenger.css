@@ -245,7 +245,7 @@
     padding: 8px 15px;
     margin: 0;
     clear: both;
-    background-color: #EAE3E5;
+    background-color: #e6e6e6;
     border-radius: 20px 2px 2px 20px;
     max-width: 60%;
 }
@@ -522,7 +522,7 @@
 }
 
 .user-name {
-    color: #333;
+    color: #ce1d76;
 }
 
 .edit-btn {

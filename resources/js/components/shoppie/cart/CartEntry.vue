@@ -6,9 +6,9 @@
         <td class="product-price" data-title="Price"><p>$ 78.00</p></td>
         <td class="product-quantity" data-title="Quantity">
             <div class="quantity_filter">
-                <input type="button" value="-" class="minus" @click="minus">
+                <button type="button" class="minus btn btn-sm btn-pill btn-outline-primary border-bottom-right-radius-0 border-top-right-radius-0" @click="minus">-</button>
                 <input class="quantity-number qty" type="text" v-model="quantity" min="1" max="10">
-                <input type="button" value="+" class="plus" @click="plus">
+                <button type="button" class="plus btn btn-sm btn-pill btn-outline-primary border-bottom-left-radius-0 border-top-left-radius-0" @click="plus">+</button>
             </div>
         </td>
         <td class="product-total" data-title="Subprice"><p>$ 156.00</p></td>

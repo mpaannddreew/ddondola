@@ -30,7 +30,7 @@
         components: {ChatUser},
         data() {
             return {
-                chatUsers: [1]
+                chatUsers: [1, 2, 3, 4, 5]
             }
         },
         props: {

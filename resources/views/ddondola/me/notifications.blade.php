@@ -1,8 +1,9 @@
-@extends('layouts.base.ddondola-profile-card')
+@extends('ddondola.me.base.account-admin-icon-side-nav')
 @section('title')@parent Notifications @endsection
-@section('right-side')
-    <div class="col-md-9 mb-4">
-        <div class="page-header row no-gutters mb-4">
+@section('notifications-active') active @endsection
+@section('main')
+    <div class="container">
+        <div class="page-header row no-gutters py-4">
             <div class="col">
                 <span class="text-uppercase page-subtitle">Activity</span>
                 <h3 class="page-title">Notifications</h3>

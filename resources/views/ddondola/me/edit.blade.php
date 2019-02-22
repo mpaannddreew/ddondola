@@ -8,7 +8,7 @@
         </li>
         <li class="@yield('settings-active')">
             <i class="icon ion-ios-settings"></i>
-            <a href="{{ route('my.profile.edit.settings') }}"> Settings</a>
+            <a href="{{ route('my.profile.edit.settings') }}">Settings</a>
         </li>
     </ul>
 @endsection

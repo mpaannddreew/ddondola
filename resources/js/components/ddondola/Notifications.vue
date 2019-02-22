@@ -1,9 +1,7 @@
 <template>
-    <div class="activity">
-        <div class="activity-box">
-            <ul class="activity-list">
-                <li is="notification" v-for="(notification, indx) in notifications"></li>
-            </ul>
+    <div class="card card-small user-activity mb-4 border">
+        <div class="card-body p-0">
+            <div is="notification" v-for="(notification, indx) in notifications"></div>
         </div>
     </div>
 </template>

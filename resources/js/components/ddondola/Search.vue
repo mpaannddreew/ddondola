@@ -1,6 +1,6 @@
 <template>
     <form action="#" class="w-100" :class="classObject">
-        <div class="input-group input-group-seamless ml-3">
+        <div class="input-group input-group-seamless">
             <div class="input-group-prepend">
                 <div class="input-group-text">
                     <i class="material-icons">search</i>
@@ -109,5 +109,7 @@
 </script>
 
 <style scoped>
-
+    i.material-icons {
+        font-weight: bold;
+    }
 </style>

@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    protected $params = ['dashboard' => '', 'profile' => '', 'profile_edit' => '', 'messenger' => '', 'orders' => '', 'cart' => '', 'shops' => '', 'wishlist' => ''];
-
     /**
      * Create a new controller instance.
      *
@@ -23,50 +21,30 @@ class HomeController extends Controller
     }
 
     public function dashboard() {
-        $params = $this->params;
-        $params['dashboard'] = 'active';
-        return view('ddondola.me.dashboard', $params);
+        return view('ddondola.me.dashboard');
     }
 
     public function messenger() {
-        $params = $this->params;
-        $params['messenger'] = 'active';
-        return view('ddondola.me.messenger', $params);
+        return view('ddondola.me.messenger');
     }
 
     public function notifications() {
         return view('ddondola.me.notifications');
     }
 
-    public function people() {
-        return view('ddondola.people');
-    }
-
     public function profile(Request $request) {
-        $params = $this->params;
-        $params['profile'] = 'active';
-        $params['user'] = $request->user();
-        return view('ddondola.me.profile', $params);
+        return view('ddondola.me.profile', ['user' => $request->user()]);
     }
 
     public function following(Request $request) {
-        $params = $this->params;
-        $params['profile'] = 'active';
-        $params['user'] = $request->user();
-        return view('ddondola.me.following', $params);
+        return view('ddondola.me.following', ['user' => $request->user()]);
     }
 
     public function editProfile(Request $request) {
-        $params = $this->params;
-        $params['profile'] = 'active';
-        $params['user'] = $request->user();
-        return view('ddondola.me.edit-info', $params);
+        return view('ddondola.me.edit-info', ['user' => $request->user()]);
     }
 
     public function editProfileSettings(Request $request) {
-        $params = $this->params;
-        $params['profile'] = 'active';
-        $params['user'] = $request->user();
-        return view('ddondola.me.edit-settings', $params);
+        return view('ddondola.me.edit-settings', ['user' => $request->user()]);
     }
 }

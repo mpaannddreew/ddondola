@@ -7,17 +7,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Messenger\Traits\Converser;
-use Overtrue\LaravelFollow\Traits\CanBeFollowed;
-use Overtrue\LaravelFollow\Traits\CanFavorite;
-use Overtrue\LaravelFollow\Traits\CanFollow;
 use Shoppie\Shop;
 use Shoppie\Traits\Buyer;
 use Shoppie\Traits\Seller;
-use Thoughts\Traits\Reviewer;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Seller, Buyer, CanFollow, CanFavorite, Converser, HasApiTokens, Reviewer;
+    use Notifiable, Seller, Buyer, Converser, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.

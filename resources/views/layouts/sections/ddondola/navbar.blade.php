@@ -1,4 +1,4 @@
-<div class="main-navbar sticky-top bg-white border-bottom">
+<div class="main-navbar sticky-top bg-white">
     <div class="container p-0">
         <!-- Main Navbar -->
         <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">

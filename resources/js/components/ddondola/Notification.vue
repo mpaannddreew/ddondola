@@ -1,17 +1,16 @@
 <template>
-    <li>
-        <div class="activity-user">
-            <a href="profile.html" title="" data-toggle="tooltip" class="avatar" data-original-title="Lesley Grauer">
-                <img alt="Lesley Grauer" src="/images/avatars/0.jpg" class="img-fluid rounded-circle">
-            </a>
+    <div class="user-activity__item pr-3 py-3">
+        <div class="user-activity__item__icon">
+            <img src="/images/avatars/0.jpg" alt="User Avatar" class="user-avatar rounded-circle mr-2 w-100">
         </div>
-        <div class="activity-content">
-            <div class="timeline-content">
-                <a href="profile.html" class="name">Lesley Grauer</a> added new task <a href="#">Hospital Administration</a>
-                <span class="time">4 mins ago</span>
-            </div>
+        <div class="user-activity__item__content">
+            <span class="text-light">23 Minutes ago</span>
+            <p>Assigned himself to the <a href="#">Shards Dashboards</a> project.</p>
         </div>
-    </li>
+        <div class="user-activity__item__action ml-auto">
+            <button class="ml-auto btn btn-sm btn-white">View Project</button>
+        </div>
+    </div>
 </template>
 
 <script>

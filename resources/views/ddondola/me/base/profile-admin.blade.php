@@ -1,4 +1,5 @@
 @extends('ddondola.me.base.account-admin')
+@section('profile-base-active') active @endsection
 @section('main')
     @include('ddondola.sections.banner')
     <div class="container py-4">

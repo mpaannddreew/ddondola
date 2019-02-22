@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Ddondola'),
+    'name' => env('APP_NAME', 'ddondola'),
 
     /*
     |--------------------------------------------------------------------------
@@ -162,7 +162,6 @@ return [
 
         Shoppie\ShoppieServiceProvider::class,
         Messenger\MessengerServiceProvider::class,
-        Thoughts\ThoughtsServiceProvider::class
 
     ],
 

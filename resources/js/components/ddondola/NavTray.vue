@@ -41,7 +41,7 @@
             return {
                 notifications: [],
                 unReadCount: 0,
-                trayUrl: '/notifications'
+                trayUrl: '/me/notifications'
             }
         },
         computed: {

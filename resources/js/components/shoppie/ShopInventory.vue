@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="card card-small mb-4 border">
-            <div class="row no-gutters p-2">
+        <div class="mb-4">
+            <div class="row no-gutters">
                 <div class="col-lg-3 mb-2 mb-lg-0">
                     <form action="POST">
                         <div class="input-group input-group-seamless">
@@ -10,7 +10,7 @@
                                     <i class="material-icons"></i>
                                 </div>
                             </div>
-                            <input type="text" class="form-control form-control-sm file-manager-cards__search" placeholder="Filter products">
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter products">
                         </div>
                     </form>
                 </div>

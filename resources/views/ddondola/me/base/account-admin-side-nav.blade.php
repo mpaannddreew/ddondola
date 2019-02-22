@@ -12,8 +12,8 @@
     </ul>
     <h6 class="main-sidebar__nav-title">Dashboards</h6>
     <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item {{ $dashboard }}">
-            <a class="nav-link" href="{{ route('my.dashboard') }}">
+        <li class="nav-item">
+            <a class="nav-link @yield('dashboard-active')" href="{{ route('my.dashboard') }}">
                 <i class="material-icons">dashboard</i>
                 <span>Dashboard</span>
             </a>
@@ -21,17 +21,23 @@
     </ul>
     <h6 class="main-sidebar__nav-title">Account</h6>
     <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item {{ $profile }}">
-            <a class="nav-link" href="{{ route('my.profile') }}">
+        <li class="nav-item">
+            <a class="nav-link @yield('profile-base-active')" href="{{ route('my.profile') }}">
                 <i class="material-icons">account_circle</i>
                 <span>Profile</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @yield('notifications-active')" href="{{ route('my.notifications') }}">
+                <i class="material-icons">notifications</i>
+                <span>Notifications</span>
             </a>
         </li>
     </ul>
     <h6 class="main-sidebar__nav-title">Apps</h6>
     <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item {{ $messenger }}">
-            <a class="nav-link" href="{{ route('my.messenger') }}">
+        <li class="nav-item">
+            <a class="nav-link @yield('messenger-active')" href="{{ route('my.messenger') }}">
                 <i class="material-icons">chat_bubble</i>
                 <span>Messenger</span>
             </a>
@@ -39,8 +45,8 @@
     </ul>
     <h6 class="main-sidebar__nav-title">Business</h6>
     <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item {{ $shops }}">
-            <a class="nav-link" href="{{ route('my.shops') }}">
+        <li class="nav-item">
+            <a class="nav-link @yield('shops-active')" href="{{ route('my.shops') }}">
                 <i class="material-icons">shop</i>
                 <span>Shops</span>
             </a>
@@ -48,20 +54,20 @@
     </ul>
     <h6 class="main-sidebar__nav-title">Shopping</h6>
     <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item {{ $cart }}">
-            <a class="nav-link" href="{{ route('my.cart') }}">
+        <li class="nav-item">
+            <a class="nav-link @yield('cart-active')" href="{{ route('my.cart') }}">
                 <i class="material-icons">shopping_cart</i>
                 <span>Cart</span>
             </a>
         </li>
-        <li class="nav-item {{ $wishlist }}">
-            <a class="nav-link" href="{{ route('my.wishlist') }}">
+        <li class="nav-item">
+            <a class="nav-link @yield('wishlist-active')" href="{{ route('my.wishlist') }}">
                 <i class="fa fa-heart"></i>
                 <span>Wishlist</span>
             </a>
         </li>
-        <li class="nav-item {{ $orders }}">
-            <a class="nav-link" href="{{ route('my.orders') }}">
+        <li class="nav-item">
+            <a class="nav-link @yield('orders-active')" href="{{ route('my.orders') }}">
                 <i class="material-icons">description</i>
                 <span>Orders</span>
             </a>
