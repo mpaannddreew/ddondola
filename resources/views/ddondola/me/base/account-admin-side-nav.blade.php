@@ -43,15 +43,6 @@
             </a>
         </li>
     </ul>
-    <h6 class="main-sidebar__nav-title">Business</h6>
-    <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item">
-            <a class="nav-link @yield('shops-active')" href="{{ route('my.shops') }}">
-                <i class="material-icons">shop</i>
-                <span>Shops</span>
-            </a>
-        </li>
-    </ul>
     <h6 class="main-sidebar__nav-title">Shopping</h6>
     <ul class="nav nav--no-borders flex-column">
         <li class="nav-item">

@@ -6,7 +6,7 @@
         <div class="products-grid p-0">
             <div class="row">
                 <div class="item col-xl-3 col-md-6" v-for="(indx, product) in products">
-                    <div is="shop-product"></div>
+                    <div is="product"></div>
                 </div>
             </div>
         </div>
@@ -14,10 +14,10 @@
 </template>
 
 <script>
-    import ShopProduct from "./products/ShopProduct";
+    import Product from "./products/Product";
     export default {
         name: "RelatedProducts",
-        components: {ShopProduct},
+        components: {Product},
         data() {
             return {
                 products: [1, 2, 3, 4]

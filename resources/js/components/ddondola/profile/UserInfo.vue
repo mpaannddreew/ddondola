@@ -6,11 +6,12 @@
             </div>
             <h4 class="mb-0">Sierra Brooks</h4>
             <span class="text-muted d-block mb-2">Project Manager</span>
+            <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2"><i class="fa fa-user-plus mr-1"></i> Follow</button>
             <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2"><i class="material-icons mr-1">chat_bubble</i> Message</button>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item p-4">
-                <strong class="text-muted d-block mb-2">Description</strong>
+                <strong class="text-muted d-block mb-2">Bio</strong>
                 <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?</span>
             </li>
             <li class="list-group-item p-4">

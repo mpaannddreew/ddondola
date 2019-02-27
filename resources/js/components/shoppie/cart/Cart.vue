@@ -16,13 +16,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(indx, entry) in entries" is="cart-entry"></tr>
+                            <tr v-for="(indx, entry) in entries" is="cart-entry" :key="indx"></tr>
                             </tbody>
                             <tfoot>
                             <tr>
                                 <td colspan="12">
-                                    <ul class="table-btn">
-                                        <li><a href="shop.html" class="btn btn-continue"><i class="fa fa-chevron-left"></i>Continue Shopping</a></li>
+                                    <ul class="table-btn m-0 p-0">
+                                        <li><a href="shop.html" class="mb-2 btn btn-lg btn-pill btn-outline-primary mr-2"><i class="fa fa-chevron-left"></i> Continue Shopping</a></li>
                                     </ul>
                                 </td>
                             </tr>
@@ -32,37 +32,56 @@
                 </div>
             </div>
         </section>
-        <section class="cart-box-section py-4">
-            <div class="row justify-content-between">
-                <div class="col-lg-4 col-md-6">
-                    <div class="box-1 text-center card border">
-                        <div class="ci-title border-bottom">
-                            <h6>Promotional code</h6>
+        <section class="order-details py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 pl-0">
+                        <div class="card card-small border">
+                            <div class="card-header">
+                                <h6 class="text-uppercase">Coupon Code</h6>
+                            </div>
+                            <div class="card-body border-top">
+                                <p>If you have a coupon code, please enter it in the box below</p>
+                                <form action="#">
+                                    <div class="form-group d-flex">
+                                        <input type="text" name="coupon">
+                                        <button type="submit" class="cart-black-button">Apply coupon</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="ci-caption">
-                            <p class="mb-3">Enter Your Coupon Code If you have one</p>
-                            <form>
-                                <input required="" class="form-control mb-4" type="text" placeholder="Coupon Code">
-                                <button class="btn btn-continue" type="submit">Apply Coupon Code</button>
-                            </form>
+                        <div class="card card-small border my-4">
+                            <div class="card-header">
+                                <h6 class="text-uppercase">Instructions for seller</h6>
+                            </div>
+                            <div class="card-body border-top">
+                                <p>If you have some information for the seller you can leave them in the box below</p>
+                                <form action="#">
+                                    <textarea name="instructions"></textarea>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="box-2 text-center card border">
-                        <div class="ci-title border-bottom">
-                            <h6>Cart Total</h6>
+                    <div class="col-lg-6 pr-0 mb-4">
+                        <div class="card card-small border">
+                            <div class="card-header">
+                                <h6 class="text-uppercase">Order Summary</h6>
+                            </div>
+                            <div class="card-body border-top">
+                                <p>Shipping and additional costs are calculated based on values you have entered.</p>
+                                <ul class="order-menu list-unstyled">
+                                    <li class="d-flex justify-content-between"><span>Order Subtotal </span><strong>$390.00</strong></li>
+                                    <li class="d-flex justify-content-between"><span>Shipping and handling</span><strong>$10.00</strong></li>
+                                    <li class="d-flex justify-content-between"><span>Tax</span><strong>$0.00</strong></li>
+                                    <li class="d-flex justify-content-between"><span>Total</span><strong class="text-primary price-total">$400.00</strong></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="ci-caption">
-                            <ul class="pl-0">
-                                <li>Subtotal <span>$237.00</span></li>
-                                <li>Total <span>$237.00</span></li>
-
-                            </ul>
-                        </div>
-                        <div class="ci-btn border-top">
-                            <a href="checkout.html" class="btn btn-checkout btn-block rounded-0">Proceed to Checkout</a>
-                        </div>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <a :href="checkoutUrl" class="btn btn-lg btn-pill btn-outline-primary" style="text-transform: uppercase;">
+                            Proceed to checkout <i class="fa fa-chevron-right"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -78,6 +97,12 @@
         data() {
             return {
                 entries: [1, 2]
+            }
+        },
+        props: {
+            checkoutUrl: {
+                type: String,
+                required: true
             }
         }
     }

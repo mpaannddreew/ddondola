@@ -13,10 +13,8 @@
             @if(Auth::user()->is($user))
                 <li><a href="{{ route('my.profile') }}" class="@yield('profile-active')"><i class="fa fa-user-circle"></i> Profile</a></li>
                 <li><a href="{{ route('my.profile.edit') }}" class="@yield('edit-active')"><i class="fa fa-pencil"></i> Edit</a></li>
-                <li><a href="{{ route('my.following') }}" class="@yield('following-active')"><i class="fa fa-users"></i> Following</a></li>
             @else
                 <li><a href="{{ route('user.profile', ['user' => $user->code]) }}" class="@yield('profile-active')"><i class="fa fa-user-circle"></i> Profile</a></li>
-                <li><a href="{{ route('user.following', ['user' => $user->code]) }}" class="@yield('following-active')"><i class="fa fa-users"></i> Following</a></li>
             @endif
         </ul>
     </div>

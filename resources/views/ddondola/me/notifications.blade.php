@@ -5,7 +5,7 @@
     <div class="container">
         <div class="page-header row no-gutters py-4">
             <div class="col">
-                <span class="text-uppercase page-subtitle">Activity</span>
+                <span class="text-uppercase page-subtitle"><i class="fa fa-feed"></i> Activity</span>
                 <h3 class="page-title">Notifications</h3>
             </div>
         </div>

@@ -13,6 +13,7 @@
         "laravel/tinker": "^1.0",
         "mll-lab/laravel-graphql-playground": "^0.3.2",
         "nuwave/lighthouse": "^2.6",
+        "overtrue/laravel-follow": "^1.1",
         "silber/bouncer": "v1.0.0-rc.3",
         "spatie/laravel-medialibrary": "^7.0.0"
     },

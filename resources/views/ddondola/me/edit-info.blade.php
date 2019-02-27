@@ -75,10 +75,6 @@
                         <label for="userBio">Bio</label>
                         <textarea style="min-height: 87px;" id="userBio" name="userBio" class="form-control">I'm a design focused engineer.</textarea>
                     </div>
-                    <div class="form-group col-md-12">
-                        <label for="userTags">Tags</label>
-                        <div class="bootstrap-tagsinput"><span class="tag label label-info">User Experience<span data-role="remove"></span></span> <span class="tag label label-info">UI Design<span data-role="remove"></span></span> <span class="tag label label-info"> React JS<span data-role="remove"></span></span> <span class="tag label label-info"> HTML &amp; CSS<span data-role="remove"></span></span> <span class="tag label label-info"> JavaScript<span data-role="remove"></span></span> <span class="tag label label-info"> Bootstrap 4<span data-role="remove"></span></span> <input type="text" placeholder=""></div><input id="userTags" name="userTags" value="User Experience,UI Design, React JS, HTML &amp; CSS, JavaScript, Bootstrap 4" class="d-none" style="display: none;">
-                    </div>
                 </div>
                 <hr>
                 <div class="form-row mx-4">

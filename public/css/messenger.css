@@ -1118,3 +1118,12 @@
 .mCS-dark.mCSB_scrollTools .mCSB_draggerRail {
     opacity: 0;
 }
+
+.messenger .navbar-search.form-control {
+    background-color: #f5f6f8 !important;
+    color: #6c757d !important;
+}
+
+.messenger .navbar-search.form-control::placeholder {
+    color: #6c757d !important;
+}

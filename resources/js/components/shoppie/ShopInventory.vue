@@ -48,7 +48,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr is="inventory-row" v-for="(indx, product) in products"></tr>
+                <tr is="inventory-row" v-for="(indx, product) in products" :key="indx"></tr>
                 </tbody>
             </table>
         </div>
