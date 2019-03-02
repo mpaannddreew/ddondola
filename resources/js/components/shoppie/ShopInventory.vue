@@ -16,7 +16,7 @@
                 </div>
                 <div class="col">
                     <div class="d-flex ml-lg-auto my-auto">
-                        <div class="btn-group btn-group-sm mr-2 ml-lg-auto" role="group" aria-label="Table row actions">
+                        <div class="btn-group btn-group-sm ml-lg-auto" role="group" aria-label="Table row actions">
                             <button type="button" class="btn btn-white">
                                 <i class="material-icons"></i>
                             </button>
@@ -30,8 +30,6 @@
                                 <i class="material-icons"></i>
                             </button>
                         </div>
-                        <button class="btn btn-sm btn-accent d-inline-block ml-auto ml-lg-0">
-                            <i class="fa fa-plus"></i> Add New Product </button>
                     </div>
                 </div>
             </div>

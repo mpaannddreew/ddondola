@@ -1,6 +1,6 @@
 @extends('ddondola.me.edit')
 @section('title')@parent General @endsection
-@section('info-active') active @endsection
+@section('info-active', 'active')
 @section('profile')
     <div class="card card-small edit-user-details border">
         <div class="card-header p-0">
@@ -31,17 +31,6 @@
                                 <input type="text" class="form-control" id="lastName" value="Brooks">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="emailAddress">Email</label>
-                                <div class="input-group input-group-seamless">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="material-icons"></i>
-                                        </div>
-                                    </div>
-                                    <input type="email" class="form-control" id="emailAddress">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
                                 <label for="phoneNumber">Phone Number</label>
                                 <div class="input-group input-group-seamless">
                                     <div class="input-group-prepend">
@@ -52,8 +41,19 @@
                                     <input type="text" class="form-control" id="phoneNumber" value="+40 1234 567 890">
                                 </div>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label for="emailAddress">Email</label>
+                                <div class="input-group input-group-seamless">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="material-icons"></i>
+                                        </div>
+                                    </div>
+                                    <input type="email" class="form-control" id="emailAddress">
+                                </div>
+                            </div>
                             <div class="form-group col-md-12">
-                                <label for="userLocation">Location</label>
+                                <label for="userLocation">Address</label>
                                 <textarea style="min-height: 87px;" id="userBio" name="userBio" class="form-control">I'm a design focused engineer.</textarea>
                             </div>
                         </div>

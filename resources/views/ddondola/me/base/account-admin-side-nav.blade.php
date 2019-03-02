@@ -38,7 +38,7 @@
     <ul class="nav nav--no-borders flex-column">
         <li class="nav-item">
             <a class="nav-link @yield('messenger-active')" href="{{ route('my.messenger') }}">
-                <i class="material-icons">chat_bubble</i>
+                <i class="material-icons">chat</i>
                 <span>Messenger</span>
             </a>
         </li>

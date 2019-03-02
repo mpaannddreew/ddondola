@@ -18,32 +18,7 @@
                 </div>
             </div>
             <div class="col-lg-6 py-5">
-                <div class="product_description">
-                    <div class="product_category">Laptops</div>
-                    <div class="product_name">MacBook Air 13</div>
-                    <div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                    <div class="product_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum. laoreet turpis, nec sollicitudin dolor cursus at. Maecenas aliquet, dolor a faucibus efficitur, nisi tellus cursus urna, eget dictum lacus turpis.</p></div>
-                    <div class="order_info d-flex flex-row">
-                        <form action="#">
-                            <div class="clearfix" style="z-index: 1000;">
 
-                                <div class="quantity_filter" style="margin: 0;">
-                                    <button type="button" class="minus btn btn-sm btn-pill btn-outline-primary border-bottom-right-radius-0 border-top-right-radius-0" @click="minus">-</button>
-                                    <input class="quantity-number qty" type="text" v-model="quantity" min="1" max="10">
-                                    <button type="button" class="plus btn btn-sm btn-pill btn-outline-primary border-bottom-left-radius-0 border-top-left-radius-0" @click="plus">+</button>
-                                </div>
-
-                            </div>
-
-                            <div class="product_price my-5">$2000</div>
-                            <div class="button_container">
-                                <button type="button" class="btn btn-sm btn-pill btn-outline-primary"><i class="fa fa-cart-plus"></i> Add to Cart</button>
-                                <button type="button" class="btn btn-sm btn-pill btn-outline-primary"><i class="fa fa-heart"></i> Add to Favourites</button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

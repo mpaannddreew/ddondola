@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="section-heading my-5">
+        <div class="section-heading my-4">
             <h2>Related Products</h2>
         </div>
         <div class="products-grid p-0">

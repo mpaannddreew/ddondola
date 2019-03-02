@@ -7,15 +7,15 @@
         </span>
     </div>
 </div>
-<nav class="secondary_nav sticky_horizontal_2 border-bottom border-top">
-    <div class="container">
-        <ul class="clearfix">
+<div class="header-navbar collapse d-lg-flex p-0 bg-white border-bottom">
+    <div class="container p-0">
+        <ul class="nav nav-tabs border-0 flex-column flex-lg-row @yield('user-nav-fill')">
             @if(Auth::user()->is($user))
-                <li><a href="{{ route('my.profile') }}" class="@yield('profile-active')"><i class="fa fa-user-circle"></i> Profile</a></li>
-                <li><a href="{{ route('my.profile.edit') }}" class="@yield('edit-active')"><i class="fa fa-pencil"></i> Edit</a></li>
+                <li class="nav-item"><a href="{{ route('my.profile') }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>
+                <li class="nav-item"><a href="{{ route('my.profile.edit') }}" class="nav-link @yield('edit-active')"><i class="material-icons">mode_edit</i> Edit</a></li>
             @else
-                <li><a href="{{ route('user.profile', ['user' => $user->code]) }}" class="@yield('profile-active')"><i class="fa fa-user-circle"></i> Profile</a></li>
+                <li class="nav-item"><a href="{{ route('user.profile', ['user' => $user->code]) }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>
             @endif
         </ul>
     </div>
-</nav>
+</div>

@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar">
-        <div class="block">
+        <div class="block border-bottom">
             <h6 class="text-uppercase mb-3">Product Categories</h6>
             <ul class="list-unstyled">
                 <li>
@@ -30,6 +30,31 @@
                     </ul>
                 </li>
             </ul>
+        </div>
+        <div class="block">
+            <h6 class="text-uppercase">Brands </h6>
+            <form action="#">
+                <div class="custom-control custom-checkbox mb-3">
+                    <input id="brand0" type="checkbox" name="clothes-brand" checked="" class="custom-control-input">
+                    <label class="custom-control-label" for="brand0">Calvin Klein <small>(18)</small></label>
+                </div>
+                <div class="custom-control custom-checkbox mb-3">
+                    <input id="brand1" type="checkbox" name="clothes-brand" checked="" class="custom-control-input">
+                    <label class="custom-control-label" for="brand1">Levi Strauss <small>(30)</small></label>
+                </div>
+                <div class="custom-control custom-checkbox mb-3">
+                    <input id="brand2" type="checkbox" name="clothes-brand" class="custom-control-input">
+                    <label class="custom-control-label" for="brand2">Hugo Boss <small>(120)</small></label>
+                </div>
+                <div class="custom-control custom-checkbox mb-3">
+                    <input id="brand3" type="checkbox" name="clothes-brand" class="custom-control-input">
+                    <label class="custom-control-label" for="brand3">Tomi Hilfiger <small>(70)</small></label>
+                </div>
+                <div class="custom-control custom-checkbox mb-3">
+                    <input id="brand4" type="checkbox" name="clothes-brand" class="custom-control-input">
+                    <label class="custom-control-label" for="brand4">Tom Ford  <small>(110)</small></label>
+                </div>
+            </form>
         </div>
     </div>
 </template>

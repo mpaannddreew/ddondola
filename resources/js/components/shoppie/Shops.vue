@@ -1,5 +1,34 @@
 <template>
-
+    <div>
+        <header class="d-flex justify-content-between align-items-start mb-4">
+            <span class="visible-items">Showing <strong>1-15 </strong>of <strong>158 </strong>results</span>
+            <div class="btn-group">
+                <select class="form-control" tabindex="-98">
+                    <option value="newest">Fashion</option>
+                    <option value="oldest">Electronics</option>
+                    <option value="lowest-price">Restaurants</option>
+                    <option value="heigh-price">Bars</option>
+                </select>
+            </div>
+        </header>
+        <div class="card card-small lo-stats h-100 border">
+            <table class="table mb-0">
+                <thead class="py-2 bg-light text-semibold border-bottom">
+                <tr>
+                    <th>Details</th>
+                    <th></th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Items</th>
+                    <th class="text-center">Total</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr is="shop"></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -14,6 +43,13 @@
         },
         methods: {
 
+        },
+        props: {
+            mine: {
+                type: Boolean,
+                required: false,
+                default: false
+            }
         }
     }
 </script>

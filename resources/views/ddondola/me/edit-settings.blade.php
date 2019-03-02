@@ -1,6 +1,6 @@
 @extends('ddondola.me.edit')
 @section('title')@parent Settings @endsection
-@section('settings-active') active @endsection
+@section('settings-active', 'active')
 @section('profile')
     <div class="card card-small edit-user-details border">
         <div class="card-body p-0">

@@ -1,5 +1,5 @@
 @extends('ddondola.me.base.profile-admin')
-@section('edit-active') active @endsection
+@section('edit-active', 'active')
 @section('profile-info')
     <ul class="edit-menu m-4">
         <li class="@yield('info-active')">

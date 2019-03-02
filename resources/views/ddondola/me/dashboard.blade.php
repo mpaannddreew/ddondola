@@ -1,6 +1,6 @@
 @extends('ddondola.me.base.account-admin-icon-side-nav')
 @section('title')@parent Dashboard @endsection
-@section('dashboard-active') active @endsection
+@section('dashboard-active', 'active')
 @section('main')
     <div class="container">
         <div class="page-header row no-gutters py-4">

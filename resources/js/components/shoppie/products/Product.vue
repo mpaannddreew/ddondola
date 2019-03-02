@@ -1,6 +1,7 @@
 <template>
     <div class="card product is-gray">
         <div class="image d-flex align-items-center justify-content-center">
+            <!--<div class="ribbon ribbon-danger text-uppercase">Sold</div>-->
             <img src="/images/products/hoodie-man-1.png" alt="product" class="img-fluid">
             <div class="hover-overlay d-flex align-items-center justify-content-center">
                 <div class="CTA d-flex align-items-center justify-content-center">
@@ -18,7 +19,7 @@
         </div>
         <div class="p-4 title">
             <small class="text-muted">Men Wear</small>
-            <a href="detail.html">
+            <a href="#">
                 <h3 class="h6 text-uppercase no-margin-bottom">Elegant Lake</h3>
             </a>
             <span class="price text-muted">$40.00</span>
@@ -28,7 +29,10 @@
 
 <script>
     export default {
-        name: "ShopProduct"
+        name: "ShopProduct",
+        data() {
+            return {}
+        }
     }
 </script>
 
