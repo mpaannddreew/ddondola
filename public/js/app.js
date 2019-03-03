@@ -4006,7 +4006,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Shops",
@@ -4485,13 +4484,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Shop"
+  name: "Shop",
+  data: function data() {
+    return {};
+  },
+  props: {
+    mine: {
+      type: Boolean,
+      required: true
+    }
+  }
 });
 
 /***/ }),
@@ -54617,7 +54620,7 @@ var render = function() {
       _c("table", { staticClass: "table mb-0" }, [
         _vm._m(1),
         _vm._v(" "),
-        _c("tbody", [_c("shop", { tag: "tr" })], 1)
+        _c("tbody", [_c("shop", { tag: "tr", attrs: { mine: _vm.mine } })], 1)
       ])
     ])
   ])
@@ -54676,11 +54679,9 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("th"),
           _vm._v(" "),
-          _c("th", { staticClass: "text-center" }, [_vm._v("Status")]),
+          _c("th", { staticClass: "text-center" }, [_vm._v("Products")]),
           _vm._v(" "),
-          _c("th", { staticClass: "text-center" }, [_vm._v("Items")]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-center" }, [_vm._v("Total")]),
+          _c("th", { staticClass: "text-center" }, [_vm._v("Likes")]),
           _vm._v(" "),
           _c("th", { staticClass: "text-right" }, [_vm._v("Actions")])
         ])
@@ -55634,69 +55635,72 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("tr", [
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c("td", { staticClass: "lo-stats__items text-center" }, [_vm._v("12")]),
+    _vm._v(" "),
+    _c("td", { staticClass: "lo-stats__total text-center text-success" }, [
+      _vm._v("90")
+    ]),
+    _vm._v(" "),
+    _c("td", { staticClass: "lo-stats__actions" }, [
+      _c(
+        "div",
+        {
+          staticClass: "btn-group d-table ml-auto",
+          attrs: { role: "group", "aria-label": "Basic example" }
+        },
+        [
+          _c(
+            "button",
+            { staticClass: "btn btn-sm btn-white", attrs: { type: "button" } },
+            [_vm._v("Go to")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.mine,
+                  expression: "mine"
+                }
+              ],
+              staticClass: "btn btn-sm btn-white",
+              attrs: { type: "button" }
+            },
+            [_vm._v("Edit")]
+          )
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "lo-stats__image" }, [
-        _c("img", {
-          staticClass: "border rounded",
-          attrs: { src: "/images/orders/product-order-1.jpg" }
-        })
-      ]),
+    return _c("td", { staticClass: "lo-stats__image" }, [
+      _c("img", {
+        staticClass: "border rounded",
+        attrs: { src: "/images/orders/product-order-1.jpg" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "lo-stats__order-details" }, [
+      _c("span", [_vm._v("#19280")]),
       _vm._v(" "),
-      _c("td", { staticClass: "lo-stats__order-details" }, [
-        _c("span", [_vm._v("#19280")]),
-        _vm._v(" "),
-        _c("span", [_vm._v("21 February 2018 20:32")])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "lo-stats__status" }, [
-        _c("div", { staticClass: "d-table mx-auto" }, [
-          _c("span", { staticClass: "badge badge-pill badge-success" }, [
-            _vm._v("Complete")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "lo-stats__items text-center" }, [_vm._v("12")]),
-      _vm._v(" "),
-      _c("td", { staticClass: "lo-stats__total text-center text-success" }, [
-        _vm._v("$199")
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "lo-stats__actions" }, [
-        _c(
-          "div",
-          {
-            staticClass: "btn-group d-table ml-auto",
-            attrs: { role: "group", "aria-label": "Basic example" }
-          },
-          [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-white",
-                attrs: { type: "button" }
-              },
-              [_vm._v("Go to")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-white",
-                attrs: { type: "button" }
-              },
-              [_vm._v("Edit")]
-            )
-          ]
-        )
-      ])
+      _c("span", [_vm._v("21 February 2018 20:32")])
     ])
   }
 ]

@@ -17,14 +17,13 @@
                 <tr>
                     <th>Details</th>
                     <th></th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Items</th>
-                    <th class="text-center">Total</th>
+                    <th class="text-center">Products</th>
+                    <th class="text-center">Likes</th>
                     <th class="text-right">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr is="shop"></tr>
+                <tr is="shop" :mine="mine"></tr>
                 </tbody>
             </table>
         </div>
