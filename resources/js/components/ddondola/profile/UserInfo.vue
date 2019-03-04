@@ -1,6 +1,6 @@
 <template>
-    <div class="card card-small mb-4 pt-3 border">
-        <div class="card-header border-bottom text-center">
+    <div class="card card-small mb-4 border">
+        <div class="card-body text-center">
             <div class="mb-3 mx-auto">
                 <img class="rounded-circle" src="/images/avatars/0.jpg" alt="User Avatar" width="110">
             </div>
@@ -9,24 +9,6 @@
             <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2"><i class="fa fa-user-plus mr-1"></i> Follow</button>
             <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2"><i class="material-icons mr-1">chat_bubble</i> Message</button>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item p-4">
-                <strong class="text-muted d-block mb-2">Bio</strong>
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?</span>
-            </li>
-            <li class="list-group-item p-4">
-                <strong class="text-muted d-block mb-2">Phone number</strong>
-                <span>+256785631375</span>
-            </li>
-            <li class="list-group-item p-4">
-                <strong class="text-muted d-block mb-2">Email</strong>
-                <span>andrewmvp007@gmail.com</span>
-            </li>
-            <li class="list-group-item p-4">
-                <strong class="text-muted d-block mb-2">Location</strong>
-                <span>Menlo Park, California, United States</span>
-            </li>
-        </ul>
     </div>
 </template>
 

@@ -2145,24 +2145,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserInfo"
 });
@@ -3790,24 +3772,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -51726,8 +51690,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card card-small mb-4 pt-3 border" }, [
-      _c("div", { staticClass: "card-header border-bottom text-center" }, [
+    return _c("div", { staticClass: "card card-small mb-4 border" }, [
+      _c("div", { staticClass: "card-body text-center" }, [
         _c("div", { staticClass: "mb-3 mx-auto" }, [
           _c("img", {
             staticClass: "rounded-circle",
@@ -51767,44 +51731,6 @@ var staticRenderFns = [
             _vm._v(" Message")
           ]
         )
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "list-group list-group-flush" }, [
-        _c("li", { staticClass: "list-group-item p-4" }, [
-          _c("strong", { staticClass: "text-muted d-block mb-2" }, [
-            _vm._v("Bio")
-          ]),
-          _vm._v(" "),
-          _c("span", [
-            _vm._v(
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?"
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item p-4" }, [
-          _c("strong", { staticClass: "text-muted d-block mb-2" }, [
-            _vm._v("Phone number")
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("+256785631375")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item p-4" }, [
-          _c("strong", { staticClass: "text-muted d-block mb-2" }, [
-            _vm._v("Email")
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("andrewmvp007@gmail.com")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item p-4" }, [
-          _c("strong", { staticClass: "text-muted d-block mb-2" }, [
-            _vm._v("Location")
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("Menlo Park, California, United States")])
-        ])
       ])
     ])
   }
@@ -54294,8 +54220,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card card-small mb-4 pt-3 border" }, [
-      _c("div", { staticClass: "card-header border-bottom text-center" }, [
+    return _c("div", { staticClass: "card card-small mb-4 border" }, [
+      _c("div", { staticClass: "card-body text-center" }, [
         _c("div", { staticClass: "mb-3 mx-auto" }, [
           _c("img", {
             staticClass: "rounded-circle",
@@ -54340,44 +54266,6 @@ var staticRenderFns = [
             _vm._v(" Message")
           ]
         )
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "list-group list-group-flush" }, [
-        _c("li", { staticClass: "list-group-item p-4" }, [
-          _c("strong", { staticClass: "text-muted d-block mb-2" }, [
-            _vm._v("Description")
-          ]),
-          _vm._v(" "),
-          _c("span", [
-            _vm._v(
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?"
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item p-4" }, [
-          _c("strong", { staticClass: "text-muted d-block mb-2" }, [
-            _vm._v("Phone number")
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("+256785631375")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item p-4" }, [
-          _c("strong", { staticClass: "text-muted d-block mb-2" }, [
-            _vm._v("Email")
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("andrewmvp007@gmail.com")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item p-4" }, [
-          _c("strong", { staticClass: "text-muted d-block mb-2" }, [
-            _vm._v("Location")
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("Menlo Park, California, United States")])
-        ])
       ])
     ])
   }
