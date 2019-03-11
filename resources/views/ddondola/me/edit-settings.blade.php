@@ -1,7 +1,7 @@
 @extends('ddondola.me.edit')
 @section('title')@parent Settings @endsection
 @section('settings-active', 'active')
-@section('profile')
+@section('edit')
     <div class="card card-small edit-user-details border">
         <div class="card-body p-0">
             <form action="#" class="py-4">

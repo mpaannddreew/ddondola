@@ -271,7 +271,6 @@
                         <button type="submit"><i class="fa fa-send"></i></button>
                     </form>
                     <ul class="ft-options">
-                        <li><a href="#" title=""><i class="fa fa-camera"></i></a></li>
                         <li><a href="#" title=""><i class="fa fa-paperclip"></i></a></li>
                     </ul>
                 </div>

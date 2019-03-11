@@ -1127,3 +1127,9 @@
 .messenger .navbar-search.form-control::placeholder {
     color: #6c757d !important;
 }
+
+.contact-list > li:last-child {
+
+    border-bottom: none !important;
+
+}

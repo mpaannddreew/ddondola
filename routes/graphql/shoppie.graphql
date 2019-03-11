@@ -1,0 +1,223 @@
+type Profile {
+    phone_number: String
+    email: String
+    description: String
+    address: String
+}
+
+type Settings {
+    settings: String
+}
+
+type ShopCategory {
+    id: ID!
+    code: String!
+    name: String!
+    description: String
+    shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Shop {
+    id: ID!
+    code: String!
+    name: String!
+    category: ShopCategory! @belongsTo
+    owner: User! @belongsTo
+    profile: Profile!
+    settings: Settings!
+    active: Boolean!
+    categories: [ProductCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedCategories")
+    subcategories: [ProductSubCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedSubcategories")
+    subCategoriesCount: Int! @method(name: "subCategoriesCount")
+    brands: [ProductBrand!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedBrands")
+    products: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
+    productCount: Int! @method(name: "productCount")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type ProductCategory {
+    id: ID!
+    code: String!
+    name: String!
+    shop: Shop! @belongsTo
+    description: String
+    categories: [ProductSubCategory!] @hasMany(type: "paginator")
+    categoryCount: Int! @method(name: "categoryCount")
+    productCount: Int! @method(name: "productCount")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type ProductSubCategory {
+    id: ID!
+    code: String!
+    name: String!
+    category: ProductCategory! @belongsTo
+    description: String
+    products: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
+    productCount: Int! @method(name: "productCount")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type ProductBrand {
+    id: ID!
+    code: String!
+    name: String!
+    shop: Shop! @belongsTo
+    description: String
+    products: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
+    productCount: Int! @method(name: "productCount")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Product {
+    id: ID!
+    code: String!
+    name: String!
+    category: ProductCategory! @method(name: "category")
+    subcategory: ProductSubCategory! @belongsTo
+    brand: ProductBrand! @belongsTo
+    price: String!
+    description: String
+    quantity: Int! @method(name: "quantity")
+    active: Boolean!
+    offers: [ProductOffer!] @hasMany(type: "paginator")
+    stock: [Stock] @hasMany(type: "paginator")
+    orders: [Order!] @belongsToMany(type: "paginator")
+    carts: [Cart!] @belongsToMany(type: "paginator")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type CartEntry {
+    id: ID!
+    product: Product!
+    quantity: String!
+    price: String!
+    amount: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+
+type Cart {
+    id: ID!
+    entries: [CartEntry!]
+    amount: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type OrderEntry {
+    id: ID!
+    product: Product!
+    quantity: String!
+    price: String!
+    amount: String!
+    delivered: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Order {
+    id: ID!
+    code: String!
+    entries: [CartEntry!]
+    amount: String!
+    owner: User! @belongsTo
+    cleared: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+enum StockType {
+    STOCK_OUT @enum(value: "out")
+    STOCK_IN @enum(value: "in")
+}
+
+type Stock {
+    id: ID!
+    quantity: String!
+    type: StockType!
+    product: Product! @belongsTo
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type ProductOffer {
+    id: ID!
+    product: Product! @belongsTo
+    price: String!
+    start_date: DateTime!
+    end_date: DateTime!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+input NewShop {
+    categoryId: String!
+    name: String!
+    email: String!
+    phone_number: String!
+    description: String!
+    address: String!
+}
+
+input NewBrand {
+    name: String!
+    description: String
+}
+
+input NewProductCategory {
+    name: String!
+    description: String
+}
+
+input NewProductSubCategory {
+    name: String!
+    description: String
+}
+
+input NewStock {
+    type: StockType!
+    quantity: Int!
+    note: String!
+}
+
+input NewOffer {
+    price: String!
+    start_date: DateTime!
+    end_date: DateTime!
+}
+
+input NewProduct {
+    categoryId: String!
+    brandId: String!
+    name: String!
+    price: String!
+    description: String
+    active: Boolean!
+    minimum_stock: String!
+    stock: NewStock!
+}
+
+extend type Query {
+    shopCategories: [ShopCategory!] @all(model: "Shoppie\\ShopCategory")
+    shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
+    shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
+    product(id: ID! @eq): Product! @find(model: "Shoppie\\Product")
+    products: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
+}
+
+extend type Mutation {
+    createShop(shop: NewShop!): Shop! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createShop")
+    createBrand(shopId: ID! brand: NewBrand!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createBrand")
+    createCategory(shopId: ID! category: NewProductCategory!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")
+    createSubCategory(categoryId: ID! subcategory: NewProductSubCategory!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
+    createProduct(product: NewProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProduct")
+}

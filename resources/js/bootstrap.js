@@ -5,8 +5,24 @@ window.Moment = require('moment');
 window.Collect = require('collect.js');
 window.Bloodhound = require('bloodhound-js');
 
+window.Swal = require('sweetalert2');
+
+window.DToast = function(type, title) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+
+    Toast.fire({
+        type: type,
+        title: title
+    });
+};
+
 /**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+ * We'll loading jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
@@ -18,7 +34,7 @@ window.Bloodhound = require('bloodhound-js');
 // } catch (e) {}
 
 /**
- * We'll load the axios HTTP library which allows us to easily issue requests
+ * We'll loading the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */

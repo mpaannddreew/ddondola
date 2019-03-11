@@ -26,7 +26,7 @@ jQuery(document).ready(function($) {
     });
 
     //For Header Appearing in Homepage on Scrolling
-    var lazy = $('#header.lazy-load')
+    var lazy = $('#header.lazy-loading')
 
     $(window).on('scroll', function() {
         if ($(this).scrollTop() > 200) {

@@ -13,11 +13,12 @@ use Overtrue\LaravelFollow\Traits\CanFollow;
 use Overtrue\LaravelFollow\Traits\CanLike;
 use Shoppie\Shop;
 use Shoppie\Traits\Buyer;
+use Shoppie\Traits\Identifier;
 use Shoppie\Traits\Seller;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Seller, Buyer, Converser, HasApiTokens, CanLike, CanFollow, CanBeFollowed, CanFavorite;
+    use Notifiable, Seller, Buyer, Converser, HasApiTokens, CanLike, CanFollow, CanBeFollowed, CanFavorite, Identifier;
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'code', 'settings'
+        'first_name', 'last_name', 'email', 'password', 'code', 'settings', 'profile', 'active'
     ];
 
     /**
@@ -41,7 +42,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'settings' => 'array',
-        'active' => 'bool'
+        'active' => 'bool',
+        'profile' => 'array'
     ];
 
     /**
@@ -56,37 +58,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getNameAttribute()
     {
         return $this->name();
-    }
-
-    /**
-     * Shops this user is following
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function following() {
-        return $this->followings(Shop::class)->get();
-    }
-
-    /**
-     * Shop following count
-     *
-     * @return int
-     */
-    public function followingCount() {
-        return $this->followings(Shop::class)->get()->count();
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->code = \Illuminate\Support\Str::uuid()->toString();
-        });
-    }
-
-    public function getRouteKeyName()
-    {
-        return "code";
     }
 }

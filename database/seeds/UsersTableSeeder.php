@@ -28,29 +28,26 @@ class UsersTableSeeder extends Seeder
         $user = $this->users->create([
             'first_name' => 'Andrew',
             'last_name' => 'Mpande',
-            'email' => 'andrewmvp007@gmail.com',
+            'email' => 'andrew@ddondola.com',
             'email_verified_at' => \Carbon\Carbon::now(),
-            'password' => bcrypt('admin/admin')
+            'password' => bcrypt('secret')
         ]);
 
         $user_2 = $this->users->create([
             'first_name' => 'Faridah',
             'last_name' => 'Nankinzi',
-            'email' => 'nankinzifaridah@gmail.com',
+            'email' => 'faridah@ddondola.com',
             'email_verified_at' => \Carbon\Carbon::now(),
-            'password' => bcrypt('save/save')
+            'password' => bcrypt('secret')
         ]);
 
-        $shopCategory = \Shoppie\Facades\Shoppie::newShopCategory('Electronics', 'This represents fashion shops');
-        $shop = $user->newShop($shopCategory,'K & K Electronics');
+        $shopCategory = \Shoppie\Facades\Shoppie::newShopCategory('Fashion', 'This represents fashion shops');
+        $shop = $user->newShop($shopCategory, ['name' => 'K & K Electronics']);
 
-        $productCategory = $shop->newProductCategory("Music gadgets");
-        $product = $shop->newProduct($productCategory, ['name' => 'JB audio headsets', 'price' => '100000']);
+        $productCategory = \Shoppie\Facades\Shoppie::newProductCategory($shop, "Men's Collection");
+        $productSubCategory = \Shoppie\Facades\Shoppie::newProductSubCategory($productCategory, "T-shirts");
+        $productBrand = \Shoppie\Facades\Shoppie::newProductBrand($shop, "Calvin Klein");
+        $product = \Shoppie\Facades\Shoppie::newProduct($productSubCategory, $productBrand, ['name' => 'Elegant Lake', 'price' => '100000']);
 
-        $product->checkIn('12', $user, "Stock increase");
-        $product->checkIn('15', $user, "Stock increase");
-
-        $this->users->id($user->id)->cart->addProduct($product, 5);
-        $this->users->id($user_2->id)->cart->addProduct($product, 3);
     }
 }

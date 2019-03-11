@@ -34,7 +34,9 @@
     <script src="{{ asset('js/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script>
-        $(function () {});
+        $(function () {
+            $(".input-daterange").datepicker({})
+        });
     </script>
 @endsection
 

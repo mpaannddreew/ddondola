@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c00543a4f7eed700012f48d0f369b52",
+    "content-hash": "421abd04868e457afe3869f8c7ac15db",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -1825,20 +1825,20 @@
         },
         {
             "name": "mll-lab/laravel-graphql-playground",
-            "version": "v0.3.3",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mll-lab/laravel-graphql-playground.git",
-                "reference": "390b678a3e423d80d349e1fa61461e0dcbf4d502"
+                "reference": "b07606b350c4f61182220394e9c5109a08c3bac3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mll-lab/laravel-graphql-playground/zipball/390b678a3e423d80d349e1fa61461e0dcbf4d502",
-                "reference": "390b678a3e423d80d349e1fa61461e0dcbf4d502",
+                "url": "https://api.github.com/repos/mll-lab/laravel-graphql-playground/zipball/b07606b350c4f61182220394e9c5109a08c3bac3",
+                "reference": "b07606b350c4f61182220394e9c5109a08c3bac3",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*",
+                "laravel/framework": ">=5.1.0",
                 "php": ">=5.5.9"
             },
             "require-dev": {
@@ -1873,7 +1873,7 @@
                 "graphql-playground",
                 "laravel"
             ],
-            "time": "2018-09-19T08:57:32+00:00"
+            "time": "2019-02-28T13:53:27+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2186,16 +2186,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.1.5",
+            "version": "3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6"
+                "reference": "ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
-                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
+                "url": "https://api.github.com/repos/opis/closure/zipball/ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b",
+                "reference": "ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b",
                 "shasum": ""
             },
             "require": {
@@ -2243,7 +2243,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2019-01-14T14:45:33+00:00"
+            "time": "2019-02-22T10:30:00+00:00"
         },
         {
             "name": "overtrue/laravel-follow",

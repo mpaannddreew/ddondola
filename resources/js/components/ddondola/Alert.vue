@@ -1,5 +1,5 @@
 <template>
-    <div class="alert fade show mb-0" :class="alert" role="alert" v-show="show">
+    <div class="alert fade show mb-0" :class="alert" role="alert" v-show="show" id="error-box">
         <button type="button" class="close" @click="hideAlert">
             <span aria-hidden="true">×</span>
         </button>

@@ -1,33 +1,43 @@
-"A datetime string with format 'Y-m-d H:i:s', e.g. '2018-01-01 13:00:00'."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
-"A date string with format 'Y-m-d', e.g. '2011-05-23'."
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
+type User {
+    id: ID!
+    first_name: String!
+    last_name: String!
+    email: String!
+    cart: Cart @hasOne
+    shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
+    profile: Profile!
+    settings: Settings!
+    active: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
 type Query {
-    users: [User!]! @paginate(type: "paginator" model: "App\\User")
-    user(id: ID @eq): User @find(model: "App\\User")
+    me: User! @auth
+    users: [User!]! @paginate(type: "paginator" model: "Ddondola\\User")
+    user(id: ID @eq): User @find(model: "Ddondola\\User")
 }
 
 type Mutation {
     createUser(
-        name: String @rules(apply: ["required"])
+        first_name: String @rules(apply: ["required"])
+        last_name: String @rules(apply: ["required"])
         email: String @rules(apply: ["required", "email", "unique:users,email"])
-    ): User @create(model: "App\\User")
+        password: String @bcrypt
+    ): User @create(model: "Ddondola\\User")
+
     updateUser(
         id: ID @rules(apply: ["required"])
-        name: String
+        first_name: String
+        last_name: String
         email: String @rules(apply: ["email"])
-    ): User @update(model: "App\\User")
-    deleteUser(
-        id: ID @rules(apply: ["required"])
-    ): User @delete(model: "App\\User")
+    ): User @update(model: "Ddondola\\User")
+
 }
 
-type User {
-    id: ID!
-    name: String!
-    email: String!
-    created_at: DateTime!
-    updated_at: DateTime!
-}
+
+#import shoppie.graphql

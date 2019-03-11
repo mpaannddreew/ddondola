@@ -4,8 +4,8 @@
             <img class="border rounded" src="/images/orders/product-order-1.jpg">
         </td>
         <td class="lo-stats__order-details">
-            <span>#19280</span>
-            <span>21 February 2018 20:32</span>
+            <span>{{ shop.name }}</span>
+            <span class="text-uppercase">{{ shop.category.name }}</span>
         </td>
         <td class="lo-stats__items text-center">12</td>
         <td class="lo-stats__total text-center text-success">90</td>
@@ -27,6 +27,10 @@
         props: {
             mine: {
                 type: Boolean,
+                required: true
+            },
+            shop: {
+                type: Object,
                 required: true
             }
         }

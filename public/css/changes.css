@@ -1,5 +1,5 @@
 body {
-    background: #ffffff;
+    background: #f8f8f8;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
@@ -109,7 +109,7 @@ body {
 
 .card {
     background-color: #fff;
-    /*border-radius: 2px;*/
+    border-radius: 4px;
     box-shadow: none;
 }
 
@@ -205,13 +205,13 @@ body {
 }
 
 .user-profile-bnr {
-    background: url(../images/banner_background.jpg) no-repeat;
-    background-size: cover;
+    /*background: url(../images/banner_background.jpg) no-repeat;*/
+    /*background-size: cover;*/
 }
 
 .user-profile-bnr .wrapper {
 
-    background-color: rgba(255, 31, 155, 0.08);
+    background-color: rgba(255, 255, 255, 0.01);
 
 }
 
@@ -293,3 +293,144 @@ h1.grey, h2.grey, h3.grey, h4.grey, h5.grey, h6.grey {
 
 }
 
+.jobs-list {
+
+    float: left;
+    width: 100%;
+    padding: 20px 20px;
+
+}
+
+.job-info {
+
+    float: left;
+    width: 100%;
+    margin-bottom: 22px;
+
+}
+
+.job-details {
+
+    float: left;
+    width: 170px;
+
+}
+
+.job-details h3 {
+
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.5;
+
+}
+
+.job-details p {
+
+    color: #686868;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 !important;
+
+}
+
+.hr-rate {
+
+    float: right;
+    width: 40px;
+
+}
+
+.hr-rate span {
+    font-size: 14px;
+    font-weight: 600;
+    float: right;
+}
+
+thead.bg-light tr th{
+    border-bottom: none !important;
+}
+
+.suggestions-list {
+    float: left;
+    width: 100%;
+    padding: 13px 0 30px 0;
+}
+
+.suggestion-usd img {
+    float: left;
+}
+
+.suggestion-usd {
+    float: left;
+    width: 100%;
+    padding: 15px 20px;
+}
+
+.sgt-text {
+    float: left;
+    padding-left: 10px;
+}
+
+.sgt-text h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1;
+}
+
+.sgt-text span {
+    color: #686868;
+    font-size: 14px;
+}
+
+.suggestion-usd > span {
+    float: right;
+    margin-top: 4px;
+    position: relative;
+}
+
+.suggestion-usd > span i {
+    color: #b2b2b2;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #e5e5e5;
+    text-align: center;
+    line-height: 30px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.suggestion-usd > span:hover {
+    border: 1px solid #d51e76;
+}
+
+.suggestion-usd > span:hover i {
+    color: #d51e76;
+}
+
+.loader {
+    border: 3px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 3px solid #d51e76;
+    width: 25px;
+    height: 25px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader.loader-sm {
+    width: 25px;
+    height: 25px;
+}

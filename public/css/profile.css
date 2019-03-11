@@ -101,7 +101,7 @@ ul.nav-news-feed i.ion-ios-videocam{color: #9e1f63;}
 .page-sidebar .widget {
     margin-bottom: 30px;
     box-shadow: none;
-    border-radius: 2px;
+    /*border-radius: 2px;*/
 }
 
 .page-sidebar .widget .widget-title {

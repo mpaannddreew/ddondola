@@ -5,8 +5,8 @@
         </div>
         <div class="products-grid p-0">
             <div class="row">
-                <div class="item col-xl-3 col-md-6" v-for="(indx, product) in products">
-                    <div is="product"></div>
+                <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
+                    <div is="product" :key="indx" :product="product"></div>
                 </div>
             </div>
         </div>
@@ -20,7 +20,13 @@
         components: {Product},
         data() {
             return {
-                products: [1, 2, 3, 4]
+                products: []
+            }
+        },
+        props: {
+            product: {
+                type: Object,
+                required: true
             }
         }
     }

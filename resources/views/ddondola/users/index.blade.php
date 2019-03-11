@@ -1,2 +1,2 @@
-@extends('layouts.base.ddondola-profile-card')
+@extends('layouts.base.ddondola-no-container')
 @section('title')@parent Users @endsection
