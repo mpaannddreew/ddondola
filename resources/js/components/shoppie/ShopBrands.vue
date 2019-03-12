@@ -35,7 +35,7 @@
                                     </td>
                                 </tr>
                             </template>
-                            <template v-if="!showBrands && loaded">
+                            <template v-else-if="!showBrands && loaded">
                                 <tr>
                                     <td colspan="2">
                                         <div align="center">
@@ -166,7 +166,7 @@
             }
         },
         watch: {
-            name: function (data) {
+            name(data) {
                 if (data.length > 0) {
                     this.clearError("name");
                 }

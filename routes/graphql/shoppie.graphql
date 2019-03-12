@@ -87,7 +87,7 @@ type Product {
     quantity: Int! @method(name: "quantity")
     active: Boolean!
     offers: [ProductOffer!] @hasMany(type: "paginator")
-    stock: [Stock] @hasMany(type: "paginator")
+    stock(type: String!): [Stock] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedStock")
     orders: [Order!] @belongsToMany(type: "paginator")
     carts: [Cart!] @belongsToMany(type: "paginator")
     created_at: DateTime!
@@ -145,6 +145,8 @@ type Stock {
     quantity: String!
     type: StockType!
     product: Product! @belongsTo
+    note: String
+    user: User @rename(attribute: "addedBy")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -196,8 +198,8 @@ input NewOffer {
 }
 
 input NewProduct {
-    categoryId: String!
-    brandId: String!
+    categoryId: ID!
+    brandId: ID!
     name: String!
     price: String!
     description: String
@@ -220,4 +222,5 @@ extend type Mutation {
     createCategory(shopId: ID! category: NewProductCategory!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")
     createSubCategory(categoryId: ID! subcategory: NewProductSubCategory!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
     createProduct(product: NewProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProduct")
+    updateStock(productId: ID! stock: NewStock!): Stock! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateStock")
 }

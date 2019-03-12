@@ -4,6 +4,7 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
 type User {
     id: ID!
+    name: String! @method(name: "name")
     first_name: String!
     last_name: String!
     email: String!
