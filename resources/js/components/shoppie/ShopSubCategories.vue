@@ -60,6 +60,21 @@
                         </table>
                     </div>
                 </div>
+                <nav class="my-4">
+                    <ul class="pager">
+                        <li class="disabled">
+                            <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
+                                <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span> Previous
+                            </a>
+                        </li>
+                        <li class="spacer"></li>
+                        <li>
+                            <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
+                                Next <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
         <div class="col-md-4">

@@ -21,11 +21,13 @@
                     <small>There are no products in the directory yet!</small>
                 </h4>
             </div>
-            <div class="row" v-else-if="showProducts && loaded">
-                <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
-                    <div is="product" :product="product" :key="indx"></div>
+            <template v-else-if="showProducts && loaded">
+                <div class="row">
+                    <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
+                        <div is="product" :product="product" :key="indx"></div>
+                    </div>
                 </div>
-            </div>
+            </template>
         </div>
     </div>
 </template>

@@ -32,7 +32,7 @@ type Shop {
     subcategories: [ProductSubCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedSubcategories")
     subCategoriesCount: Int! @method(name: "subCategoriesCount")
     brands: [ProductBrand!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedBrands")
-    products: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
+    products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     productCount: Int! @method(name: "productCount")
     created_at: DateTime!
     updated_at: DateTime!
@@ -46,6 +46,7 @@ type ProductCategory {
     description: String
     categories: [ProductSubCategory!] @hasMany(type: "paginator")
     categoryCount: Int! @method(name: "categoryCount")
+    products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     productCount: Int! @method(name: "productCount")
     created_at: DateTime!
     updated_at: DateTime!
@@ -57,7 +58,7 @@ type ProductSubCategory {
     name: String!
     category: ProductCategory! @belongsTo
     description: String
-    products: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
+    products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     productCount: Int! @method(name: "productCount")
     created_at: DateTime!
     updated_at: DateTime!
@@ -69,7 +70,7 @@ type ProductBrand {
     name: String!
     shop: Shop! @belongsTo
     description: String
-    products: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
+    products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     productCount: Int! @method(name: "productCount")
     created_at: DateTime!
     updated_at: DateTime!
@@ -208,12 +209,19 @@ input NewProduct {
     stock: NewStock!
 }
 
+input ProductFilter {
+    ordering: String
+    brandIds: String
+}
+
 extend type Query {
     shopCategories: [ShopCategory!] @all(model: "Shoppie\\ShopCategory")
     shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
     shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
     product(id: ID! @eq): Product! @find(model: "Shoppie\\Product")
-    products: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
+    products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
+    productCategory(id: ID! @eq): ProductCategory! @find(model: "Shoppie\\ProductCategory")
+    productSubCategory(id: ID! @eq): ProductSubCategory! @find(model: "Shoppie\\ProductSubCategory")
 }
 
 extend type Mutation {

@@ -23,27 +23,35 @@
                     <div class="block border-bottom">
                         <h6 class="text-uppercase mb-3">Product Categories</h6>
                         <ul class="list-unstyled">
-                            <li v-for="(category, indx) in categories" :key="indx">
-                                <a href="#" class="d-flex justify-content-between align-items-center"><span>{{ category.name }}</span><small>{{ category.productCount }}</small></a>
-                                <ul class="list-unstyled">
-                                    <li v-for="(subcategory, indx_) in category.categories.data" :key="indx_"> <a href="#">{{ subcategory.name }}</a></li>
-                                </ul>
-                            </li>
+                            <template v-for="(category, indx) in categories" >
+                                <li :key="indx" v-if="category.productCount" :id="'category-' + category.id" :class="{active: categoryId === category.id}">
+                                    <a href="javascript:void(0);" class="d-flex justify-content-between align-items-center" @click="showCategory(category.id)">
+                                        <span>{{ category.name }}</span><small>{{ category.productCount }}</small>
+                                    </a>
+                                    <ul class="list-unstyled">
+                                        <template v-for="(subcategory, indx_) in category.categories.data">
+                                            <li :key="indx_" v-if="subcategory.productCount" :id="'subcategory-' + subcategory.id" :class="{active: subcategoryId === subcategory.id}">
+                                                <a href="javascript:void(0);" @click="showSubcategory(subcategory.id, category.id)">{{ subcategory.name }}</a>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </li>
+                            </template>
                         </ul>
                     </div>
                     <div class="block">
-                        <h6 class="text-uppercase">Brands </h6>
-                        <form action="#">
-                            <div class="custom-control custom-checkbox mb-3" v-for="(brand, indx) in brands" :key="indx">
-                                <input id="brand0" type="checkbox" name="clothes-brand" class="custom-control-input">
-                                <label class="custom-control-label" for="brand0">{{ brand.name }} <small>({{ brand.productCount }})</small></label>
+                        <h6 class="text-uppercase">Brands</h6>
+                        <template v-for="(brand, indx) in brands">
+                            <div class="custom-control custom-checkbox mb-3" :key="indx" v-if="brand.productCount">
+                                <input :id="'brand_' + indx" type="checkbox" name="clothes-brand" class="custom-control-input" v-model="brandIds" :value="brand.id">
+                                <label class="custom-control-label" :for="'brand_' + indx">{{ brand.name }} <small>({{ brand.productCount }})</small></label>
                             </div>
-                        </form>
+                        </template>
                     </div>
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="products-grid p-0">
+                <div class="products-grid p-0" id="products">
                     <header class="d-flex justify-content-between align-items-start">
                         <span class="visible-items" v-if="showProducts && productsLoaded">Showing <strong>1-15 </strong>of <strong>158 </strong>results</span>
                         <span class="visible-items" v-else></span>
@@ -73,11 +81,28 @@
                             </template>
                         </h4>
                     </div>
-                    <div class="row" v-else-if="showProducts && productsLoaded">
-                        <div class="item col-xl-4 col-md-6" v-for="(product, indx) in products" :key="indx">
-                            <div is="product" :product="product"></div>
+                    <template v-else-if="showProducts && productsLoaded">
+                        <div class="row">
+                            <div class="item col-xl-4 col-md-6" v-for="(product, indx) in products" :key="indx">
+                                <div is="product" :product="product"></div>
+                            </div>
                         </div>
-                    </div>
+                        <nav>
+                            <ul class="pager">
+                                <li class="disabled">
+                                    <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
+                                        <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span> Previous
+                                    </a>
+                                </li>
+                                <li class="spacer"></li>
+                                <li>
+                                    <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
+                                        Next <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </template>
                 </div>
             </div>
         </div>
@@ -98,6 +123,9 @@
                 products: [],
                 categories: [],
                 brands: [],
+                brandIds: [],
+                categoryId: '',
+                subcategoryId: '',
                 loaded: false,
                 productsLoaded: false,
                 count: 12,
@@ -111,6 +139,34 @@
             },
             showProducts() {
                 return this.products.length > 0;
+            },
+            filters() {
+                return {
+                    ordering: this.ordering,
+                    brandIds: JSON.stringify(this.brandIds)
+                }
+            },
+            productVariables() {
+                var variables = {filters: this.filters, count: this.count, page: this.page};
+
+                if (this.subcategoryId) {
+                    variables["subcategoryId"] = this.subcategoryId;
+                }else if(this.categoryId) {
+                    variables["categoryId"] = this.categoryId;
+                }else {
+                    variables["shopId"] = this.shop.id;
+                }
+
+                return variables;
+            },
+            productQuery() {
+                if (this.subcategoryId) {
+                    return graphql.subcategoryProducts
+                }else if(this.categoryId) {
+                    return graphql.categoryProducts
+                }else {
+                    return graphql.shopProducts;
+                }
             }
         },
         props: {
@@ -145,8 +201,8 @@
             },
             productsRequest() {
                 return axios.post(graphql.api, {
-                    query: graphql.shopProducts,
-                    variables: {shopId: this.shop.id, count: this.count, page: this.page}
+                    query: this.productQuery,
+                    variables: this.productVariables
                 });
             },
             spreadResponse(filters, products) {
@@ -159,11 +215,38 @@
                 this.brands = response.data.data.shop.brands.data;
             },
             fetchProducts() {
+                this.productsLoaded = false;
+                this.products = [];
                 this.productsRequest().then(this.loadProducts).catch(function (error) {})
             },
             loadProducts(response) {
                 this.productsLoaded = true;
-                this.products = response.data.data.shop.products.data;
+                console.log(JSON.stringify(response.data));
+                if (this.subcategoryId) {
+                    this.products = response.data.data.subcategory.products.data;
+                }else if(this.categoryId) {
+                    this.products = response.data.data.category.products.data;
+                }else {
+                    this.products = response.data.data.shop.products.data;
+                }
+            },
+            showCategory(categoryId) {
+                this.categoryId = categoryId;
+                this.subcategoryId = "";
+                this.fetchProducts();
+            },
+            showSubcategory(subcategoryId, categoryId) {
+                this.categoryId = categoryId;
+                this.subcategoryId = subcategoryId;
+                this.fetchProducts();
+            }
+        },
+        watch: {
+            brandIds(data) {
+                this.fetchProducts();
+            },
+            ordering(data) {
+                this.fetchProducts();
             }
         }
     }

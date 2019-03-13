@@ -4,13 +4,13 @@
             <div class="container p-0">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     <li class="nav-item">
-                        <a href="#stock" class="nav-link" :class="{ active: showing === 'all' }" @click="showAll"><i class="material-icons">list</i> All</a>
+                        <a href="javascript:void(0);" class="nav-link" :class="{ active: showing === 'all' }" @click="showAll"><i class="material-icons">list</i> All</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#stock"  class="nav-link" :class="{ active: showing === 'in' }" @click="showIn"><i class="material-icons">done</i> In stock</a>
+                        <a href="javascript:void(0);"  class="nav-link" :class="{ active: showing === 'in' }" @click="showIn"><i class="material-icons">done</i> In stock</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#stock"  class="nav-link" :class="{ active: showing === 'out' }" @click="showOut"><i class="material-icons">clear</i> Out Stock</a>
+                        <a href="javascript:void(0);"  class="nav-link" :class="{ active: showing === 'out' }" @click="showOut"><i class="material-icons">clear</i> Out Stock</a>
                     </li>
                 </ul>
             </div>
@@ -62,6 +62,21 @@
                             </table>
                         </div>
                     </div>
+                    <nav class="my-4">
+                        <ul class="pager">
+                            <li class="disabled">
+                                <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
+                                    <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span> Previous
+                                </a>
+                            </li>
+                            <li class="spacer"></li>
+                            <li>
+                                <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
+                                    Next <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
                 <div class="col-md-4">
                     <div class="card card-small mb-3" style="background: none !important;">

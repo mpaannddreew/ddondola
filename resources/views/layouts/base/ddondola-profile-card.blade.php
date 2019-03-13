@@ -7,10 +7,7 @@
                 <h5><a href="{{ route('my.profile') }}" class="text-white">{{ Auth::user()->name() }}</a></h5>
                 <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
             </div>
-            <div class="card card-small widget categories border my-4">
-                <div class="card-header border-bottom">
-                    <h6 class="m-0">Shortcuts</h6>
-                </div>
+            <div class="card card-small widget categories my-4" style="background: none !important;">
                 <div class="card-body p-0">
                     <ul class="categories-list">
                         <li>
@@ -61,14 +58,9 @@
                     </ul>
                 </div>
             </div>
-            <shop-suggestions></shop-suggestions>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-9">
             @yield('page-content')
-        </div>
-        <div class="col-md-3 py-4">
-            <top-products class="mb-4"></top-products>
-            <shop-suggestions title="Most Visited Shops"></shop-suggestions>
         </div>
     </div>
 @endsection

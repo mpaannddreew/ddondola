@@ -15,24 +15,25 @@ window.graphql = {
             name
           }
         }`,
-    shopCategoriesAndBrands: `query shopCategoriesAndBrands($id: ID!, $count: Int!, $page: Int!) {
+    shopCategoriesAndBrands: `query shopCategoriesAndBrands($id: ID! $count: Int! $page: Int!) {
           shop(id: $id) {
             subCategoriesCount
             name
-            categories(count: $count, page: $page) {
+            categories(count: $count page: $page) {
               data {
                 id
                 name
                 productCount
-                categories(count: $count, page: $page) {
+                categories(count: $count page: $page) {
                   data {
                     id
                     name
+                    productCount
                   }
                 }
               }
             }
-            brands(count: $count, page: $page) {
+            brands(count: $count page: $page) {
               data {
                 id
                 name
@@ -93,8 +94,8 @@ window.graphql = {
                 }
           }
         }`,
-    createSubCategory: `mutation createSubCategory($categoryId: ID!, $subcategory: NewProductSubCategory!) {
-          category:createSubCategory(categoryId: $categoryId, subcategory: $subcategory) {
+    createSubCategory: `mutation createSubCategory($categoryId: ID! $subcategory: NewProductSubCategory!) {
+          category:createSubCategory(categoryId: $categoryId subcategory: $subcategory) {
             id
             name
             productCount
@@ -103,9 +104,55 @@ window.graphql = {
             }
           }
         }`,
-    shopProducts: `query shopProducts($shopId: ID!, $count: Int!, $page: Int!) {
+    shopProducts: `query shopProducts($shopId: ID! $filters: ProductFilter $count: Int! $page: Int!) {
           shop(id: $shopId) {
-            products(count: $count, page: $page) {
+            products(filters: $filters count: $count page: $page) {
+              data {
+                id
+                name
+                code
+                active
+                quantity
+                price
+                category {
+                  name
+                }
+                subcategory {
+                  name
+                }
+                brand {
+                  name
+                }
+              }
+            }
+          }
+        }`,
+    categoryProducts: `query categoryProducts($categoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {
+          category:productCategory(id: $categoryId) {
+            products(filters: $filters count: $count page: $page) {
+              data {
+                id
+                name
+                code
+                active
+                quantity
+                price
+                category {
+                  name
+                }
+                subcategory {
+                  name
+                }
+                brand {
+                  name
+                }
+              }
+            }
+          }
+        }`,
+    subcategoryProducts: `query subcategoryProducts($subcategoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {
+          subcategory:productSubCategory(id: $subcategoryId) {
+            products(filters: $filters count: $count page: $page) {
               data {
                 id
                 name
@@ -139,9 +186,9 @@ window.graphql = {
             }
           }
         }`,
-    myShops: `query myShops($count: Int!, $page: Int!) {
+    myShops: `query myShops($count: Int! $page: Int!) {
           me {
-            shops(count: $count, page: $page) {
+            shops(count: $count page: $page) {
               data {
                 id
                 code
@@ -154,8 +201,8 @@ window.graphql = {
             }
           }
         }`,
-    products: `query products($count: Int!, $page: Int!) {
-          products(count: $count, page: $page) {
+    products: `query products(filters: ProductFilter $count: Int! $page: Int!) {
+          products(filters: ProductFilter count: $count page: $page) {
             data {
               id
               name
@@ -197,8 +244,8 @@ window.graphql = {
             }
           }
         }`,
-    updateStock: `mutation updateStock($productId: ID!, $stock: NewStock!) {
-          stock:updateStock(productId: $productId, stock: $stock) {
+    updateStock: `mutation updateStock($productId: ID! $stock: NewStock!) {
+          stock:updateStock(productId: $productId stock: $stock) {
             quantity
             type
             note
