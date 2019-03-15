@@ -19,10 +19,13 @@
                         <div class="d-flex ml-lg-auto my-auto">
                             <div class="btn-group btn-group-sm ml-lg-auto" role="group" aria-label="Table row actions">
                                 <div class="btn-group">
-                                    <select class="form-control form-control-sm" tabindex="-98">
-                                        <option value="newest">All</option>
-                                        <option value="oldest">Active</option>
-                                        <option value="lowest-price">Inactive</option>
+                                    <select class="form-control form-control-sm" tabindex="-98" v-model="ordering">
+                                        <option value="newest">Latest</option>
+                                        <option value="oldest">Oldest</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="lowest-price">Lowest price</option>
+                                        <option value="highest-price">Highest price</option>
                                     </select>
                                 </div>
                             </div>
@@ -69,21 +72,7 @@
                     </tbody>
                 </table>
             </div>
-            <nav>
-                <ul class="pager">
-                    <li class="disabled">
-                        <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                            <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span> Previous
-                        </a>
-                    </li>
-                    <li class="spacer"></li>
-                    <li>
-                        <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                            Next <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         </div>
     </div>
 </template>
@@ -101,7 +90,9 @@
                 products: [],
                 loaded: false,
                 count: 10,
-                page: 1
+                page: 1,
+                ordering: '',
+                paginatorInfo: null
             }
         },
         computed: {
@@ -125,14 +116,26 @@
         },
         methods: {
             fetchProducts() {
+                this.products = [];
+                this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopProducts,
-                    variables: {shopId: this.shop.id, count: this.count, page: this.page}
+                    variables: {shopId: this.shop.id, filters: {ordering: this.ordering}, count: this.count, page: this.page}
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {
                 this.loaded = true;
                 this.products = response.data.data.shop.products.data;
+                this.paginatorInfo = response.data.data.shop.products.paginatorInfo;
+            },
+            loadPage(page) {
+                this.page = page;
+                this.fetchProducts();
+            }
+        },
+        watch: {
+            ordering(data) {
+                this.loadPage(1);
             }
         }
     }

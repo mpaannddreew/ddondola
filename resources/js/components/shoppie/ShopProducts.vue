@@ -53,14 +53,14 @@
             <div class="col-md-9">
                 <div class="products-grid p-0" id="products">
                     <header class="d-flex justify-content-between align-items-start">
-                        <span class="visible-items" v-if="showProducts && productsLoaded">Showing <strong>1-15 </strong>of <strong>158 </strong>results</span>
+                        <visible-items :paginator-info="paginatorInfo" v-if="showProducts && productsLoaded && paginatorInfo"></visible-items>
                         <span class="visible-items" v-else></span>
                         <div class="btn-group">
                             <select class="form-control" tabindex="-98" v-model="ordering">
                                 <option value="latest">Latest</option>
                                 <option value="oldest">Oldest</option>
-                                <option value="lowest-price">Low Price</option>
-                                <option value="highest-price">High Price</option>
+                                <option value="lowest-price">Lowest Price</option>
+                                <option value="highest-price">Highest Price</option>
                             </select>
                         </div>
                     </header>
@@ -87,22 +87,8 @@
                                 <div is="product" :product="product"></div>
                             </div>
                         </div>
-                        <nav>
-                            <ul class="pager">
-                                <li class="disabled">
-                                    <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                                        <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span> Previous
-                                    </a>
-                                </li>
-                                <li class="spacer"></li>
-                                <li>
-                                    <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                                        Next <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
                     </template>
+                    <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
                 </div>
             </div>
         </div>
@@ -118,7 +104,7 @@
         mounted() {
             this.fetchAll();
         },
-        data() {
+        data: function () {
             return {
                 products: [],
                 categories: [],
@@ -130,7 +116,8 @@
                 productsLoaded: false,
                 count: 12,
                 page: 1,
-                ordering: ''
+                ordering: '',
+                paginatorInfo: null
             }
         },
         computed: {
@@ -221,32 +208,38 @@
             },
             loadProducts(response) {
                 this.productsLoaded = true;
-                console.log(JSON.stringify(response.data));
                 if (this.subcategoryId) {
                     this.products = response.data.data.subcategory.products.data;
+                    this.paginatorInfo = response.data.data.subcategory.products.paginatorInfo;
                 }else if(this.categoryId) {
                     this.products = response.data.data.category.products.data;
+                    this.paginatorInfo = response.data.data.category.products.paginatorInfo;
                 }else {
                     this.products = response.data.data.shop.products.data;
+                    this.paginatorInfo = response.data.data.shop.products.paginatorInfo;
                 }
             },
             showCategory(categoryId) {
                 this.categoryId = categoryId;
                 this.subcategoryId = "";
-                this.fetchProducts();
+                this.loadPage(1);
             },
             showSubcategory(subcategoryId, categoryId) {
                 this.categoryId = categoryId;
                 this.subcategoryId = subcategoryId;
+                this.loadPage(1);
+            },
+            loadPage(page) {
+                this.page = page;
                 this.fetchProducts();
             }
         },
         watch: {
             brandIds(data) {
-                this.fetchProducts();
+                this.loadPage(1);
             },
             ordering(data) {
-                this.fetchProducts();
+                this.loadPage(1);
             }
         }
     }

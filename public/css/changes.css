@@ -12,7 +12,7 @@ body {
 }
 
 .main-content > .main-navbar {
-    box-shadow: 0 0.125rem 0.625rem 0 rgba(90,97,105,.12);
+    box-shadow: 0 0.125rem 0.625rem 0 rgba(90, 97, 105, .12);
     background-color: #ce1d76 !important;
 }
 
@@ -83,7 +83,7 @@ body {
 }
 
 .dropdown-menu-small {
-    box-shadow: 0 0.125rem 0.625rem 0 rgba(90,97,105,.12);
+    box-shadow: 0 0.125rem 0.625rem 0 rgba(90, 97, 105, .12);
 }
 
 .main-navbar .navbar .navbar-nav .dropdown-menu {
@@ -347,7 +347,7 @@ h1.grey, h2.grey, h3.grey, h4.grey, h5.grey, h6.grey {
     float: right;
 }
 
-thead.bg-light tr th{
+thead.bg-light tr th {
     border-bottom: none !important;
 }
 
@@ -421,13 +421,21 @@ thead.bg-light tr th{
 
 /* Safari */
 @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .loader.loader-sm {
@@ -457,3 +465,84 @@ thead.bg-light tr th{
 
 }
 
+.grediant-bt-dark::before {
+
+    background: linear-gradient(-90deg, rgba(0, 0, 0, 0.7) 0%, rgba(17, 17, 17, 0.5) 100%);
+
+}
+
+.lis-grediant::before {
+
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+}
+
+.profile-inner {
+
+    padding-top: 207px;
+
+}
+
+.profile-inner a{
+    text-decoration: none;
+}
+
+.profile-inner h2{
+    font-size: 2rem;
+}
+
+section.profile-inner {
+
+    padding-bottom: 6.25em;
+    position: relative;
+
+}
+
+.background-image-maker {
+
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-color: #222222;
+    z-index: -1;
+
+}
+
+.lis-border-width-4 {
+
+    border-width: 4px !important;
+
+}
+
+.lis-line-height-1 {
+
+    line-height: 1 !important;
+
+}
+
+.lis-line-height-2 {
+
+    line-height: 2 !important;
+
+}
+
+.lis-font-weight-500 {
+
+    font-weight: 500;
+
+}
+
+b, strong {
+
+    font-weight: bolder !important;
+
+}

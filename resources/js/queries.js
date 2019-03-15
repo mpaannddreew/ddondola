@@ -51,6 +51,16 @@ window.graphql = {
                     productCount
                     categoryCount
                 }
+                paginatorInfo {
+                    count
+                    currentPage
+                    firstItem
+                    hasMorePages
+                    lastItem
+                    lastPage
+                    perPage
+                    total
+                }
             }
           }
         }`,
@@ -61,6 +71,16 @@ window.graphql = {
                     id
                     name
                     productCount
+                }
+                paginatorInfo {
+                    count
+                    currentPage
+                    firstItem
+                    hasMorePages
+                    lastItem
+                    lastPage
+                    perPage
+                    total
                 }
             }
           }
@@ -90,6 +110,16 @@ window.graphql = {
                         category {
                           name
                         }
+                    }
+                    paginatorInfo {
+                        count
+                        currentPage
+                        firstItem
+                        hasMorePages
+                        lastItem
+                        lastPage
+                        perPage
+                        total
                     }
                 }
           }
@@ -124,6 +154,16 @@ window.graphql = {
                   name
                 }
               }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
             }
           }
         }`,
@@ -146,6 +186,16 @@ window.graphql = {
                 brand {
                   name
                 }
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
               }
             }
           }
@@ -170,6 +220,16 @@ window.graphql = {
                   name
                 }
               }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
             }
           }
         }`,
@@ -183,6 +243,16 @@ window.graphql = {
               category {
                 name
               }
+            }
+            paginatorInfo {
+              count
+              currentPage
+              firstItem
+              hasMorePages
+              lastItem
+              lastPage
+              perPage
+              total
             }
           }
         }`,
@@ -198,11 +268,21 @@ window.graphql = {
                   name
                 }
               }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
             }
           }
         }`,
-    products: `query products(filters: ProductFilter $count: Int! $page: Int!) {
-          products(filters: ProductFilter count: $count page: $page) {
+    products: `query products($filters: ProductFilter $count: Int! $page: Int!) {
+          products(filters: $filters count: $count page: $page) {
             data {
               id
               name
@@ -219,6 +299,16 @@ window.graphql = {
               brand {
                 name
               }
+            }
+            paginatorInfo {
+              count
+              currentPage
+              firstItem
+              hasMorePages
+              lastItem
+              lastPage
+              perPage
+              total
             }
           }
         }`,
@@ -240,6 +330,16 @@ window.graphql = {
                   name
                 }
                 created_at
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
               }
             }
           }

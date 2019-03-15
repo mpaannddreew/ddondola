@@ -18,65 +18,49 @@
         <div class="container py-4">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card card-small border" id="stock">
-                        <div class="card-body p-0 text-center">
-                            <table class="table mb-0">
-                                <thead class="bg-light">
+                    <div class="card card-small lo-stats h-100 border" id="stock">
+                        <table class="table mb-0">
+                            <thead class="py-2 bg-light text-semibold border-bottom">
+                            <tr>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-center">Type</th>
+                                <th>Note</th>
+                                <th>Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <template v-if="!loaded">
                                 <tr>
-                                    <th scope="col" class="border-0">Quantity</th>
-                                    <th scope="col" class="border-0">Type</th>
-                                    <th scope="col" class="border-0">Note</th>
-                                    <th scope="col" class="border-0">Date</th>
+                                    <td colspan="4">
+                                        <div align="center"><div class="loader"></div></div>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <template v-if="!loaded">
-                                    <tr>
-                                        <td colspan="4">
-                                            <div align="center"><div class="loader"></div></div>
-                                        </td>
-                                    </tr>
-                                </template>
-                                <template v-else-if="!showStock && loaded">
-                                    <tr>
-                                        <td colspan="4">
-                                            <div align="center">
-                                                <h4>
-                                                    <i class="material-icons">error_outline</i>
-                                                    <br />
-                                                    <small>No stock!</small>
-                                                </h4>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </template>
-                                <template v-else-if="showStock && loaded">
-                                    <tr v-for="(_stock, indx) in stock" :key="indx">
-                                        <td>{{ _stock.quantity }}</td>
-                                        <td>{{ _stock.type === "STOCK_IN" ? "in": "out" }}</td>
-                                        <td>{{ _stock.note }}</td>
-                                        <td>{{ humanize(_stock.created_at) }}</td>
-                                    </tr>
-                                </template>
-                                </tbody>
-                            </table>
-                        </div>
+                            </template>
+                            <template v-else-if="!showStock && loaded">
+                                <tr>
+                                    <td colspan="4">
+                                        <div align="center">
+                                            <h4>
+                                                <i class="material-icons">error_outline</i>
+                                                <br />
+                                                <small>No stock!</small>
+                                            </h4>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                            <template v-else-if="showStock && loaded">
+                                <tr v-for="(_stock, indx) in stock" :key="indx">
+                                    <td class="lo-stats__items text-center">{{ _stock.quantity }}</td>
+                                    <td class="lo-stats__items text-center">{{ _stock.type === "STOCK_IN" ? "in": "out" }}</td>
+                                    <td>{{ _stock.note }}</td>
+                                    <td>{{ humanize(_stock.created_at) }}</td>
+                                </tr>
+                            </template>
+                            </tbody>
+                        </table>
                     </div>
-                    <nav class="my-4">
-                        <ul class="pager">
-                            <li class="disabled">
-                                <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                                    <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span> Previous
-                                </a>
-                            </li>
-                            <li class="spacer"></li>
-                            <li>
-                                <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                                    Next <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
                 </div>
                 <div class="col-md-4">
                     <div class="card card-small mb-3" style="background: none !important;">
@@ -130,7 +114,8 @@
                 showing: 'all',
                 loaded: false,
                 loading: false,
-                error: false
+                error: false,
+                paginatorInfo: null
             }
         },
         props: {
@@ -143,17 +128,16 @@
             showAll() {
                 this.loaded = false;
                 this.showing = 'all';
-                this.fetchStock();
             },
             showIn() {
                 this.loaded = false;
                 this.showing = 'in';
-                this.fetchStock();
+                this.loadPage(1);
             },
             showOut() {
                 this.loaded = false;
                 this.showing = 'out';
-                this.fetchStock();
+                this.loadPage(1);
             },
             fetchStock() {
                 axios.post(graphql.api, {
@@ -164,6 +148,7 @@
             loadStock(response) {
                 this.loaded = true;
                 this.stock = response.data.data.product.stock.data;
+                this.paginatorInfo = response.data.data.product.stock.paginatorInfo;
             },
             validate() {
                 if (!this.quantity.length > 0)
@@ -198,17 +183,18 @@
                 this.loading = false;
                 this.quantity = '';
                 this.note = '';
-                if ((this.showing === 'all' || this.showing === 'in') && this.type === 'STOCK_IN')
-                    this.stock.unshift(response.data.data.stock);
 
-                if ((this.showing === 'all' || this.showing === 'out') && this.type === 'STOCK_OUT')
-                    this.stock.unshift(response.data.data.stock);
+                this.loadPage(1);
 
                 DToast("success", "Stock updated successfully");
             },
             humanize(date) {
                 return Moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
                 // return Moment(date).fromNow();
+            },
+            loadPage(page) {
+                this.page = page;
+                this.fetchStock();
             }
         },
         computed: {

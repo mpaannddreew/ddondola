@@ -35,7 +35,11 @@
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script>
         $(function () {
-            $(".input-daterange").datepicker({})
+            $(".input-daterange").datepicker({});
+            $('.background-image-maker').each(function () {
+                var imgURL = $(this).next('.holder-image').find('img').attr('src');
+                $(this).css('background-image', 'url(' + imgURL + ')');
+            });
         });
     </script>
 @endsection

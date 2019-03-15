@@ -2,14 +2,14 @@
     <div>
         <div class="products-grid p-0">
             <header class="d-flex justify-content-between align-items-start mb-4">
-                <span class="visible-items" v-if="showProducts && loaded">Showing <strong>1-15 </strong>of <strong>158 </strong>results</span>
+                <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
                 <span class="visible-items" v-else></span>
                 <div class="btn-group">
                     <select class="form-control" tabindex="-98" v-model="ordering">
                         <option value="latest">Latest</option>
                         <option value="oldest">Oldest</option>
-                        <option value="lowest-price">Low Price</option>
-                        <option value="highest-price">High Price</option>
+                        <option value="lowest-price">Lowest Price</option>
+                        <option value="highest-price">Highest Price</option>
                     </select>
                 </div>
             </header>
@@ -28,6 +28,7 @@
                     </div>
                 </div>
             </template>
+            <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         </div>
     </div>
 </template>
@@ -46,7 +47,8 @@
                 loaded: false,
                 count: 12,
                 page: 1,
-                ordering: ''
+                ordering: '',
+                paginatorInfo: null
             }
         },
         computed: {
@@ -56,14 +58,26 @@
         },
         methods: {
             fetchProducts() {
+                this.loaded = false;
+                this.products = [];
                 axios.post(graphql.api, {
                     query: graphql.products,
-                    variables: {count: this.count, page: this.page}
+                    variables: {count: this.count, filters: {ordering: this.ordering}, page: this.page}
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {
                 this.loaded = true;
                 this.products = response.data.data.products.data;
+                this.paginatorInfo = response.data.data.products.paginatorInfo;
+            },
+            loadPage(page) {
+                this.page = page;
+                this.fetchProducts();
+            }
+        },
+        watch: {
+            ordering(data) {
+                this.loadPage(1);
             }
         }
     }

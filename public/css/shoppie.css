@@ -397,40 +397,10 @@
     width: 100%;
 }
 
-.hero_in {
-    width: 100%;
-    height: 450px;
-    position: relative;
-    overflow: hidden
-}
-
-@media (max-width: 767px) {
-    .hero_in {
-        height: 350px
-    }
-}
-
-.hero_in.shop_detail {
-    height: 350px
-}
-
-@media (max-width: 767px) {
-    .hero_in.shop_detail {
-        height: 350px
-    }
-}
-
-.hero_in.shop_detail {
-    background: url(../images/hero-area.jpg) center center no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover
-}
-
 .wrapper {
-    background-color: #000;
-    background-color: rgba(0, 0, 0, 0.2)
+    /*background-color: #000;*/
+    /*background-color: rgba(0, 0, 0, 0.2);*/
+    background: linear-gradient(-90deg, rgba(0, 0, 0, 0.7) 0%, rgba(17, 17, 17, 0.5) 100%);
 }
 
 
@@ -1159,4 +1129,148 @@ ul.order-menu strong.price-total {
 .products-grid .product.is-gray .image {
     border-top-left-radius: 0.625rem;
     border-top-right-radius: 0.625rem;
+}
+
+.thingsImage {
+    overflow: hidden;
+    border-radius: 2px;
+    border: 0;
+    position: relative;
+    box-shadow: none;
+    margin: 0 auto;
+    width: 100%;
+    height: auto
+}
+
+.thingsImage img {
+    max-width: 100%;
+    width: 100%
+}
+
+@media (min-width: 768px) {
+    .thingsImage img {
+        width: auto
+    }
+}
+
+.thingsMask {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    position: absolute;
+    border-radius: 0;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    transition: all .4s;
+    padding: 40px 30px
+}
+
+.thingsMask h2 {
+    font-weight: 500;
+    color: #fff;
+    margin: 0 0 8px 0;
+    text-transform: capitalize;
+    font-size: 24px
+}
+
+@media (min-width: 768px) {
+    .thingsMask h2 {
+        font-size: 24px
+    }
+}
+
+.thingsMask h2 i {
+    color: #ce1d76;
+    transition: all .3s ease-in-out;
+    margin-left: 5px;
+    margin-right: 5px
+}
+
+.thingsMask p {
+    color: #fff;
+    margin: 0 0 0 0
+}
+
+i.fa.fa-heart-o.active:before {
+    content: "\f004"
+}
+
+.thingsCaption {
+    padding: 20px 30px;
+    border-top: none;
+    margin: 0
+}
+
+.captionItem li i {
+    color: #ce1d76;
+    cursor: pointer
+}
+
+.captionItem li a {
+    color: #ce1d76
+}
+
+.captionItem li a:hover {
+    color: #ce1d76
+}
+
+.captionItem li:last-child {
+    float: right
+}
+
+.thingsBox {
+    margin: 0 -15px
+}
+
+@media (min-width: 768px) {
+    .thingsBox {
+        margin: 0
+    }
+}
+
+.thingsBox:hover .thingsMask {
+    background-color: rgba(243, 71, 220, 0.5)
+}
+
+.thingsBox:hover .thingsMask h2 i {
+    color: #fff
+}
+
+.thingsMask a {
+    text-decoration: none;
+}
+
+.thingsBox:hover .thingsCaption h2 {
+    color: #ce1d76
+}
+
+.thingsBox.thinsSpace {
+    margin: 15px 0
+}
+
+@media (min-width: 768px) {
+    .thingsBox.thinsSpace .thingsImage img {
+        width: 100%
+    }
+}
+
+.rating {
+    margin-bottom: 2px;
+    margin-left: 0
+}
+
+.rating li {
+    padding: 0
+}
+
+.rating li i {
+    color: #ffb400;
+    font-size: 10px
+}
+
+.list-inline > li {
+
+    display: inline-block;
+
 }

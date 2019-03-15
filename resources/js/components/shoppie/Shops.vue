@@ -5,7 +5,7 @@
         </template>
         <div v-else-if="loaded">
             <header class="d-flex justify-content-between align-items-start mb-4">
-                <span class="visible-items" v-if="shopsAvailable">Showing <strong>1-15 </strong>of <strong>158 </strong>results</span>
+                <visible-items :paginator-info="paginatorInfo" v-if="shopsAvailable && paginatorInfo"></visible-items>
                 <span class="visible-items" v-else-if="!shopsAvailable"></span>
                 <div class="btn-group">
                     <select class="form-control form-control-md custom-select custom-select-mdl" tabindex="-98">
@@ -14,64 +14,31 @@
                     </select>
                 </div>
             </header>
-            <div class="card card-small lo-stats h-100 border">
-                <table class="table mb-0">
-                    <thead class="py-2 bg-light text-semibold border-bottom">
-                    <tr>
-                        <th>Details</th>
-                        <th></th>
-                        <th class="text-center">Products</th>
-                        <th class="text-center">Likes</th>
-                        <th class="text-right">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <template v-if="!shopsLoaded">
-                        <tr>
-                            <td colspan="5">
-                                <div align="center"><div class="loader"></div></div>
-                            </td>
-                        </tr>
-                    </template>
-                    <template v-else-if="shopsLoaded && !shopsAvailable">
-                        <tr>
-                            <td colspan="5">
-                                <div align="center">
-                                    <h4>
-                                        <i class="material-icons">error_outline</i>
-                                        <br />
-                                        <template v-if="mine">
-                                            <small>You have not created any shops yet!</small>
-                                            <br />
-                                            <a :href="createShopUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Create Shop</a>
-                                        </template>
-                                        <small v-else-if="!mine">There are no shops in the directory yet!</small>
-                                    </h4>
-                                </div>
-                            </td>
-                        </tr>
-                    </template>
-                    <template v-else-if="shopsLoaded && shopsAvailable">
-                        <tr v-for="(shop, indx) in shops" is="shop" :shop="shop" :mine="mine" :key="indx"></tr>
-                    </template>
-                    </tbody>
-                </table>
+            <template v-if="!shopsLoaded">
+                <div align="center"><div class="loader"></div></div>
+            </template>
+            <template v-else-if="shopsLoaded && !shopsAvailable">
+                <div align="center">
+                    <h4>
+                        <i class="material-icons">error_outline</i>
+                        <br />
+                        <template v-if="mine">
+                            <small>You have not created any shops yet!</small>
+                            <br />
+                            <a :href="createShopUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Create Shop</a>
+                        </template>
+                        <small v-else-if="!mine">There are no shops in the directory yet!</small>
+                    </h4>
+                </div>
+            </template>
+            <div class="row" id="grid-items" v-else-if="shopsLoaded && shopsAvailable">
+                <template v-for="(shop, indx) in shops">
+                    <div class="col-xs-12 col-sm-4 col-md-12 col-lg-4">
+                        <div is="shop" :shop="shop" :mine="mine" :key="indx"></div>
+                    </div>
+                </template>
             </div>
-            <nav class="my-4">
-                <ul class="pager">
-                    <li>
-                        <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                            <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span> Previous
-                        </a>
-                    </li>
-                    <li class="spacer"></li>
-                    <li>
-                        <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                            Next <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         </div>
     </div>
 </template>
@@ -89,9 +56,10 @@
                 shops: [],
                 categories: [],
                 page: 1,
-                count: 10,
+                count: 12,
                 loaded: false,
-                shopsLoaded: false
+                shopsLoaded: false,
+                paginatorInfo: null
             }
         },
         methods: {
@@ -124,6 +92,11 @@
             loadShops(shops) {
                 this.shopsLoaded = true;
                 this.shops = this.mine ? shops.data.data.me.shops.data: shops.data.data.shops.data;
+                this.paginatorInfo = this.mine ? shops.data.data.me.shops.paginatorInfo: shops.data.data.shops.paginatorInfo;
+            },
+            loadPage(page) {
+                this.page = page;
+                this.fetchShops();
             }
         },
         props: {

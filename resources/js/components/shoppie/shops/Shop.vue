@@ -1,21 +1,30 @@
 <template>
-    <tr>
-        <td class="lo-stats__image">
-            <img class="border rounded" src="/images/orders/product-order-1.jpg">
-        </td>
-        <td class="lo-stats__order-details">
-            <span>{{ shop.name }}</span>
-            <span class="text-uppercase">{{ shop.category.name }}</span>
-        </td>
-        <td class="lo-stats__items text-center">12</td>
-        <td class="lo-stats__total text-center text-success">90</td>
-        <td class="lo-stats__actions">
-            <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-sm btn-white">Go to</button>
-                <button type="button" class="btn btn-sm btn-white" v-show="mine">Edit</button>
+    <div class="thingsBox thinsSpace card border" data-marker-id="1">
+        <div class="thingsImage"><img src="/images/hero-area.jpg" alt="Image things">
+            <div class="thingsMask">
+                <ul class="list-inline rating">
+                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                </ul>
+                <a href="javascript:void(0)">
+                    <h2>
+                        {{ shop.name }}
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    </h2>
+                </a>
+                <p>215 Terry Lane, New York</p>
             </div>
-        </td>
-    </tr>
+        </div>
+        <div class="thingsCaption">
+            <ul class="list-inline captionItem">
+                <li><i class="fa fa-heart-o" aria-hidden="true"></i> 8 K</li>
+                <li><a href="javascript:void(0)"> {{ shop.category.name }}</a></li>
+            </ul>
+        </div>
+    </div>
 </template>
 
 <script>

@@ -19,63 +19,47 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card card-small border">
-                        <div class="card-body p-0 text-center">
-                            <table class="table mb-0">
-                                <thead class="bg-light">
+                    <div class="card card-small lo-stats h-100 border">
+                        <table class="table mb-0">
+                            <thead class="py-2 bg-light text-semibold border-bottom">
+                            <tr>
+                                <th>Name</th>
+                                <th>Sub Categories</th>
+                                <th class="text-center">Products</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <template v-if="!loaded">
                                 <tr>
-                                    <th scope="col" class="border-0">Name</th>
-                                    <th scope="col" class="border-0">Sub Categories</th>
-                                    <th scope="col" class="border-0">Products</th>
+                                    <td colspan="3">
+                                        <div align="center"><div class="loader"></div></div>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <template v-if="!loaded">
-                                    <tr>
-                                        <td colspan="3">
-                                            <div align="center"><div class="loader"></div></div>
-                                        </td>
-                                    </tr>
-                                </template>
-                                <template v-if="!showCategories && loaded">
-                                    <tr>
-                                        <td colspan="3">
-                                            <div align="center">
-                                                <h4>
-                                                    <i class="material-icons">error_outline</i>
-                                                    <br />
-                                                    <small>You have not added any categories yet!</small>
-                                                </h4>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </template>
-                                <template v-else-if="showCategories && loaded">
-                                    <tr v-for="(category, indx) in categories" :key="indx">
-                                        <td>{{ category.name }}</td>
-                                        <td>{{ category.categoryCount }}</td>
-                                        <td>{{ category.productCount }}</td>
-                                    </tr>
-                                </template>
-                                </tbody>
-                            </table>
-                        </div>
+                            </template>
+                            <template v-if="!showCategories && loaded">
+                                <tr>
+                                    <td colspan="3">
+                                        <div align="center">
+                                            <h4>
+                                                <i class="material-icons">error_outline</i>
+                                                <br />
+                                                <small>You have not added any categories yet!</small>
+                                            </h4>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                            <template v-else-if="showCategories && loaded">
+                                <tr v-for="(category, indx) in categories" :key="indx">
+                                    <td>{{ category.name }}</td>
+                                    <td>{{ category.categoryCount }}</td>
+                                    <td class="lo-stats__items text-center">{{ category.productCount }}</td>
+                                </tr>
+                            </template>
+                            </tbody>
+                        </table>
                     </div>
-                    <nav class="my-4">
-                        <ul class="pager">
-                            <li class="disabled">
-                                <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                                    <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span> Previous
-                                </a>
-                            </li>
-                            <li class="spacer"></li>
-                            <li>
-                                <a class="btn btn-block btn-pill btn-outline-primary btn-sm" href="#">
-                                    Next <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
                 </div>
             </div>
             <div class="col-md-4">
@@ -119,7 +103,8 @@
                 name: '',
                 description: '',
                 error: false,
-                loading: false
+                loading: false,
+                paginatorInfo: null
             }
         },
         computed: {
@@ -143,6 +128,7 @@
             loadData(response) {
                 this.loaded = true;
                 this.categories = response.data.data.shop.categories.data;
+                this.paginatorInfo = response.data.data.shop.categories.paginatorInfo;
             },
             validate() {
                 if (!this.name.length > 0)
@@ -167,7 +153,6 @@
                 this.name = '';
                 this.description = '';
                 this.loading = false;
-                this.categories.unshift(response.data.data.category);
                 DToast("success", "Category created successfully");
             },
             createCategory() {
@@ -182,6 +167,10 @@
                         }
                     }
                 }).then(this.clearForm).catch(function (error) {});
+            },
+            loadPage(page) {
+                this.page = page;
+                this.loadCategories();
             }
         },
         watch: {
