@@ -24,7 +24,7 @@
             <template v-else-if="showProducts && loaded">
                 <div class="row">
                     <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
-                        <div is="product" :product="product" :key="indx"></div>
+                        <div is="product" :product="product" :url="url" :key="indx"></div>
                     </div>
                 </div>
             </template>
@@ -49,6 +49,12 @@
                 page: 1,
                 ordering: '',
                 paginatorInfo: null
+            }
+        },
+        props: {
+            url: {
+                type: String,
+                required: true
             }
         },
         computed: {

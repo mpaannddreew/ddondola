@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/extras.1.2.0.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('slick/slick.css') }}"/>
     <link rel="stylesheet" href="{{ asset('slick/slick-theme.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/ui.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/changes.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/shoppie.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/messenger.css') }}"/>

@@ -22,7 +22,11 @@
                             <tr>
                                 <td colspan="12">
                                     <ul class="table-btn m-0 p-0">
-                                        <li><a href="shop.html" class="mb-2 btn btn-lg btn-pill btn-outline-primary mr-2"><i class="fa fa-chevron-left"></i> Continue Shopping</a></li>
+                                        <li>
+                                            <a :href="shoppingUrl" class="mb-2 btn btn-lg btn-pill btn-outline-primary mr-2">
+                                                <i class="fa fa-chevron-left"></i> Continue Shopping
+                                            </a>
+                                        </li>
                                     </ul>
                                 </td>
                             </tr>
@@ -36,20 +40,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 pl-0">
-                        <div class="card card-small border">
-                            <div class="card-header">
-                                <h6 class="text-uppercase">Coupon Code</h6>
-                            </div>
-                            <div class="card-body border-top">
-                                <p>If you have a coupon code, please enter it in the box below</p>
-                                <form action="#">
-                                    <div class="form-group d-flex">
-                                        <input type="text" name="coupon">
-                                        <button type="submit" class="cart-black-button">Apply coupon</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                        <coupon-code></coupon-code>
                         <div class="card card-small border my-4">
                             <div class="card-header">
                                 <h6 class="text-uppercase">Instructions for seller</h6>
@@ -63,20 +54,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 pr-0 mb-4">
-                        <div class="card card-small border">
-                            <div class="card-header">
-                                <h6 class="text-uppercase">Order Summary</h6>
-                            </div>
-                            <div class="card-body border-top">
-                                <p>Shipping and additional costs are calculated based on values you have entered.</p>
-                                <ul class="order-menu list-unstyled">
-                                    <li class="d-flex justify-content-between"><span>Order Subtotal </span><strong>$390.00</strong></li>
-                                    <li class="d-flex justify-content-between"><span>Shipping and handling</span><strong>$10.00</strong></li>
-                                    <li class="d-flex justify-content-between"><span>Tax</span><strong>$0.00</strong></li>
-                                    <li class="d-flex justify-content-between"><span>Total</span><strong class="text-primary price-total">$400.00</strong></li>
-                                </ul>
-                            </div>
-                        </div>
+                        <order-summary></order-summary>
                     </div>
                     <div class="col-lg-12 text-center">
                         <a :href="checkoutUrl" class="btn btn-lg btn-pill btn-outline-primary" style="text-transform: uppercase;">
@@ -91,9 +69,11 @@
 
 <script>
     import CartEntry from "./CartEntry";
+    import CouponCode from "./CouponCode";
+    import OrderSummary from "./OrderSummary";
     export default {
         name: "Cart",
-        components: {CartEntry},
+        components: {OrderSummary, CouponCode, CartEntry},
         data() {
             return {
                 entries: [1, 2]
@@ -101,6 +81,10 @@
         },
         props: {
             checkoutUrl: {
+                type: String,
+                required: true
+            },
+            shoppingUrl: {
                 type: String,
                 required: true
             }

@@ -84,7 +84,7 @@
                     <template v-else-if="showProducts && productsLoaded">
                         <div class="row">
                             <div class="item col-xl-4 col-md-6" v-for="(product, indx) in products" :key="indx">
-                                <div is="product" :product="product"></div>
+                                <div is="product" :product="product" :url="url"></div>
                             </div>
                         </div>
                     </template>
@@ -172,6 +172,10 @@
             },
             shop: {
                 type: Object,
+                required: true
+            },
+            url: {
+                type: String,
                 required: true
             }
         },

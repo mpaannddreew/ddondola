@@ -18,18 +18,18 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="{{ route('my.wishlist') }}">
-                                <i class="fa fa-heart"></i>
-                                Wishlist
-                                <span class="category-counter"><i class="fa fa-folder-open"></i></span>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
                             <a href="{{ route('my.orders') }}">
                                 <i class="material-icons">description</i>
                                 Orders
                                 <span class="category-counter"><i class="fa fa-list-alt"></i></span>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{{ route('my.wishlist') }}">
+                                <i class="fa fa-heart"></i>
+                                Wishlist
+                                <span class="category-counter"><i class="fa fa-folder-open"></i></span>
                             </a>
                         </li>
                         <li class="divider"></li>
@@ -52,6 +52,14 @@
                             <a href="{{ route('products') }}">
                                 <i class="fa fa-shopping-basket"></i>
                                 Discover products
+                                <span class="category-counter"><i class="fa fa-search"></i></span>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{{ route('users.index') }}">
+                                <i class="fa fa-users"></i>
+                                Find shopping partners
                                 <span class="category-counter"><i class="fa fa-search"></i></span>
                             </a>
                         </li>

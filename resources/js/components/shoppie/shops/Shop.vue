@@ -9,7 +9,7 @@
                     <li><i class="fa fa-star" aria-hidden="true"></i></li>
                     <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
                 </ul>
-                <a href="javascript:void(0)">
+                <a :href="shopUrl">
                     <h2>
                         {{ shop.name }}
                         <i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -20,7 +20,7 @@
         </div>
         <div class="thingsCaption">
             <ul class="list-inline captionItem">
-                <li><i class="fa fa-heart-o" aria-hidden="true"></i> 8 K</li>
+                <li><i class="material-icons">thumb_up</i> 8 K</li>
                 <li><a href="javascript:void(0)"> {{ shop.category.name }}</a></li>
             </ul>
         </div>
@@ -41,6 +41,15 @@
             shop: {
                 type: Object,
                 required: true
+            },
+            url: {
+                type: String,
+                required: true
+            }
+        },
+        computed: {
+            shopUrl() {
+                return this.url + "/shops/" + this.shop.code;
             }
         }
     }

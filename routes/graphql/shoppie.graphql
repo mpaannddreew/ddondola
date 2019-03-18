@@ -14,7 +14,7 @@ type ShopCategory {
     code: String!
     name: String!
     description: String
-    shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
+    shops(categoryId: Int): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -89,6 +89,7 @@ type Product {
     active: Boolean!
     offers: [ProductOffer!] @hasMany(type: "paginator")
     stock(type: String!): [Stock] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedStock")
+    relatedProducts: [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@relatedProducts")
     orders: [Order!] @belongsToMany(type: "paginator")
     carts: [Cart!] @belongsToMany(type: "paginator")
     created_at: DateTime!
@@ -155,7 +156,7 @@ type Stock {
 type ProductOffer {
     id: ID!
     product: Product! @belongsTo
-    price: String!
+    discount: String!
     start_date: DateTime!
     end_date: DateTime!
     created_at: DateTime!
@@ -217,11 +218,14 @@ input ProductFilter {
 extend type Query {
     shopCategories: [ShopCategory!] @all(model: "Shoppie\\ShopCategory")
     shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
-    shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
+    shops(categoryId: Int): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
     product(id: ID! @eq): Product! @find(model: "Shoppie\\Product")
     products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
     productCategory(id: ID! @eq): ProductCategory! @find(model: "Shoppie\\ProductCategory")
     productSubCategory(id: ID! @eq): ProductSubCategory! @find(model: "Shoppie\\ProductSubCategory")
+    iLikeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@iLikeShop")
+    inCart(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@inCart")
+    isFavorite(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@isFavorite")
 }
 
 extend type Mutation {
@@ -231,4 +235,9 @@ extend type Mutation {
     createSubCategory(categoryId: ID! subcategory: NewProductSubCategory!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
     createProduct(product: NewProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProduct")
     updateStock(productId: ID! stock: NewStock!): Stock! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateStock")
+    likeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@likeShop")
+    addToCart(id: ID! quantity: Int!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@addToCart")
+    removeFromCart(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@removeFromCart")
+    addToFavorites(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@addToFavorites")
+    removeFromFavorites(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@removeFromFavorites")
 }

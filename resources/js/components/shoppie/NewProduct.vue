@@ -317,6 +317,7 @@
                 this.notifyBelowQuantity = "";
                 this.quantity = "";
                 this.note = "";
+                DToast("success", "Product created successfully")
                 // $('.row .images .col-md-3.col-sm-3.col-4.col-lg-3.col-xl-2').remove();
             },
             handleImages(e) {

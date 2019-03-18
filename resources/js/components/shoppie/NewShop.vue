@@ -150,6 +150,7 @@
                 this.description = '';
                 this.address = '';
                 this.loading = false;
+                DToast("success", "Shop created successfully")
             }
         },
         computed: {

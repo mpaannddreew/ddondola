@@ -98,18 +98,14 @@
                     </form>
                 </div>
             </div>
-            <div class="card card-small mb-3 border" v-else-if="categoriesLoaded && !requirementsLoaded">
-                <div class="card-body">
-                    <div align="center">
-                        <h4>
-                            <i class="material-icons">error_outline</i>
-                            <br />
-                            <small>You have not added any categories yet!</small>
-                            <br />
-                            <a :href="inventoryUrl + '/categories'" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add Categories</a>
-                        </h4>
-                    </div>
-                </div>
+            <div align="center" v-else-if="categoriesLoaded && !requirementsLoaded">
+                <h4>
+                    <i class="material-icons">error_outline</i>
+                    <br />
+                    <small>You have not added any categories yet!</small>
+                    <br />
+                    <a :href="inventoryUrl + '/categories'" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add Categories</a>
+                </h4>
             </div>
         </div>
     </div>
@@ -215,7 +211,7 @@
                 this.description = '';
                 this.categoryId = '';
                 this.loading = false;
-                DToast("success", "Subcategory created successfully")
+                DToast("success", "Subcategory created successfully");
             },
             createCategory() {
                 this.loading = true;

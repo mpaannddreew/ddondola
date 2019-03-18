@@ -31,11 +31,14 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::get('/dashboard', 'HomeController@dashboard')->name('my.dashboard');
         Route::get('/messenger/{any?}', 'HomeController@messenger')->name('my.messenger');
         Route::get('/notifications', 'HomeController@notifications')->name('my.notifications');
+        Route::get('/followers', 'HomeController@followers')->name('my.followers');
+        Route::get('/following', 'HomeController@following')->name('my.following');
     });
 
     Route::prefix('users')->group(function (){
         Route::get('/', 'UserController@index')->name('users.index');
         Route::get('{user}', 'UserController@userProfile')->name('user.profile');
+        Route::get('{user}/followers', 'UserController@userFollowers')->name('user.followers');
         Route::get('{user}/following', 'UserController@userFollowing')->name('user.following');
     });
 });

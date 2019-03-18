@@ -162,6 +162,7 @@ return [
 
         Shoppie\ShoppieServiceProvider::class,
         Messenger\MessengerServiceProvider::class,
+        Activity\ActivityServiceProvider::class,
 
     ],
 

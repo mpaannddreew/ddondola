@@ -26,21 +26,21 @@
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row @yield('user-nav-fill')">
                     @if(Auth::user()->is($user))
                         <li class="nav-item"><a href="{{ route('my.profile') }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>
+                        <li class="nav-item"><a href="{{ route('my.followers') }}" class="nav-link @yield('followers-active')"><i class="material-icons">people</i> Followers</a></li>
+                        <li class="nav-item"><a href="{{ route('my.following') }}" class="nav-link @yield('following-active')"><i class="material-icons">people_outline</i> Following</a></li>
                         <li class="nav-item"><a href="{{ route('my.profile.edit') }}" class="nav-link @yield('edit-active')"><i class="material-icons">mode_edit</i> Edit</a></li>
                     @else
                         <li class="nav-item"><a href="{{ route('user.profile', ['user' => $user->code]) }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>
+                        <li class="nav-item"><a href="{{ route('user.followers', ['user' => $user->code]) }}" class="nav-link @yield('followers-active')"><i class="material-icons">people</i> Followers</a></li>
+                        <li class="nav-item"><a href="{{ route('user.following', ['user' => $user->code]) }}" class="nav-link @yield('following-active')"><i class="material-icons">people_outline</i> Following</a></li>
                     @endif
+
                 </ul>
             </div>
             <div class="col-12 col-sm-6 d-flex align-items-center">
-                <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
-                    <a href="javascript:void(0)" class="btn btn-white">
-                        <i class="material-icons">person_add</i> Follow
-                    </a>
-                    <a href="javascript:void(0)" class="btn btn-white">
-                        <i class="material-icons">message</i> Message
-                    </a>
-                </div>
+                @if(!Auth::user()->is($user))
+                <user-actions :user="{{ $user }}" my-messenger-url="{{ route("my.messenger") }}"></user-actions>
+                @endif
             </div>
         </div>
     </div>

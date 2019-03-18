@@ -4,12 +4,12 @@
             <div align="center"><div class="loader"></div></div>
         </template>
         <div v-else-if="loaded">
-            <header class="d-flex justify-content-between align-items-start mb-4">
-                <visible-items :paginator-info="paginatorInfo" v-if="shopsAvailable && paginatorInfo"></visible-items>
-                <span class="visible-items" v-else-if="!shopsAvailable"></span>
+            <header class="d-flex justify-content-between align-items-start">
+                <visible-items :paginator-info="paginatorInfo" v-if="showShops && paginatorInfo"></visible-items>
+                <span class="visible-items" v-else-if="!showShops"></span>
                 <div class="btn-group">
-                    <select class="form-control form-control-md custom-select custom-select-mdl" tabindex="-98">
-                        <option value="0"></option>
+                    <select class="form-control form-control-md custom-select custom-select-mdl" tabindex="-98" v-model="categoryId">
+                        <option value="0">All</option>
                         <option v-for="(category, indx) in categories" :value="category.id" :key="indx">{{ category.name }}</option>
                     </select>
                 </div>
@@ -17,7 +17,7 @@
             <template v-if="!shopsLoaded">
                 <div align="center"><div class="loader"></div></div>
             </template>
-            <template v-else-if="shopsLoaded && !shopsAvailable">
+            <template v-else-if="!showShops && shopsLoaded">
                 <div align="center">
                     <h4>
                         <i class="material-icons">error_outline</i>
@@ -31,10 +31,10 @@
                     </h4>
                 </div>
             </template>
-            <div class="row" id="grid-items" v-else-if="shopsLoaded && shopsAvailable">
+            <div class="row" id="grid-items" v-else-if="showShops && shopsLoaded">
                 <template v-for="(shop, indx) in shops">
-                    <div class="col-xs-12 col-sm-4 col-md-12 col-lg-4">
-                        <div is="shop" :shop="shop" :mine="mine" :key="indx"></div>
+                    <div class="col-xs-12 col-sm-3 col-md-12 col-lg-3">
+                        <div is="shop" :shop="shop" :mine="mine" :url="url" :key="indx"></div>
                     </div>
                 </template>
             </div>
@@ -55,6 +55,7 @@
             return {
                 shops: [],
                 categories: [],
+                categoryId: "0",
                 page: 1,
                 count: 12,
                 loaded: false,
@@ -68,12 +69,14 @@
                 axios.all(requests).then(axios.spread(this.spreadResponse));
             },
             fetchShops() {
+                this.shopsLoaded = false;
+                this.shops = [];
                 this.shopsRequest().then(this.loadShops).catch(function (error) {});
             },
             shopsRequest() {
                 return axios.post(graphql.api, {
                     query: this.shopQuery,
-                    variables: {count: this.count, page: this.page}
+                    variables: {categoryId: parseInt(this.categoryId), count: this.count, page: this.page}
                 });
             },
             categoryRequest() {
@@ -108,14 +111,23 @@
             createShopUrl: {
                 type: String,
                 required: false
+            },
+            url: {
+                type: String,
+                required: true
             }
         },
         computed: {
             shopQuery() {
                 return this.mine ? graphql.myShops: graphql.shops;
             },
-            shopsAvailable() {
+            showShops() {
                 return this.shops.length > 0;
+            }
+        },
+        watch: {
+            categoryId(data) {
+                this.fetchShops();
             }
         }
     }

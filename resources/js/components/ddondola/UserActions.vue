@@ -1,21 +1,17 @@
 <template>
-    <div class="friend-card border">
-        <img src="/images/hero_in_shop_detail.jpg" alt="profile-cover" class="img-responsive cover">
-        <div class="card card-info pb-3">
-            <img src="/images/avatars/0.jpg" alt="user" class="profile-photo-lg">
-            <div class="friend-info">
-                <button v-if="!isMe" class="pull-right btn btn-sm btn-pill btn-outline-primary" @click="performAction" :class="{ active: follow, disabled: loading }">
-                    <i class="material-icons mr-1">person_add</i> {{ text }}
-                </button>
-                <h5><a :href="userUrl" class="profile-link">{{ name }}</a></h5>
-            </div>
-        </div>
+    <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
+        <a href="javascript:void(0)" @click="performAction" class="btn btn-white" :class="{ active: follow, disabled: loading }">
+            <i class="material-icons">person_add</i> {{ text }}
+        </a>
+        <a :href="messageUrl" class="btn btn-white">
+            <i class="material-icons">message</i> Message
+        </a>
     </div>
 </template>
 
 <script>
     export default {
-        name: "UserCard",
+        name: "UserActions",
         mounted() {
             this.getCurrentState();
         },
@@ -31,14 +27,9 @@
                 type: Object,
                 required: true
             },
-            url: {
+            myMessengerUrl: {
                 type: String,
                 required: true
-            },
-            isMe: {
-                type: Boolean,
-                required: false,
-                default: false
             }
         },
         methods: {
@@ -68,14 +59,11 @@
             }
         },
         computed: {
-            userUrl() {
-                return this.url + "/users/" + this.user.code
+            messageUrl() {
+                return this.myMessengerUrl + "/" + this.user.code
             },
             text() {
                 return this.follow ? 'Unfollow': 'Follow';
-            },
-            name() {
-                return this.isMe ? this.user.name + " (Me)": this.user.name;
             }
         }
     }

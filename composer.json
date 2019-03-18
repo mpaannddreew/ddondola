@@ -33,7 +33,8 @@
             "Ddondola\\": "app/",
             "Shoppie\\": "extensions/ddondola/shoppie/src",
             "Messenger\\": "extensions/ddondola/messenger/src",
-            "Pay\\": "extensions/ddondola/pay/src"
+            "Pay\\": "extensions/ddondola/pay/src",
+            "Activity\\": "extensions/ddondola/activity/src"
         }
     },
     "autoload-dev": {

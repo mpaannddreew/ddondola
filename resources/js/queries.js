@@ -233,8 +233,8 @@ window.graphql = {
             }
           }
         }`,
-    shops: `query shops($count: Int! $page: Int!){
-          shops(count: $count page: $page) {
+    shops: `query shops($categoryId: Int $count: Int! $page: Int!){
+          shops(categoryId: $categoryId count: $count page: $page) {
             data {
               id
               code
@@ -256,9 +256,9 @@ window.graphql = {
             }
           }
         }`,
-    myShops: `query myShops($count: Int! $page: Int!) {
+    myShops: `query myShops($categoryId: Int $count: Int! $page: Int!) {
           me {
-            shops(count: $count page: $page) {
+            shops(categoryId: $categoryId count: $count page: $page) {
               data {
                 id
                 code
@@ -319,6 +319,27 @@ window.graphql = {
             name
           }
         }`,
+    relatedProducts: `query relatedProducts($id: ID!) {
+          product(id: $id) {
+            products:relatedProducts {
+              id
+              name
+              code
+              active
+              quantity
+              price
+              category {
+                name
+              }
+              subcategory {
+                name
+              }
+              brand {
+                name
+              }
+            }
+          }
+        }`,
     productStock: `query productStock($id: ID! $type: String! $count: Int! $page: Int!){
           product(id: $id) {
             stock(type: $type count: $count page: $page) {
@@ -353,6 +374,139 @@ window.graphql = {
               name
             }
             created_at
+          }
+        }`,
+    iLikeShop: `query iLikeShop($id: ID!) {
+          like:iLikeShop(id: $id)
+        }`,
+    likeShop: `mutation likeShop($id: ID!) {
+          like:likeShop(id: $id)
+        }`,
+    iFollowUser: `query iFollowUser($id: ID!) {
+          follow:iFollowUser(id: $id)
+        }`,
+    followUser: `mutation followUser($id: ID!) {
+          follow:followUser(id: $id)
+        }`,
+    inCart: `query inCart($id: ID!) {
+          inCart(id: $id)
+        }`,
+    addToCart: `mutation addToCart($id: ID! $quantity: Int!) {
+          inCart:addToCart(id: $id quantity: $quantity)
+        }`,
+    removeFromCart: `mutation removeFromCart($id: ID!) {
+          inCart:removeFromCart(id: $id)
+        }`,
+    isFavorite: `query isFavorite($id: ID!) {
+          isFavorite(id: $id)
+        }`,
+    addToFavorites: `mutation addToFavorites($id: ID!) {
+          isFavorite:addToFavorites(id: $id)
+        }`,
+    removeFromFavorites: `mutation removeFromFavorites($id: ID!) {
+          isFavorite:removeFromFavorites(id: $id)
+        }`,
+    users: `query users($count: Int! $page: Int!) {
+          users(count: $count page: $page) {
+            data {
+              id
+              code
+              name
+            }
+            paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+          }
+        }`,
+    followers: `query followers($id: ID! $count: Int! $page: Int!){
+          user(id: $id) {
+            followers(count: $count page:$page) {
+              data {
+                id
+                code
+                name
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    following: `query following($id: ID! $count: Int! $page: Int!){
+          user(id: $id) {
+            following(count: $count page:$page) {
+              data {
+                id
+                code
+                name
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    myFollowers: `query myFollowers($count: Int! $page: Int!){
+          me {
+            followers(count: $count page:$page) {
+              data {
+                id
+                code
+                name
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    myFollowing: `query myFollowing($count: Int! $page: Int!){
+          me {
+            following(count: $count page:$page) {
+              data {
+                id
+                code
+                name
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
           }
         }`
 };

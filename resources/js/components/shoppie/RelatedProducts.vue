@@ -1,12 +1,15 @@
 <template>
     <div>
-        <div class="section-heading my-4">
-            <h2>Related Products</h2>
-        </div>
-        <div class="products-grid p-0">
-            <div class="row">
-                <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
-                    <div is="product" :key="indx" :product="product"></div>
+        <div align="center" v-if="!loaded"><div class="loader"></div></div>
+        <div v-if="hasRelated && loaded">
+            <div class="section-heading my-4">
+                <h2>Related Products</h2>
+            </div>
+            <div class="products-grid p-0">
+                <div class="row">
+                    <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
+                        <div is="product" :key="indx" :product="product" :url="url"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -18,15 +21,40 @@
     export default {
         name: "RelatedProducts",
         components: {Product},
+        mounted() {
+            this.getRelated();
+        },
         data() {
             return {
-                products: []
+                products: [],
+                loaded: false
             }
         },
         props: {
             product: {
                 type: Object,
                 required: true
+            },
+            url: {
+                type: String,
+                required: true
+            }
+        },
+        computed: {
+            hasRelated() {
+                return this.products.length > 0;
+            }
+        },
+        methods: {
+            getRelated() {
+                axios.post(graphql.api, {
+                    query: graphql.relatedProducts,
+                    variables: {id: this.product.id}
+                }).then(this.loadRelated).catch(function (error) {});
+            },
+            loadRelated(response) {
+                this.loaded = true;
+                this.products = response.data.data.product.products;
             }
         }
     }

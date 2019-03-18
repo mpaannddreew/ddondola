@@ -18,15 +18,15 @@
         <div class="container py-4">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card card-small lo-stats h-100 border" id="stock">
+                    <div class="card card-small lo-stats border">
                         <table class="table mb-0">
                             <thead class="py-2 bg-light text-semibold border-bottom">
-                            <tr>
-                                <th class="text-center">Quantity</th>
-                                <th class="text-center">Type</th>
-                                <th>Note</th>
-                                <th>Date</th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">Type</th>
+                                    <th>Note</th>
+                                    <th>Date</th>
+                                </tr>
                             </thead>
                             <tbody>
                             <template v-if="!loaded">
@@ -128,6 +128,7 @@
             showAll() {
                 this.loaded = false;
                 this.showing = 'all';
+                this.loadPage(1);
             },
             showIn() {
                 this.loaded = false;
@@ -146,6 +147,7 @@
                 }).then(this.loadStock).catch(function (error) {})
             },
             loadStock(response) {
+                console.log(JSON.stringify(response.data));
                 this.loaded = true;
                 this.stock = response.data.data.product.stock.data;
                 this.paginatorInfo = response.data.data.product.stock.paginatorInfo;

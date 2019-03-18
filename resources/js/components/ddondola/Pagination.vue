@@ -3,10 +3,10 @@
         <nav>
             <ul class="pagination justify-content-center">
                 <li class="page-item" v-if="hasPrevious">
-                    <a class="page-link" href="javascript:void(0)" @click="loadPage(previousPage)" tabindex="-1"><i class="fa fa-chevron-left"></i></a>
+                    <a class="page-link" href="javascript:void(0)" @click="loadPage(previousPage)" tabindex="-1"><i class="fa fa-chevron-left"></i> Previous</a>
                 </li>
                 <li class="page-item disabled" v-else>
-                    <a class="page-link" href="javascript:void(0)"><i class="fa fa-chevron-left"></i></a>
+                    <a class="page-link" href="javascript:void(0)"><i class="fa fa-chevron-left"></i> Previous</a>
                 </li>
 
                 <li class="page-item" v-if="addToCurrent(-4) > 1">
@@ -27,10 +27,10 @@
                 </li>
 
                 <li class="page-item" v-if="hasNext">
-                    <a class="page-link" href="javascript:void(0)" @click="loadPage(nextPage)"><i class="fa fa-chevron-right"></i></a>
+                    <a class="page-link" href="javascript:void(0)" @click="loadPage(nextPage)">Next <i class="fa fa-chevron-right"></i></a>
                 </li>
                 <li class="page-item disabled" v-else>
-                    <a class="page-link" href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a>
+                    <a class="page-link" href="javascript:void(0)">Next <i class="fa fa-chevron-right"></i></a>
                 </li>
             </ul>
         </nav>
