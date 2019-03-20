@@ -12,7 +12,7 @@
                 <a :href="shopUrl">
                     <h2>
                         {{ shop.name }}
-                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        <i class="fa fa-check-circle" aria-hidden="true" v-if="verified"></i>
                     </h2>
                 </a>
                 <p>215 Terry Lane, New York</p>
@@ -20,7 +20,7 @@
         </div>
         <div class="thingsCaption">
             <ul class="list-inline captionItem">
-                <li><i class="material-icons">thumb_up</i> 8 K</li>
+                <li><i class="fa fa-thumbs-o-up"></i> {{ shop.likes }}</li>
                 <li><a href="javascript:void(0)"> {{ shop.category.name }}</a></li>
             </ul>
         </div>
@@ -31,7 +31,9 @@
     export default {
         name: "Shop",
         data() {
-            return {}
+            return {
+                verified: false
+            }
         },
         props: {
             mine: {

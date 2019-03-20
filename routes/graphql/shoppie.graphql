@@ -1,12 +1,12 @@
-type Profile {
-    phone_number: String
-    email: String
+type ShopProfile {
+    phone_number: String!
+    email: String!
     description: String
     address: String
 }
 
-type Settings {
-    settings: String
+type ShopSettings {
+    discount: String
 }
 
 type ShopCategory {
@@ -25,9 +25,10 @@ type Shop {
     name: String!
     category: ShopCategory! @belongsTo
     owner: User! @belongsTo
-    profile: Profile!
-    settings: Settings!
+    profile: ShopProfile!
+    settings: ShopSettings!
     active: Boolean!
+    likes: Int! @method(name: "likeCount")
     categories: [ProductCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedCategories")
     subcategories: [ProductSubCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedSubcategories")
     subCategoriesCount: Int! @method(name: "subCategoriesCount")
@@ -76,6 +77,10 @@ type ProductBrand {
     updated_at: DateTime!
 }
 
+type ProductSettings {
+    minimum_stock: String!
+}
+
 type Product {
     id: ID!
     code: String!
@@ -87,11 +92,13 @@ type Product {
     description: String
     quantity: Int! @method(name: "quantity")
     active: Boolean!
+    settings: ProductSettings!
     offers: [ProductOffer!] @hasMany(type: "paginator")
     stock(type: String!): [Stock] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedStock")
     relatedProducts: [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@relatedProducts")
     orders: [Order!] @belongsToMany(type: "paginator")
     carts: [Cart!] @belongsToMany(type: "paginator")
+    discount: Int! @method(name: "discount")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -226,6 +233,8 @@ extend type Query {
     iLikeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@iLikeShop")
     inCart(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@inCart")
     isFavorite(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@isFavorite")
+    searchProducts(name: String!): [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchProducts")
+    searchShops(name: String!): [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchShops")
 }
 
 extend type Mutation {

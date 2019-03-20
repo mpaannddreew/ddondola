@@ -1,8 +1,9 @@
 <template>
-    <form action="#" class="w-100" :class="classObject">
+    <form id="search-wrapper" action="#" class="w-100" :class="classObject">
         <div class="input-group input-group-seamless">
             <div class="input-group-prepend">
                 <div class="input-group-text">
+                    <!--<div align="center"><div class="loader"></div></div>-->
                     <i class="material-icons">search</i>
                 </div>
             </div>
@@ -18,18 +19,7 @@
             this.initSearch();
         },
         data() {
-            return {
-                states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-                    'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-                    'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-                    'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-                    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-                    'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-                    'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-                    'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-                    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-                ]
-            }
+            return {}
         },
         props: {
             sideSearch: {
@@ -62,7 +52,7 @@
                             wrapper: "dropdown w-100 navbar-search form-control border-0 p-0",
                             input: "navbar-search form-control h-100",
                             hint: "navbar-search form-control h-100",
-                            menu: "dropdown-menu dropdown-menu-small w-100 border-top-radius-0",
+                            menu: "dropdown-menu dropdown-menu-small w-100 border-top-radius-0 p-0 scrollable",
                             // dataset: "",
                             // suggestion: "",
                             // selectable: "",
@@ -73,36 +63,137 @@
                         }
                     },
                     {
-                        name: 'states',
-                        source: this.substringMatcher(this.states),
+                        name: 'products',
+                        source: this.productSource(),
+                        display: function(item) {
+                            return item.name;
+                        },
                         templates: {
-                            notFound: '<a class="dropdown-item notification__all text-center" href="#"> No matches found </a>',
+                            header: '<div class="card">\n' +
+                            '\t<article class="card-group-item">\n' +
+                            '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Products</h6></header>\n' +
+                            '\t</article> <!-- card-group-item.// -->\n' +
+                            '</div>',
                             suggestion: function(data) {
-                                return '<a class="dropdown-item" href="#">' + data + '</a>';
+                                return '\n' +
+                                    '<figure class="itemside m-2">\n' +
+                                    '\t<div class="aside">\n' +
+                                    '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' +
+                                    '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' +
+                                    '\t</div>\n' +
+                                    '\t<figcaption class="text-wrap">\n' +
+                                    '\t\t<h6 class="title m-0"><a href="/products/' + data.code + '">' + data.name + '</a></h6>\n' +
+                                    '\t\t<span class="text-muted">' + data.category.name +' | ' + data.subcategory.name + ' | ' + data.brand.name + ' | 40 Reviews | UGX ' + data.price + '</span>\n' +
+                                    '\t</figcaption>\n' +
+                                    '</figure> \n';
+                            }
+                        }
+                    },
+                    {
+                        name: 'shops',
+                        source: this.shopSource(),
+                        display: function(item) {
+                            return item.name;
+                        },
+                        templates: {
+                            header: '<div class="card">\n' +
+                            '\t<article class="card-group-item">\n' +
+                            '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Shops</h6></header>\n' +
+                            '\t</article> <!-- card-group-item.// -->\n' +
+                            '</div>',
+                            suggestion: function(data) {
+                                return '\n' +
+                                    '<figure class="itemside m-2">\n' +
+                                    '\t<div class="aside">\n' +
+                                    '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' +
+                                    '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' +
+                                    '\t</div>\n' +
+                                    '\t<figcaption class="text-wrap">\n' +
+                                    '\t\t<h6 class="title m-0"><a href="/shops/' + data.code + '">' + data.name + '</a></h6>\n' +
+                                    '\t\t<span class="text-muted">' + data.category.name + ' | 128 Reviews | 3k Likes</span>\n' +
+                                    '\t</figcaption>\n' +
+                                    '</figure> \n';
+                            }
+                        }
+                    },
+                    {
+                        name: 'users',
+                        source: this.userSource(),
+                        display: function(item) {
+                            return item.name;
+                        },
+                        templates: {
+                            header: '<div class="card">\n' +
+                            '\t<article class="card-group-item">\n' +
+                            '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">People</h6></header>\n' +
+                            '\t</article> <!-- card-group-item.// -->\n' +
+                            '</div>',
+                            suggestion: function(data) {
+                                return '\n' +
+                                    '<figure class="itemside m-2">\n' +
+                                    '\t<div class="aside">\n' +
+                                    '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' +
+                                    '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' +
+                                    '\t</div>\n' +
+                                    '\t<figcaption class="text-wrap">\n' +
+                                    '\t\t<h6 class="title m-0"><a href="/people/' + data.code + '">' + data.name + '</a></h6>\n' +
+                                    '\t\t<span class="text-muted">148 Followers | 390 Following</span>\n' +
+                                    '\t</figcaption>\n' +
+                                    '</figure> \n';
                             }
                         }
                     });
             },
-            substringMatcher: function(strs) {
-                return function findMatches(q, cb) {
-                    let matches, substrRegex;
-
-                    // an array that will be populated with substring matches
-                    matches = [];
-
-                    // regex used to determine if a string contains the substring `q`
-                    substrRegex = new RegExp(q, 'i');
-
-                    // iterate through the pool of strings and for any string that
-                    // contains the substring `q`, add it to the `matches` array
-                    $.each(strs, function(i, str) {
-                        if (substrRegex.test(str)) {
-                            matches.push(str);
-                        }
-                    });
-
-                    cb(matches);
-                };
+            transform(data) {
+                return data.data.results;
+            },
+            productSource() {
+                return new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    remote: {
+                        url: graphql.api,
+                        prepare: function(query, settings) {
+                            settings.url = settings.url + "?" + $.param({query: graphql.searchProducts, variables: {name: query}});
+                            settings.headers = SearchHeaders;
+                            settings.type = "GET";
+                            return settings;
+                        },
+                        transform: this.transform
+                    },
+                });
+            },
+            shopSource() {
+                return new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    remote: {
+                        url: graphql.api,
+                        prepare: function(query, settings) {
+                            settings.url = settings.url + "?" + $.param({query: graphql.searchShops, variables: {name: query}});
+                            settings.headers = SearchHeaders;
+                            settings.type = "GET";
+                            return settings;
+                        },
+                        transform: this.transform
+                    },
+                });
+            },
+            userSource() {
+                return new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    remote: {
+                        url: graphql.api,
+                        prepare: function(query, settings) {
+                            settings.url = settings.url + "?" + $.param({query: graphql.searchUsers, variables: {name: query}});
+                            settings.headers = SearchHeaders;
+                            settings.type = "GET";
+                            return settings;
+                        },
+                        transform: this.transform
+                    },
+                });
             }
         }
     }
@@ -111,5 +202,10 @@
 <style scoped>
     i.material-icons {
         font-weight: bold;
+    }
+
+    div.loader {
+        width: 15px;
+        height: 15px;
     }
 </style>

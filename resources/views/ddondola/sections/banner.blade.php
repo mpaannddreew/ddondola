@@ -11,7 +11,7 @@
                         <img style="width: 100px; height: 100px;" src="{{ asset('images/avatars/0.jpg') }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 rounded mb-4 mb-md-0" alt="" />
                         <div class="media-body align-self-center">
                             <h5 class="text-white lis-font-weight-500 lis-line-height-1">{{ $user->name() }}</h5>
-                            <p class="mb-0">Member since January,2013</p>
+                            <p class="mb-0">{{ $user->followerCount() }} {{ $user->followerCount() > 1 || $user->followerCount() == 0 ? "followers": "follower"  }}</p>
                         </div>
                     </div>
                 </a>

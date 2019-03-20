@@ -69,7 +69,7 @@
         },
         computed: {
             userUrl() {
-                return this.url + "/users/" + this.user.code
+                return this.url + "/people/" + this.user.code
             },
             text() {
                 return this.follow ? 'Unfollow': 'Follow';

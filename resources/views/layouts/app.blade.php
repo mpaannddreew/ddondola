@@ -27,7 +27,6 @@
 <!-- Scripts
 ================================================= -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-<script src="{{ asset('jquery-slimscroll/jquery.slimscroll.js') }}"></script>
 @yield('javascripts')
 <script src="{{ asset('js/app.js') }}" defer></script>
 @yield('scripts')

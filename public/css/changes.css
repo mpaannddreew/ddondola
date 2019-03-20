@@ -673,3 +673,13 @@ section#reviews {
     color: #777;
     margin-bottom: 10px
 }
+
+[class*="list-"] li::after {
+    content: none;
+}
+
+.scrollable {
+    max-height: 400px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+}

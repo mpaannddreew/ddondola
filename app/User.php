@@ -59,4 +59,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->name();
     }
+
+    public function followingCount() {
+        return $this->followings->count();
+    }
+
+    public function followerCount() {
+        return $this->followers->count();
+    }
 }

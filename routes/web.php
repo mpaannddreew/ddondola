@@ -35,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::get('/following', 'HomeController@following')->name('my.following');
     });
 
-    Route::prefix('users')->group(function (){
+    Route::prefix('people')->group(function (){
         Route::get('/', 'UserController@index')->name('users.index');
         Route::get('{user}', 'UserController@userProfile')->name('user.profile');
         Route::get('{user}/followers', 'UserController@userFollowers')->name('user.followers');

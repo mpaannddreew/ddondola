@@ -4,7 +4,7 @@
     <div class="page-header row no-gutters py-4">
         <div class="col">
             <span class="text-uppercase page-subtitle"><i class="fa fa-folder-open-o"></i> Directory</span>
-            <h3 class="page-title">Users</h3>
+            <h3 class="page-title">People</h3>
         </div>
     </div>
 @endsection

@@ -55,11 +55,19 @@
             url: {
                 type: String,
                 required: true
+            },
+            myFavorites: {
+                type: Boolean,
+                required: false,
+                default: false
             }
         },
         computed: {
             showProducts() {
                 return this.products.length > 0;
+            },
+            query() {
+                return this.myFavorites ? graphql.myFavoriteProducts: graphql.products;
             }
         },
         methods: {
@@ -67,14 +75,19 @@
                 this.loaded = false;
                 this.products = [];
                 axios.post(graphql.api, {
-                    query: graphql.products,
+                    query: this.query,
                     variables: {count: this.count, filters: {ordering: this.ordering}, page: this.page}
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {
                 this.loaded = true;
-                this.products = response.data.data.products.data;
-                this.paginatorInfo = response.data.data.products.paginatorInfo;
+                if (this.myFavorites) {
+                    this.products = response.data.data.me.products.data;
+                    this.paginatorInfo = response.data.data.me.products.paginatorInfo;
+                }else {
+                    this.products = response.data.data.products.data;
+                    this.paginatorInfo = response.data.data.products.paginatorInfo;
+                }
             },
             loadPage(page) {
                 this.page = page;

@@ -6,7 +6,7 @@
                 <template v-if="inCart && isFavorite"> | </template>
                 <i class="fa fa-heart" v-if="isFavorite"></i>
             </div>
-            <div class="ribbon ribbon-info text-uppercase">60%</div>
+            <div class="ribbon ribbon-info text-uppercase" v-if="product.discount">{{ product.discount }}%</div>
             <img :src="imageUrl" alt="product" class="img-fluid">
             <div class="hover-overlay d-flex align-items-center justify-content-center">
                 <div class="CTA d-flex align-items-center justify-content-center">

@@ -144,6 +144,7 @@ window.graphql = {
                 active
                 quantity
                 price
+                discount
                 category {
                   name
                 }
@@ -177,6 +178,7 @@ window.graphql = {
                 active
                 quantity
                 price
+                discount
                 category {
                   name
                 }
@@ -210,6 +212,7 @@ window.graphql = {
                 active
                 quantity
                 price
+                discount
                 category {
                   name
                 }
@@ -240,6 +243,7 @@ window.graphql = {
               code
               name
               productCount
+              likes
               category {
                 name
               }
@@ -264,6 +268,7 @@ window.graphql = {
                 code
                 name
                 productCount
+                likes
                 category {
                   name
                 }
@@ -290,6 +295,7 @@ window.graphql = {
               active
               quantity
               price
+              discount
               category {
                 name
               }
@@ -328,6 +334,7 @@ window.graphql = {
               active
               quantity
               price
+              discount
               category {
                 name
               }
@@ -412,6 +419,8 @@ window.graphql = {
               id
               code
               name
+              followerCount
+              followingCount
             }
             paginatorInfo {
                 count
@@ -427,11 +436,13 @@ window.graphql = {
         }`,
     followers: `query followers($id: ID! $count: Int! $page: Int!){
           user(id: $id) {
-            followers(count: $count page:$page) {
+            followers(count: $count page: $page) {
               data {
                 id
                 code
                 name
+                followerCount
+                followingCount
               }
               paginatorInfo {
                 count
@@ -448,11 +459,13 @@ window.graphql = {
         }`,
     following: `query following($id: ID! $count: Int! $page: Int!){
           user(id: $id) {
-            following(count: $count page:$page) {
+            following(count: $count page: $page) {
               data {
                 id
                 code
                 name
+                followerCount
+                followingCount
               }
               paginatorInfo {
                 count
@@ -469,11 +482,13 @@ window.graphql = {
         }`,
     myFollowers: `query myFollowers($count: Int! $page: Int!){
           me {
-            followers(count: $count page:$page) {
+            followers(count: $count page: $page) {
               data {
                 id
                 code
                 name
+                followerCount
+                followingCount
               }
               paginatorInfo {
                 count
@@ -490,11 +505,13 @@ window.graphql = {
         }`,
     myFollowing: `query myFollowing($count: Int! $page: Int!){
           me {
-            following(count: $count page:$page) {
+            following(count: $count page: $page) {
               data {
                 id
                 code
                 name
+                followerCount
+                followingCount
               }
               paginatorInfo {
                 count
@@ -508,5 +525,77 @@ window.graphql = {
               }
             }
           }
-        }`
+        }`,
+    myFavoriteProducts: `query myFavoriteProducts($filters: ProductFilter $count: Int! $page: Int!){
+          me {
+            products:favouriteProducts(filters: $filters count: $count page: $page) {
+                data {
+                  id
+                  name
+                  code
+                  active
+                  quantity
+                  price
+                  discount
+                  category {
+                    name
+                  }
+                  subcategory {
+                    name
+                  }
+                  brand {
+                    name
+                  }
+                }
+                paginatorInfo {
+                  count
+                  currentPage
+                  firstItem
+                  hasMorePages
+                  lastItem
+                  lastPage
+                  perPage
+                  total
+                }
+            }
+          }
+        }`,
+    searchProducts: `query searchProducts($name: String!) {
+          results:searchProducts(name: $name) {
+            id
+            name
+            price
+            code
+            discount
+            category {
+              name
+            }
+            subcategory {
+              name
+            }
+            brand {
+              name
+            }
+          }
+        }`,
+    searchShops: `query searchShops($name: String!) {
+          results:searchShops(name: $name) {
+            id
+            name
+            code
+            likes
+            category {
+              name
+            }
+          }
+        }`,
+    searchUsers: `query searchUsers($name: String!) {
+          results:searchUsers(name: $name) {
+            id
+            code
+            name
+            followerCount
+            followingCount
+          }
+        }`,
 };

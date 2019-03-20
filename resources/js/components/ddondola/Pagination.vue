@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="paginatorInfo.hasMorePages">
         <nav>
             <ul class="pagination justify-content-center">
                 <li class="page-item" v-if="hasPrevious">

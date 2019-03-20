@@ -2,6 +2,17 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
+type UserProfile {
+    phone_number: String
+    email: String
+    description: String
+    address: String
+}
+
+type UserSettings {
+    discount: String
+}
+
 type User {
     id: ID!
     code: String!
@@ -10,12 +21,15 @@ type User {
     last_name: String!
     email: String!
     cart: Cart @hasOne
-    profile: Profile!
-    settings: Settings!
+    profile: UserProfile!
+    settings: UserSettings!
     active: Boolean!
     shops(categoryId: Int): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
+    favouriteProducts(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     followers: [User!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedFollowers")
+    followerCount: Int! @method(name: "followerCount")
     following: [User!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedFollowing")
+    followingCount: Int! @method(name: "followingCount")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -25,6 +39,7 @@ type Query {
     users: [User!]! @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedUsers")
     user(id: ID @eq): User @find(model: "Ddondola\\User")
     iFollowUser(id: ID!): Boolean! @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@iFollowUser")
+    searchUsers(name: String!): [User!] @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@searchUsers")
 }
 
 type Mutation {

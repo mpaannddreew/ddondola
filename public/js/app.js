@@ -2480,15 +2480,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Search",
   mounted: function mounted() {
     this.initSearch();
   },
   data: function data() {
-    return {
-      states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
-    };
+    return {};
   },
   props: {
     sideSearch: {
@@ -2521,7 +2520,7 @@ __webpack_require__.r(__webpack_exports__);
           wrapper: "dropdown w-100 navbar-search form-control border-0 p-0",
           input: "navbar-search form-control h-100",
           hint: "navbar-search form-control h-100",
-          menu: "dropdown-menu dropdown-menu-small w-100 border-top-radius-0",
+          menu: "dropdown-menu dropdown-menu-small w-100 border-top-radius-0 p-0 scrollable",
           // dataset: "",
           // suggestion: "",
           // selectable: "",
@@ -2531,32 +2530,108 @@ __webpack_require__.r(__webpack_exports__);
 
         }
       }, {
-        name: 'states',
-        source: this.substringMatcher(this.states),
+        name: 'products',
+        source: this.productSource(),
+        display: function display(item) {
+          return item.name;
+        },
         templates: {
-          notFound: '<a class="dropdown-item notification__all text-center" href="#"> No matches found </a>',
+          header: '<div class="card">\n' + '\t<article class="card-group-item">\n' + '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Products</h6></header>\n' + '\t</article> <!-- card-group-item.// -->\n' + '</div>',
           suggestion: function suggestion(data) {
-            return '<a class="dropdown-item" href="#">' + data + '</a>';
+            return '\n' + '<figure class="itemside m-2">\n' + '\t<div class="aside">\n' + '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' + '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' + '\t</div>\n' + '\t<figcaption class="text-wrap">\n' + '\t\t<h6 class="title m-0"><a href="/products/' + data.code + '">' + data.name + '</a></h6>\n' + '\t\t<span class="text-muted">' + data.category.name + ' | ' + data.subcategory.name + ' | ' + data.brand.name + ' | 40 Reviews | UGX ' + data.price + '</span>\n' + '\t</figcaption>\n' + '</figure> \n';
+          }
+        }
+      }, {
+        name: 'shops',
+        source: this.shopSource(),
+        display: function display(item) {
+          return item.name;
+        },
+        templates: {
+          header: '<div class="card">\n' + '\t<article class="card-group-item">\n' + '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Shops</h6></header>\n' + '\t</article> <!-- card-group-item.// -->\n' + '</div>',
+          suggestion: function suggestion(data) {
+            return '\n' + '<figure class="itemside m-2">\n' + '\t<div class="aside">\n' + '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' + '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' + '\t</div>\n' + '\t<figcaption class="text-wrap">\n' + '\t\t<h6 class="title m-0"><a href="/shops/' + data.code + '">' + data.name + '</a></h6>\n' + '\t\t<span class="text-muted">' + data.category.name + ' | 128 Reviews | 3k Likes</span>\n' + '\t</figcaption>\n' + '</figure> \n';
+          }
+        }
+      }, {
+        name: 'users',
+        source: this.userSource(),
+        display: function display(item) {
+          return item.name;
+        },
+        templates: {
+          header: '<div class="card">\n' + '\t<article class="card-group-item">\n' + '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">People</h6></header>\n' + '\t</article> <!-- card-group-item.// -->\n' + '</div>',
+          suggestion: function suggestion(data) {
+            return '\n' + '<figure class="itemside m-2">\n' + '\t<div class="aside">\n' + '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' + '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' + '\t</div>\n' + '\t<figcaption class="text-wrap">\n' + '\t\t<h6 class="title m-0"><a href="/people/' + data.code + '">' + data.name + '</a></h6>\n' + '\t\t<span class="text-muted">148 Followers | 390 Following</span>\n' + '\t</figcaption>\n' + '</figure> \n';
           }
         }
       });
     },
-    substringMatcher: function substringMatcher(strs) {
-      return function findMatches(q, cb) {
-        var matches, substrRegex; // an array that will be populated with substring matches
-
-        matches = []; // regex used to determine if a string contains the substring `q`
-
-        substrRegex = new RegExp(q, 'i'); // iterate through the pool of strings and for any string that
-        // contains the substring `q`, add it to the `matches` array
-
-        $.each(strs, function (i, str) {
-          if (substrRegex.test(str)) {
-            matches.push(str);
-          }
-        });
-        cb(matches);
-      };
+    transform: function transform(data) {
+      return data.data.results;
+    },
+    productSource: function productSource() {
+      return new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          url: graphql.api,
+          prepare: function prepare(query, settings) {
+            settings.url = settings.url + "?" + $.param({
+              query: graphql.searchProducts,
+              variables: {
+                name: query
+              }
+            });
+            settings.headers = SearchHeaders;
+            settings.type = "GET";
+            return settings;
+          },
+          transform: this.transform
+        }
+      });
+    },
+    shopSource: function shopSource() {
+      return new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          url: graphql.api,
+          prepare: function prepare(query, settings) {
+            settings.url = settings.url + "?" + $.param({
+              query: graphql.searchShops,
+              variables: {
+                name: query
+              }
+            });
+            settings.headers = SearchHeaders;
+            settings.type = "GET";
+            return settings;
+          },
+          transform: this.transform
+        }
+      });
+    },
+    userSource: function userSource() {
+      return new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          url: graphql.api,
+          prepare: function prepare(query, settings) {
+            settings.url = settings.url + "?" + $.param({
+              query: graphql.searchUsers,
+              variables: {
+                name: query
+              }
+            });
+            settings.headers = SearchHeaders;
+            settings.type = "GET";
+            return settings;
+          },
+          transform: this.transform
+        }
+      });
     }
   }
 });
@@ -2986,7 +3061,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     userUrl: function userUrl() {
-      return this.url + "/users/" + this.user.code;
+      return this.url + "/people/" + this.user.code;
     },
     text: function text() {
       return this.follow ? 'Unfollow' : 'Follow';
@@ -5647,11 +5722,19 @@ __webpack_require__.r(__webpack_exports__);
     url: {
       type: String,
       required: true
+    },
+    myFavorites: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   computed: {
     showProducts: function showProducts() {
       return this.products.length > 0;
+    },
+    query: function query() {
+      return this.myFavorites ? graphql.myFavoriteProducts : graphql.products;
     }
   },
   methods: {
@@ -5659,7 +5742,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loaded = false;
       this.products = [];
       axios.post(graphql.api, {
-        query: graphql.products,
+        query: this.query,
         variables: {
           count: this.count,
           filters: {
@@ -5671,8 +5754,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadProducts: function loadProducts(response) {
       this.loaded = true;
-      this.products = response.data.data.products.data;
-      this.paginatorInfo = response.data.data.products.paginatorInfo;
+
+      if (this.myFavorites) {
+        this.products = response.data.data.me.products.data;
+        this.paginatorInfo = response.data.data.me.products.paginatorInfo;
+      } else {
+        this.products = response.data.data.products.data;
+        this.paginatorInfo = response.data.data.products.paginatorInfo;
+      }
     },
     loadPage: function loadPage(page) {
       this.page = page;
@@ -7969,7 +8058,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Shop",
   data: function data() {
-    return {};
+    return {
+      verified: false
+    };
   },
   props: {
     mine: {
@@ -12908,7 +12999,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ni.material-icons[data-v-c0e89786] {\n    font-weight: bold;\n}\n", ""]);
+exports.push([module.i, "\ni.material-icons[data-v-c0e89786] {\n    font-weight: bold;\n}\ndiv.loader[data-v-c0e89786] {\n    width: 15px;\n    height: 15px;\n}\n", ""]);
 
 // exports
 
@@ -13074,6 +13165,112 @@ function toComment(sourceMap) {
 
 	return '/*# ' + data + ' */';
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/decode-uri-component/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/decode-uri-component/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var token = '%[a-f0-9]{2}';
+var singleMatcher = new RegExp(token, 'gi');
+var multiMatcher = new RegExp('(' + token + ')+', 'gi');
+
+function decodeComponents(components, split) {
+	try {
+		// Try to decode the entire string first
+		return decodeURIComponent(components.join(''));
+	} catch (err) {
+		// Do nothing
+	}
+
+	if (components.length === 1) {
+		return components;
+	}
+
+	split = split || 1;
+
+	// Split the array in 2 parts
+	var left = components.slice(0, split);
+	var right = components.slice(split);
+
+	return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
+}
+
+function decode(input) {
+	try {
+		return decodeURIComponent(input);
+	} catch (err) {
+		var tokens = input.match(singleMatcher);
+
+		for (var i = 1; i < tokens.length; i++) {
+			input = decodeComponents(tokens, i).join('');
+
+			tokens = input.match(singleMatcher);
+		}
+
+		return input;
+	}
+}
+
+function customDecodeURIComponent(input) {
+	// Keep track of all the replacements and prefill the map with the `BOM`
+	var replaceMap = {
+		'%FE%FF': '\uFFFD\uFFFD',
+		'%FF%FE': '\uFFFD\uFFFD'
+	};
+
+	var match = multiMatcher.exec(input);
+	while (match) {
+		try {
+			// Decode as big chunks as possible
+			replaceMap[match[0]] = decodeURIComponent(match[0]);
+		} catch (err) {
+			var result = decode(match[0]);
+
+			if (result !== match[0]) {
+				replaceMap[match[0]] = result;
+			}
+		}
+
+		match = multiMatcher.exec(input);
+	}
+
+	// Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
+	replaceMap['%C2'] = '\uFFFD';
+
+	var entries = Object.keys(replaceMap);
+
+	for (var i = 0; i < entries.length; i++) {
+		// Replace all decoded components
+		var key = entries[i];
+		input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
+	}
+
+	return input;
+}
+
+module.exports = function (encodedURI) {
+	if (typeof encodedURI !== 'string') {
+		throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
+	}
+
+	try {
+		encodedURI = encodedURI.replace(/\+/g, ' ');
+
+		// Try the built in decoder first
+		return decodeURIComponent(encodedURI);
+	} catch (err) {
+		// Fallback to a more advanced decoder
+		return customDecodeURIComponent(encodedURI);
+	}
+};
 
 
 /***/ }),
@@ -51882,6 +52079,242 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/query-string/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/query-string/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var strictUriEncode = __webpack_require__(/*! strict-uri-encode */ "./node_modules/strict-uri-encode/index.js");
+var objectAssign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+var decodeComponent = __webpack_require__(/*! decode-uri-component */ "./node_modules/decode-uri-component/index.js");
+
+function encoderForArrayFormat(opts) {
+	switch (opts.arrayFormat) {
+		case 'index':
+			return function (key, value, index) {
+				return value === null ? [
+					encode(key, opts),
+					'[',
+					index,
+					']'
+				].join('') : [
+					encode(key, opts),
+					'[',
+					encode(index, opts),
+					']=',
+					encode(value, opts)
+				].join('');
+			};
+
+		case 'bracket':
+			return function (key, value) {
+				return value === null ? encode(key, opts) : [
+					encode(key, opts),
+					'[]=',
+					encode(value, opts)
+				].join('');
+			};
+
+		default:
+			return function (key, value) {
+				return value === null ? encode(key, opts) : [
+					encode(key, opts),
+					'=',
+					encode(value, opts)
+				].join('');
+			};
+	}
+}
+
+function parserForArrayFormat(opts) {
+	var result;
+
+	switch (opts.arrayFormat) {
+		case 'index':
+			return function (key, value, accumulator) {
+				result = /\[(\d*)\]$/.exec(key);
+
+				key = key.replace(/\[\d*\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = {};
+				}
+
+				accumulator[key][result[1]] = value;
+			};
+
+		case 'bracket':
+			return function (key, value, accumulator) {
+				result = /(\[\])$/.exec(key);
+				key = key.replace(/\[\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				} else if (accumulator[key] === undefined) {
+					accumulator[key] = [value];
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+
+		default:
+			return function (key, value, accumulator) {
+				if (accumulator[key] === undefined) {
+					accumulator[key] = value;
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+	}
+}
+
+function encode(value, opts) {
+	if (opts.encode) {
+		return opts.strict ? strictUriEncode(value) : encodeURIComponent(value);
+	}
+
+	return value;
+}
+
+function keysSorter(input) {
+	if (Array.isArray(input)) {
+		return input.sort();
+	} else if (typeof input === 'object') {
+		return keysSorter(Object.keys(input)).sort(function (a, b) {
+			return Number(a) - Number(b);
+		}).map(function (key) {
+			return input[key];
+		});
+	}
+
+	return input;
+}
+
+function extract(str) {
+	var queryStart = str.indexOf('?');
+	if (queryStart === -1) {
+		return '';
+	}
+	return str.slice(queryStart + 1);
+}
+
+function parse(str, opts) {
+	opts = objectAssign({arrayFormat: 'none'}, opts);
+
+	var formatter = parserForArrayFormat(opts);
+
+	// Create an object with no prototype
+	// https://github.com/sindresorhus/query-string/issues/47
+	var ret = Object.create(null);
+
+	if (typeof str !== 'string') {
+		return ret;
+	}
+
+	str = str.trim().replace(/^[?#&]/, '');
+
+	if (!str) {
+		return ret;
+	}
+
+	str.split('&').forEach(function (param) {
+		var parts = param.replace(/\+/g, ' ').split('=');
+		// Firefox (pre 40) decodes `%3D` to `=`
+		// https://github.com/sindresorhus/query-string/pull/37
+		var key = parts.shift();
+		var val = parts.length > 0 ? parts.join('=') : undefined;
+
+		// missing `=` should be `null`:
+		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+		val = val === undefined ? null : decodeComponent(val);
+
+		formatter(decodeComponent(key), val, ret);
+	});
+
+	return Object.keys(ret).sort().reduce(function (result, key) {
+		var val = ret[key];
+		if (Boolean(val) && typeof val === 'object' && !Array.isArray(val)) {
+			// Sort object keys, not values
+			result[key] = keysSorter(val);
+		} else {
+			result[key] = val;
+		}
+
+		return result;
+	}, Object.create(null));
+}
+
+exports.extract = extract;
+exports.parse = parse;
+
+exports.stringify = function (obj, opts) {
+	var defaults = {
+		encode: true,
+		strict: true,
+		arrayFormat: 'none'
+	};
+
+	opts = objectAssign(defaults, opts);
+
+	if (opts.sort === false) {
+		opts.sort = function () {};
+	}
+
+	var formatter = encoderForArrayFormat(opts);
+
+	return obj ? Object.keys(obj).sort(opts.sort).map(function (key) {
+		var val = obj[key];
+
+		if (val === undefined) {
+			return '';
+		}
+
+		if (val === null) {
+			return encode(key, opts);
+		}
+
+		if (Array.isArray(val)) {
+			var result = [];
+
+			val.slice().forEach(function (val2) {
+				if (val2 === undefined) {
+					return;
+				}
+
+				result.push(formatter(key, val2, result.length));
+			});
+
+			return result.join('&');
+		}
+
+		return encode(key, opts) + '=' + encode(val, opts);
+	}).filter(function (x) {
+		return x.length > 0;
+	}).join('&') : '';
+};
+
+exports.parseUrl = function (str, opts) {
+	return {
+		url: str.split('?')[0] || '',
+		query: parse(extract(str), opts)
+	};
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/setimmediate/setImmediate.js":
 /*!***************************************************!*\
   !*** ./node_modules/setimmediate/setImmediate.js ***!
@@ -52262,6 +52695,24 @@ proto._updateLength = function() {
 };
 
 module.exports = Storage;
+
+
+/***/ }),
+
+/***/ "./node_modules/strict-uri-encode/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/strict-uri-encode/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+module.exports = function (str) {
+	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+		return '%' + c.charCodeAt(0).toString(16).toUpperCase();
+	});
+};
 
 
 /***/ }),
@@ -58433,65 +58884,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("nav", [
-      _c(
-        "ul",
-        { staticClass: "pagination justify-content-center" },
-        [
-          _vm.hasPrevious
-            ? _c("li", { staticClass: "page-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "javascript:void(0)", tabindex: "-1" },
-                    on: {
-                      click: function($event) {
-                        return _vm.loadPage(_vm.previousPage)
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-chevron-left" }),
-                    _vm._v(" Previous")
-                  ]
-                )
-              ])
-            : _c("li", { staticClass: "page-item disabled" }, [_vm._m(0)]),
-          _vm._v(" "),
-          _vm.addToCurrent(-4) > 1
-            ? _c("li", { staticClass: "page-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "javascript:void(0)" },
-                    on: {
-                      click: function($event) {
-                        _vm.loadPage(_vm.addToCurrent(-5))
-                      }
-                    }
-                  },
-                  [_vm._v("…")]
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._l(_vm.paginatorInfo.lastPage, function(i) {
-            return [
-              _vm.paginatorInfo.currentPage === i
-                ? _c("li", { staticClass: "page-item active" }, [
+  return _vm.paginatorInfo.hasMorePages
+    ? _c("div", [
+        _c("nav", [
+          _c(
+            "ul",
+            { staticClass: "pagination justify-content-center" },
+            [
+              _vm.hasPrevious
+                ? _c("li", { staticClass: "page-item" }, [
                     _c(
                       "a",
                       {
                         staticClass: "page-link",
-                        attrs: { href: "javascript:void(0)" }
+                        attrs: { href: "javascript:void(0)", tabindex: "-1" },
+                        on: {
+                          click: function($event) {
+                            return _vm.loadPage(_vm.previousPage)
+                          }
+                        }
                       },
-                      [_vm._v(_vm._s(i))]
+                      [
+                        _c("i", { staticClass: "fa fa-chevron-left" }),
+                        _vm._v(" Previous")
+                      ]
                     )
                   ])
-                : i > _vm.addToCurrent(-5) && i < _vm.addToCurrent(5)
+                : _c("li", { staticClass: "page-item disabled" }, [_vm._m(0)]),
+              _vm._v(" "),
+              _vm.addToCurrent(-4) > 1
                 ? _c("li", { staticClass: "page-item" }, [
                     _c(
                       "a",
@@ -58500,60 +58921,92 @@ var render = function() {
                         attrs: { href: "javascript:void(0)" },
                         on: {
                           click: function($event) {
-                            return _vm.loadPage(i)
+                            _vm.loadPage(_vm.addToCurrent(-5))
                           }
                         }
                       },
-                      [_vm._v(_vm._s(i))]
+                      [_vm._v("…")]
                     )
                   ])
-                : _vm._e()
-            ]
-          }),
-          _vm._v(" "),
-          _vm.paginatorInfo.lastPage > _vm.addToCurrent(4)
-            ? _c("li", { staticClass: "page-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "javascript:void(0)" },
-                    on: {
-                      click: function($event) {
-                        _vm.loadPage(_vm.addToCurrent(5))
-                      }
-                    }
-                  },
-                  [_vm._v("…")]
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.hasNext
-            ? _c("li", { staticClass: "page-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "javascript:void(0)" },
-                    on: {
-                      click: function($event) {
-                        return _vm.loadPage(_vm.nextPage)
-                      }
-                    }
-                  },
-                  [
-                    _vm._v("Next "),
-                    _c("i", { staticClass: "fa fa-chevron-right" })
-                  ]
-                )
-              ])
-            : _c("li", { staticClass: "page-item disabled" }, [_vm._m(1)])
-        ],
-        2
-      )
-    ])
-  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.paginatorInfo.lastPage, function(i) {
+                return [
+                  _vm.paginatorInfo.currentPage === i
+                    ? _c("li", { staticClass: "page-item active" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "page-link",
+                            attrs: { href: "javascript:void(0)" }
+                          },
+                          [_vm._v(_vm._s(i))]
+                        )
+                      ])
+                    : i > _vm.addToCurrent(-5) && i < _vm.addToCurrent(5)
+                    ? _c("li", { staticClass: "page-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "page-link",
+                            attrs: { href: "javascript:void(0)" },
+                            on: {
+                              click: function($event) {
+                                return _vm.loadPage(i)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(i))]
+                        )
+                      ])
+                    : _vm._e()
+                ]
+              }),
+              _vm._v(" "),
+              _vm.paginatorInfo.lastPage > _vm.addToCurrent(4)
+                ? _c("li", { staticClass: "page-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "page-link",
+                        attrs: { href: "javascript:void(0)" },
+                        on: {
+                          click: function($event) {
+                            _vm.loadPage(_vm.addToCurrent(5))
+                          }
+                        }
+                      },
+                      [_vm._v("…")]
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.hasNext
+                ? _c("li", { staticClass: "page-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "page-link",
+                        attrs: { href: "javascript:void(0)" },
+                        on: {
+                          click: function($event) {
+                            return _vm.loadPage(_vm.nextPage)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v("Next "),
+                        _c("i", { staticClass: "fa fa-chevron-right" })
+                      ]
+                    )
+                  ])
+                : _c("li", { staticClass: "page-item disabled" }, [_vm._m(1)])
+            ],
+            2
+          )
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -58872,7 +59325,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "form",
-    { staticClass: "w-100", class: _vm.classObject, attrs: { action: "#" } },
+    {
+      staticClass: "w-100",
+      class: _vm.classObject,
+      attrs: { id: "search-wrapper", action: "#" }
+    },
     [_vm._m(0)]
   )
 }
@@ -66584,9 +67041,11 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "ribbon ribbon-info text-uppercase" }, [
-          _vm._v("60%")
-        ]),
+        _vm.product.discount
+          ? _c("div", { staticClass: "ribbon ribbon-info text-uppercase" }, [
+              _vm._v(_vm._s(_vm.product.discount) + "%")
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("img", {
           staticClass: "img-fluid",
@@ -66801,10 +67260,12 @@ var render = function() {
                   _vm._s(_vm.shop.name) +
                   "\n                    "
               ),
-              _c("i", {
-                staticClass: "fa fa-check-circle",
-                attrs: { "aria-hidden": "true" }
-              })
+              _vm.verified
+                ? _c("i", {
+                    staticClass: "fa fa-check-circle",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                : _vm._e()
             ])
           ]),
           _vm._v(" "),
@@ -66814,7 +67275,10 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "thingsCaption" }, [
         _c("ul", { staticClass: "list-inline captionItem" }, [
-          _vm._m(1),
+          _c("li", [
+            _c("i", { staticClass: "fa fa-thumbs-o-up" }),
+            _vm._v(" " + _vm._s(_vm.shop.likes))
+          ]),
           _vm._v(" "),
           _c("li", [
             _c("a", { attrs: { href: "javascript:void(0)" } }, [
@@ -66854,15 +67318,6 @@ var staticRenderFns = [
           attrs: { "aria-hidden": "true" }
         })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("i", { staticClass: "material-icons" }, [_vm._v("thumb_up")]),
-      _vm._v(" 8 K")
     ])
   }
 ]
@@ -81919,6 +82374,7 @@ window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/d
 window.Moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 window.Collect = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
 window.Bloodhound = __webpack_require__(/*! bloodhound-js */ "./node_modules/bloodhound-js/index.js");
+window.QueryString = __webpack_require__(/*! query-string */ "./node_modules/query-string/index.js");
 window.Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 
 window.DToast = function (type, title) {
@@ -81960,12 +82416,19 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 var token = document.head.querySelector('meta[name="csrf-token"]');
+window.Token = token;
 
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+window.SearchHeaders = {
+  "X-Requested-With": "XMLHttpRequest",
+  "X-CSRF-TOKEN": Token.content,
+  "Accept": "application/json"
+};
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -85747,14 +86210,14 @@ window.graphql = {
   createCategory: "mutation createCategory($shopId: ID! $category: NewProductCategory!) {\n          category:createCategory(shopId: $shopId category: $category) {\n            id\n            name\n            productCount\n            categoryCount\n          }\n        }",
   shopProductSubCategories: "query productSubCategories($id: ID! $count: Int! $page: Int!){\n          shop(id: $id) {\n                categories:subcategories(count: $count page: $page) {\n                    data {\n                        id\n                        name\n                        productCount\n                        category {\n                          name\n                        }\n                    }\n                    paginatorInfo {\n                        count\n                        currentPage\n                        firstItem\n                        hasMorePages\n                        lastItem\n                        lastPage\n                        perPage\n                        total\n                    }\n                }\n          }\n        }",
   createSubCategory: "mutation createSubCategory($categoryId: ID! $subcategory: NewProductSubCategory!) {\n          category:createSubCategory(categoryId: $categoryId subcategory: $subcategory) {\n            id\n            name\n            productCount\n            category {\n              name\n            }\n          }\n        }",
-  shopProducts: "query shopProducts($shopId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          shop(id: $shopId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  categoryProducts: "query categoryProducts($categoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          category:productCategory(id: $categoryId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  subcategoryProducts: "query subcategoryProducts($subcategoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          subcategory:productSubCategory(id: $subcategoryId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  shops: "query shops($categoryId: Int $count: Int! $page: Int!){\n          shops(categoryId: $categoryId count: $count page: $page) {\n            data {\n              id\n              code\n              name\n              productCount\n              category {\n                name\n              }\n            }\n            paginatorInfo {\n              count\n              currentPage\n              firstItem\n              hasMorePages\n              lastItem\n              lastPage\n              perPage\n              total\n            }\n          }\n        }",
-  myShops: "query myShops($categoryId: Int $count: Int! $page: Int!) {\n          me {\n            shops(categoryId: $categoryId count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                productCount\n                category {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  products: "query products($filters: ProductFilter $count: Int! $page: Int!) {\n          products(filters: $filters count: $count page: $page) {\n            data {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n            }\n            paginatorInfo {\n              count\n              currentPage\n              firstItem\n              hasMorePages\n              lastItem\n              lastPage\n              perPage\n              total\n            }\n          }\n        }",
+  shopProducts: "query shopProducts($shopId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          shop(id: $shopId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  categoryProducts: "query categoryProducts($categoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          category:productCategory(id: $categoryId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  subcategoryProducts: "query subcategoryProducts($subcategoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          subcategory:productSubCategory(id: $subcategoryId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  shops: "query shops($categoryId: Int $count: Int! $page: Int!){\n          shops(categoryId: $categoryId count: $count page: $page) {\n            data {\n              id\n              code\n              name\n              productCount\n              likes\n              category {\n                name\n              }\n            }\n            paginatorInfo {\n              count\n              currentPage\n              firstItem\n              hasMorePages\n              lastItem\n              lastPage\n              perPage\n              total\n            }\n          }\n        }",
+  myShops: "query myShops($categoryId: Int $count: Int! $page: Int!) {\n          me {\n            shops(categoryId: $categoryId count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                productCount\n                likes\n                category {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  products: "query products($filters: ProductFilter $count: Int! $page: Int!) {\n          products(filters: $filters count: $count page: $page) {\n            data {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              discount\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n            }\n            paginatorInfo {\n              count\n              currentPage\n              firstItem\n              hasMorePages\n              lastItem\n              lastPage\n              perPage\n              total\n            }\n          }\n        }",
   createProduct: "mutation createProduct($product: NewProduct!){\n          createProduct(product: $product) {\n            id\n            code\n            name\n          }\n        }",
-  relatedProducts: "query relatedProducts($id: ID!) {\n          product(id: $id) {\n            products:relatedProducts {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n            }\n          }\n        }",
+  relatedProducts: "query relatedProducts($id: ID!) {\n          product(id: $id) {\n            products:relatedProducts {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              discount\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n            }\n          }\n        }",
   productStock: "query productStock($id: ID! $type: String! $count: Int! $page: Int!){\n          product(id: $id) {\n            stock(type: $type count: $count page: $page) {\n              data {\n                quantity\n                type\n                note\n                user {\n                  name\n                }\n                created_at\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
   updateStock: "mutation updateStock($productId: ID! $stock: NewStock!) {\n          stock:updateStock(productId: $productId stock: $stock) {\n            quantity\n            type\n            note\n            user {\n              name\n            }\n            created_at\n          }\n        }",
   iLikeShop: "query iLikeShop($id: ID!) {\n          like:iLikeShop(id: $id)\n        }",
@@ -85767,11 +86230,15 @@ window.graphql = {
   isFavorite: "query isFavorite($id: ID!) {\n          isFavorite(id: $id)\n        }",
   addToFavorites: "mutation addToFavorites($id: ID!) {\n          isFavorite:addToFavorites(id: $id)\n        }",
   removeFromFavorites: "mutation removeFromFavorites($id: ID!) {\n          isFavorite:removeFromFavorites(id: $id)\n        }",
-  users: "query users($count: Int! $page: Int!) {\n          users(count: $count page: $page) {\n            data {\n              id\n              code\n              name\n            }\n            paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n          }\n        }",
-  followers: "query followers($id: ID! $count: Int! $page: Int!){\n          user(id: $id) {\n            followers(count: $count page:$page) {\n              data {\n                id\n                code\n                name\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  following: "query following($id: ID! $count: Int! $page: Int!){\n          user(id: $id) {\n            following(count: $count page:$page) {\n              data {\n                id\n                code\n                name\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  myFollowers: "query myFollowers($count: Int! $page: Int!){\n          me {\n            followers(count: $count page:$page) {\n              data {\n                id\n                code\n                name\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  myFollowing: "query myFollowing($count: Int! $page: Int!){\n          me {\n            following(count: $count page:$page) {\n              data {\n                id\n                code\n                name\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }"
+  users: "query users($count: Int! $page: Int!) {\n          users(count: $count page: $page) {\n            data {\n              id\n              code\n              name\n              followerCount\n              followingCount\n            }\n            paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n          }\n        }",
+  followers: "query followers($id: ID! $count: Int! $page: Int!){\n          user(id: $id) {\n            followers(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  following: "query following($id: ID! $count: Int! $page: Int!){\n          user(id: $id) {\n            following(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  myFollowers: "query myFollowers($count: Int! $page: Int!){\n          me {\n            followers(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  myFollowing: "query myFollowing($count: Int! $page: Int!){\n          me {\n            following(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  myFavoriteProducts: "query myFavoriteProducts($filters: ProductFilter $count: Int! $page: Int!){\n          me {\n            products:favouriteProducts(filters: $filters count: $count page: $page) {\n                data {\n                  id\n                  name\n                  code\n                  active\n                  quantity\n                  price\n                  discount\n                  category {\n                    name\n                  }\n                  subcategory {\n                    name\n                  }\n                  brand {\n                    name\n                  }\n                }\n                paginatorInfo {\n                  count\n                  currentPage\n                  firstItem\n                  hasMorePages\n                  lastItem\n                  lastPage\n                  perPage\n                  total\n                }\n            }\n          }\n        }",
+  searchProducts: "query searchProducts($name: String!) {\n          results:searchProducts(name: $name) {\n            id\n            name\n            price\n            code\n            discount\n            category {\n              name\n            }\n            subcategory {\n              name\n            }\n            brand {\n              name\n            }\n          }\n        }",
+  searchShops: "query searchShops($name: String!) {\n          results:searchShops(name: $name) {\n            id\n            name\n            code\n            likes\n            category {\n              name\n            }\n          }\n        }",
+  searchUsers: "query searchUsers($name: String!) {\n          results:searchUsers(name: $name) {\n            id\n            code\n            name\n            followerCount\n            followingCount\n          }\n        }"
 };
 
 /***/ }),
