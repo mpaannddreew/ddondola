@@ -26,19 +26,20 @@
                                 <th>Name</th>
                                 <th>Sub Categories</th>
                                 <th class="text-center">Products</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <template v-if="!loaded">
                                 <tr>
-                                    <td colspan="3">
+                                    <td colspan="4">
                                         <div align="center"><div class="loader"></div></div>
                                     </td>
                                 </tr>
                             </template>
                             <template v-if="!showCategories && loaded">
                                 <tr>
-                                    <td colspan="3">
+                                    <td colspan="4">
                                         <div align="center">
                                             <h4>
                                                 <i class="material-icons">error_outline</i>
@@ -54,6 +55,12 @@
                                     <td>{{ category.name }}</td>
                                     <td>{{ category.categoryCount }}</td>
                                     <td class="lo-stats__items text-center">{{ category.productCount }}</td>
+                                    <td>
+                                        <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
+                                            <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </template>
                             </tbody>

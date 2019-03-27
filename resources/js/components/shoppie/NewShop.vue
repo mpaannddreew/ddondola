@@ -14,7 +14,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Shop Category</label>
-                                <select class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="shopCategory" id="shopCategory">
+                                <select class="form-control form-control-sm custom-select custom-select-sm" tabindex="-1" aria-hidden="true" v-model="shopCategory" id="shopCategory">
                                     <option v-for="(category, indx) in categories" :key="indx" :value="category.id">{{ category.name }}</option>
                                 </select>
                                 <div class="invalid-feedback" id="shopCategory_feedback"></div>

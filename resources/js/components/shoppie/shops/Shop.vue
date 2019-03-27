@@ -20,7 +20,7 @@
         </div>
         <div class="thingsCaption">
             <ul class="list-inline captionItem">
-                <li><i class="fa fa-thumbs-o-up"></i> {{ shop.likes }}</li>
+                <li><i class="fa fa-thumbs-o-up"></i> {{ shop.likes }} {{ shop.likes === 1 ? "like": "likes" }}</li>
                 <li><a href="javascript:void(0)"> {{ shop.category.name }}</a></li>
             </ul>
         </div>

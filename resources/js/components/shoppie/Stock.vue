@@ -183,12 +183,16 @@
             },
             clearForm(response) {
                 this.loading = false;
-                this.quantity = '';
-                this.note = '';
+                if (response.data.data.stock) {
+                    this.quantity = '';
+                    this.note = '';
 
-                this.loadPage(1);
+                    this.loadPage(1);
 
-                DToast("success", "Stock updated successfully");
+                    DToast("success", "Stock updated successfully");
+                }else {
+                    DToast("danger", "Stock not enough!");
+                }
             },
             humanize(date) {
                 return Moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");

@@ -3,8 +3,8 @@
         <div class="input-group input-group-seamless">
             <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <!--<div align="center"><div class="loader"></div></div>-->
-                    <i class="material-icons">search</i>
+                    <div align="center" v-if="searching"><div class="loader"></div></div>
+                    <i class="material-icons text-white" v-else>search</i>
                 </div>
             </div>
             <input style="padding-left: 1.875rem;" class="navbar-search form-control" id="search" type="text" placeholder="Search" aria-label="Search">
@@ -19,7 +19,9 @@
             this.initSearch();
         },
         data() {
-            return {}
+            return {
+                searching: false
+            }
         },
         props: {
             sideSearch: {
@@ -69,23 +71,25 @@
                             return item.name;
                         },
                         templates: {
-                            header: '<div class="card">\n' +
-                            '\t<article class="card-group-item">\n' +
-                            '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Products</h6></header>\n' +
-                            '\t</article> <!-- card-group-item.// -->\n' +
-                            '</div>',
+                            header: '<div class="card border-bottom">\n' +
+                            '            <article class="card-group-item">\n' +
+                            '                <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Products</h6></header>\n' +
+                            '            </article> <!-- card-group-item.// -->\n' +
+                            '        </div>',
                             suggestion: function(data) {
-                                return '\n' +
-                                    '<figure class="itemside m-2">\n' +
-                                    '\t<div class="aside">\n' +
-                                    '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' +
-                                    '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' +
-                                    '\t</div>\n' +
-                                    '\t<figcaption class="text-wrap">\n' +
-                                    '\t\t<h6 class="title m-0"><a href="/products/' + data.code + '">' + data.name + '</a></h6>\n' +
-                                    '\t\t<span class="text-muted">' + data.category.name +' | ' + data.subcategory.name + ' | ' + data.brand.name + ' | 40 Reviews | UGX ' + data.price + '</span>\n' +
-                                    '\t</figcaption>\n' +
-                                    '</figure> \n';
+                                return '<div>\n' +
+                                    '      <a href="/products/' + data.code + '">' +
+                                    '        <div class="row py-2 px-4 border-bottom">\n' +
+                                    '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' +
+                                    '                <img class="rounded" src="/images/avatars/0.jpg">\n' +
+                                    '            </div>\n' +
+                                    '            <div class="col pl-3">\n' +
+                                    '                <h6 class="m-0">' + data.name + '</h6>\n' +
+                                    '                <span class="text-light">' + data.category.name +' | ' + data.subcategory.name + ' | ' + data.brand.name + ' | ' + data.reviewCount + ' Review(s) | UGX ' + data.price + '</span>\n' +
+                                    '            </div>\n' +
+                                    '        </div>\n' +
+                                    '      </a>' +
+                                    '    </div>';
                             }
                         }
                     },
@@ -96,23 +100,24 @@
                             return item.name;
                         },
                         templates: {
-                            header: '<div class="card">\n' +
-                            '\t<article class="card-group-item">\n' +
-                            '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Shops</h6></header>\n' +
-                            '\t</article> <!-- card-group-item.// -->\n' +
-                            '</div>',
+                            header: '<div class="card border-bottom">\n' +
+                            '           <article class="card-group-item">\n' +
+                            '              <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Shops</h6></header>\n' +
+                            '           </article> <!-- card-group-item.// -->\n' +
+                            '       </div>',
                             suggestion: function(data) {
-                                return '\n' +
-                                    '<figure class="itemside m-2">\n' +
-                                    '\t<div class="aside">\n' +
-                                    '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' +
-                                    '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' +
-                                    '\t</div>\n' +
-                                    '\t<figcaption class="text-wrap">\n' +
-                                    '\t\t<h6 class="title m-0"><a href="/shops/' + data.code + '">' + data.name + '</a></h6>\n' +
-                                    '\t\t<span class="text-muted">' + data.category.name + ' | 128 Reviews | 3k Likes</span>\n' +
-                                    '\t</figcaption>\n' +
-                                    '</figure> \n';
+                                return '<div>\n' +
+                                    '      <a href="/shops/' + data.code + '">' +
+                                    '        <div class="row py-2 px-4 border-bottom">\n' +
+                                    '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' +
+                                    '                <img class="rounded" src="/images/avatars/0.jpg">\n' +
+                                    '            </div>\n' +
+                                    '            <div class="col pl-3">\n' +
+                                    '                <h6 class="m-0">' + data.name + '</h6>\n' +
+                                    '                <span class="text-light">' + data.category.name + ' | ' + data.reviewCount + ' Review(s) | ' + data.likes + ' Like(s)</span>\n' +
+                                    '            </div>\n' +
+                                    '        </div>\n' +
+                                    '    </div>';
                             }
                         }
                     },
@@ -123,28 +128,39 @@
                             return item.name;
                         },
                         templates: {
-                            header: '<div class="card">\n' +
-                            '\t<article class="card-group-item">\n' +
-                            '\t\t<header class="card-header py-2" style="border-radius: 0;"><h6 class="title">People</h6></header>\n' +
-                            '\t</article> <!-- card-group-item.// -->\n' +
-                            '</div>',
+                            header: '<div class="card border-bottom">\n' +
+                            '            <article class="card-group-item">\n' +
+                            '                <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">People</h6></header>\n' +
+                            '            </article> <!-- card-group-item.// -->\n' +
+                            '        </div>',
                             suggestion: function(data) {
-                                return '\n' +
-                                    '<figure class="itemside m-2">\n' +
-                                    '\t<div class="aside">\n' +
-                                    '\t\t<div class="img-wrap img-sm" style="max-width: 3rem; max-height: 3rem;">' +
-                                    '<img src="/images/avatars/0.jpg" class="img-thumbnail user-avatar" style="max-width: 3rem; max-height: 3rem;"></div>\n' +
-                                    '\t</div>\n' +
-                                    '\t<figcaption class="text-wrap">\n' +
-                                    '\t\t<h6 class="title m-0"><a href="/people/' + data.code + '">' + data.name + '</a></h6>\n' +
-                                    '\t\t<span class="text-muted">148 Followers | 390 Following</span>\n' +
-                                    '\t</figcaption>\n' +
-                                    '</figure> \n';
+                                return '<div>\n' +
+                                    '     <a href="/people/' + data.code + '">' +
+                                    '        <div class="row py-2 px-4 border-bottom">\n' +
+                                    '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' +
+                                    '                <img class="rounded" src="/images/avatars/0.jpg">\n' +
+                                    '            </div>\n' +
+                                    '            <div class="col pl-3">\n' +
+                                    '                <h6 class="m-0">' + data.name + '</h6>\n' +
+                                    '                <span class="text-light">' + data.followerCount + ' Follower(s) | ' + data.followingCount + ' Following</span>\n' +
+                                    '            </div>\n' +
+                                    '        </div>\n' +
+                                    '    </a>' +
+                                    '  </div>';
                             }
                         }
-                    });
+                    })
+                    .on('typeahead:asyncrequest', this.showSpinner)
+                    .on('typeahead:asynccancel typeahead:asyncreceive', this.hideSpinner);
+            },
+            showSpinner() {
+                this.searching = true;
+            },
+            hideSpinner() {
+                this.searching = false;
             },
             transform(data) {
+                console.log(JSON.stringify(data.data));
                 return data.data.results;
             },
             productSource() {

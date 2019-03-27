@@ -212,7 +212,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Shoppie' => \Shoppie\Facades\Shoppie::class
+        'Shoppie' => \Shoppie\Facades\Shoppie::class,
+        'Activity' => \Activity\Facades\Activity::class
     ],
 
 ];

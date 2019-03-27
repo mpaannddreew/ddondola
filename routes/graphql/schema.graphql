@@ -61,3 +61,4 @@ type Mutation {
 
 
 #import shoppie.graphql
+#import activity.graphql

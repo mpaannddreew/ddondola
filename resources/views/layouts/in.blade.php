@@ -34,6 +34,7 @@
     <script src="{{ asset('slick/slick.min.js') }}"></script>
     <script src="{{ asset('js/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.sticky.js') }}"></script>
     <script>
         $(function () {
             $(".input-daterange").datepicker({});
@@ -41,6 +42,8 @@
                 var imgURL = $(this).next('.holder-image').find('img').attr('src');
                 $(this).css('background-image', 'url(' + imgURL + ')');
             });
+
+            $(".sticky").sticky({topSpacing: 60, zIndex: 1015});
         });
     </script>
 @endsection

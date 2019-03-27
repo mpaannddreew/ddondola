@@ -1,7 +1,7 @@
 <template>
     <div>
         <div align="center" v-if="!loaded"><div class="loader"></div></div>
-        <div align="center" v-else-if="!showProductsArea && loaded">
+        <div align="center" v-else-if="!showProductsArea && loaded || !brandsHaveProducts && !categoriesHaveProducts">
             <h4>
                 <i class="material-icons">error_outline</i>
                 <br />
@@ -24,13 +24,13 @@
                         <h6 class="text-uppercase mb-3">Product Categories</h6>
                         <ul class="list-unstyled">
                             <template v-for="(category, indx) in categories" >
-                                <li :key="indx" v-if="category.productCount" :id="'category-' + category.id" :class="{active: categoryId === category.id}">
+                                <li :key="indx" :id="'category-' + category.id" :class="{active: categoryId === category.id}" v-if="category.productCount">
                                     <a href="javascript:void(0);" class="d-flex justify-content-between align-items-center" @click="showCategory(category.id)">
                                         <span>{{ category.name }}</span><small>{{ category.productCount }}</small>
                                     </a>
                                     <ul class="list-unstyled">
                                         <template v-for="(subcategory, indx_) in category.categories.data">
-                                            <li :key="indx_" v-if="subcategory.productCount" :id="'subcategory-' + subcategory.id" :class="{active: subcategoryId === subcategory.id}">
+                                            <li :key="indx_" :id="'subcategory-' + subcategory.id" :class="{active: subcategoryId === subcategory.id}" v-if="subcategory.productCount">
                                                 <a href="javascript:void(0);" @click="showSubcategory(subcategory.id, category.id)">{{ subcategory.name }}</a>
                                             </li>
                                         </template>
@@ -56,7 +56,7 @@
                         <visible-items :paginator-info="paginatorInfo" v-if="showProducts && productsLoaded && paginatorInfo"></visible-items>
                         <span class="visible-items" v-else></span>
                         <div class="btn-group">
-                            <select class="form-control" tabindex="-98" v-model="ordering">
+                            <select class="form-control custom-select custom-select-sm" tabindex="-98" v-model="ordering">
                                 <option value="latest">Latest</option>
                                 <option value="oldest">Oldest</option>
                                 <option value="lowest-price">Lowest Price</option>
@@ -122,7 +122,13 @@
         },
         computed: {
             showProductsArea() {
-                return this.categories.length > 0 && this.brands.length > 0;
+                return this.showCategories && this.showBrands;
+            },
+            showBrands() {
+                return this.brands.length > 0;
+            },
+            showCategories() {
+                return this.categories.length > 0;
             },
             showProducts() {
                 return this.products.length > 0;
@@ -154,6 +160,16 @@
                 }else {
                     return graphql.shopProducts;
                 }
+            },
+            brandsHaveProducts() {
+                return Collect(this.brands).reject(function(value, key) {
+                    return value.productCount === 0;
+                }).count() > 0;
+            },
+            categoriesHaveProducts() {
+                return Collect(this.categories).reject(function(value, key) {
+                    return value.productCount === 0;
+                }).count() > 0;
             }
         },
         props: {

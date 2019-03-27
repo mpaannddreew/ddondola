@@ -2,6 +2,7 @@
 
 namespace Ddondola;
 
+use Activity\Traits\Reviewer;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,14 +12,14 @@ use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 use Overtrue\LaravelFollow\Traits\CanLike;
-use Shoppie\Shop;
 use Shoppie\Traits\Buyer;
 use Shoppie\Traits\Identifier;
 use Shoppie\Traits\Seller;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Seller, Buyer, Converser, HasApiTokens, CanLike, CanFollow, CanBeFollowed, CanFavorite, Identifier;
+    use Notifiable, Seller, Buyer, Converser, HasApiTokens, CanLike, CanFollow,
+        CanBeFollowed, CanFavorite, Identifier, Reviewer;
 
     /**
      * The attributes that are mass assignable.

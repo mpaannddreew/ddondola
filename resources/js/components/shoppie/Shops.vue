@@ -8,7 +8,7 @@
                 <visible-items :paginator-info="paginatorInfo" v-if="showShops && paginatorInfo"></visible-items>
                 <span class="visible-items" v-else-if="!showShops"></span>
                 <div class="btn-group">
-                    <select class="form-control form-control-md custom-select custom-select-mdl" tabindex="-98" v-model="categoryId">
+                    <select class="form-control form-control-sm custom-select custom-select-sm" tabindex="-98" v-model="categoryId">
                         <option value="0">All</option>
                         <option v-for="(category, indx) in categories" :value="category.id" :key="indx">{{ category.name }}</option>
                     </select>

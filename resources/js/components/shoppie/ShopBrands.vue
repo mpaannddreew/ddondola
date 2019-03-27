@@ -24,19 +24,20 @@
                         <tr>
                             <th>Name</th>
                             <th class="text-center">Products</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <template v-if="!loaded">
                             <tr>
-                                <td colspan="2">
+                                <td colspan="3">
                                     <div align="center"><div class="loader"></div></div>
                                 </td>
                             </tr>
                         </template>
                         <template v-else-if="!showBrands && loaded">
                             <tr>
-                                <td colspan="2">
+                                <td colspan="3">
                                     <div align="center">
                                         <h4>
                                             <i class="material-icons">error_outline</i>
@@ -51,6 +52,12 @@
                             <tr v-for="(brand, indx) in brands">
                                 <td>{{ brand.name }}</td>
                                 <td class="lo-stats__items text-center">{{ brand.productCount }}</td>
+                                <td>
+                                    <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
+                                        <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
+                                    </div>
+                                </td>
                             </tr>
                         </template>
                         </tbody>

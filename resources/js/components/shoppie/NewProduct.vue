@@ -23,7 +23,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><a :href="inventoryUrl + '/categories'" title="Add Category" data-toggle="tooltip"><i class="material-icons">add_circle</i></a></span>
                                     </div>
-                                    <select id="category" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="categoryId">
+                                    <select id="category" class="form-control form-control-sm custom-select custom-select-sm" tabindex="-1" aria-hidden="true" v-model="categoryId">
                                         <option v-for="(category, indx) in categories" :value="category.id" :key="indx">{{ category.name }}</option>
                                     </select>
                                 </div>
@@ -35,7 +35,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><a :href="inventoryUrl + '/sub-categories'" title="Add Sub Category" data-toggle="tooltip"><i class="material-icons">add_circle</i></a></span>
                                     </div>
-                                    <select id="subCategory" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="subCategoryId">
+                                    <select id="subCategory" class="form-control form-control-sm custom-select custom-select-sm" tabindex="-1" aria-hidden="true" v-model="subCategoryId">
                                         <option v-for="(category, indx) in subCategories" :value="category.id" :key="indx">{{ category.name }}</option>
                                     </select>
                                 </div>
@@ -47,7 +47,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><a :href="inventoryUrl + '/brands'" title="Add Brand" data-toggle="tooltip"><i class="material-icons">add_circle</i></a></span>
                                     </div>
-                                    <select id="brand" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="brandId">
+                                    <select id="brand" class="form-control form-control-sm custom-select custom-select-sm" tabindex="-1" aria-hidden="true" v-model="brandId">
                                         <option v-for="(brand, indx) in brands" :value="brand.id" :key="indx">{{ brand.name }}</option>
                                     </select>
                                 </div>

@@ -145,6 +145,7 @@ window.graphql = {
                 quantity
                 price
                 discount
+                reviewCount
                 category {
                   name
                 }
@@ -179,6 +180,7 @@ window.graphql = {
                 quantity
                 price
                 discount
+                reviewCount
                 category {
                   name
                 }
@@ -213,6 +215,7 @@ window.graphql = {
                 quantity
                 price
                 discount
+                reviewCount
                 category {
                   name
                 }
@@ -244,6 +247,7 @@ window.graphql = {
               name
               productCount
               likes
+              reviewCount
               category {
                 name
               }
@@ -269,6 +273,7 @@ window.graphql = {
                 name
                 productCount
                 likes
+                reviewCount
                 category {
                   name
                 }
@@ -296,6 +301,7 @@ window.graphql = {
               quantity
               price
               discount
+              reviewCount
               category {
                 name
               }
@@ -335,6 +341,7 @@ window.graphql = {
               quantity
               price
               discount
+              reviewCount
               category {
                 name
               }
@@ -537,6 +544,7 @@ window.graphql = {
                   quantity
                   price
                   discount
+                  reviewCount
                   category {
                     name
                   }
@@ -567,6 +575,7 @@ window.graphql = {
             price
             code
             discount
+            reviewCount
             category {
               name
             }
@@ -584,6 +593,7 @@ window.graphql = {
             name
             code
             likes
+            reviewCount
             category {
               name
             }
@@ -598,4 +608,115 @@ window.graphql = {
             followingCount
           }
         }`,
+    isReviewed: `query isReviewed($entity: Reviewable!) {
+            isReviewed(entity: $entity) {
+                isReviewed
+                review {
+                    id
+                    rating
+                    body
+                }
+            }
+        }`,
+    addReview: `mutation addReview($entity: Reviewable! $review: ReviewData!) {
+            review:addReview(entity: $entity review: $review) {
+                id
+                rating
+                body
+                created_at
+                reviewer {
+                    name
+                }
+            }
+        }`,
+    editReview: `mutation editReview($id: ID! $review: ReviewData!) {
+            review:editReview(id: $id review: $review) {
+                id
+                rating
+                body
+                created_at
+                reviewer {
+                    name
+                }
+            }
+        }`,
+    shopReviews: `query shopReviews($id: ID! $count: Int! $page: Int!){
+          shop(id: $id) {
+            reviews(count: $count page: $page) {
+                data {
+                    id
+                    rating
+                    body
+                    created_at
+                    reviewer {
+                        name
+                    }
+                }
+                paginatorInfo {
+                    count
+                    currentPage
+                    firstItem
+                    hasMorePages
+                    lastItem
+                    lastPage
+                    perPage
+                    total
+                }
+            }
+          }
+        }`,
+    productReviews: `query productReviews($id: ID! $count: Int! $page: Int!){
+          product(id: $id) {
+            reviews(count: $count page: $page) {
+                data {
+                    id
+                    rating
+                    body
+                    created_at
+                    reviewer {
+                        name
+                    }
+                }
+                paginatorInfo {
+                    count
+                    currentPage
+                    firstItem
+                    hasMorePages
+                    lastItem
+                    lastPage
+                    perPage
+                    total
+                }
+            }
+          }
+        }`,
+    myCart: `query myCart {
+        me {
+            cart {
+              id
+              sum
+              productCount
+            }
+        }
+    }`,
+    myCartProducts: `query myCartProducts {
+        me {
+          cart {
+              sum
+              products {
+                id
+                quantity
+                price
+                name
+                code
+                pivot:cartPivot {
+                  id
+                  sum
+                  price
+                  quantity
+                }
+              }
+           }
+        }
+    }`
 };

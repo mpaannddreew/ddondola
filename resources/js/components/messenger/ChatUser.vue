@@ -13,7 +13,7 @@
                     <span class="contact-date text-ellipsis">Hey there, this is Andrew. Did you get it?</span>
                 </div>
             </router-link>
-            <ul class="contact-action">
+            <ul class="contact-action" v-if="!isNav">
                 <li class="dropdown dropdown-action">
                     <a href="#" class="dropdown-toggle action-icon" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-sm-right p-1">
@@ -37,6 +37,10 @@
             homeUrl: {
                 type: String,
                 require: true
+            },
+            isNav: {
+                type: Boolean,
+                default: false
             }
         }
     }

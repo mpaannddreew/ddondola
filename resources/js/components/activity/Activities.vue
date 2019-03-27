@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4 class="page-title">Activities</h4>
+        <!--<h4 class="page-title">Activities</h4>-->
         <div class="activity">
             <div class="activity-box">
                 <ul class="activity-list">

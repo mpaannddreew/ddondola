@@ -4,7 +4,7 @@
             <about></about>
         </div>
         <div class="col-md-9">
-            <reviews></reviews>
+            <activities></activities>
         </div>
     </div>
 </template>
@@ -12,6 +12,15 @@
 <script>
     export default {
         name: "ShopProfile",
+        data() {
+            return {}
+        },
+        props: {
+            shop: {
+                type: Object,
+                required: true
+            }
+        }
     }
 </script>
 

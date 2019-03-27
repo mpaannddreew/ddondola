@@ -5,7 +5,7 @@
                 <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
                 <span class="visible-items" v-else></span>
                 <div class="btn-group">
-                    <select class="form-control" tabindex="-98" v-model="ordering">
+                    <select class="form-control custom-select custom-select-sm" tabindex="-98" v-model="ordering">
                         <option value="latest">Latest</option>
                         <option value="oldest">Oldest</option>
                         <option value="lowest-price">Lowest Price</option>

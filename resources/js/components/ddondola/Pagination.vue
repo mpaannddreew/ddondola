@@ -1,5 +1,5 @@
 <template>
-    <div v-if="paginatorInfo.hasMorePages">
+    <div v-if="showPagination">
         <nav>
             <ul class="pagination justify-content-center">
                 <li class="page-item" v-if="hasPrevious">
@@ -69,6 +69,9 @@
             },
             nextPage() {
                 return this.paginatorInfo.currentPage + 1;
+            },
+            showPagination() {
+                return this.paginatorInfo.hasMorePages || this.paginatorInfo.currentPage !== 1 && !this.paginatorInfo.hasMorePages
             }
         }
     }

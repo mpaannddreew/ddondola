@@ -19,7 +19,7 @@
                         <div class="d-flex ml-lg-auto my-auto">
                             <div class="btn-group btn-group-sm ml-lg-auto" role="group" aria-label="Table row actions">
                                 <div class="btn-group">
-                                    <select class="form-control form-control-sm" tabindex="-98" v-model="ordering">
+                                    <select class="form-control form-control-sm custom-select custom-select-sm" tabindex="-98" v-model="ordering">
                                         <option value="newest">Latest</option>
                                         <option value="oldest">Oldest</option>
                                         <option value="active">Active</option>
