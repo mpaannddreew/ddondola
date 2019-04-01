@@ -185,7 +185,7 @@ ul.nav-news-feed i.ion-ios-videocam{color: #9e1f63;}
 }
 
 .activity-list::before {
-    background: #ddd;
+    /*background: #ddd;*/
     bottom: 0;
     content: "";
     left: 23px;
@@ -195,7 +195,7 @@ ul.nav-news-feed i.ion-ios-videocam{color: #9e1f63;}
 }
 
 .activity .activity-list li::before {
-    background: #ddd;
+    /*background: #ddd;*/
     bottom: 0;
     content: "";
     left: 22px;
@@ -205,7 +205,7 @@ ul.nav-news-feed i.ion-ios-videocam{color: #9e1f63;}
 }
 
 .activity-list li::before {
-    background: #ddd;
+    /*background: #ddd;*/
     bottom: 0;
     content: "";
     left: 8px;
@@ -340,4 +340,192 @@ ul.edit-menu li.active a{
     width: 80px;
     border-radius: 50%;
     vertical-align: middle;
+}
+
+.notification-box > ul {
+    display: inline-block;
+    list-style: outside none none;
+    margin-bottom: 0;
+    margin-top: 20px;
+    padding-left: 0;
+    width: 100%;
+}
+
+.notification-box {
+    display: inline-block;
+    width: 100%;
+}
+
+.notification-box > ul > li {
+    border-bottom: 1px solid #e1e8ed;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+.notification-box > ul li figure {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-right: 10px;
+    max-width: 45px;
+    min-width: 45px;
+    vertical-align: top;
+}
+
+.notifi-meta {
+    display: inline-block;
+    line-height: initial;
+    vertical-align: middle;
+    width: 86%;
+}
+
+.notifi-meta > p {
+    margin-bottom: 0;
+    text-transform: capitalize;
+    color: #3a3a3a;
+}
+
+.notifi-meta > span {
+    color: #999;
+    font-size: 12px;
+}
+
+.notification-box > ul > li:last-child {
+    border-bottom: 0 none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.notification-box > ul li > i.del {
+    cursor: pointer;
+    display: inline-block;
+    opacity: 0;
+    text-align: right;
+    vertical-align: top;
+    visibility: hidden;
+    transition: all 0.2s linear 0s;
+    color: red;
+}
+
+.notification-box > ul li:hover > i.del {
+    opacity: 1;
+    visibility: visible;
+}
+
+.more-options {
+    display: inline-block;
+    float: right;
+    position: relative;
+}
+
+.more-options > i {
+    color: #999 !important;
+    font-size: 16px;
+}
+
+.notification-box > ul li figure img {
+
+    border-radius: 100%;
+
+}
+
+.central-meta {
+    display: inline-block;
+    width: 100%;
+    padding: 25px;
+    border-bottom:1px solid #e1e5eb!important
+}
+
+.central-meta:last-child {
+    border-bottom: none !important;
+}
+
+.friend-info {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.friend-info > figure {
+    display: inline-block;
+    vertical-align: middle;
+    width: 8%;
+}
+
+.friend-info > figure img {
+    border-radius: 100%;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.friend-name {
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    width: 90%;
+}
+
+.friend-name > ins {
+    float: left;
+    /*font-weight: 700;*/
+    width: 100%;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.friend-name > span {
+    color: #999;
+    float: left;
+    font-size: 12px;
+    text-transform: capitalize;
+    width: 100%;
+}
+
+.lodmore {
+    display: inline-block;
+    width: 100%;
+}
+
+.btn-view.btn-load-more {
+    background: #fff;
+    border: medium none;
+    border-radius: 100%;
+    color: transparent;
+    display: block;
+    height: 50px;
+    margin: 30px auto 0;
+    position: relative;
+    width: 50px;
+    transition: all 0.2s linear 0s;
+    z-index: 77;
+}
+
+a.btn-view {
+    background: #ffffff;
+}
+
+a.btn-view:hover {
+    background: #ce1d76 !important;
+    border: none !important;
+}
+
+.btn-view.btn-load-more::before {
+    color: #333;
+    content: "\f01e";
+    font-family: fontawesome;
+    left: 50%;
+    opacity: 1;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    z-index: 111;
+    transition: all 0.2s linear 0s;
+}
+
+.btn-view.btn-load-more:hover::before {
+    color: #fff;
+    transform: translate(-50%, -50%) rotate(360deg);
 }

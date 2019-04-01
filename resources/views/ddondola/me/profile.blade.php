@@ -2,5 +2,12 @@
 @section('title')@parent Profile @endsection
 @section('profile-active', 'active')
 @section('profile')
-    <user-profile :user="{{ $user }}"></user-profile>
+    <div class="row">
+        <div class="col-md-4">
+            <about></about>
+        </div>
+        <div class="col-md-6">
+            <activities></activities>
+        </div>
+    </div>
 @endsection

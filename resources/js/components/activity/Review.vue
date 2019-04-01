@@ -1,6 +1,7 @@
 <template>
     <div class="review-box clearfix">
-        <figure class="rev-thumb"><img src="/images/avatars/0.jpg" alt="">
+        <figure class="rev-thumb">
+            <img :src="review.reviewer.avatar" alt="" class="rounded-circle">
         </figure>
         <div class="rev-content border">
             <div class="rating text-warning">

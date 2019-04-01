@@ -24,6 +24,8 @@ type User {
     profile: UserProfile!
     settings: UserSettings!
     active: Boolean!
+    avatar: String! @method(name: "avatar")
+    coverPicture: String! @method(name: "coverPicture")
     shops(categoryId: Int): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
     favouriteProducts(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     followers: [User!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedFollowers")

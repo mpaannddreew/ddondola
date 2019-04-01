@@ -38,63 +38,65 @@
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="add-review">
-                            <h5>{{ reviewText }}</h5>
-                            <form v-if="!isReviewed">
-                                <div class="form-group">
-                                    <label>Rating </label>
-                                    <div class="custom-select-form">
-                                        <select name="rating_review" id="rating" class="form-control custom-select" v-model="rating">
-                                            <option value="1">1 (lowest)</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5" selected="">5 (highest)</option>
-                                        </select>
+                    <div class="modal-body p-0">
+                        <div class="card card-small">
+                            <div class="card-header border-bottom">
+                                <h5 class="m-0"><i class="material-icons">rate_review</i> {{ reviewText }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <form v-if="!isReviewed">
+                                    <div class="form-group">
+                                        <label>Rating </label>
+                                        <div class="custom-select-form">
+                                            <select name="rating_review" id="rating" class="form-control custom-select" v-model="rating">
+                                                <option value="1">1 (lowest)</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5" selected="">5 (highest)</option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback" id="rating_feedback"></div>
                                     </div>
-                                    <div class="invalid-feedback" id="rating_feedback"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Your Review</label>
-                                    <textarea name="review_text" id="review" class="form-control" style="height:130px;" v-model="body" v-if="!isReviewed"></textarea>
-                                    <div class="invalid-feedback" id="review_feedback"></div>
-                                </div>
-                                <div class="form-groupadd_top_20 add_bottom_30">
-                                    <button @click="validate" :class="{disabled: loading}" type="button" class="btn btn-success" id="submit-review">
-                                        <i class="fa fa-check-circle"></i> Submit
-                                    </button>
-                                    <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-remove"></i> Close</button>
-                                </div>
-                            </form>
-                            <form v-else-if="isReviewed && review">
-                                <div class="form-group">
-                                    <label>Rating </label>
-                                    <div class="custom-select-form">
-                                        <select name="rating_review" id="edit_rating" class="form-control custom-select" v-model="review.rating">
-                                            <option value="1">1 (lowest)</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5" selected="">5 (highest)</option>
-                                        </select>
+                                    <div class="form-group">
+                                        <label>Your Review</label>
+                                        <textarea name="review_text" id="review" class="form-control" style="height:130px;" v-model="body" v-if="!isReviewed"></textarea>
+                                        <div class="invalid-feedback" id="review_feedback"></div>
                                     </div>
-                                    <div class="invalid-feedback" id="edit_rating_feedback"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Your Review</label>
-                                    <textarea name="review_text" id="edit_review" class="form-control" style="height:130px;" v-model="review.body"></textarea>
-                                    <div class="invalid-feedback" id="edit_review_feedback"></div>
-                                </div>
-                                <div class="form-groupadd_top_20 add_bottom_30">
-                                    <button @click="validate" :class="{disabled: loading}" type="button" class="btn btn-success">
-                                        <i class="fa fa-check-circle"></i> Submit
-                                    </button>
-                                    <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-remove"></i> Close</button>
-                                </div>
-                            </form>
+                                    <div class="form-groupadd_top_20 add_bottom_30">
+                                        <button @click="validate" :class="{disabled: loading}" type="button" class="btn btn-md btn-pill btn-outline-primary" id="submit-review">
+                                            <i class="material-icons">check</i> Submit
+                                        </button>
+                                        <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
+                                    </div>
+                                </form>
+                                <form v-else-if="isReviewed && review">
+                                    <div class="form-group">
+                                        <label>Rating </label>
+                                        <div class="custom-select-form">
+                                            <select name="rating_review" id="edit_rating" class="form-control custom-select" v-model="review.rating">
+                                                <option value="1">1 (lowest)</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5" selected="">5 (highest)</option>
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback" id="edit_rating_feedback"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Your Review</label>
+                                        <textarea name="review_text" id="edit_review" class="form-control" style="height:130px;" v-model="review.body"></textarea>
+                                        <div class="invalid-feedback" id="edit_review_feedback"></div>
+                                    </div>
+                                    <div class="form-groupadd_top_20 add_bottom_30">
+                                        <button @click="validate" :class="{disabled: loading}" type="button" class="btn btn-md btn-pill btn-outline-primary">
+                                            <i class="material-icons">check</i> Submit
+                                        </button>
+                                        <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

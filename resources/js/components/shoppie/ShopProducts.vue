@@ -256,6 +256,8 @@
         },
         watch: {
             brandIds(data) {
+                this.categoryId = "";
+                this.subcategoryId = "";
                 this.loadPage(1);
             },
             ordering(data) {

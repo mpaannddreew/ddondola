@@ -1,207 +1,181 @@
 <template>
-    <div class="card card-small border">
-        <div class="card-body">
-            <div align="center" v-if="!loaded"><div class="loader"></div></div>
-            <div v-else-if="loaded && requirementsLoaded">
-                <div class="form-row">
-                    <div class="col mb-3">
-                        <h6 class="form-text m-0">General</h6>
-                        <p class="form-text text-muted m-0">Setup product general details.</p>
-                    </div>
+    <div>
+        <div class="card card-small border" v-if="!loaded">
+            <div class="card-body">
+                <div align="center"><div class="loader"></div></div>
+            </div>
+        </div>
+        <div class="card card-small border" v-else-if="loaded && !requirementsLoaded">
+            <div class="card-body">
+                <div align="center">
+                    <h4>
+                        <i class="material-icons">error_outline</i>
+                        <br />
+                        <small>You have not added any {{ infoText }} yet!</small>
+                        <br />
+                        <a :href="inventoryUrl + '/' + addUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add {{ infoTextUpper }}</a>
+                    </h4>
                 </div>
-                <div class="form-row mx-4">
-                    <div class="col-lg-12">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="name">Product Name</label>
-                                <input type="text" class="form-control" id="name" v-model="name">
-                                <div class="invalid-feedback" id="name_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="category">Product Category</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><a :href="inventoryUrl + '/categories'" title="Add Category" data-toggle="tooltip"><i class="material-icons">add_circle</i></a></span>
-                                    </div>
-                                    <select id="category" class="form-control form-control-sm custom-select custom-select-sm" tabindex="-1" aria-hidden="true" v-model="categoryId">
+            </div>
+        </div>
+        <div class="checkout-process" v-else-if="loaded && requirementsLoaded">
+            <div class="card mb-4">
+                <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
+                    <h5>
+                        <a class="btn btn-link" href="javascript:void(0)">
+                            <span>01</span><i class="material-icons">info</i> General Information
+                        </a>
+                    </h5>
+                </div>
+                <div class="card-body p-4 border border-top-0">
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="name">Product Name</label>
+                                    <input type="text" class="form-control" id="name" v-model="name">
+                                    <div class="invalid-feedback" id="name_feedback"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="category">Product Category</label>
+                                    <select id="category" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="categoryId">
                                         <option v-for="(category, indx) in categories" :value="category.id" :key="indx">{{ category.name }}</option>
                                     </select>
+                                    <div class="invalid-feedback" id="category_feedback"></div>
                                 </div>
-                                <div class="invalid-feedback" id="category_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="subCategory">Product Sub Category</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><a :href="inventoryUrl + '/sub-categories'" title="Add Sub Category" data-toggle="tooltip"><i class="material-icons">add_circle</i></a></span>
-                                    </div>
-                                    <select id="subCategory" class="form-control form-control-sm custom-select custom-select-sm" tabindex="-1" aria-hidden="true" v-model="subCategoryId">
+                                <div class="form-group col-md-6">
+                                    <label for="subCategory">Product Sub Category</label>
+                                    <select id="subCategory" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="subCategoryId">
                                         <option v-for="(category, indx) in subCategories" :value="category.id" :key="indx">{{ category.name }}</option>
                                     </select>
+                                    <div class="invalid-feedback" id="subCategory_feedback"></div>
                                 </div>
-                                <div class="invalid-feedback" id="subCategory_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="brand">Product Brand</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><a :href="inventoryUrl + '/brands'" title="Add Brand" data-toggle="tooltip"><i class="material-icons">add_circle</i></a></span>
-                                    </div>
-                                    <select id="brand" class="form-control form-control-sm custom-select custom-select-sm" tabindex="-1" aria-hidden="true" v-model="brandId">
+                                <div class="form-group col-md-6">
+                                    <label for="brand">Product Brand</label>
+                                    <select id="brand" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="brandId">
                                         <option v-for="(brand, indx) in brands" :value="brand.id" :key="indx">{{ brand.name }}</option>
                                     </select>
+                                    <div class="invalid-feedback" id="brand_feedback"></div>
                                 </div>
-                                <div class="invalid-feedback" id="brand_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="description">Product Description</label>
-                                <textarea style="min-height: 87px;" id="description" class="form-control" v-model="description"></textarea>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label>Product Status</label>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" name="status" id="product_active" value="1" checked="" v-model="status">
-                                    <label class="custom-control-label" for="product_active">
-                                        Active
-                                    </label>
+                                <div class="form-group col-md-6">
+                                    <label for="price">General Price</label>
+                                    <input type="text" class="form-control" id="price" v-model="price">
+                                    <div class="invalid-feedback" id="price_feedback"></div>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" name="status" id="product_inactive" value="0" v-model="status">
-                                    <label class="custom-control-label" for="product_inactive">
-                                        Inactive
-                                    </label>
+                                <div class="form-group col-md-12">
+                                    <label for="description">Product Description</label>
+                                    <textarea style="min-height: 87px;" id="description" class="form-control" v-model="description"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col mb-3">
-                        <h6 class="form-text m-0">Pricing</h6>
-                        <p class="form-text text-muted m-0">Setup product pricing details.</p>
-                    </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
+                    <h5>
+                        <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">label_outline</i> Stock Information</a>
+                    </h5>
                 </div>
-                <div class="form-row mx-4">
-                    <div class="col-lg-12">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="price">General Price</label>
-                                <input type="text" class="form-control" id="price" v-model="price">
-                                <div class="invalid-feedback" id="price_feedback"></div>
+                <div class="card-body p-4 border border-top-0">
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="quantity">Product Quantity</label>
+                                    <input type="text" class="form-control" id="quantity" v-model="quantity">
+                                    <div class="invalid-feedback" id="quantity_feedback"></div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="description">Stock Note</label>
+                                    <textarea style="min-height: 87px;" id="note" class="form-control" v-model="note"></textarea>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="notifyBelowQuantity">Notify Below Quantity</label>
+                                    <input type="text" class="form-control" id="notifyBelowQuantity" v-model="notifyBelowQuantity">
+                                    <div class="invalid-feedback" id="notifyBelowQuantity_feedback"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col mb-3">
-                        <h6 class="form-text m-0">Stock</h6>
-                        <p class="form-text text-muted m-0">Setup product initial stock details.</p>
-                    </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
+                    <h5>
+                        <a class="btn btn-link" href="javascript:void(0)"><span>03</span><i class="material-icons">add_a_photo</i> Product Pictures</a>
+                    </h5>
                 </div>
-                <div class="form-row mx-4">
-                    <div class="col-lg-12">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="quantity">Product Quantity</label>
-                                <input type="text" class="form-control" id="quantity" v-model="quantity">
-                                <div class="invalid-feedback" id="quantity_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="description">Stock Note</label>
-                                <textarea style="min-height: 87px;" id="note" class="form-control" v-model="note"></textarea>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="notifyBelowQuantity">Notify Below Quantity</label>
-                                <input type="text" class="form-control" id="notifyBelowQuantity" v-model="notifyBelowQuantity">
-                                <div class="invalid-feedback" id="notifyBelowQuantity_feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col mb-3">
-                        <h6 class="form-text m-0">Product Pictures</h6>
-                        <p class="form-text text-muted m-0">Add product pictures.</p>
-                    </div>
-                </div>
-                <div class="form-row mx-4">
-                    <div class="col-lg-12">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label>Product Images</label>
-                                <div>
-                                    <div class="card card-small">
-                                        <div class="row no-gutters">
-                                            <div class="file-manager-cards__dropzone w-100">
-                                                <div class="dropzone dz-clickable">
-                                                    <div class="dz-default dz-message">
-                                                        <label class="text-reagent-gray">
-                                                            <i class="material-icons mr-1"></i> Add Product Images <input class="d-none" type="file" multiple accept="image/*" @change="handleImages">
-                                                        </label>
+                <div class="card-body p-4 border border-top-0">
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div>
+                                        <div class="card card-small">
+                                            <div class="row no-gutters">
+                                                <div class="file-manager-cards__dropzone w-100">
+                                                    <div class="dropzone dz-clickable">
+                                                        <div class="dz-default dz-message">
+                                                            <label class="text-reagent-gray">
+                                                                <i class="material-icons mr-1"></i> Add Product Images <input class="d-none" type="file" multiple accept="image/*" @change="handleImages">
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <small class="form-text text-muted">Max. file size: 50 MB. Allowed images: jpg, gif, png. Maximum 10 images only.</small>
                                     </div>
-                                    <small class="form-text text-muted">Max. file size: 50 MB. Allowed images: jpg, gif, png. Maximum 10 images only.</small>
-                                </div>
-                                <div class="row images">
-                                    <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
+                                    <div class="row images">
+                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
                                         <!--<div class="product-thumbnail">-->
-                                            <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                            <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
+                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
+                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
                                         <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
+                                        <!--</div>-->
+                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
                                         <!--<div class="product-thumbnail">-->
-                                            <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                            <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
+                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
+                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
                                         <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
+                                        <!--</div>-->
+                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
                                         <!--<div class="product-thumbnail">-->
-                                            <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                            <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
+                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
+                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
                                         <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
+                                        <!--</div>-->
+                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
                                         <!--<div class="product-thumbnail">-->
-                                            <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                            <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
+                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
+                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
                                         <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
+                                        <!--</div>-->
+                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
                                         <!--<div class="product-thumbnail">-->
-                                            <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                            <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
+                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
+                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
                                         <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
+                                        <!--</div>-->
+                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
                                         <!--<div class="product-thumbnail">-->
-                                            <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                            <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
+                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
+                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
                                         <!--</div>-->
-                                    <!--</div>-->
+                                        <!--</div>-->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="m-4">
-                    <button type="button" class="btn btn-success btn-md" :class="{disabled: loading}" @click="validate">
-                        <i class="fa fa-check-circle"></i> Save Product
-                    </button>
-                    <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
-                </div>
             </div>
-            <div align="center" v-else-if="loaded && !requirementsLoaded">
-                <h4>
-                    <i class="material-icons">error_outline</i>
-                    <br />
-                    <small>You have not added any {{ infoText }} yet!</small>
-                    <br />
-                    <a :href="inventoryUrl + '/' + addUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add {{ infoTextUpper }}</a>
-                </h4>
+            <div class="form-wizard-buttons text-md-right">
+                <button type="button" class="btn btn-lg btn-pill btn-outline-primary" :class="{disabled: loading}" @click="validate">
+                    <i class="material-icons">check</i> Save Product
+                </button>
+                <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
             </div>
         </div>
     </div>
@@ -232,7 +206,9 @@
                 loaded: false,
                 loading: false,
                 error: false,
-                images: []
+                images: [],
+                stages: ["general", "stock", "pictures"],
+                stage: "general"
             }
         },
         methods: {

@@ -6,7 +6,7 @@
                 <div class="profile-card">
                     <img src="{{ asset('images/avatars/0.jpg') }}" alt="user" class="profile-photo">
                     <h5><a href="{{ route('my.profile') }}" class="text-white">{{ Auth::user()->name() }}</a></h5>
-                    <a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
+                    <a href="{{ route("my.followers") }}" class="text-white"><i class="ion ion-android-person-add"></i> {{ Auth::user()->viewFollower() }}</a>
                 </div>
                 <div class="card card-small widget categories my-4" style="background: none !important;">
                     <div class="card-body p-0">
@@ -69,8 +69,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-6 py-4">
             @yield('page-content')
+        </div>
+        <div class="col-md-3 py-4">
         </div>
     </div>
 @endsection

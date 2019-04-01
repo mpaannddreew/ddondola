@@ -1,24 +1,26 @@
-<section class="image-bg lis-grediant grediant-bt-dark text-white pb-4 profile-inner">
-    <div class="background-image-maker"></div>
-    <div class="holder-image">
-        <img src="{{ asset('images/hero-area.jpg') }}" alt="" class="img-fluid d-none">
-    </div>
-    <div class="container">
-        <div class="row justify-content-center wow fadeInUp">
-            <div class="col-12 col-md-12 mb-4 mb-lg-0">
-                <a href="javascript:void(0)" class="text-white">
-                    <div class="media d-block d-sm-flex text-sm-left text-center">
-                        <img style="width: 100px; height: 100px;" src="{{ asset('images/avatars/0.jpg') }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 rounded mb-4 mb-md-0" alt="" />
-                        <div class="media-body align-self-center">
-                            <h5 class="text-white lis-font-weight-500 lis-line-height-1">{{ $user->name() }}</h5>
-                            <p class="mb-0">{{ $user->followerCount() }} {{ $user->followerCount() > 1 || $user->followerCount() == 0 ? "followers": "follower"  }}</p>
+@section('banner')
+    <section class="image-bg lis-grediant grediant-bt-dark text-white pb-4 profile-inner">
+        <div class="background-image-maker"></div>
+        <div class="holder-image">
+            <img src="{{ $user->coverPicture() }}" alt="" class="img-fluid d-none">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-12 mb-4 mb-lg-0">
+                    <a href="javascript:void(0)" class="text-white">
+                        <div class="media d-block d-sm-flex text-sm-left text-center">
+                            <img style="width: 100px; height: 100px;" src="{{ $user->avatar() }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 rounded mb-4 mb-md-0" alt="" />
+                            <div class="media-body align-self-center">
+                                <h5 class="text-white lis-font-weight-500 lis-line-height-1">{{ $user->name() }}</h5>
+                                <p class="mb-0">{{ $user->viewFollower() }}</p>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    @show
 <div class="header-navbar collapse d-lg-flex p-0 bg-white border-bottom sticky">
     <div class="container p-0">
         <div class="row">
@@ -28,6 +30,7 @@
                         <li class="nav-item"><a href="{{ route('my.profile') }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>
                         <li class="nav-item"><a href="{{ route('my.followers') }}" class="nav-link @yield('followers-active')"><i class="material-icons">people</i> Followers</a></li>
                         <li class="nav-item"><a href="{{ route('my.following') }}" class="nav-link @yield('following-active')"><i class="material-icons">people_outline</i> Following</a></li>
+                        <li class="nav-item"><a href="{{ route('my.notifications') }}" class="nav-link @yield('notifications-active')"><i class="material-icons">notifications</i> Notifications</a></li>
                         <li class="nav-item"><a href="{{ route('my.profile.edit') }}" class="nav-link @yield('edit-active')"><i class="material-icons">mode_edit</i> Edit</a></li>
                     @else
                         <li class="nav-item"><a href="{{ route('user.profile', ['user' => $user->code]) }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>

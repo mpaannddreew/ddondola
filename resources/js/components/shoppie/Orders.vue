@@ -4,22 +4,35 @@
             <div class="container p-0">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     <li class="nav-item">
-                        <a href="#" class="nav-link active"><i class="material-icons">list</i> All</a>
+                        <a href="javascript:void(0)" class="nav-link active"><i class="material-icons">list</i> All</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="material-icons">done</i> Completed</a>
+                        <a href="javascript:void(0)" class="nav-link"><i class="material-icons">done</i> Completed</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="material-icons">help</i> Pending</a>
+                        <a href="javascript:void(0)" class="nav-link"><i class="material-icons">help</i> Pending</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="material-icons">clear</i> Cancelled</a>
+                        <a href="javascript:void(0)" class="nav-link"><i class="material-icons">clear</i> Cancelled</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="container py-4">
-            <div class="card card-small lo-stats h-100 border">
+            <div class="row">
+                <div class="col-12 col-sm-6 text-center text-sm-left mb-4 mb-sm-0">
+                    <div class="input-daterange input-group input-group-md w-100">
+                        <input type="text" class="input-sm form-control form-control-sm" name="start" placeholder="Start Date">
+                        <input type="text" class="input-sm form-control form-control-sm" name="end" placeholder="End Date">
+                        <span class="input-group-append">
+                        <span class="input-group-text">
+                              <i class="material-icons"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-small lo-stats h-100 border mt-4">
                 <table class="table mb-0">
                     <thead class="py-2 bg-light text-semibold border-bottom">
                     <tr>
@@ -57,19 +70,6 @@
                     </tbody>
                 </table>
             </div>
-            <nav class="mt-4">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
         </div>
     </div>
 </template>

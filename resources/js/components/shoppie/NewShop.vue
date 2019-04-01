@@ -1,70 +1,63 @@
 <template>
-    <div class="card card-small border">
-        <div class="card-body">
-            <div align="center" v-if="!requirementsLoaded"><div class="loader"></div></div>
-            <div v-else-if="requirementsLoaded">
-                <div class="form-row">
-                    <div class="col mb-3">
-                        <h6 class="form-text m-0">General</h6>
-                        <p class="form-text text-muted m-0">Setup shop general profile details.</p>
-                    </div>
+    <div>
+        <div class="card card-small border" v-if="!requirementsLoaded">
+            <div class="card-body">
+                <div align="center"><div class="loader"></div></div>
+            </div>
+        </div>
+        <div class="checkout-process" v-else-if="requirementsLoaded">
+            <div class="card mb-4">
+                <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
+                    <h5>
+                        <a class="btn btn-link" href="javascript:void(0)">
+                            <span>01</span><i class="material-icons">info</i> General Information
+                        </a>
+                    </h5>
                 </div>
-                <div class="form-row mx-4">
-                    <div class="col-lg-12">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Shop Category</label>
-                                <select class="form-control form-control-sm custom-select custom-select-sm" tabindex="-1" aria-hidden="true" v-model="shopCategory" id="shopCategory">
-                                    <option v-for="(category, indx) in categories" :key="indx" :value="category.id">{{ category.name }}</option>
-                                </select>
-                                <div class="invalid-feedback" id="shopCategory_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control p-2" id="name" v-model="name">
-                                <div class="invalid-feedback" id="name_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="phoneNumber">Phone Number</label>
-                                <div class="input-group input-group-seamless">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="material-icons"></i>
-                                        </div>
-                                    </div>
+                <div class="card-body p-4 border border-top-0">
+                    <div class="form-row mx-4">
+                        <div class="col-lg-12">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Shop Category</label>
+                                    <select class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="shopCategory" id="shopCategory">
+                                        <option v-for="(category, indx) in categories" :key="indx" :value="category.id">{{ category.name }}</option>
+                                    </select>
+                                    <div class="invalid-feedback" id="shopCategory_feedback"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" v-model="name">
+                                    <div class="invalid-feedback" id="name_feedback"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="phoneNumber">Phone Number</label>
                                     <input type="text" class="form-control" id="phoneNumber" v-model="phoneNumber">
+                                    <div class="invalid-feedback" id="phoneNumber_feedback"></div>
                                 </div>
-                                <div class="invalid-feedback" id="phoneNumber_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="emailAddress">Email</label>
-                                <div class="input-group input-group-seamless">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="material-icons"></i>
-                                        </div>
-                                    </div>
+                                <div class="form-group col-md-6">
+                                    <label for="emailAddress">Email</label>
                                     <input type="email" class="form-control" id="emailAddress" v-model="emailAddress">
+                                    <div class="invalid-feedback" id="emailAddress_feedback"></div>
                                 </div>
-                                <div class="invalid-feedback" id="emailAddress_feedback"></div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="description">Description</label>
-                                <textarea style="min-height: 87px;" id="description" name="description" class="form-control" v-model="description"></textarea>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="address">Address</label>
-                                <textarea style="min-height: 87px;" id="address" name="address" class="form-control" v-model="address"></textarea>
+                                <div class="form-group col-md-12">
+                                    <label for="description">About</label>
+                                    <textarea style="min-height: 87px;" id="description" name="description" class="form-control" v-model="description"></textarea>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="address">Address</label>
+                                    <textarea style="min-height: 87px;" id="address" name="address" class="form-control" v-model="address"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="m-4" v-show="requirementsLoaded">
-                    <button type="button" class="btn btn-success btn-md" :class="{disabled: loading}" @click="validate">
-                        <i class="fa fa-check-circle"></i> Create Shop
-                    </button>
-                    <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
-                </div>
+            </div>
+            <div class="form-wizard-buttons text-md-right">
+                <button type="button" class="btn btn-lg btn-pill btn-outline-primary" :class="{disabled: loading}" @click="validate">
+                    <i class="material-icons">check</i> Create Shop
+                </button>
+                <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
             </div>
         </div>
     </div>

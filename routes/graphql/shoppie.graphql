@@ -29,6 +29,8 @@ type Shop {
     settings: ShopSettings!
     active: Boolean!
     likes: Int! @method(name: "likeCount")
+    avatar: String! @method(name: "avatar")
+    coverPicture: String! @method(name: "coverPicture")
     categories: [ProductCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedCategories")
     subcategories: [ProductSubCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedSubcategories")
     subCategoriesCount: Int! @method(name: "subCategoriesCount")
@@ -114,7 +116,7 @@ type Product {
     quantity: Int! @method(name: "quantity")
     active: Boolean!
     settings: ProductSettings!
-    offers: [ProductOffer!] @hasMany(type: "paginator")
+    offers(ordering: String): [ProductOffer!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@productOffers")
     stock(type: String!): [Stock] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedStock")
     relatedProducts: [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@relatedProducts")
     reviews: [Review!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@paginatedReviews")
@@ -171,6 +173,7 @@ type ProductOffer {
     discount: String!
     start_date: DateTime!
     end_date: DateTime!
+    cancel: Boolean!
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -206,9 +209,9 @@ input NewStock {
 }
 
 input NewOffer {
-    price: String!
-    start_date: DateTime!
-    end_date: DateTime!
+    discount: String!
+    start_date: String!
+    end_date: String!
 }
 
 input NewProduct {
@@ -254,4 +257,5 @@ extend type Mutation {
     removeFromCart(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@removeFromCart")
     addToFavorites(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@addToFavorites")
     removeFromFavorites(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@removeFromFavorites")
+    createProductOffer(productId: ID! offer: NewOffer!): ProductOffer @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProductOffer")
 }

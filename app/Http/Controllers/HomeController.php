@@ -28,8 +28,8 @@ class HomeController extends Controller
         return view('ddondola.me.messenger');
     }
 
-    public function notifications() {
-        return view('ddondola.me.notifications');
+    public function notifications(Request $request) {
+        return view('ddondola.me.notifications', ['user' => $request->user()]);
     }
 
     public function profile(Request $request) {

@@ -197,7 +197,7 @@ a.btn_1.outline:focus, .btn_1.outline:focus {
     position: absolute;
     left: 12px;
     top: 34px;
-    color: rgba(110, 22, 55, 0.53);
+    color: #ed1e8e;
     width: 25px;
     height: 25px;
     display: block;

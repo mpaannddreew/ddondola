@@ -6,7 +6,7 @@
     <li is="nav-tray"></li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img class="user-avatar rounded-circle mr-2" src="{{ asset('images/avatars/0.jpg') }}" alt="User Avatar"> <span class="d-none d-md-inline-block text-white">{{ Auth::user()->first_name }}</span>
+            <img class="user-avatar rounded-circle mr-2" src="{{ Auth::user()->avatar() }}" alt="User Avatar"> <span class="d-none d-md-inline-block text-white">{{ Auth::user()->first_name }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-small dropdown-menu-right">
             <a class="dropdown-item" href="{{ route('my.profile') }}"><i class="material-icons">account_circle</i> Profile</a>

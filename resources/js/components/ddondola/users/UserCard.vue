@@ -1,13 +1,14 @@
 <template>
     <div class="friend-card border">
-        <img src="/images/hero_in_shop_detail.jpg" alt="profile-cover" class="img-responsive cover">
+        <img :src="user.coverPicture" alt="profile-cover" class="img-responsive cover">
         <div class="card card-info pb-3">
-            <img src="/images/avatars/0.jpg" alt="user" class="profile-photo-lg">
+            <img :src="user.avatar" alt="user" class="profile-photo-lg">
             <div class="friend-info">
                 <button v-if="!isMe" class="pull-right btn btn-sm btn-pill btn-outline-primary" @click="performAction" :class="{ active: follow, disabled: loading }">
                     <i class="material-icons mr-1">person_add</i> {{ text }}
                 </button>
                 <h5><a :href="userUrl" class="profile-link">{{ name }}</a></h5>
+                <p class="m-0">{{ followers }} | {{ following }}</p>
             </div>
         </div>
     </div>
@@ -76,6 +77,12 @@
             },
             name() {
                 return this.isMe ? this.user.name + " (Me)": this.user.name;
+            },
+            followers() {
+                return this.user.followerCount + (this.user.followerCount === 1 ? " Follower": " Followers");
+            },
+            following() {
+                return this.user.followingCount + (this.user.followingCount === 1 ? " Following": " Following");
             }
         }
     }

@@ -31,14 +31,16 @@
                     </h4>
                 </div>
             </template>
-            <div class="row" id="grid-items" v-else-if="showShops && shopsLoaded">
-                <template v-for="(shop, indx) in shops">
-                    <div class="col-xs-12 col-sm-3 col-md-12 col-lg-3">
-                        <div is="shop" :shop="shop" :mine="mine" :url="url" :key="indx"></div>
-                    </div>
-                </template>
+            <div class="friend-list my-4" v-else-if="showShops && shopsLoaded">
+                <div class="row">
+                    <template v-for="(shop, indx) in shops">
+                        <div class="col-md-4 col-sm-4">
+                            <div is="shop" :shop="shop" :mine="mine" :url="url" :key="indx"></div>
+                        </div>
+                    </template>
+                </div>
             </div>
-            <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
+            <pagination v-if="paginatorInfo" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         </div>
     </div>
 </template>
@@ -89,10 +91,12 @@
                 this.loadShops(shops);
             },
             loadCategories(categories) {
+                console.log(JSON.stringify(categories.data));
                 this.loaded = true;
                 this.categories = categories.data.data.categories;
             },
             loadShops(shops) {
+                console.log(JSON.stringify(shops.data));
                 this.shopsLoaded = true;
                 this.shops = this.mine ? shops.data.data.me.shops.data: shops.data.data.shops.data;
                 this.paginatorInfo = this.mine ? shops.data.data.me.shops.paginatorInfo: shops.data.data.shops.paginatorInfo;

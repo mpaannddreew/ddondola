@@ -247,7 +247,6 @@ body {
 
 .block-body input, .block-body textarea, .card-body input, .card-body textarea {
 
-    padding: 10px 15px;
     border: 1px solid #ddd;
     width: 100%;
     outline: none;
@@ -294,120 +293,8 @@ h1.grey, h2.grey, h3.grey, h4.grey, h5.grey, h6.grey {
 
 }
 
-.jobs-list {
-
-    float: left;
-    width: 100%;
-    padding: 20px 20px;
-
-}
-
-.job-info {
-
-    float: left;
-    width: 100%;
-    margin-bottom: 22px;
-
-}
-
-.job-details {
-
-    float: left;
-    width: 170px;
-
-}
-
-.job-details h3 {
-
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    line-height: 1.5;
-
-}
-
-.job-details p {
-
-    color: #686868;
-    font-size: 14px;
-    line-height: 20px;
-    margin: 0 !important;
-
-}
-
-.hr-rate {
-
-    float: right;
-    width: 40px;
-
-}
-
-.hr-rate span {
-    font-size: 14px;
-    font-weight: 600;
-    float: right;
-}
-
 thead.bg-light tr th {
     border-bottom: none !important;
-}
-
-.suggestions-list {
-    float: left;
-    width: 100%;
-    padding: 13px 0 30px 0;
-}
-
-.suggestion-usd img {
-    float: left;
-}
-
-.suggestion-usd {
-    float: left;
-    width: 100%;
-    padding: 15px 20px;
-}
-
-.sgt-text {
-    float: left;
-    padding-left: 10px;
-}
-
-.sgt-text h4 {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    line-height: 1;
-}
-
-.sgt-text span {
-    color: #686868;
-    font-size: 14px;
-}
-
-.suggestion-usd > span {
-    float: right;
-    margin-top: 4px;
-    position: relative;
-}
-
-.suggestion-usd > span i {
-    color: #b2b2b2;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #e5e5e5;
-    text-align: center;
-    line-height: 30px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.suggestion-usd > span:hover {
-    border: 1px solid #d51e76;
-}
-
-.suggestion-usd > span:hover i {
-    color: #d51e76;
 }
 
 .loader {
@@ -637,7 +524,6 @@ section#reviews {
     top: 0px;
     width: 80px;
     height: 80px;
-    background: #ffffff;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;

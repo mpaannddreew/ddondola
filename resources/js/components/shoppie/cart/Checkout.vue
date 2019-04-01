@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
-                        <a class="btn btn-link" href="javascript:void(0)"><span>01</span>Order review</a>
+                        <a class="btn btn-link" href="javascript:void(0)"><span>01</span><i class="material-icons">description</i> Order review</a>
                     </h5>
                 </div>
                 <div class="card-body p-0">
@@ -58,7 +58,7 @@
             <div class="card mt-4 border-top">
                 <div class="card-header form-wizard-step border-right border-top-right-radius-0">
                     <h5>
-                        <a class="btn btn-link collapsed" href="javascript:void(0)"><span>02</span>Payment Method</a>
+                        <a class="btn btn-link collapsed" href="javascript:void(0)"><span>02</span><i class="material-icons">payment</i> Payment Method</a>
                     </h5>
                 </div>
                 <div class="card-body border border-top-0">

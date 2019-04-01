@@ -2,7 +2,7 @@
     <div class="card product is-gray border">
         <div class="image d-flex align-items-center justify-content-center border-bottom">
             <div class="ribbon ribbon-danger text-uppercase" v-if="soldOut">Sold Out</div>
-            <div class="ribbon ribbon-info text-uppercase" v-else-if="!soldOut && product.discount">{{ product.discount }}%</div>
+            <div class="ribbon ribbon-info text-uppercase" v-else-if="!soldOut && product.discount">-{{ product.discount }}%</div>
             <div class="ribbon ribbon-warning text-uppercase" v-if="inCart || isFavorite">
                 <i class="fa fa-shopping-cart" v-if="inCart"></i>
                 <template v-if="inCart && isFavorite"> | </template>

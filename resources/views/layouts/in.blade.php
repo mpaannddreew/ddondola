@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{ asset('css/changes.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/shoppie.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/messenger.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/owl.theme.default.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}"/>
     <script async defer src="{{ asset('js/buttons.js') }}"></script>
 @endsection
@@ -35,9 +38,10 @@
     <script src="{{ asset('js/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script src="{{ asset('js/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.js') }}"></script>
     <script>
         $(function () {
-            $(".input-daterange").datepicker({});
+            $(".input-daterange").datepicker({}).val();
             $('.background-image-maker').each(function () {
                 var imgURL = $(this).next('.holder-image').find('img').attr('src');
                 $(this).css('background-image', 'url(' + imgURL + ')');

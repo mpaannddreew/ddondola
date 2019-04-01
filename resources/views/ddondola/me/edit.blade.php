@@ -1,4 +1,5 @@
 @extends('ddondola.me.base.profile-admin')
+@section('banner')@endsection
 @section('edit-active', 'active')
 @section('profile')
     <div class="row">

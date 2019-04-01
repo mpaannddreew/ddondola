@@ -1,90 +1,102 @@
 <template>
-    <div class="row">
-        <div class="col-md-8">
-            <div>
-                <div class="mb-4">
-                    <div class="row no-gutters">
-                        <div class="col-lg-3 mb-2 mb-lg-0">
-                            <form action="POST">
-                                <div class="input-group input-group-seamless">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="material-icons"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Filter brands">
+    <div>
+        <div class="mb-4">
+            <div class="row no-gutters">
+                <div class="col-12 col-sm-6 mb-2 mb-lg-0">
+                    <form action="POST">
+                        <div class="input-group input-group-seamless">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="material-icons"></i>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-small lo-stats h-100 border">
-                    <table class="table mb-0 ">
-                        <thead class="py-2 bg-light text-semibold border-bottom">
-                        <tr>
-                            <th>Name</th>
-                            <th class="text-center">Products</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <template v-if="!loaded">
-                            <tr>
-                                <td colspan="3">
-                                    <div align="center"><div class="loader"></div></div>
-                                </td>
-                            </tr>
-                        </template>
-                        <template v-else-if="!showBrands && loaded">
-                            <tr>
-                                <td colspan="3">
-                                    <div align="center">
-                                        <h4>
-                                            <i class="material-icons">error_outline</i>
-                                            <br />
-                                            <small>You have not added any brands yet!</small>
-                                        </h4>
-                                    </div>
-                                </td>
-                            </tr>
-                        </template>
-                        <template v-else-if="showBrands && loaded">
-                            <tr v-for="(brand, indx) in brands">
-                                <td>{{ brand.name }}</td>
-                                <td class="lo-stats__items text-center">{{ brand.productCount }}</td>
-                                <td>
-                                    <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
-                                        <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </template>
-                        </tbody>
-                    </table>
-                </div>
-                <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card card-small mb-3" style="background: none !important;">
-                <div class="card-header border-bottom">
-                    <h6 class="m-0"><i class="material-icons">add</i> New Brand</h6>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="form-group">
-                            <input class="form-control form-control-sm" type="text" placeholder="Name" v-model="name" id="name">
-                            <div class="invalid-feedback" id="name_feedback"></div>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control form-control-sm" placeholder="Description" v-model="description"></textarea>
-                        </div>
-                        <div class="form-group mb-0">
-                            <button type="button" class="btn btn-success" :class="{disabled: loading}" @click="validate">Save</button>
-                            <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
+                            </div>
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter brands">
                         </div>
                     </form>
+                </div>
+                <div class="col-12 col-sm-6 d-flex align-items-center">
+                    <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
+                        <a href="#new-brand" data-toggle="modal" class="btn btn-success">
+                            <i class="material-icons">add</i> New Brand
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-small lo-stats h-100 border">
+            <table class="table mb-0 ">
+                <thead class="py-2 bg-light text-semibold border-bottom">
+                <tr>
+                    <th>Name</th>
+                    <th class="text-center">Products</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <template v-if="!loaded">
+                    <tr>
+                        <td colspan="3">
+                            <div align="center"><div class="loader"></div></div>
+                        </td>
+                    </tr>
+                </template>
+                <template v-else-if="!showBrands && loaded">
+                    <tr>
+                        <td colspan="3">
+                            <div align="center">
+                                <h4>
+                                    <i class="material-icons">error_outline</i>
+                                    <br />
+                                    <small>You have not added any brands yet!</small>
+                                </h4>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
+                <template v-else-if="showBrands && loaded">
+                    <tr v-for="(brand, indx) in brands">
+                        <td>{{ brand.name }}</td>
+                        <td class="lo-stats__items text-center">{{ brand.productCount }}</td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
+                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </div>
+        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
+        <div class="modal fade" id="new-brand" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="card card-small">
+                            <div class="card-header border-bottom">
+                                <h6 class="m-0"><i class="material-icons">add</i> New Brand</h6>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group">
+                                        <input class="form-control form-control-sm" type="text" placeholder="Name" v-model="name" id="name">
+                                        <div class="invalid-feedback" id="name_feedback"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control form-control-sm" placeholder="Description" v-model="description"></textarea>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <button type="button" class="btn btn-md btn-pill btn-outline-primary" :class="{disabled: loading}" @click="validate"><i class="material-icons">check</i> Save</button>
+                                        <button class="btn btn-link p-0" v-show="loading"><div class="loader loader-sm"></div></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,6 +169,8 @@
                 this.description = '';
                 this.loading = false;
                 DToast("success", "Brand created successfully");
+                $("#new-brand").modal('hide');
+                this.loadPage(1);
             },
             createBrand() {
                 this.loading = true;

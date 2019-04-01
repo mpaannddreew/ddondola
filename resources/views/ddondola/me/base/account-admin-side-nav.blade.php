@@ -27,12 +27,6 @@
                 <span>Profile</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link @yield('notifications-active')" href="{{ route('my.notifications') }}">
-                <i class="material-icons">notifications</i>
-                <span>Notifications</span>
-            </a>
-        </li>
     </ul>
     <h6 class="main-sidebar__nav-title">Apps</h6>
     <ul class="nav nav--no-borders flex-column">

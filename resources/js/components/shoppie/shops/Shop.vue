@@ -1,28 +1,15 @@
 <template>
-    <div class="thingsBox thinsSpace card border" data-marker-id="1">
-        <div class="thingsImage"><img src="/images/hero-area.jpg" alt="Image things">
-            <div class="thingsMask">
-                <ul class="list-inline rating">
-                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                </ul>
-                <a :href="shopUrl">
-                    <h2>
-                        {{ shop.name }}
-                        <i class="fa fa-check-circle" aria-hidden="true" v-if="verified"></i>
-                    </h2>
-                </a>
-                <p>215 Terry Lane, New York</p>
+    <div class="friend-card border">
+        <img :src="shop.coverPicture" alt="profile-cover" class="img-responsive cover">
+        <div class="card card-info pb-3">
+            <img :src="shop.avatar" alt="user" class="profile-photo-lg">
+            <div class="friend-info">
+                <button class="pull-right btn btn-sm btn-pill btn-outline-primary" @click="performAction" :class="{ active: like, disabled: loading }">
+                    <i class="material-icons mr-1">thumb_up</i> {{ text }}
+                </button>
+                <h5><a :href="shopUrl" class="profile-link">{{ shop.name }} <i class="fa fa-check-circle" aria-hidden="true" v-if="verified"></i></a></h5>
+                <p class="m-0">{{ shop.category.name }} | {{ likes }}</p>
             </div>
-        </div>
-        <div class="thingsCaption">
-            <ul class="list-inline captionItem">
-                <li><i class="fa fa-thumbs-o-up"></i> {{ shop.likes }} {{ shop.likes === 1 ? "like": "likes" }}</li>
-                <li><a href="javascript:void(0)"> {{ shop.category.name }}</a></li>
-            </ul>
         </div>
     </div>
 </template>
@@ -30,9 +17,15 @@
 <script>
     export default {
         name: "Shop",
+        mounted() {
+            this.getCurrentState();
+        },
         data() {
             return {
-                verified: false
+                verified: false,
+                like: false,
+                loaded: false,
+                loading: false
             }
         },
         props: {
@@ -49,9 +42,41 @@
                 required: true
             }
         },
+        methods: {
+            performAction() {
+                if (this.loaded) {
+                    this.action();
+                }
+            },
+            getCurrentState() {
+                this.loading = true;
+                axios.post(graphql.api, {
+                    query: graphql.iLikeShop,
+                    variables: {id: this.shop.id}
+                }).then(this.loadAction).catch(function (error) {})
+            },
+            action() {
+                this.loading = true;
+                axios.post(graphql.api, {
+                    query: graphql.likeShop,
+                    variables: {id: this.shop.id}
+                }).then(this.loadAction).catch(function (error) {})
+            },
+            loadAction(response) {
+                this.like = response.data.data.like;
+                this.loaded = true;
+                this.loading = false;
+            }
+        },
         computed: {
             shopUrl() {
                 return this.url + "/shops/" + this.shop.code;
+            },
+            text() {
+                return this.like ? 'Unlike': 'Like';
+            },
+            likes() {
+                return this.shop.likes + (this.shop.likes === 1 ? " Like": " Likes");
             }
         }
     }

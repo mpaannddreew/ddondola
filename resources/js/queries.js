@@ -248,6 +248,8 @@ window.graphql = {
               productCount
               likes
               reviewCount
+              coverPicture
+              avatar
               category {
                 name
               }
@@ -274,6 +276,8 @@ window.graphql = {
                 productCount
                 likes
                 reviewCount
+                coverPicture
+                avatar
                 category {
                   name
                 }
@@ -426,6 +430,8 @@ window.graphql = {
               id
               code
               name
+              avatar
+              coverPicture
               followerCount
               followingCount
             }
@@ -448,6 +454,8 @@ window.graphql = {
                 id
                 code
                 name
+                avatar
+                coverPicture
                 followerCount
                 followingCount
               }
@@ -471,6 +479,8 @@ window.graphql = {
                 id
                 code
                 name
+                avatar
+                coverPicture
                 followerCount
                 followingCount
               }
@@ -494,6 +504,8 @@ window.graphql = {
                 id
                 code
                 name
+                avatar
+                coverPicture
                 followerCount
                 followingCount
               }
@@ -517,6 +529,8 @@ window.graphql = {
                 id
                 code
                 name
+                avatar
+                coverPicture
                 followerCount
                 followingCount
               }
@@ -593,6 +607,8 @@ window.graphql = {
             name
             code
             likes
+            avatar
+            coverPicture
             reviewCount
             category {
               name
@@ -604,6 +620,8 @@ window.graphql = {
             id
             code
             name
+            avatar
+            coverPicture
             followerCount
             followingCount
           }
@@ -650,6 +668,7 @@ window.graphql = {
                     created_at
                     reviewer {
                         name
+                        avatar
                     }
                 }
                 paginatorInfo {
@@ -675,6 +694,7 @@ window.graphql = {
                     created_at
                     reviewer {
                         name
+                        avatar
                     }
                 }
                 paginatorInfo {
@@ -718,5 +738,37 @@ window.graphql = {
               }
            }
         }
-    }`
+    }`,
+    productsOffers: `query productsOffers($id: ID! $ordering: String $count: Int! $page: Int!) {
+          product(id: $id) {
+            offers(ordering: $ordering count: $count page: $page) {
+              data {
+                id
+                discount
+                start_date
+                end_date
+                cancel
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    createProductOffer: `mutation createProductOffer($productId: ID! $offer: NewOffer!) {
+            offer:createProductOffer(productId: $productId offer: $offer) {
+                id
+                discount
+                start_date
+                end_date
+                cancel
+            }
+        }`
 };

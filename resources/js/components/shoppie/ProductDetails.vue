@@ -86,14 +86,45 @@
             <div class="container p-0">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link active"><i class="material-icons">rate_review</i> Reviews</a>
+                        <a href="javascript:void(0)" @click="showReviews" class="nav-link" :class="{active: reviews}"><i class="material-icons">rate_review</i> Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" @click="showRelated" class="nav-link" :class="{active: !reviews}"><i class="material-icons">folder</i> Related Products</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="container py-4">
-            <reviews :reviewable="product" reviewable-type="product"></reviews>
-            <related-products :product="product" :url="url" class="mt-4"></related-products>
+            <div v-if="reviews">
+                <div class="row">
+                    <div class="col-md-4">
+                        <rating-meter></rating-meter>
+
+                        <div class="box border" style="box-shadow: none !important;">
+                            <dl>
+                                <dt class="text-muted">Description</dt>
+                                <dd> Dolor sit amet, consectetur adipisicing elit do eiusmod
+                                    tempor incididunt</dd>
+                            </dl>
+                            <dl>
+                                <dt class="text-muted">Parameter</dt>
+                                <dd>Value name</dd>
+                            </dl>
+                            <dl>
+                                <dt class="text-muted">Discount</dt>
+                                <dd>USD 658</dd>
+                            </dl>
+                        </div> <!-- box.// -->
+
+                    </div>
+                    <div class="col-md-8">
+                        <reviews :reviewable="product" reviewable-type="product"></reviews>
+                    </div>
+                </div>
+            </div>
+            <div v-else>
+                <related-products :product="product" :url="url"></related-products>
+            </div>
         </div>
     </div>
 </template>
@@ -113,7 +144,8 @@
                 isFavorite: false,
                 cartStatusLoading: false,
                 favoriteStatusLoading: false,
-                quantity: 1
+                quantity: 1,
+                reviews: true
             }
         },
         props: {
@@ -266,6 +298,12 @@
                         variables: {id: this.product.id}
                     }).then(this.favoritesStatus).catch(function (error) {});
                 }
+            },
+            showReviews() {
+                this.reviews = true;
+            },
+            showRelated() {
+                this.reviews = false;
             }
         },
         watch: {

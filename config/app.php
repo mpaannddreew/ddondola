@@ -213,7 +213,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Shoppie' => \Shoppie\Facades\Shoppie::class,
-        'Activity' => \Activity\Facades\Activity::class
+        'Activity' => \Activity\Facades\ActivityManager::class
     ],
 
 ];

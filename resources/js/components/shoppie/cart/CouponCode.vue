@@ -7,7 +7,7 @@
             <p>If you have a coupon code, please enter it in the box below</p>
             <form action="#">
                 <div class="form-group d-flex">
-                    <input type="text" name="coupon">
+                    <input type="text" name="coupon" class="p-2">
                     <button type="submit" class="cart-black-button">Apply coupon</button>
                 </div>
             </form>

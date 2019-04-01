@@ -2,11 +2,13 @@
 
 namespace Ddondola;
 
+use Activity\Traits\Actor;
 use Activity\Traits\Reviewer;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Laravolt\Avatar\Facade as Avatar;
 use Messenger\Traits\Converser;
 use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanFavorite;
@@ -19,7 +21,7 @@ use Shoppie\Traits\Seller;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, Seller, Buyer, Converser, HasApiTokens, CanLike, CanFollow,
-        CanBeFollowed, CanFavorite, Identifier, Reviewer;
+        CanBeFollowed, CanFavorite, Identifier, Reviewer, Actor;
 
     /**
      * The attributes that are mass assignable.
@@ -67,5 +69,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function followerCount() {
         return $this->followers->count();
+    }
+
+    public function avatar() {
+        return Avatar::create($this->name())->toBase64();
+    }
+
+    public function coverPicture() {
+        return asset('images/hero-area.jpg');
+    }
+
+    public function viewFollower() {
+        return $this->followerCount() . " " . ($this->followerCount() > 1 || $this->followerCount() == 0 ? "followers": "follower");
     }
 }

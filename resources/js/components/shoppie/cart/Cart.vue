@@ -5,14 +5,18 @@
                 <div align="center"><div class="loader"></div></div>
             </div>
         </div>
-        <div align="center" v-else-if="!hasProducts && loaded">
-            <h4>
-                <i class="material-icons">error_outline</i>
-                <br />
-                <small>You have not added any products to cart!</small>
-                <br />
-                <a :href="shoppingUrl" class="btn btn-xs btn-success">Start Shopping</a>
-            </h4>
+        <div class="card card-small border" v-else-if="!hasProducts && loaded">
+            <div class="card-body">
+                <div align="center">
+                    <h4>
+                        <i class="material-icons">error_outline</i>
+                        <br />
+                        <small>You have not added any products to cart!</small>
+                        <br />
+                        <a :href="shoppingUrl" class="btn btn-xs btn-success">Start Shopping</a>
+                    </h4>
+                </div>
+            </div>
         </div>
         <template v-else-if="hasProducts && loaded">
             <section class="cart-section card border">

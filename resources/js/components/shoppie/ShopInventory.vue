@@ -3,7 +3,7 @@
         <div>
             <div class="mb-4">
                 <div class="row no-gutters">
-                    <div class="col-lg-3 mb-2 mb-lg-0">
+                    <div class="col-lg-6 mb-2 mb-lg-0">
                         <form action="POST">
                             <div class="input-group input-group-seamless">
                                 <div class="input-group-prepend">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-small lo-stats h-100 mb-4 border">
+            <div class="card card-small lo-stats h-100 mb-4 border border-top-radius-0">
                 <table class="table mb-0">
                     <thead class="py-2 bg-light text-semibold border-bottom">
                     <tr>
