@@ -1,19 +1,23 @@
 <template>
-    <div class="review-box clearfix">
-        <figure class="rev-thumb">
-            <img :src="review.reviewer.avatar" alt="" class="rounded-circle">
-        </figure>
-        <div class="rev-content border">
-            <div class="rating text-warning">
-                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>
-            </div>
-            <div class="rev-info">
-                {{ review.reviewer.name }} – {{ date}}
-            </div>
-            <div class="rev-text">
-                <p>
-                    {{ review.body }}
-                </p>
+    <div class="central-meta item">
+        <div class="user-post">
+            <div class="friend-info">
+                <figure>
+                    <img alt="" :src="review.reviewer.avatar" class="img-fluid rounded-circle">
+                </figure>
+                <div class="friend-name">
+                    <ins>
+                        <a href="#" class="name">{{ review.reviewer.name }}</a>
+                    </ins>
+                    <span>
+                        <span class="text-warning" v-html="starHtml"></span> – {{ date }}
+                    </span>
+                </div>
+                <div class="description mt-2">
+                    <p class="m-0">
+                        {{ review.body }}
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -31,6 +35,20 @@
         computed: {
             date() {
                 return Moment(this.review.created_at).fromNow();
+            },
+            starHtml() {
+                var stars = "";
+                var difference = 5 - this.review.rating;
+                for (var i = 1; i <= this.review.rating; i++) {
+                    stars += '<i class="fa fa-star"></i>';
+                    if (i === this.review.rating && difference > 0) {
+                        for (var j = 1; j <= difference; j++) {
+                            stars += '<i class="fa fa-star-o"></i>';
+                        }
+                    }
+                }
+
+                return stars;
             }
         }
     }

@@ -1314,7 +1314,7 @@ ul.order-menu strong.price-total {
     left: 40px;
     font-size: 18px;
     font-weight: 500;
-    color: #000000;
+    text-transform: uppercase;
 }
 .deals_slider_container
 {
@@ -1350,13 +1350,13 @@ ul.order-menu strong.price-total {
 }
 .deals_item_name
 {
-    font-size: 24px;
+    /*font-size: 24px;*/
     font-weight: 400;
     color: #000000;
 }
 .deals_item_price
 {
-    font-size: 24px;
+    /*font-size: 24px;*/
     font-weight: 500;
     color: #df3b3b;
 }
@@ -1430,7 +1430,6 @@ ul.order-menu strong.price-total {
 }
 .deals_timer_unit
 {
-    width: 33.33333333%;
     font-size: 24px;
     font-weight: 500;
     color: #000000;

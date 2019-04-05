@@ -1,29 +1,34 @@
 <template>
-    <div class="card card-small border">
-        <div class="card-body p-0">
-            <div class="deals m-0">
-                <div class="deals_title">Active shop deals</div>
-                <div class="deals_slider_container">
+    <div>
+        <div class="card card-small border" v-if="!loaded">
+            <div class="card-body">
+                <div align="center"><div class="loader"></div></div>
+            </div>
+        </div>
+        <div class="card card-small border" v-else-if="loaded && hasDeals">
+            <div class="card-body p-0">
+                <div class="deals m-0">
+                    <div class="deals_title">Active shop deals</div>
+                    <div class="deals_slider_container">
 
-                    <!-- Deals Slider -->
-                    <div class="owl-carousel owl-theme deals_slider">
-
-                        <!-- Deals Item -->
-                        <deal></deal>
-
-                        <!-- Deals Item -->
-                        <deal></deal>
-
-                        <!-- Deals Item -->
-                        <deal></deal>
+                        <!-- Deals Slider -->
+                        <div class="deals_slider">
+                            <div v-for="(deal, indx) in deals" v-if="isActive(indx)">
+                                <!-- Deals Item -->
+                                <deal :deal="deal" :key="indx"></deal>
+                            </div>
+                        </div>
 
                     </div>
 
-                </div>
-
-                <div class="deals_slider_nav_container">
-                    <div class="deals_slider_prev deals_slider_nav"><i class="fa fa-chevron-left ml-auto"></i></div>
-                    <div class="deals_slider_next deals_slider_nav"><i class="fa fa-chevron-right ml-auto"></i></div>
+                    <div class="deals_slider_nav_container">
+                        <div class="deals_slider_prev deals_slider_nav">
+                            <i class="fa fa-chevron-left ml-auto" @click="previous"></i>
+                        </div>
+                        <div class="deals_slider_next deals_slider_nav">
+                            <i class="fa fa-chevron-right ml-auto" @click="next"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,48 +41,63 @@
         name: "Deals",
         components: {Deal},
         mounted() {
-            this.initDealsSlider();
+            this.fetchOffers();
         },
         data() {
             return {
-
+                deals: [],
+                loaded: false,
+                active: 0
+            }
+        },
+        props: {
+            shop: {
+                type: Object,
+                required: true
+            }
+        },
+        computed: {
+            hasDeals() {
+                return this.dealsCount > 0;
+            },
+            dealsCount() {
+                return this.deals.length;
+            }
+        },
+        watch: {
+            deals: {
+                handler(data) {
+                    console.log(data.length);
+                    if (data.length > 0) {
+                        this.initDealsSlider();
+                    }
+                },
+                deep: true
             }
         },
         methods: {
-            initDealsSlider() {
-                if($('.deals_slider').length)
-                {
-                    var dealsSlider = $('.deals_slider');
-                    dealsSlider.owlCarousel(
-                        {
-                            items:1,
-                            loop:false,
-                            navClass:['deals_slider_prev', 'deals_slider_next'],
-                            nav:false,
-                            dots:false,
-                            smartSpeed:1200,
-                            margin:30,
-                            autoplay:false,
-                            autoplayTimeout:5000
-                        });
-
-                    if($('.deals_slider_prev').length)
-                    {
-                        var prev = $('.deals_slider_prev');
-                        prev.on('click', function()
-                        {
-                            dealsSlider.trigger('prev.owl.carousel');
-                        });
-                    }
-
-                    if($('.deals_slider_next').length)
-                    {
-                        var next = $('.deals_slider_next');
-                        next.on('click', function()
-                        {
-                            dealsSlider.trigger('next.owl.carousel');
-                        });
-                    }
+            fetchOffers() {
+                this.loaded = false;
+                axios.post(graphql.api, {
+                    query: graphql.activeShopOffers,
+                    variables: {shopId: this.shop.id, ordering: "active", count: 1, page: 1}
+                }).then(this.loadOffers).catch(function(error){});
+            },
+            loadOffers(response) {
+                this.loaded = true;
+                this.deals = response.data.data.shop.deals;
+            },
+            isActive(indx) {
+                return this.active === indx;
+            },
+            previous() {
+                if (this.active > 0) {
+                    this.active --;
+                }
+            },
+            next() {
+                if (this.active < (this.dealsCount - 1)) {
+                    this.active ++;
                 }
             }
         }

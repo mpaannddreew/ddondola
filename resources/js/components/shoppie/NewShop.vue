@@ -43,6 +43,7 @@
                                 <div class="form-group col-md-12">
                                     <label for="description">About</label>
                                     <textarea style="min-height: 87px;" id="description" name="description" class="form-control" v-model="description"></textarea>
+                                    <div class="invalid-feedback" id="description_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="address">Address</label>
@@ -112,6 +113,9 @@
                 if (!this.emailAddress.length > 0)
                     this.showError('emailAddress', "Valid email address is required");
 
+                if (!this.description.length > 0)
+                    this.showError('description', "Please add a shop description to guide buyers");
+
                 if (!this.error) {
                     this.createShop();
                 }
@@ -170,6 +174,11 @@
             emailAddress: function (data) {
                 if (data.length > 0) {
                     this.clearError("emailAddress");
+                }
+            },
+            description: function (data) {
+                if (data.length > 0) {
+                    this.clearError("description");
                 }
             }
         }

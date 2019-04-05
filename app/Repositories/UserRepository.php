@@ -14,22 +14,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository
 {
-    const DEFAULT_USER_ABOUT = [
-        'about' => [
-            'description' => null,
-            'location' => null,
-            'phone_number' => null
-        ]
-    ];
-
-    const DEFAULT_SHOP_SETTINGS = [
-        'settings' => [
-            'enable_following' => true,
-            'enable_notifications' => true,
-            'enable_messaging' => true
-        ]
-    ];
-
     /**
      * Get user by id
      *
@@ -58,19 +42,6 @@ class UserRepository
      */
     public function create($data) {
         return User::create($data)->createCart();
-    }
-
-    /**
-     * Get a collection of users
-     *
-     * @param int $offset
-     * @param int $limit
-     * @param null $active
-     * @return Collection
-     */
-    public function all($offset = 0, $limit = 10, $active = null) {
-        return $active ? User::where('active', '=', $active)->skip($offset)->take($limit)->get()
-            : User::skip($offset)->take($limit)->get();
     }
 
     /**

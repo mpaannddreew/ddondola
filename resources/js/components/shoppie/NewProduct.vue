@@ -71,10 +71,37 @@
                     </div>
                 </div>
             </div>
+            <div class="card mb-4" id="attributes">
+                <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
+                    <h5>
+                        <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">create</i> Product Attributes</a>
+                    </h5>
+                </div>
+                <div class="card-body p-4 border border-top-0">
+                    <div class="form-row" v-for="(attribute, indx) in attributes" :key="indx">
+                        <div class="form-group col-md-5">
+                            <input type="text" class="form-control" placeholder="Name" v-model="attribute.name" :id="indx + '_name'">
+                            <div class="invalid-feedback" :id="indx + '_name_feedback'"></div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <input type="text" class="form-control" placeholder="Value" v-model="attribute.value" :id="indx + '_value'">
+                            <div class="invalid-feedback" :id="indx + '_value_feedback'"></div>
+                        </div>
+                        <div class="form-group col-md-2 p-0">
+                            <button type="button" class="btn btn-sm btn-success" @click="addRow">
+                                <i class="material-icons">add</i> Add
+                            </button>
+                            <button type="button" class="btn btn-sm btn-link text-danger" v-if="showRemove" @click="removeRow(indx)">
+                                <i class="material-icons">clear</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card mb-4">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
-                        <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">label_outline</i> Stock Information</a>
+                        <a class="btn btn-link" href="javascript:void(0)"><span>03</span><i class="material-icons">label_outline</i> Stock Information</a>
                     </h5>
                 </div>
                 <div class="card-body p-4 border border-top-0">
@@ -103,7 +130,7 @@
             <div class="card mb-4">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
-                        <a class="btn btn-link" href="javascript:void(0)"><span>03</span><i class="material-icons">add_a_photo</i> Product Pictures</a>
+                        <a class="btn btn-link" href="javascript:void(0)"><span>04</span><i class="material-icons">add_a_photo</i> Product Pictures</a>
                     </h5>
                 </div>
                 <div class="card-body p-4 border border-top-0">
@@ -207,12 +234,12 @@
                 loading: false,
                 error: false,
                 images: [],
-                stages: ["general", "stock", "pictures"],
-                stage: "general"
+                attributes: [{name: '', value: ''}]
             }
         },
         methods: {
             loadShopCategoriesAndBrands() {
+                this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopCategoriesAndBrands,
                     variables: {id: this.shop.id, count: 50, page: 1}
@@ -237,7 +264,8 @@
                             name: this.name,
                             active: !!this.status,
                             stock: {quantity: this.quantity, note: this.note, type: 'STOCK_IN'},
-                            minimum_stock: this.notifyBelowQuantity
+                            minimum_stock: this.notifyBelowQuantity,
+                            attributes: this.attributes
                         }
                     }
                 }).then(this.clearForm).catch(function (error) {});
@@ -266,6 +294,8 @@
                 if (!this.notifyBelowQuantity.length > 0)
                     this.showError('notifyBelowQuantity', "Product minimum stock indicator is required");
 
+                this.validateAttributes();
+
                 if (!this.error) {
                     this.createProduct();
                 }
@@ -293,6 +323,7 @@
                 this.notifyBelowQuantity = "";
                 this.quantity = "";
                 this.note = "";
+                this.attributes = [{name: '', value: ''}];
                 DToast("success", "Product created successfully")
                 // $('.row .images .col-md-3.col-sm-3.col-4.col-lg-3.col-xl-2').remove();
             },
@@ -331,6 +362,29 @@
                 //         };
                 //     }
                 // }
+            },
+            addRow() {
+                if (this.numberOfAttributes < 10) {
+                    this.attributes.push({name: '', value: ''});
+                } else {
+                    DToast('error', "Only 10 attributes are supported")
+                }
+            },
+            removeRow(index) {
+                if (this.numberOfAttributes > 1) {
+                    this.attributes.splice(index, 1)
+                }
+            },
+            validateAttributes() {
+                for(var i = 0; i < this.numberOfAttributes; i++) {
+                    var name = i + '_name';
+                    var value = i + '_value';
+                    if (!$("#" + name).val().length > 0)
+                        this.showError(name, "Attribute name is required");
+
+                    if (!$("#" + value).val().length > 0)
+                        this.showError(value, "Attribute value is required");
+                }
             }
         },
         watch: {
@@ -372,9 +426,24 @@
                 if (data) {
                     this.clearError('notifyBelowQuantity');
                 }
+            },
+            attributes: {
+                handler(data) {
+                    for(var i = 0; i < this.numberOfAttributes; i++) {
+                        this.clearError(i + '_name');
+                        this.clearError(i + '_value');
+                    }
+                },
+                deep: true
             }
         },
         computed: {
+            numberOfAttributes() {
+                return this.attributes.length;
+            },
+            showRemove() {
+                return this.numberOfAttributes > 1;
+            },
             requirementsLoaded() {
                 return this.hasCategories && this.hasSubCategories && this.hasBrands;
             },
@@ -423,5 +492,7 @@
 </script>
 
 <style scoped>
-
+    div#attributes .form-row:last-child .form-group {
+        margin-bottom: 0 !important;
+    }
 </style>

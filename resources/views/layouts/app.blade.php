@@ -13,6 +13,10 @@
 
     <!-- Stylesheets
     ================================================= -->
+    <link rel="stylesheet" href="{{ asset('css/material-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/theme.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/extras.1.2.0.min.css') }}"/>
     @yield('stylesheets')
     <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
@@ -27,6 +31,13 @@
 <!-- Scripts
 ================================================= -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('js/libs/popper.js/1.14.3/umd/popper.min.js') }}"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/libs/Chart.js/2.7.1/Chart.min.js') }}"></script>
+<script src="{{ asset('js/theme.min.js') }}"></script>
+<script src="{{ asset('js/libs/Sharrre/2.0.1/jquery.sharrre.min.js') }}"></script>
+<script src="{{ asset('js/extras.min.js') }}"></script>
+<script src="{{ asset('js/theme-extra.min.js') }}"></script>
 @yield('javascripts')
 <script src="{{ asset('js/app.js') }}" defer></script>
 @yield('scripts')

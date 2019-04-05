@@ -47,7 +47,7 @@
                         <tr>
                             <td colspan="4">
                                 <div align="center">
-                                    <h4>
+                                    <h4 class="m-0">
                                         <i class="material-icons">error_outline</i>
                                         <br />
                                         <small>You have not added any categories yet!</small>

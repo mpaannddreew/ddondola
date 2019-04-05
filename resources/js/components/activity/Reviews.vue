@@ -1,39 +1,38 @@
 <template>
     <div>
-        <div class="row mb-4">
-            <div class="col-12 col-sm-6 text-center text-sm-left mb-sm-0">
-                <h4 class="page-title m-0">Reviews</h4>
-            </div>
-            <div class="col-12 col-sm-6 d-flex align-items-center">
-                <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
-                    <a href="#review-form" class="btn btn-success" data-toggle="modal" :class="{disabled: !isReviewedLoaded}">
-                        <i class="material-icons">rate_review</i> {{ reviewText }}
-                    </a>
+        <div class="card card-small border">
+            <div class="card-header border-bottom">
+                <div class="row">
+                    <div class="col-12 col-sm-6 text-center text-sm-left mb-sm-0">
+                        <h5 class="page-title m-0"><img src="/images/feed.png" alt="" style="filter: grayscale(100%);"> Reviews</h5>
+                    </div>
+                    <div class="col-12 col-sm-6 d-flex align-items-center">
+                        <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
+                            <a href="#review-form" class="btn btn-success" data-toggle="modal" :class="{disabled: !isReviewedLoaded}">
+                                <i class="material-icons">rate_review</i> {{ reviewText }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="card-body p-0">
+                <template v-if="!loaded">
+                    <div align="center" class="p-4"><div class="loader"></div></div>
+                </template>
+                <template v-else-if="!hasReviews && loaded">
+                    <div align="center" class="p-4">
+                        <h4>
+                            <i class="material-icons">error_outline</i>
+                            <br />
+                            <small>No reviews about this entity have been added. Be the first!</small>
+                        </h4>
+                    </div>
+                </template>
+                <review v-else-if="hasReviews && loaded" v-for="(review, indx) in reviews" :review="review" :key="indx"></review>
             </div>
         </div>
-        <template v-if="!loaded">
-            <div align="center"><div class="loader"></div></div>
-        </template>
-        <template v-else-if="!hasReviews && loaded">
-            <div align="center">
-                <h4>
-                    <i class="material-icons">error_outline</i>
-                    <br />
-                    <small>No reviews about this entity have been added. Be the first!</small>
-                </h4>
-            </div>
-        </template>
-        <template v-else-if="hasReviews && loaded">
-            <section id="reviews">
-                <div class="reviews-container">
-                    <template v-for="(review, indx) in reviews">
-                        <review :review="review" :key="indx"></review>
-                    </template>
-                </div>
-            </section>
-        </template>
-        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
+        <a href="javascript:void(0)" class="btn-view btn-load-more border"></a>
+        <!--<pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>-->
         <div class="modal fade" id="review-form" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <!-- Modal content-->

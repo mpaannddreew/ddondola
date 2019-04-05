@@ -4,7 +4,7 @@
 @section('profile')
     <div class="row">
         <div class="col-md-4">
-            <about></about>
+            <about :user="{{ $user }}"></about>
         </div>
         <div class="col-md-6">
             <activities></activities>

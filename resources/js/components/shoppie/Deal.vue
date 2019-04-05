@@ -1,23 +1,27 @@
 <template>
-    <div class="owl-item deals_item">
+    <div class="deals_item">
         <div class="deals_image">
             <img src="/images/products/hoodie-man-1.png" alt="">
         </div>
         <div class="deals_content">
-            <div class="deals_info_line d-flex flex-row justify-content-start">
-                <div class="deals_item_category"><a href="#">Headphones</a></div>
-                <div class="deals_item_price_a ml-auto">$300</div>
+            <div class="text-center">
+                <span class="text-muted d-block">{{ deal.subcategory.name }}</span>
+                <h4 class="mb-2 text-ellipsis">{{ deal.name }}</h4>
             </div>
-            <div class="deals_info_line d-flex flex-row justify-content-start">
-                <div class="deals_item_name">Beoplay H7</div>
-                <div class="deals_item_price ml-auto">$225</div>
+            <div class="text-center">
+                <ul class="price list-inline no-margin">
+                    <li class="list-inline-item deals_item_price_a text-primary">UGX {{ deal.discountedPrice }}</li>
+                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;">UGX {{ deal.price }}</li>
+                </ul>
             </div>
             <div class="available">
                 <div class="available_line d-flex flex-row justify-content-start">
                     <div class="available_title">Available: <span>6</span></div>
                     <div class="sold_title ml-auto">Already sold: <span>28</span></div>
                 </div>
-                <div class="available_bar"><span style="width:17%"></span></div>
+                <div class="progress progress-sm mb-3 bg-light border">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 17%;"></div>
+                </div>
             </div>
             <div class="deals_timer d-flex flex-row justify-content-start">
                 <div class="deals_timer_title_container">
@@ -25,18 +29,15 @@
                     <div class="deals_timer_subtitle">Offer ends in:</div>
                 </div>
                 <div class="deals_timer_content ml-auto">
-                    <div class="deals_timer_box clearfix" data-target-time="">
-                        <div class="deals_timer_unit">
-                            <div id="deals_timer1_hr" class="deals_timer_hr"></div>
-                            <span>hours</span>
+                    <div class="deals_timer_box clearfix">
+                        <div class="deals_timer_unit border-right">
+                            <div id="deals_timer1_hr" class="deals_timer_hr">{{ hours }}</div>
+                        </div>
+                        <div class="deals_timer_unit border-right">
+                            <div id="deals_timer1_min" class="deals_timer_min">{{ minutes }}</div>
                         </div>
                         <div class="deals_timer_unit">
-                            <div id="deals_timer1_min" class="deals_timer_min"></div>
-                            <span>mins</span>
-                        </div>
-                        <div class="deals_timer_unit">
-                            <div id="deals_timer1_sec" class="deals_timer_sec"></div>
-                            <span>secs</span>
+                            <div id="deals_timer1_sec" class="deals_timer_sec">{{ seconds }}</div>
                         </div>
                     </div>
                 </div>
@@ -53,77 +54,61 @@
         },
         data() {
             return {
-
+                days: null,
+                hours: null,
+                minutes: null,
+                seconds: null
+            }
+        },
+        props: {
+            deal: {
+                type: Object,
+                required: true
+            }
+        },
+        computed: {
+            target_date() {
+                return Moment(this.offer.end_date).valueOf();
+            },
+            offer() {
+                return this.deal.offers.data[0];
             }
         },
         methods: {
             initTimer() {
                 if($('.deals_timer_box').length)
                 {
-                    var timer = $('.deals_timer_box');
+                    setInterval(this.countDown, 1000);
+                }
+            },
+            countDown() {
+                // find the amount of "seconds" between now and target
+                var current_date = new Date().getTime();
+                var seconds_left = (this.target_date - current_date) / 1000;
 
-                    var targetTime;
-                    var target_date;
+                // do some time calculations
+                this.days = parseInt(seconds_left / 86400);
+                seconds_left = seconds_left % 86400;
 
-                    // Add a date to data-target-time of the .deals_timer_box
-                    // Format: "Feb 17, 2018"
-                    if(timer.data('target-time') !== "")
-                    {
-                        targetTime = timer.data('target-time');
-                        target_date = new Date(targetTime).getTime();
-                    }
-                    else
-                    {
-                        var date = new Date();
-                        date.setDate(date.getDate() + 2);
-                        target_date = date.getTime();
-                    }
-
-                    // variables for time units
-                    var days, hours, minutes, seconds;
-
-                    var h = timer.find('.deals_timer_hr');
-                    var m = timer.find('.deals_timer_min');
-                    var s = timer.find('.deals_timer_sec');
-
-                    setInterval(function ()
-                    {
-                        // find the amount of "seconds" between now and target
-                        var current_date = new Date().getTime();
-                        var seconds_left = (target_date - current_date) / 1000;
-                        console.log(seconds_left);
-
-                        // do some time calculations
-                        days = parseInt(seconds_left / 86400);
-                        seconds_left = seconds_left % 86400;
-
-                        hours = parseInt(seconds_left / 3600);
-                        hours = hours + days * 24;
-                        seconds_left = seconds_left % 3600;
+                this.hours = parseInt(seconds_left / 3600);
+                this.hours = this.hours + this.days * 24;
+                seconds_left = seconds_left % 3600;
 
 
-                        minutes = parseInt(seconds_left / 60);
-                        seconds = parseInt(seconds_left % 60);
+                this.minutes = parseInt(seconds_left / 60);
+                this.seconds = parseInt(seconds_left % 60);
 
-                        if(hours.toString().length < 2)
-                        {
-                            hours = "0" + hours;
-                        }
-                        if(minutes.toString().length < 2)
-                        {
-                            minutes = "0" + minutes;
-                        }
-                        if(seconds.toString().length < 2)
-                        {
-                            seconds = "0" + seconds;
-                        }
-
-                        // display results
-                        h.text(hours);
-                        m.text(minutes);
-                        s.text(seconds);
-
-                    }, 1000);
+                if(this.hours.toString().length < 2)
+                {
+                    this.hours = "0" + this.hours;
+                }
+                if(this.minutes.toString().length < 2)
+                {
+                    this.minutes = "0" + this.minutes;
+                }
+                if(this.seconds.toString().length < 2)
+                {
+                    this.seconds = "0" + this.seconds;
                 }
             }
         }

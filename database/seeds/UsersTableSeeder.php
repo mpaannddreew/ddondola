@@ -5,17 +5,17 @@ use Illuminate\Database\Seeder;
 class UsersTableSeeder extends Seeder
 {
     /**
-     * @var \Ddondola\Repositories\UserRepository
+     * @var \Ddondola\Repositories\CountryRepository
      */
-    protected $users;
+    protected $countries;
 
     /**
      * UsersTableSeeder constructor.
-     * @param \Ddondola\Repositories\UserRepository $users
+     * @param \Ddondola\Repositories\CountryRepository $countries
      */
-    public function __construct(\Ddondola\Repositories\UserRepository $users)
+    public function __construct(\Ddondola\Repositories\CountryRepository $countries)
     {
-        $this->users = $users;
+        $this->countries = $countries;
     }
 
     /**
@@ -25,29 +25,38 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = $this->users->create([
-            'first_name' => 'Andrew',
-            'last_name' => 'Mpande',
-            'email' => 'andrew@ddondola.com',
-            'email_verified_at' => \Carbon\Carbon::now(),
-            'password' => bcrypt('secret')
-        ]);
+        $this->countries->addCountries();
+        $country = $this->countries->code('ug');
 
-        $user_2 = $this->users->create([
-            'first_name' => 'Faridah',
-            'last_name' => 'Nankinzi',
-            'email' => 'faridah@ddondola.com',
-            'email_verified_at' => \Carbon\Carbon::now(),
-            'password' => bcrypt('secret')
-        ]);
+        $users = [
+            [
+                'first_name' => 'Andrew',
+                'last_name' => 'Mpande',
+                'email' => 'andrew@ddondola.com',
+                'email_verified_at' => \Carbon\Carbon::now(),
+                'password' => bcrypt('secret')
+            ],
+            [
+                'first_name' => 'Faridah',
+                'last_name' => 'Nankinzi',
+                'email' => 'faridah@ddondola.com',
+                'email_verified_at' => \Carbon\Carbon::now(),
+                'password' => bcrypt('secret')
+            ]
+        ];
 
-        $shopCategory = \Shoppie\Facades\Shoppie::newShopCategory('Fashion', 'This represents fashion shops');
-        $shop = $user->newShop($shopCategory, ['name' => 'K & K Electronics']);
+        foreach ($users as $user) {
+            $country->users()->create($user);
+        }
 
-        $productCategory = \Shoppie\Facades\Shoppie::newProductCategory($shop, "Men's Collection");
-        $productSubCategory = \Shoppie\Facades\Shoppie::newProductSubCategory($productCategory, "T-shirts");
-        $productBrand = \Shoppie\Facades\Shoppie::newProductBrand($shop, "Calvin Klein");
-        $product = \Shoppie\Facades\Shoppie::newProduct($productSubCategory, $productBrand, ['name' => 'Elegant Lake', 'price' => '100000']);
+        $shop_categories = [
+            'Machinery/Mechanical Parts/Tools', 'Consumer Electronics/Home Appliances', 'Auto/Transportation',
+            'Apparel/Textiles/Timepieces', 'Home & Garden/Construction/Lights', 'Beauty & Personal Care/Health'
+        ];
+
+        foreach ($shop_categories as $category) {
+            \Shoppie\Facades\Shoppie::newShopCategory($category);
+        }
 
     }
 }

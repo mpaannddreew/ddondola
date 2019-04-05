@@ -2,12 +2,12 @@
 
 namespace Ddondola\Http\Controllers\Auth;
 
-use Ddondola\Repositories\UserRepository;
-use Ddondola\User;
+use Ddondola\Repositories\CountryRepository;
 use Ddondola\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -31,17 +31,17 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
-    protected $users;
+    protected $countries;
 
     /**
      * Create a new controller instance.
      *
-     * @param UserRepository $users
+     * @param CountryRepository $countries
      */
-    public function __construct(UserRepository $users)
+    public function __construct(CountryRepository $countries)
     {
         $this->middleware('guest');
-        $this->users = $users;
+        $this->countries = $countries;
     }
 
     /**
@@ -53,6 +53,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'country' => [
+                'required', 'numeric',
+                Rule::exists('countries')->where(function ($query) use ($data) {
+                    $query->where('id', $data["country"])->where('active', 1);
+                }),
+            ],
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -64,15 +70,25 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \Ddondola\User
+     * @return \Ddondola\User|\Illuminate\Database\Eloquent\Model
      */
     protected function create(array $data)
     {
-        return $this->users->create([
+        return $this->countries->id($data["country"])->users()->create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register', ['countries' => $this->countries->active()]);
     }
 }

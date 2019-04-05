@@ -5,12 +5,20 @@
     <!--Reset Password Form-->
     <form name="Login_form" method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
         @csrf
-        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+        <div class="form-group">
             <label for="my-email">{{ __('E-Mail Address') }}</label>
-            <input class="form-control" type="email" name="email" title="Enter Email" value="{{ old('email') }}"/>
-            <i class="fa fa-envelope"></i>
+            <div class="input-group">
+                <div class="input-group input-group-seamless">
+                    <span class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">email</i>
+                      </span>
+                    </span>
+                    <input class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" name="email" title="Enter Email" value="{{ old('email') }}"/>
+                </div>
+            </div>
             @if ($errors->has('email'))
-                <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert" style="display: block;">
                     <strong>{{ $errors->first('email') }}</strong>
                 </span>
             @endif

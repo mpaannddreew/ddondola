@@ -187,22 +187,6 @@ a.btn_1.outline:focus, .btn_1.outline:focus {
     display: block
 }
 
-#login aside form .form-group input, #register aside form .form-group input {
-    padding-left: 40px
-}
-
-#login aside form .form-group i, #register aside form .form-group i {
-    font-size: 21px;
-    font-size: 1.3125rem;
-    position: absolute;
-    left: 12px;
-    top: 34px;
-    color: #ed1e8e;
-    width: 25px;
-    height: 25px;
-    display: block;
-    font-weight: 400 !important
-}
 
 #login aside .copy, #register aside .copy {
     text-align: center;
@@ -279,7 +263,6 @@ a.btn_1.outline:focus, .btn_1.outline:focus {
 }
 
 .form-control {
-    height: calc(2.55rem + 2px);
     font-size: 14px;
     font-size: 0.875rem;
     -webkit-border-radius: 3px;

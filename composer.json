@@ -15,8 +15,8 @@
         "mll-lab/laravel-graphql-playground": "^1.0",
         "nuwave/lighthouse": "^2.6",
         "overtrue/laravel-follow": "^1.1",
-        "silber/bouncer": "v1.0.0-rc.3",
-        "spatie/laravel-medialibrary": "^7.0.0"
+        "rinvex/countries": "^5.0",
+        "silber/bouncer": "v1.0.0-rc.3"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

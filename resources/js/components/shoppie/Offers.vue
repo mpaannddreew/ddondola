@@ -42,7 +42,7 @@
                     <tr>
                         <td colspan="4">
                             <div align="center">
-                                <h4>
+                                <h4 class="m-0">
                                     <i class="material-icons">error_outline</i>
                                     <br />
                                     <small>There are no offers added for this product yet!</small>
@@ -206,7 +206,6 @@
                 this.loading = false;
             },
             clearForm(response) {
-                console.log(JSON.stringify(response.data));
                 if (response.data.data.offer) {
                     this.discount = '';
                     this.start_date = '';
@@ -214,6 +213,7 @@
                     this.loading = false;
                     $("#new-offer").modal('hide');
                     DToast("success", "Offer created successfully");
+                    this.loadPage(1);
                 }else {
                     $("#new-offer").modal('hide');
                     DToast("error", "Product already has a running offer");
@@ -237,10 +237,7 @@
                 });
             },
             humanize(datetime) {
-                return Moment(datetime).format("dddd, MMMM Do YYYY, h:mm:ss a");
-            },
-            endsIn(datetime) {
-                return Moment(datetime).fromNow();
+                return Moment(datetime).format("dddd, MMMM Do YYYY");
             }
         },
         watch: {

@@ -295,11 +295,11 @@ ul.edit-menu li.active::before{
     transform: translate(-50%,-50%);
 }
 
-ul.edit-menu li i.icon{
+ul.edit-menu li i{
     font-size: 16px;
 }
 
-ul.edit-menu li.active i.icon{
+ul.edit-menu li.active i{
     color: #b31e5a;
 }
 

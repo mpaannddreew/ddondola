@@ -5,7 +5,7 @@
 @section('profile')
     <div class="row">
         <div class="col-md-4">
-            <about></about>
+            <about :user="{{ Auth::user() }}"></about>
         </div>
         <div class="col-md-8">
             <notifications></notifications>

@@ -146,6 +146,8 @@ window.graphql = {
                 price
                 discount
                 reviewCount
+                averageRating
+                discountedPrice
                 category {
                   name
                 }
@@ -181,6 +183,8 @@ window.graphql = {
                 price
                 discount
                 reviewCount
+                averageRating
+                discountedPrice
                 category {
                   name
                 }
@@ -216,6 +220,8 @@ window.graphql = {
                 price
                 discount
                 reviewCount
+                averageRating
+                discountedPrice
                 category {
                   name
                 }
@@ -306,6 +312,8 @@ window.graphql = {
               price
               discount
               reviewCount
+              averageRating
+              discountedPrice
               category {
                 name
               }
@@ -335,6 +343,13 @@ window.graphql = {
             name
           }
         }`,
+    editProduct: `mutation editProduct($productId: ID! $product: EditProduct!){
+          editProduct(productId: $productId product: $product) {
+            id
+            code
+            name
+          }
+        }`,
     relatedProducts: `query relatedProducts($id: ID!) {
           product(id: $id) {
             products:relatedProducts {
@@ -346,6 +361,8 @@ window.graphql = {
               price
               discount
               reviewCount
+              averageRating
+              discountedPrice
               category {
                 name
               }
@@ -559,6 +576,8 @@ window.graphql = {
                   price
                   discount
                   reviewCount
+                  averageRating
+                  discountedPrice
                   category {
                     name
                   }
@@ -590,6 +609,8 @@ window.graphql = {
             code
             discount
             reviewCount
+            averageRating
+            discountedPrice
             category {
               name
             }
@@ -729,6 +750,7 @@ window.graphql = {
                 price
                 name
                 code
+                discountedPrice
                 pivot:cartPivot {
                   id
                   sum
@@ -770,5 +792,37 @@ window.graphql = {
                 end_date
                 cancel
             }
+        }`,
+    activeShopOffers: `query activeShopOffers($shopId: ID! $ordering: String! $count: Int! $page: Int!) {
+          shop(id: $shopId) {
+            deals: activeOffers {
+              id
+              name
+              code
+              active
+              quantity
+              price
+              discount
+              reviewCount
+              averageRating
+              discountedPrice
+              category {
+                name
+              }
+              subcategory {
+                name
+              }
+              brand {
+                name
+              }
+              offers(ordering: $ordering, count: $count, page: $page) {
+                data {
+                  discount
+                  start_date
+                  end_date
+                }
+              }
+            }
+          }
         }`
 };

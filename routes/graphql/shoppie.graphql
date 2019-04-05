@@ -37,8 +37,10 @@ type Shop {
     brands: [ProductBrand!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedBrands")
     reviews: [Review!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@paginatedReviews")
     reviewCount: Int! @method(name: "reviewCount")
+    averageRating: String! @method(name: "averageRating")
     products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     productCount: Int! @method(name: "productCount")
+    activeOffers: [Product!] @method(name: "activeOffers")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -81,8 +83,14 @@ type ProductBrand {
     updated_at: DateTime!
 }
 
+type Attribute {
+    name: String!
+    value: String!
+}
+
 type ProductSettings {
     minimum_stock: String!
+    attributes: [Attribute!]!
 }
 
 type CartPivot {
@@ -121,9 +129,11 @@ type Product {
     relatedProducts: [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@relatedProducts")
     reviews: [Review!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@paginatedReviews")
     reviewCount: Int! @method(name: "reviewCount")
+    averageRating: String! @method(name: "averageRating")
     orders: [Order!] @belongsToMany(type: "paginator")
     carts: [Cart!] @belongsToMany(type: "paginator")
     discount: Int! @method(name: "discount")
+    discountedPrice: Int! @method(name: "discountedPrice")
     cartPivot: CartPivot
     orderPivot: OrderPivot
     created_at: DateTime!
@@ -171,8 +181,8 @@ type ProductOffer {
     id: ID!
     product: Product! @belongsTo
     discount: String!
-    start_date: DateTime!
-    end_date: DateTime!
+    start_date: Date!
+    end_date: Date!
     cancel: Boolean!
     created_at: DateTime!
     updated_at: DateTime!
@@ -214,6 +224,11 @@ input NewOffer {
     end_date: String!
 }
 
+input NewAttribute {
+    name: String!
+    value: String!
+}
+
 input NewProduct {
     categoryId: ID!
     brandId: ID!
@@ -221,8 +236,20 @@ input NewProduct {
     price: String!
     description: String
     active: Boolean!
+    attributes: [NewAttribute!]!
     minimum_stock: String!
     stock: NewStock!
+}
+
+input EditProduct {
+    categoryId: ID
+    brandId: ID
+    name: String
+    price: String
+    description: String
+    active: Boolean
+    minimum_stock: String
+    attributes: [NewAttribute!]
 }
 
 input ProductFilter {
@@ -251,6 +278,7 @@ extend type Mutation {
     createCategory(shopId: ID! category: NewProductCategory!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")
     createSubCategory(categoryId: ID! subcategory: NewProductSubCategory!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
     createProduct(product: NewProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProduct")
+    editProduct(productId: ID! product: EditProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editProduct")
     updateStock(productId: ID! stock: NewStock!): Stock! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateStock")
     likeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@likeShop")
     addToCart(id: ID! quantity: Int!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@addToCart")

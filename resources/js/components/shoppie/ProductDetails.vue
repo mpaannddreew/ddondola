@@ -26,15 +26,6 @@
                                 <li class="list-inline-item current" v-if="product.discount">UGX {{ product.discounted_price }}</li>
                                 <li class="list-inline-item" :class="{original: product.discount, current: !product.discount}">UGX {{ product.price }}</li>
                             </ul>
-                            <div class="review d-flex align-items-center">
-                                <ul class="rate list-inline">
-                                    <li class="list-inline-item"><i class="fa fa-star text-primary"></i></li>
-                                    <li class="list-inline-item"><i class="fa fa-star text-primary"></i></li>
-                                    <li class="list-inline-item"><i class="fa fa-star text-primary"></i></li>
-                                    <li class="list-inline-item"><i class="fa fa-star text-primary"></i></li>
-                                    <li class="list-inline-item"><i class="fa fa-star-o text-primary"></i></li>
-                                </ul><span class="text-muted">5 reviews</span>
-                            </div>
                         </div>
                         <dl class="my-2">
                             <dt>Description</dt>
@@ -44,13 +35,13 @@
                         </dl>
                         <dl class="row">
                             <dt class="col-sm-3">Brand</dt>
-                            <dd class="col-sm-9">12345611</dd>
+                            <dd class="col-sm-9">{{ product.brand_name }}</dd>
 
                             <dt class="col-sm-3">Category</dt>
-                            <dd class="col-sm-9">Black and white </dd>
+                            <dd class="col-sm-9">{{ product.sub_category.category.name }}</dd>
 
                             <dt class="col-sm-3">Subcategory</dt>
-                            <dd class="col-sm-9">Russia, USA, and Europe </dd>
+                            <dd class="col-sm-9">{{ product.sub_category.name }}</dd>
 
                             <dt class="col-sm-3">Orders</dt>
                             <dd class="col-sm-9">154 orders</dd>
@@ -98,23 +89,19 @@
             <div v-if="reviews">
                 <div class="row">
                     <div class="col-md-4">
-                        <rating-meter></rating-meter>
+                        <rating-meter :reviewable="product"></rating-meter>
 
-                        <div class="box border" style="box-shadow: none !important;">
-                            <dl>
-                                <dt class="text-muted">Description</dt>
-                                <dd> Dolor sit amet, consectetur adipisicing elit do eiusmod
-                                    tempor incididunt</dd>
-                            </dl>
-                            <dl>
-                                <dt class="text-muted">Parameter</dt>
-                                <dd>Value name</dd>
-                            </dl>
-                            <dl>
-                                <dt class="text-muted">Discount</dt>
-                                <dd>USD 658</dd>
-                            </dl>
-                        </div> <!-- box.// -->
+                        <div class="card card-small border" v-if="hasAttributes">
+                            <div class="card-header border-bottom">
+                                <h5 class="m-0">Product Attributes</h5>
+                            </div>
+                            <div class="card-body">
+                                <dl class="dlist-inline" v-for="(attribute, indx) in attributes">
+                                    <dt class="text-muted">{{ attribute.name }}: </dt>
+                                    <dd>{{ attribute.value }}</dd>
+                                </dl>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="col-md-8">
@@ -167,6 +154,12 @@
             },
             messageUrl() {
                 return '/me/messenger/' + this.product.shop.code;
+            },
+            attributes() {
+                return Collect(this.product.settings).get('attributes', []);
+            },
+            hasAttributes() {
+                return this.attributes.length > 0;
             }
         },
         methods: {

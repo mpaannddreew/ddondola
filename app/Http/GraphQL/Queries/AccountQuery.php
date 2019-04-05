@@ -83,7 +83,8 @@ class AccountQuery
     {
         return $this->status(User::select())
             ->where("first_name", "like", "%" . collect($args)->get("name") . "%")
-            ->orWhere("last_name", "like", "%" . collect($args)->get("name") . "%")->get();
+            ->orWhere("last_name", "like", "%" . collect($args)->get("name") . "%")
+            ->where("active", "=", 1)->get();
     }
 
     protected function orderBy($builder, $column="created_at", $order="desc") {

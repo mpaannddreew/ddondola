@@ -8,7 +8,7 @@
         <div class="card card-small border" v-else-if="!hasProducts && loaded">
             <div class="card-body">
                 <div align="center">
-                    <h4>
+                    <h4 class="m-0">
                         <i class="material-icons">error_outline</i>
                         <br />
                         <small>You have not added any products to cart!</small>

@@ -6,11 +6,11 @@
         <div class="col-md-3">
             <ul class="edit-menu m-4">
                 <li class="@yield('info-active')">
-                    <i class="icon ion-ios-information-outline"></i>
+                    <i class="fa fa-info-circle"></i>
                     <a href="{{ route('my.profile.edit') }}">General</a>
                 </li>
                 <li class="@yield('settings-active')">
-                    <i class="icon ion-ios-settings"></i>
+                    <i class="fa fa-cogs"></i>
                     <a href="{{ route('my.profile.edit.settings') }}">Settings</a>
                 </li>
             </ul>

@@ -49,6 +49,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile' => 'array'
     ];
 
+    public function country() {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
     /**
      * return user's name
      *

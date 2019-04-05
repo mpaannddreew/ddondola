@@ -4,53 +4,119 @@
 @section('auth')
     <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
         @csrf
-        <div class="form-group {{ $errors->has('first_name') ? ' has-error' : '' }}">
+        <div class="form-group">
+            <label for="category">{{ __('Country') }}</label>
+            <div class="input-group">
+                <div class="input-group input-group-seamless">
+                    <span class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">flag</i>
+                      </span>
+                    </span>
+                    <select name="country" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('country') ? ' is-invalid' : '' }}" tabindex="-1" aria-hidden="true">
+                        <option></option>
+                        @foreach($countries as $country)
+                            <option value="{{ $country->id }}">
+                                {{ $country->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            @if ($errors->has('country'))
+                <span class="invalid-feedback" role="alert" style="display: block;">
+                    <strong>{{ $errors->first('country') }}</strong>
+                </span>
+            @endif
+        </div>
+        <div class="form-group">
             <label for="first_name">{{ __('First name') }}</label>
-            <input class="form-control" value="{{ old('first_name') }}" type="text" name="first_name" title="Enter first name"/>
-            <i class="fa fa-user"></i>
+            <div class="input-group">
+                <div class="input-group input-group-seamless">
+                    <span class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">person</i>
+                      </span>
+                    </span>
+                    <input class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" type="text" name="first_name" title="Enter first name"/>
+                </div>
+            </div>
             @if ($errors->has('first_name'))
-                <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert" style="display: block;">
                     <strong>{{ $errors->first('first_name') }}</strong>
                 </span>
             @endif
         </div>
-        <div class="form-group {{ $errors->has('last_name') ? ' has-error' : '' }}">
+        <div class="form-group">
             <label for="last_name">{{ __('Last name') }}</label>
-            <input class="form-control" value="{{ old('last_name') }}" type="text" name="last_name" title="Enter last name"/>
-            <i class="fa fa-user"></i>
+            <div class="input-group">
+                <div class="input-group input-group-seamless">
+                    <span class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">person</i>
+                      </span>
+                    </span>
+                    <input class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}" value="{{ old('last_name') }}" type="text" name="last_name" title="Enter last name"/>
+                </div>
+            </div>
             @if ($errors->has('last_name'))
-                <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert" style="display: block;">
                     <strong>{{ $errors->first('last_name') }}</strong>
                 </span>
             @endif
         </div>
-        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+        <div class="form-group">
             <label for="my-email">{{ __('E-Mail Address') }}</label>
-            <input class="form-control" type="email" name="email" title="Enter Email" value="{{ old('email') }}"/>
-            <i class="fa fa-envelope"></i>
+            <div class="input-group">
+                <div class="input-group input-group-seamless">
+                    <span class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">email</i>
+                      </span>
+                    </span>
+                    <input class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" name="email" title="Enter Email" value="{{ old('email') }}"/>
+                </div>
+            </div>
             @if ($errors->has('email'))
-                <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert" style="display: block;">
                     <strong>{{ $errors->first('email') }}</strong>
                 </span>
             @endif
         </div>
 
-        <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+        <div class="form-group">
             <label for="my-password">{{ __('Password') }}</label>
-            <input class="form-control" type="password" name="password" title="Enter password"/>
-            <i class="fa fa-key"></i>
+            <div class="input-group">
+                <div class="input-group input-group-seamless">
+                    <span class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">lock</i>
+                      </span>
+                    </span>
+                    <input class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" name="password" title="Enter password"/>
+                </div>
+            </div>
             @if ($errors->has('password'))
-                <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert" style="display: block;">
                     <strong>{{ $errors->first('password') }}</strong>
                 </span>
             @endif
         </div>
-        <div class="form-group {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+        <div class="form-group">
             <label for="password-confirm">{{ __('Confirm Password') }}</label>
-            <input id="password-confirm" class="form-control" type="password" name="password_confirmation" title="Enter password"/>
-            <i class="fa fa-key"></i>
+            <div class="input-group">
+                <div class="input-group input-group-seamless">
+                    <span class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">lock</i>
+                      </span>
+                    </span>
+                    <input id="password-confirm" class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" type="password" name="password_confirmation" title="Enter password"/>
+                </div>
+            </div>
             @if ($errors->has('password_confirmation'))
-                <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert" style="display: block;">
                     <strong>{{ $errors->first('password_confirmation') }}</strong>
                 </span>
             @endif
