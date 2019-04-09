@@ -2,6 +2,21 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
+interface Muddondozi @interface(resolver: "Ddondola\\Http\\GraphQL\\Interfaces\\Muddondozi@resolveType") {
+    id: ID!
+    code: String!
+    type: String!
+}
+
+type Country {
+    id: ID!
+    code: String!
+    name: String!
+    details: String! @method(name: "details")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
 type UserProfile {
     phone_number: String
     email: String
@@ -13,9 +28,10 @@ type UserSettings {
     discount: String
 }
 
-type User {
+type User implements Muddondozi {
     id: ID!
     code: String!
+    type: String! @method(name: "type")
     name: String! @method(name: "name")
     first_name: String!
     last_name: String!
@@ -38,7 +54,7 @@ type User {
 
 type Query {
     me: User! @auth
-    users: [User!]! @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedUsers")
+    users(myCountry: Boolean): [User!]! @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedUsers")
     user(id: ID @eq): User @find(model: "Ddondola\\User")
     iFollowUser(id: ID!): Boolean! @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@iFollowUser")
     searchUsers(name: String!): [User!] @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@searchUsers")

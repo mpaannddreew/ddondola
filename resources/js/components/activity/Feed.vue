@@ -17,7 +17,7 @@
 <script>
     import Activity from "./Activity";
     export default {
-        name: "Activities",
+        name: "Feed",
         components: {Activity},
         mounted() {
 
@@ -26,9 +26,22 @@
             return {}
         },
         props: {
-            title: {
+            actor: {
+                type: Object,
+                required: false
+            },
+            actorType: {
                 type: String,
-                default: "Timeline"
+                default: 'user'
+            },
+            feedType: {
+                type: String,
+                default: 'timeline'
+            }
+        },
+        computed: {
+            title() {
+                return this.feedType === 'timeline' ? 'Timeline': 'News Feed';
             }
         }
     }

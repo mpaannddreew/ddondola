@@ -13,10 +13,10 @@
                         <i class="material-icons">flag</i>
                       </span>
                     </span>
-                    <select name="country" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('country') ? ' is-invalid' : '' }}" tabindex="-1" aria-hidden="true">
+                    <select name="id" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('id') ? ' is-invalid' : '' }}" tabindex="-1" aria-hidden="true">
                         <option></option>
                         @foreach($countries as $country)
-                            <option value="{{ $country->id }}">
+                            <option value="{{ $country->id }}" {{ old('id') == $country->id ? 'selected': '' }}>
                                 {{ $country->name }}
                             </option>
                         @endforeach
@@ -24,9 +24,9 @@
                 </div>
             </div>
 
-            @if ($errors->has('country'))
+            @if ($errors->has('id'))
                 <span class="invalid-feedback" role="alert" style="display: block;">
-                    <strong>{{ $errors->first('country') }}</strong>
+                    <strong>{{ $errors->first('id') }}</strong>
                 </span>
             @endif
         </div>

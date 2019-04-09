@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="mb-4">
+        <div class="mb-2">
             <div class="row no-gutters">
                 <div class="col-12 col-sm-6 mb-2 mb-lg-0">
                     <form action="POST">
@@ -60,7 +60,7 @@
                         <td>{{ category.name }}</td>
                         <td>{{ category.category.name }}</td>
                         <td class="text-center">{{ category.productCount }}</td>
-                        <td></td>
+                        <td>{{ category.description }}</td>
                         <td>
                             <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
                                 <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
@@ -72,7 +72,7 @@
                 </tbody>
             </table>
         </div>
-        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
+        <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         <div class="modal fade" id="new-subcategory" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -142,7 +142,6 @@
                 loaded: false,
                 categoriesLoaded: false,
                 page: 1,
-                count: 10,
                 name: '',
                 description: '',
                 categoryId: '',
@@ -179,7 +178,7 @@
             subcategoryRequest() {
                 return axios.post(graphql.api, {
                     query: graphql.shopProductSubCategories,
-                    variables: {id: this.shop.id, count: this.count, page: this.page}
+                    variables: {id: this.shop.id, count: graphql.rowCount, page: this.page}
                 });
             },
             loadCategories() {
@@ -187,6 +186,8 @@
                 axios.all(requests).then(axios.spread(this.spreadResponse));
             },
             refreshSubCaregories() {
+                this.loaded = false;
+                this.categories = [];
                 this.subcategoryRequest().then(this.loadData).catch(function (error) {})
             },
             spreadResponse(subcategories, categories) {

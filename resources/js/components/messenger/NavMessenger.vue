@@ -15,8 +15,7 @@
         name: "NavMessenger",
         data() {
             return {
-                unReadCount: 5,
-                isNav: true
+                unReadCount: 5
             }
         },
         props: {

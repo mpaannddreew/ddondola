@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="container py-4">
+        <div class="container py-2">
             <div class="card card-small lo-stats border">
                 <table class="table mb-0">
                     <thead class="py-2 bg-light text-semibold border-bottom">
@@ -69,7 +69,7 @@
                     </tbody>
                 </table>
             </div>
-            <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
+            <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
             <div class="modal fade" id="update-stock" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <!-- Modal content-->
@@ -123,7 +123,6 @@
                 note: '',
                 stock: [],
                 page: 1,
-                count: 10,
                 available: '',
                 showing: 'all',
                 loaded: false,
@@ -155,9 +154,11 @@
                 this.loadPage(1);
             },
             fetchStock() {
+                this.loaded = false;
+                this.stock = [];
                 axios.post(graphql.api, {
                     query: graphql.productStock,
-                    variables: {id: this.product.id, type: this.showing, count: this.count, page: this.page}
+                    variables: {id: this.product.id, type: this.showing, count: graphql.rowCount, page: this.page}
                 }).then(this.loadStock).catch(function (error) {})
             },
             loadStock(response) {

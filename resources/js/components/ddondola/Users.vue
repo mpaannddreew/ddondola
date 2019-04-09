@@ -35,7 +35,6 @@
             return {
                 users: [],
                 page: 1,
-                count: 12,
                 loaded: false,
                 paginatorInfo: null
             }
@@ -76,7 +75,7 @@
                 }
             },
             variables() {
-                var variables = {count: this.count, page: this.page};
+                var variables = {count: graphql.columnCount, page: this.page};
                 if (this.type === "followers" || this.type === "following") {
                     variables["id"] = this.user.id;
                 }

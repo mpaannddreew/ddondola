@@ -9,7 +9,7 @@
     </div>
 @endsection
 @section('main')
-    <div class="container py-4">
+    <div class="container py-2">
         <users type="users" url="{{ url("/") }}" :me="{{ Auth::user() }}"></users>
     </div>
 @endsection

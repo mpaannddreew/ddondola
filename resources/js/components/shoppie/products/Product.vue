@@ -27,9 +27,12 @@
             <ul class="list-inline text-warning" v-html="starHtml"></ul>
             <small class="text-muted">{{ product.subcategory.name }}</small>
             <a :href="productUrl">
-                <h3 class="h6 text-uppercase no-margin-bottom m-0">{{ product.name }}</h3>
+                <h3 class="h6 text-uppercase no-margin-bottom m-0 text-ellipsis">{{ product.name }}</h3>
             </a>
-            <span class="price text-muted">UGX {{ product.price }}</span>
+            <ul class="price list-inline no-margin">
+                <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice }}</li>
+                <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price }}</li>
+            </ul>
         </div>
     </div>
 </template>

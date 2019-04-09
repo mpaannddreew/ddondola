@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="mb-4">
+        <div class="mb-2">
             <div class="row no-gutters">
                 <div class="col-12 col-sm-6 mb-2 mb-lg-0">
                     <select class="form-control form-control-sm custom-select custom-select-sm" style="max-width: 130px;" v-model="ordering">
@@ -69,7 +69,7 @@
                 </tbody>
             </table>
         </div>
-        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
+        <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         <div class="modal fade" id="new-offer" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -127,7 +127,6 @@
                 loaded: false,
                 loading: false,
                 error: false,
-                count: 10,
                 page: 1,
                 ordering: 'all',
                 paginatorInfo: null
@@ -150,7 +149,7 @@
                 this.offers = [];
                 axios.post(graphql.api, {
                     query: graphql.productsOffers,
-                    variables: {id: this.product.id, ordering: this.ordering, count: this.count, page: this.page}
+                    variables: {id: this.product.id, ordering: this.ordering, count: graphql.rowCount, page: this.page}
                 }).then(this.loadOffers).catch(function (error) {});
             },
             loadOffers(response) {

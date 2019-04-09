@@ -2,8 +2,8 @@
 
 namespace Ddondola;
 
-use Activity\Traits\Actor;
 use Activity\Traits\Reviewer;
+use Ddondola\Traits\Muddondozi;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,7 +21,7 @@ use Shoppie\Traits\Seller;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, Seller, Buyer, Converser, HasApiTokens, CanLike, CanFollow,
-        CanBeFollowed, CanFavorite, Identifier, Reviewer, Actor;
+        CanBeFollowed, CanFavorite, Identifier, Reviewer, Muddondozi;
 
     /**
      * The attributes that are mass assignable.

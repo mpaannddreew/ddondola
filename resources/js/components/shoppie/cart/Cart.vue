@@ -48,6 +48,11 @@
                                                     <i class="fa fa-chevron-left"></i> Continue Shopping
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a :href="checkoutUrl" class="btn btn-lg btn-pill btn-outline-primary" style="text-transform: uppercase;">
+                                                    Proceed to checkout <i class="fa fa-chevron-right"></i>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </td>
                                 </tr>
@@ -57,19 +62,14 @@
                     </div>
                 </div>
             </section>
-            <section class="order-details py-4">
+            <section class="order-details py-2">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6 pl-0">
+                        <div class="col-lg-6 pl-0 pr-2">
                             <coupon-code></coupon-code>
                         </div>
-                        <div class="col-lg-6 pr-0 mb-4">
+                        <div class="col-lg-6 pr-0 pl-2">
                             <order-summary></order-summary>
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <a :href="checkoutUrl" class="btn btn-lg btn-pill btn-outline-primary" style="text-transform: uppercase;">
-                                Proceed to checkout <i class="fa fa-chevron-right"></i>
-                            </a>
                         </div>
                     </div>
                 </div>

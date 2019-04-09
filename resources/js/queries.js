@@ -1,5 +1,7 @@
 window.graphql = {
     api: '/web/api',
+    rowCount: 10,
+    columnCount: 12,
     categories: `{
           categories:shopCategories {
             id
@@ -48,6 +50,7 @@ window.graphql = {
                 data {
                     id
                     name
+                    description
                     productCount
                     categoryCount
                 }
@@ -70,6 +73,7 @@ window.graphql = {
                 data {
                     id
                     name
+                    description
                     productCount
                 }
                 paginatorInfo {
@@ -106,6 +110,7 @@ window.graphql = {
                     data {
                         id
                         name
+                        description
                         productCount
                         category {
                           name
@@ -148,6 +153,7 @@ window.graphql = {
                 reviewCount
                 averageRating
                 discountedPrice
+                currencyCode
                 category {
                   name
                 }
@@ -185,6 +191,7 @@ window.graphql = {
                 reviewCount
                 averageRating
                 discountedPrice
+                currencyCode
                 category {
                   name
                 }
@@ -222,6 +229,7 @@ window.graphql = {
                 reviewCount
                 averageRating
                 discountedPrice
+                currencyCode
                 category {
                   name
                 }
@@ -256,6 +264,7 @@ window.graphql = {
               reviewCount
               coverPicture
               avatar
+              currencyCode
               category {
                 name
               }
@@ -284,6 +293,7 @@ window.graphql = {
                 reviewCount
                 coverPicture
                 avatar
+                currencyCode
                 category {
                   name
                 }
@@ -314,6 +324,7 @@ window.graphql = {
               reviewCount
               averageRating
               discountedPrice
+              currencyCode
               category {
                 name
               }
@@ -363,6 +374,7 @@ window.graphql = {
               reviewCount
               averageRating
               discountedPrice
+              currencyCode
               category {
                 name
               }
@@ -578,6 +590,7 @@ window.graphql = {
                   reviewCount
                   averageRating
                   discountedPrice
+                  currencyCode
                   category {
                     name
                   }
@@ -611,6 +624,7 @@ window.graphql = {
             reviewCount
             averageRating
             discountedPrice
+            currencyCode
             category {
               name
             }
@@ -690,6 +704,7 @@ window.graphql = {
                     reviewer {
                         name
                         avatar
+                        code
                     }
                 }
                 paginatorInfo {
@@ -716,6 +731,7 @@ window.graphql = {
                     reviewer {
                         name
                         avatar
+                        code
                     }
                 }
                 paginatorInfo {
@@ -751,6 +767,7 @@ window.graphql = {
                 name
                 code
                 discountedPrice
+                currencyCode
                 pivot:cartPivot {
                   id
                   sum
@@ -806,6 +823,7 @@ window.graphql = {
               reviewCount
               averageRating
               discountedPrice
+              currencyCode
               category {
                 name
               }

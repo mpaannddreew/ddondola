@@ -23,8 +23,8 @@
                         <h3 class="title mb-3">{{ product.name }}</h3>
                         <div class="d-flex align-items-center justify-content-between flex-column flex-sm-row mb-3">
                             <ul class="price list-inline no-margin">
-                                <li class="list-inline-item current" v-if="product.discount">UGX {{ product.discounted_price }}</li>
-                                <li class="list-inline-item" :class="{original: product.discount, current: !product.discount}">UGX {{ product.price }}</li>
+                                <li class="list-inline-item current" v-if="product.discount">{{ product.currency_code }} {{ product.discounted_price }}</li>
+                                <li class="list-inline-item" :class="{original: product.discount, current: !product.discount}">{{ product.currency_code }} {{ product.price }}</li>
                             </ul>
                         </div>
                         <dl class="my-2">
@@ -79,9 +79,6 @@
                     <li class="nav-item">
                         <a href="javascript:void(0)" @click="showReviews" class="nav-link" :class="{active: reviews}"><i class="material-icons">rate_review</i> Reviews</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="javascript:void(0)" @click="showRelated" class="nav-link" :class="{active: !reviews}"><i class="material-icons">folder</i> Related Products</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -108,9 +105,6 @@
                         <reviews :reviewable="product" reviewable-type="product"></reviews>
                     </div>
                 </div>
-            </div>
-            <div v-else>
-                <related-products :product="product" :url="url"></related-products>
             </div>
         </div>
     </div>

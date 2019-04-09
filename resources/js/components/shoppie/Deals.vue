@@ -6,9 +6,25 @@
             </div>
         </div>
         <div class="card card-small border" v-else-if="loaded && hasDeals">
-            <div class="card-body p-0">
-                <div class="deals m-0">
-                    <div class="deals_title">Active shop deals</div>
+            <div class="card-header border-bottom">
+                <div class="row">
+                    <div class="col-12 col-sm-6 text-center text-sm-left mb-sm-0">
+                        <h5 class="page-title m-0">Deals</h5>
+                    </div>
+                    <div class="col-12 col-sm-6 d-flex align-items-center">
+                        <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
+                            <a href="javascript:void(0)" class="btn btn-white" :class="{disabled: !hasPrevious}" @click="previous">
+                                <i class="fa fa-chevron-left ml-auto"></i>
+                            </a>
+                            <a href="javascript:void(0)" class="btn btn-white" :class="{disabled: !hasNext}" @click="next">
+                                <i class="fa fa-chevron-right ml-auto"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="deals m-0 p-0">
                     <div class="deals_slider_container">
 
                         <!-- Deals Slider -->
@@ -19,15 +35,6 @@
                             </div>
                         </div>
 
-                    </div>
-
-                    <div class="deals_slider_nav_container">
-                        <div class="deals_slider_prev deals_slider_nav">
-                            <i class="fa fa-chevron-left ml-auto" @click="previous"></i>
-                        </div>
-                        <div class="deals_slider_next deals_slider_nav">
-                            <i class="fa fa-chevron-right ml-auto" @click="next"></i>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -62,17 +69,12 @@
             },
             dealsCount() {
                 return this.deals.length;
-            }
-        },
-        watch: {
-            deals: {
-                handler(data) {
-                    console.log(data.length);
-                    if (data.length > 0) {
-                        this.initDealsSlider();
-                    }
-                },
-                deep: true
+            },
+            hasNext() {
+                return this.active < (this.dealsCount - 1)
+            },
+            hasPrevious() {
+                return this.active > 0;
             }
         },
         methods: {
@@ -91,12 +93,12 @@
                 return this.active === indx;
             },
             previous() {
-                if (this.active > 0) {
+                if (this.hasPrevious) {
                     this.active --;
                 }
             },
             next() {
-                if (this.active < (this.dealsCount - 1)) {
+                if (this.hasNext) {
                     this.active ++;
                 }
             }

@@ -31,8 +31,8 @@
                 <review v-else-if="hasReviews && loaded" v-for="(review, indx) in reviews" :review="review" :key="indx"></review>
             </div>
         </div>
-        <a href="javascript:void(0)" class="btn-view btn-load-more border"></a>
-        <!--<pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>-->
+        <!--<a href="javascript:void(0)" class="btn-view btn-load-more border"></a>-->
+        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         <div class="modal fade" id="review-form" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -116,7 +116,6 @@
                 isReviewed: false,
                 isReviewedLoaded: false,
                 page: 1,
-                count: 12,
                 loaded: false,
                 paginatorInfo: null,
                 rating: "",
@@ -160,7 +159,7 @@
             reviewRequest() {
                 return axios.post(graphql.api, {
                     query: this.query,
-                    variables: {id: this.reviewable.id, count: this.count, page: this.page}
+                    variables: {id: this.reviewable.id, count: graphql.rowCount, page: this.page}
                 });
             },
             isReviewedRequest() {

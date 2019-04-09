@@ -16,6 +16,7 @@
         <td class="lo-stats__items text-center">{{ product.category.name }}</td>
         <td class="lo-stats__items text-center">{{ product.subcategory.name }}</td>
         <td class="lo-stats__items text-center">{{ product.brand.name }}</td>
+        <td class="lo-stats__items text-center">{{ product.currencyCode }} {{ product.discountedPrice }}</td>
         <td class="lo-stats__actions">
             <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
                 <a :href="url + '/products/' + product.code" class="btn btn-sm btn-white"><i class="fa fa-wrench"></i></a>

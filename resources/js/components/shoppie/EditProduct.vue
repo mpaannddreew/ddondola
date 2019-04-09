@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="checkout-process" v-else-if="loaded && requirementsLoaded">
-            <div class="card mb-4">
+            <div class="card mb-2">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)">
@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="price">General Price</label>
-                            <input type="text" class="form-control" id="price" v-model="price">
+                            <input type="text" class="form-control" id="price" v-model="price" :placeholder="product.currency_code">
                             <div class="invalid-feedback" id="price_feedback"></div>
                         </div>
                         <div class="form-group col-md-12">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-4" id="attributes">
+            <div class="card mb-2" id="attributes">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">create</i> Product Attributes</a>

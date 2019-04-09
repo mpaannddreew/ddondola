@@ -13,11 +13,11 @@
                     <span class="contact-date text-ellipsis">Hey there, this is Andrew. Did you get it?</span>
                 </div>
             </router-link>
-            <ul class="contact-action" v-if="!isNav">
-                <li class="dropdown dropdown-action">
-                    <a href="#" class="dropdown-toggle action-icon" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                    <div class="dropdown-menu dropdown-menu-sm-right p-1">
-                        <a class="dropdown-item p-1" href="javascript:void(0)"><i class="fa fa-trash-o"></i> Delete</a>
+            <ul class="contact-action" style="list-style: none;">
+                <li class="dropdown dropdown-action dropdown-menu-sm-left">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                    <div class="dropdown-menu dropdown-menu-small" style="display: none;">
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="material-icons">delete_forever</i> Delete</a>
                     </div>
                 </li>
             </ul>
@@ -37,10 +37,6 @@
             homeUrl: {
                 type: String,
                 require: true
-            },
-            isNav: {
-                type: Boolean,
-                default: false
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <div class="row no-gutters">
                     <div class="col-12 col-sm-6 mb-2 mb-lg-0">
                         <form action="POST">
@@ -61,7 +61,7 @@
                             <td>{{ category.name }}</td>
                             <td>{{ category.categoryCount }}</td>
                             <td class="lo-stats__items text-center">{{ category.productCount }}</td>
-                            <td></td>
+                            <td>{{ category.description }}</td>
                             <td>
                                 <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
                                     <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
@@ -74,7 +74,7 @@
                 </table>
             </div>
         </div>
-        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
+        <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         <div class="modal fade" id="new-category" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -118,7 +118,6 @@
                 categories: [],
                 loaded: false,
                 page: 1,
-                count: 10,
                 name: '',
                 description: '',
                 error: false,
@@ -139,9 +138,11 @@
         },
         methods: {
             loadCategories() {
+                this.loaded = false;
+                this.categories = [];
                 axios.post(graphql.api, {
                     query: graphql.shopProductCategories,
-                    variables: {id: this.shop.id, count: this.count, page: this.page}
+                    variables: {id: this.shop.id, count: graphql.rowCount, page: this.page}
                 }).then(this.loadData).catch(function () {});
             },
             loadData(response) {

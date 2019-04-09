@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="products-grid p-0">
-            <header class="d-flex justify-content-between align-items-start mb-4">
+            <header class="d-flex justify-content-between align-items-start mb-2">
                 <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
                 <span class="visible-items" v-else></span>
                 <div class="btn-group">
@@ -45,7 +45,6 @@
             return {
                 products: [],
                 loaded: false,
-                count: 12,
                 page: 1,
                 ordering: '',
                 paginatorInfo: null
@@ -76,7 +75,7 @@
                 this.products = [];
                 axios.post(graphql.api, {
                     query: this.query,
-                    variables: {count: this.count, filters: {ordering: this.ordering}, page: this.page}
+                    variables: {count: graphql.columnCount, filters: {ordering: this.ordering}, page: this.page}
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {

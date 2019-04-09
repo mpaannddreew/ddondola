@@ -14,14 +14,15 @@ type ShopCategory {
     code: String!
     name: String!
     description: String
-    shops(categoryId: Int): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
+    shops(myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
     created_at: DateTime!
     updated_at: DateTime!
 }
 
-type Shop {
+type Shop implements Muddondozi {
     id: ID!
     code: String!
+    type: String! @method(name: "type")
     name: String!
     category: ShopCategory! @belongsTo
     owner: User! @belongsTo
@@ -41,6 +42,7 @@ type Shop {
     products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     productCount: Int! @method(name: "productCount")
     activeOffers: [Product!] @method(name: "activeOffers")
+    currencyCode: String! @method(name: "currencyCode")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -134,6 +136,7 @@ type Product {
     carts: [Cart!] @belongsToMany(type: "paginator")
     discount: Int! @method(name: "discount")
     discountedPrice: Int! @method(name: "discountedPrice")
+    currencyCode: String! @method(name: "currencyCode")
     cartPivot: CartPivot
     orderPivot: OrderPivot
     created_at: DateTime!
@@ -260,9 +263,9 @@ input ProductFilter {
 extend type Query {
     shopCategories: [ShopCategory!] @all(model: "Shoppie\\ShopCategory")
     shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
-    shops(categoryId: Int): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
+    shops(categoryId: Int myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
     product(id: ID! @eq): Product! @find(model: "Shoppie\\Product")
-    products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
+    products(filters: ProductFilter myCountry: Boolean): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
     productCategory(id: ID! @eq): ProductCategory! @find(model: "Shoppie\\ProductCategory")
     productSubCategory(id: ID! @eq): ProductSubCategory! @find(model: "Shoppie\\ProductSubCategory")
     iLikeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@iLikeShop")

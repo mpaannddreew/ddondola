@@ -53,16 +53,21 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'country' => [
+            'id' => [
                 'required', 'numeric',
                 Rule::exists('countries')->where(function ($query) use ($data) {
-                    $query->where('id', $data["country"])->where('active', 1);
+                    $query->where('id', $data["id"])->where('active', 1);
                 }),
             ],
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+        ],
+        [
+            'id.required' => 'You need to select a country',
+            'id.exists' => 'You need to select a valid country',
+            'id.numeric' => 'You need to select a valid country'
         ]);
     }
 
@@ -74,7 +79,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return $this->countries->id($data["country"])->users()->create([
+        return $this->countries->id($data["id"])->users()->create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],

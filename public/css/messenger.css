@@ -1,6 +1,4 @@
 .messenger {
-    border-bottom: 1px solid #e1e5eb;
-    border-right: 1px solid #e1e5eb;
     position: relative;
     height: calc(99.9vh - 3.75rem - 1px);
     overflow: hidden;

@@ -18,41 +18,53 @@
             </h4>
         </div>
         <div class="row" v-else-if="showProductsArea && loaded">
-            <div class="col-md-3">
+            <div class="col-md-3 px-2">
                 <div class="sidebar">
-                    <div class="block border-bottom">
-                        <h6 class="text-uppercase mb-3">Product Categories</h6>
-                        <ul class="list-unstyled">
-                            <template v-for="(category, indx) in categories" >
-                                <li :key="indx" :id="'category-' + category.id" :class="{active: categoryId === category.id}" v-if="category.productCount">
-                                    <a href="javascript:void(0);" class="d-flex justify-content-between align-items-center" @click="showCategory(category.id)">
-                                        <span>{{ category.name }}</span><small>{{ category.productCount }}</small>
-                                    </a>
-                                    <ul class="list-unstyled">
-                                        <template v-for="(subcategory, indx_) in category.categories.data">
-                                            <li :key="indx_" :id="'subcategory-' + subcategory.id" :class="{active: subcategoryId === subcategory.id}" v-if="subcategory.productCount">
-                                                <a href="javascript:void(0);" @click="showSubcategory(subcategory.id, category.id)">{{ subcategory.name }}</a>
-                                            </li>
-                                        </template>
-                                    </ul>
-                                </li>
-                            </template>
-                        </ul>
-                    </div>
-                    <div class="block">
-                        <h6 class="text-uppercase">Brands</h6>
-                        <template v-for="(brand, indx) in brands">
-                            <div class="custom-control custom-checkbox mb-3" :key="indx" v-if="brand.productCount">
-                                <input :id="'brand_' + indx" type="checkbox" name="clothes-brand" class="custom-control-input" v-model="brandIds" :value="brand.id">
-                                <label class="custom-control-label" :for="'brand_' + indx">{{ brand.name }} <small>({{ brand.productCount }})</small></label>
+                    <div class="card card-small border mb-2">
+                        <div class="card-header border-bottom">
+                            <h6 class="m-0"><i class="material-icons">folder</i> Product Categories</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="block p-0 m-0">
+                                <ul class="list-unstyled mr-0">
+                                    <template v-for="(category, indx) in categories" >
+                                        <li :key="indx" :id="'category-' + category.id" :class="{active: categoryId === category.id}" v-if="category.productCount">
+                                            <a href="javascript:void(0);" class="d-flex justify-content-between align-items-center" @click="showCategory(category.id)">
+                                                <span><i class="material-icons">label</i> {{ category.name }}</span><small>{{ category.productCount }}</small>
+                                            </a>
+                                            <ul class="list-unstyled">
+                                                <template v-for="(subcategory, indx_) in category.categories.data">
+                                                    <li :key="indx_" :id="'subcategory-' + subcategory.id" :class="{active: subcategoryId === subcategory.id}" v-if="subcategory.productCount">
+                                                        <a href="javascript:void(0);" @click="showSubcategory(subcategory.id, category.id)"><i class="material-icons">label_outline</i> {{ subcategory.name }}</a>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </li>
+                                    </template>
+                                </ul>
                             </div>
-                        </template>
+                        </div>
+                    </div>
+                    <div class="card card-small border">
+                        <div class="card-header border-bottom">
+                            <h6 class="m-0"><i class="material-icons">folder</i> Brands</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="block p-0 m-0">
+                                <template v-for="(brand, indx) in brands">
+                                    <div class="custom-control custom-checkbox" :class="{ 'mb-3': indx !== (brands.length - 1) }" :key="indx" v-if="brand.productCount">
+                                        <input :id="'brand_' + indx" type="checkbox" name="clothes-brand" class="custom-control-input" v-model="brandIds" :value="brand.id">
+                                        <label class="custom-control-label d-flex" style="display: block;" :for="'brand_' + indx">{{ brand.name }} <small class="ml-auto">({{ brand.productCount }})</small></label>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 px-2">
                 <div class="products-grid p-0" id="products">
-                    <header class="d-flex justify-content-between align-items-start">
+                    <header class="d-flex justify-content-between align-items-start mb-2">
                         <visible-items :paginator-info="paginatorInfo" v-if="showProducts && productsLoaded && paginatorInfo"></visible-items>
                         <span class="visible-items" v-else></span>
                         <div class="btn-group">
@@ -114,7 +126,6 @@
                 subcategoryId: '',
                 loaded: false,
                 productsLoaded: false,
-                count: 12,
                 page: 1,
                 ordering: '',
                 paginatorInfo: null
@@ -140,7 +151,7 @@
                 }
             },
             productVariables() {
-                var variables = {filters: this.filters, count: this.count, page: this.page};
+                var variables = {filters: this.filters, count: graphql.columnCount, page: this.page};
 
                 if (this.subcategoryId) {
                     variables["subcategoryId"] = this.subcategoryId;

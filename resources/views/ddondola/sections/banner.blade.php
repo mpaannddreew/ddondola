@@ -9,7 +9,7 @@
                 <div class="col-12 col-md-12 mb-4 mb-lg-0">
                     <a href="javascript:void(0)" class="text-white">
                         <div class="media d-block d-sm-flex text-sm-left text-center">
-                            <img style="width: 100px; height: 100px;" src="{{ $user->avatar() }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 rounded mb-4 mb-md-0" alt="" />
+                            <img style="width: 100px; height: 100px;" src="{{ $user->avatar() }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 mb-4 mb-md-0" alt="" />
                             <div class="media-body align-self-center">
                                 <h5 class="text-white lis-font-weight-500 lis-line-height-1">{{ $user->name() }}</h5>
                                 <p class="mb-0">{{ $user->viewFollower() }}</p>
@@ -30,8 +30,7 @@
                         <li class="nav-item"><a href="{{ route('my.profile') }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>
                         <li class="nav-item"><a href="{{ route('my.followers') }}" class="nav-link @yield('followers-active')"><i class="material-icons">people</i> Followers</a></li>
                         <li class="nav-item"><a href="{{ route('my.following') }}" class="nav-link @yield('following-active')"><i class="material-icons">people_outline</i> Following</a></li>
-                        <li class="nav-item"><a href="{{ route('my.notifications') }}" class="nav-link @yield('notifications-active')"><i class="material-icons">notifications</i> Notifications</a></li>
-                        <li class="nav-item"><a href="{{ route('my.profile.edit') }}" class="nav-link @yield('edit-active')"><i class="material-icons">mode_edit</i> Edit</a></li>
+                        <li class="nav-item"><a href="{{ route('my.settings') }}" class="nav-link @yield('settings-active')"><i class="material-icons">settings</i> Settings</a></li>
                     @else
                         <li class="nav-item"><a href="{{ route('user.profile', ['user' => $user->code]) }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>
                         <li class="nav-item"><a href="{{ route('user.followers', ['user' => $user->code]) }}" class="nav-link @yield('followers-active')"><i class="material-icons">people</i> Followers</a></li>

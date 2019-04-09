@@ -19,7 +19,8 @@
                                 <table class="table table-bordered text-center border-left">
                                     <thead>
                                     <tr class="row-1 border-right">
-                                        <th class="row-title text-left">Product Name</th>
+                                        <th class="row-title">Item</th>
+                                        <th class="row-title">Product Name</th>
                                         <th class="row-title">Price</th>
                                         <th class="row-title">Quantity</th>
                                         <th class="row-title">Subtotal</th>
@@ -28,25 +29,26 @@
                                     <tbody>
                                     <template v-for="(product, indx) in products">
                                         <tr class="row-2">
-                                            <td class="product-name">{{ product.name }}</td>
-                                            <td class="product-price">{{ product.pivot.price }}</td>
+                                            <td class="row-img"><img src="/images/cart/cart-inner-img-1.jpg" alt="cart-img"></td>
+                                            <td class="product-name"><a :href="'/products/ + product.code'">{{ product.name }}</a></td>
+                                            <td class="product-price">{{ product.currencyCode }} {{ product.pivot.price }}</td>
                                             <td class="product-quantity">{{ product.pivot.quantity }}</td>
-                                            <td class="product-subtotal">{{ product.pivot.sum }}</td>
+                                            <td class="product-subtotal">{{ product.currencyCode }} {{ product.pivot.sum }}</td>
                                         </tr>
                                     </template>
                                     </tbody>
                                     <tfoot>
                                     <tr class="row-4">
-                                        <td class="text-left" colspan="3">Cart Subtotal</td>
-                                        <td class="pr_subtotal">{{ cartSubtotal }}</td>
+                                        <td class="text-left" colspan="4">Cart Subtotal</td>
+                                        <td class="pr_subtotal">{{ currencyCode }} {{ cartSubtotal }}</td>
                                     </tr>
                                     <!--<tr class="row-5">-->
                                         <!--<td class="text-left" colspan="3">Promotional Code</td>-->
                                         <!--<td class="pr_subtotal">-$5.00</td>-->
                                     <!--</tr>-->
                                     <tr class="row-6">
-                                        <td class="text-left" colspan="3">Order Total</td>
-                                        <td class="product-subtotal">{{ orderTotal }}</td>
+                                        <td class="text-left" colspan="4">Order Total</td>
+                                        <td class="product-subtotal">{{ currencyCode }} {{ orderTotal }}</td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -55,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card mt-4 border-top">
+            <div class="card mt-2 border-top">
                 <div class="card-header form-wizard-step border-right border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link collapsed" href="javascript:void(0)"><span>02</span><i class="material-icons">payment</i> Payment Method</a>
@@ -111,6 +113,9 @@
             },
             orderTotal() {
                 return this.cartSubtotal;
+            },
+            currencyCode() {
+                return this.products[0].currencyCode;
             }
         },
         methods: {

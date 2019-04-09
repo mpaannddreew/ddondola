@@ -4,7 +4,7 @@
             <div align="center"><div class="loader"></div></div>
         </template>
         <div v-else-if="loaded">
-            <header class="d-flex justify-content-between align-items-start">
+            <header class="d-flex justify-content-between align-items-start mb-2">
                 <visible-items :paginator-info="paginatorInfo" v-if="showShops && paginatorInfo"></visible-items>
                 <span class="visible-items" v-else-if="!showShops"></span>
                 <div class="btn-group">
@@ -31,7 +31,7 @@
                     </h4>
                 </div>
             </template>
-            <div class="friend-list my-4" v-else-if="showShops && shopsLoaded">
+            <div class="friend-list mb-4 mt-2" v-else-if="showShops && shopsLoaded">
                 <div class="row">
                     <template v-for="(shop, indx) in shops">
                         <div class="col-md-4 col-sm-4">
@@ -59,7 +59,6 @@
                 categories: [],
                 categoryId: "0",
                 page: 1,
-                count: 12,
                 loaded: false,
                 shopsLoaded: false,
                 paginatorInfo: null
@@ -78,7 +77,7 @@
             shopsRequest() {
                 return axios.post(graphql.api, {
                     query: this.shopQuery,
-                    variables: {categoryId: parseInt(this.categoryId), count: this.count, page: this.page}
+                    variables: {categoryId: parseInt(this.categoryId), count: graphql.columnCount, page: this.page}
                 });
             },
             categoryRequest() {
@@ -96,7 +95,6 @@
                 this.categories = categories.data.data.categories;
             },
             loadShops(shops) {
-                console.log(JSON.stringify(shops.data));
                 this.shopsLoaded = true;
                 this.shops = this.mine ? shops.data.data.me.shops.data: shops.data.data.shops.data;
                 this.paginatorInfo = this.mine ? shops.data.data.me.shops.paginatorInfo: shops.data.data.shops.paginatorInfo;

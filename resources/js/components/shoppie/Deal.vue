@@ -1,17 +1,17 @@
 <template>
-    <div class="deals_item">
+    <div class="deals_item" v-if="showDeal">
         <div class="deals_image">
             <img src="/images/products/hoodie-man-1.png" alt="">
         </div>
         <div class="deals_content">
             <div class="text-center">
                 <span class="text-muted d-block">{{ deal.subcategory.name }}</span>
-                <h4 class="mb-2 text-ellipsis">{{ deal.name }}</h4>
+                <a :href="'/products/' + deal.code"><h4 class="mb-2 text-ellipsis">{{ deal.name }}</h4></a>
             </div>
             <div class="text-center">
                 <ul class="price list-inline no-margin">
-                    <li class="list-inline-item deals_item_price_a text-primary">UGX {{ deal.discountedPrice }}</li>
-                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;">UGX {{ deal.price }}</li>
+                    <li class="list-inline-item deals_item_price_a text-primary">{{ deal.currencyCode }} {{ deal.discountedPrice }}</li>
+                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;">{{ deal.currencyCode }} {{ deal.price }}</li>
                 </ul>
             </div>
             <div class="available">
@@ -23,12 +23,12 @@
                     <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 17%;"></div>
                 </div>
             </div>
-            <div class="deals_timer d-flex flex-row justify-content-start">
-                <div class="deals_timer_title_container">
-                    <div class="deals_timer_title">Hurry Up</div>
-                    <div class="deals_timer_subtitle">Offer ends in:</div>
-                </div>
-                <div class="deals_timer_content ml-auto">
+            <div class="deals_timer_title_container text-center">
+                <div class="deals_timer_title">Hurry Up</div>
+                <div class="deals_timer_subtitle">Offer ends in</div>
+            </div>
+            <div class="deals_timer d-flex flex-row justify-content-center mt-2">
+                <div class="deals_timer_content">
                     <div class="deals_timer_box clearfix">
                         <div class="deals_timer_unit border-right">
                             <div id="deals_timer1_hr" class="deals_timer_hr">{{ hours }}</div>
@@ -72,6 +72,9 @@
             },
             offer() {
                 return this.deal.offers.data[0];
+            },
+            showDeal() {
+                return (this.target_date - (new Date().getTime())) / 1000 > 0;
             }
         },
         methods: {

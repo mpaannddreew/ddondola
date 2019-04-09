@@ -85,7 +85,7 @@
                                     '            </div>\n' +
                                     '            <div class="col pl-3">\n' +
                                     '                <h6 class="m-0">' + data.name + '</h6>\n' +
-                                    '                <span class="text-light">' + data.category.name +' | ' + data.subcategory.name + ' | ' + data.brand.name + ' | ' + data.reviewCount + ' Review(s) | UGX ' + data.price + '</span>\n' +
+                                    '                <span class="text-light">' + data.category.name +' | ' + data.subcategory.name + ' | ' + data.brand.name + ' | ' + data.reviewCount + ' Review(s) | UGX ' + data.discountedPrice + '</span>\n' +
                                     '            </div>\n' +
                                     '        </div>\n' +
                                     '      </a>' +

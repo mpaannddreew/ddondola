@@ -18,7 +18,7 @@
                 </ul>
             </div>
         </div>
-        <div class="container py-4">
+        <div class="container py-2">
             <div class="row">
                 <div class="col-12 col-sm-6 text-center text-sm-left mb-4 mb-sm-0">
                     <div class="input-daterange input-group input-group-md w-100">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-small lo-stats h-100 border mt-4">
+            <div class="card card-small lo-stats h-100 border mt-2">
                 <table class="table mb-0">
                     <thead class="py-2 bg-light text-semibold border-bottom">
                     <tr>

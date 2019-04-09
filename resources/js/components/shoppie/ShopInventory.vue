@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <div class="row no-gutters">
                     <div class="col-lg-6 mb-2 mb-lg-0">
                         <form action="POST">
@@ -44,6 +44,7 @@
                         <th class="text-center">Category</th>
                         <th class="text-center">Subcategory</th>
                         <th class="text-center">Brand</th>
+                        <th class="text-center">Price</th>
                         <th class="text-right"></th>
                     </tr>
                     </thead>
@@ -72,7 +73,7 @@
                     </tbody>
                 </table>
             </div>
-            <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
+            <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         </div>
     </div>
 </template>
@@ -89,7 +90,6 @@
             return {
                 products: [],
                 loaded: false,
-                count: 10,
                 page: 1,
                 ordering: '',
                 paginatorInfo: null
@@ -120,7 +120,7 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopProducts,
-                    variables: {shopId: this.shop.id, filters: {ordering: this.ordering}, count: this.count, page: this.page}
+                    variables: {shopId: this.shop.id, filters: {ordering: this.ordering}, count: graphql.rowCount, page: this.page}
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {

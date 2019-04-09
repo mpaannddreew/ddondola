@@ -26,8 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::prefix('me')->group(function (){
         Route::get('/', 'HomeController@profile')->name('my.profile');
-        Route::get('/edit', 'HomeController@editProfile')->name('my.profile.edit');
-        Route::get('/edit/settings', 'HomeController@editProfileSettings')->name('my.profile.edit.settings');
+        Route::get('/settings', 'HomeController@Settings')->name('my.settings');
         Route::get('/dashboard', 'HomeController@dashboard')->name('my.dashboard');
         Route::get('/messenger/{any?}', 'HomeController@messenger')->name('my.messenger');
         Route::get('/notifications', 'HomeController@notifications')->name('my.notifications');

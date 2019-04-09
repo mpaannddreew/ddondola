@@ -36,12 +36,8 @@ class HomeController extends Controller
         return view('ddondola.me.profile', ['user' => $request->user()]);
     }
 
-    public function editProfile(Request $request) {
-        return view('ddondola.me.edit-info', ['user' => $request->user()]);
-    }
-
-    public function editProfileSettings(Request $request) {
-        return view('ddondola.me.edit-settings', ['user' => $request->user()]);
+    public function Settings(Request $request) {
+        return view('ddondola.me.settings', ['user' => $request->user()]);
     }
 
     public function followers(Request $request) {

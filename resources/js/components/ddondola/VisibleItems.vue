@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="my-2">
         <span class="visible-items" v-if="showItems">Showing <strong>{{ start }}-{{ end }}</strong> of <strong>{{ paginatorInfo.total }}</strong> results</span>
         <span class="visible-items" v-else></span>
     </div>

@@ -2,19 +2,19 @@
 
 .profile-card {
 
-    background: linear-gradient(to bottom, rgba(244, 31, 144, 0.8), rgba(179, 30, 90, 0.8)), url("../images/hero-area.jpg") no-repeat;
+    background: #fff;
     background-size: cover;
     width: 100%;
     min-height: 90px;
     border-radius: 4px;
     /*border-radius: 4px 4px 0 0;*/
     padding: 10px 20px;
-    color: #fff;
+    /*color: #888;*/
 }
 
 .profile-card img.profile-photo {
 
-    border: 7px solid #fff;
+    border: 7px solid #e1e5eb;
     float: left;
     margin-right: 20px;
     position: relative;
@@ -28,7 +28,7 @@
 .profile-card h5 a {
 
     font-size: 15px;
-
+    color: #888;
 }
 
 /*Newsfeed Links CSS*/
@@ -178,7 +178,6 @@ ul.nav-news-feed i.ion-ios-videocam{color: #9e1f63;}
 }
 
 .activity .activity-list > li .activity-content {
-    background-color: #fff;
     margin: 0 0 0 40px;
     padding: 0;
     position: relative;
@@ -216,11 +215,10 @@ ul.nav-news-feed i.ion-ios-videocam{color: #9e1f63;}
 
 .activity-list > li {
     background-color: #fff;
-    /*box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);*/
     margin-bottom: 10px;
     padding: 10px;
     position: relative;
-    border: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
 }
 
 .activity-list > li:last-child .activity-content {
@@ -246,7 +244,6 @@ ul.nav-news-feed i.ion-ios-videocam{color: #9e1f63;}
 }
 
 .activity-list > li .activity-content {
-    background-color: #fff;
     margin: 0 0 20px 40px;
     padding: 0;
     position: relative;
@@ -340,77 +337,6 @@ ul.edit-menu li.active a{
     width: 80px;
     border-radius: 50%;
     vertical-align: middle;
-}
-
-.notification-box > ul {
-    display: inline-block;
-    list-style: outside none none;
-    margin-bottom: 0;
-    margin-top: 20px;
-    padding-left: 0;
-    width: 100%;
-}
-
-.notification-box {
-    display: inline-block;
-    width: 100%;
-}
-
-.notification-box > ul > li {
-    border-bottom: 1px solid #e1e8ed;
-    display: inline-block;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    width: 100%;
-}
-
-.notification-box > ul li figure {
-    display: inline-block;
-    margin-bottom: 0;
-    margin-right: 10px;
-    max-width: 45px;
-    min-width: 45px;
-    vertical-align: top;
-}
-
-.notifi-meta {
-    display: inline-block;
-    line-height: initial;
-    vertical-align: middle;
-    width: 86%;
-}
-
-.notifi-meta > p {
-    margin-bottom: 0;
-    text-transform: capitalize;
-    color: #3a3a3a;
-}
-
-.notifi-meta > span {
-    color: #999;
-    font-size: 12px;
-}
-
-.notification-box > ul > li:last-child {
-    border-bottom: 0 none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.notification-box > ul li > i.del {
-    cursor: pointer;
-    display: inline-block;
-    opacity: 0;
-    text-align: right;
-    vertical-align: top;
-    visibility: hidden;
-    transition: all 0.2s linear 0s;
-    color: red;
-}
-
-.notification-box > ul li:hover > i.del {
-    opacity: 1;
-    visibility: visible;
 }
 
 .more-options {

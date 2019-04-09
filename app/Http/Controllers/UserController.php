@@ -19,6 +19,9 @@ class UserController extends Controller
         if ($user->is($request->user()))
             return redirect()->route('my.profile');
 
+        if (!$user->country->is($request->user()->country))
+            abort(404);
+
         return view('ddondola.users.profile.index', ['user' => $user]);
     }
 
@@ -26,12 +29,18 @@ class UserController extends Controller
         if ($user->is($request->user()))
             return redirect()->route('my.followers');
 
+        if (!$user->country->is($request->user()->country))
+            abort(404);
+
         return view('ddondola.users.profile.followers', ['user' => $user]);
     }
 
     public function userFollowing(Request $request, User $user) {
         if ($user->is($request->user()))
             return redirect()->route('my.following');
+
+        if (!$user->country->is($request->user()->country))
+            abort(404);
 
         return view('ddondola.users.profile.following', ['user' => $user]);
     }

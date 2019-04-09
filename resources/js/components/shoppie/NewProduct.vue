@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="checkout-process" v-else-if="loaded && requirementsLoaded">
-            <div class="card mb-4">
+            <div class="card mb-2">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)">
@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="price">General Price</label>
-                                    <input type="text" class="form-control" id="price" v-model="price">
+                                    <input type="text" class="form-control" id="price" v-model="price" :placeholder="shop.currency_code">
                                     <div class="invalid-feedback" id="price_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-4" id="attributes">
+            <div class="card mb-2" id="attributes">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">create</i> Product Attributes</a>
@@ -98,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-4">
+            <div class="card mb-2">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)"><span>03</span><i class="material-icons">label_outline</i> Stock Information</a>
@@ -127,7 +127,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-4">
+            <div class="card mb-2">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)"><span>04</span><i class="material-icons">add_a_photo</i> Product Pictures</a>
@@ -137,60 +137,21 @@
                     <div class="form-row">
                         <div class="col-lg-12">
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-12 m-0">
                                     <div>
                                         <div class="card card-small">
                                             <div class="row no-gutters">
                                                 <div class="file-manager-cards__dropzone w-100">
                                                     <div class="dropzone dz-clickable">
                                                         <div class="dz-default dz-message">
-                                                            <label class="text-reagent-gray">
-                                                                <i class="material-icons mr-1"></i> Add Product Images <input class="d-none" type="file" multiple accept="image/*" @change="handleImages">
+                                                            <label class="text-reagent-gray mb-0">
+                                                                <i class="material-icons mr-1"></i> Add Product Images <input class="d-none" type="file" multiple accept="image/*">
                                                             </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <small class="form-text text-muted">Max. file size: 50 MB. Allowed images: jpg, gif, png. Maximum 10 images only.</small>
-                                    </div>
-                                    <div class="row images">
-                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
-                                        <!--<div class="product-thumbnail">-->
-                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
-                                        <!--<div class="product-thumbnail">-->
-                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
-                                        <!--<div class="product-thumbnail">-->
-                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
-                                        <!--<div class="product-thumbnail">-->
-                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
-                                        <!--<div class="product-thumbnail">-->
-                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">-->
-                                        <!--<div class="product-thumbnail">-->
-                                        <!--<img src="/images/avatars/0.jpg" class="img-thumbnail img-fluid" alt="">-->
-                                        <!--<span class="product-remove" title="remove"><i class="fa fa-close"></i></span>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -312,7 +273,6 @@
                 this.loading = false;
             },
             clearForm(response) {
-                console.log(JSON.stringify(response));
                 this.name = '';
                 this.description = '';
                 this.loading = false;
@@ -325,43 +285,6 @@
                 this.note = "";
                 this.attributes = [{name: '', value: ''}];
                 DToast("success", "Product created successfully")
-                // $('.row .images .col-md-3.col-sm-3.col-4.col-lg-3.col-xl-2').remove();
-            },
-            handleImages(e) {
-                // $('.row .images .col-md-3.col-sm-3.col-4.col-lg-3.col-xl-2').remove();
-                // var files = !!e.target.files ? e.target.files : [];
-                // if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-                //
-                // for(var i = 0; i < files.length; i++){
-                //
-                //     if (/^image/.test( files[i].type)){ // only image file
-                //         var reader = new FileReader(); // instance of the FileReader
-                //         reader.readAsDataURL(files[i]); // read the local file
-                //
-                //         reader.onload = function (event) {
-                //             var $div_column = $('<div/>').addClass('col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2');
-                //             var $div_thumbnail = $('<div/>').addClass('product-thumbnail');
-                //             var $img = $('<img/>').addClass('img-thumbnail img-fluid');
-                //             var $span = $('<span/>').addClass('product-remove').attr('id', i);
-                //
-                //             $span.bind('click', function () {
-                //                 // var _id = $('span#' + i).id;
-                //                 // files[parseInt(_id)].delete();
-                //                 $div_column.remove();
-                //             });
-                //
-                //             var $i = $('<i/>').addClass('fa fa-close');
-                //
-                //             $img.attr('src', event.target.result);
-                //             $span.append($i);
-                //             $div_thumbnail.append($img);
-                //             $div_thumbnail.append($span);
-                //             $div_column.append($div_thumbnail);
-                //
-                //             $('.row .images').append($div_column);
-                //         };
-                //     }
-                // }
             },
             addRow() {
                 if (this.numberOfAttributes < 10) {

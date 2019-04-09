@@ -36,7 +36,14 @@ class AccountQuery
      */
     public function paginatedUsers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($this->status(User::select()), "first_name", "asc");
+        $myCountry = collect($args)->get('myCountry', true);
+        $builder = User::select();
+        if ($myCountry) {
+            $builder = $builder->whereHas('country', function($q) use($context) {
+                $q->where('id', $context->user()->country->id);
+            });
+        }
+        return $this->orderBy($this->status($builder), "first_name", "asc");
     }
 
     /**
@@ -82,6 +89,9 @@ class AccountQuery
     public function searchUsers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         return $this->status(User::select())
+            ->whereHas('country', function($q) use($context) {
+                $q->where('id', $context->user()->country->id);
+            })
             ->where("first_name", "like", "%" . collect($args)->get("name") . "%")
             ->orWhere("last_name", "like", "%" . collect($args)->get("name") . "%")
             ->where("active", "=", 1)->get();

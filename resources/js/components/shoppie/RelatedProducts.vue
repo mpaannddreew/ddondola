@@ -1,16 +1,7 @@
 <template>
     <div>
-        <div align="center" v-if="!loaded"><div class="loader"></div></div>
-        <div align="center" v-if="!hasRelated && loaded">
-            <h4>
-                <i class="material-icons">error_outline</i>
-                <br />
-                <small>No related products found!</small>
-                <br />
-            </h4>
-        </div>
         <div v-if="hasRelated && loaded">
-            <div class="products-grid p-0">
+            <div class="products-grid p-0 mb-4">
                 <div class="row">
                     <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
                         <div is="product" :key="indx" :product="product" :url="url"></div>
