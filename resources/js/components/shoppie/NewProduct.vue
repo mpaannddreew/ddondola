@@ -38,23 +38,44 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="category">Product Category</label>
-                                    <select id="category" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="categoryId">
-                                        <option v-for="(category, indx) in categories" :value="category.id" :key="indx">{{ category.name }}</option>
-                                    </select>
+                                    <div class="input-group input-group-seamless">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="material-icons">folder</i>
+                                            </div>
+                                        </div>
+                                        <select id="category" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="categoryId">
+                                            <option v-for="(category, indx) in categories" :value="category.id" :key="indx">{{ category.name }}</option>
+                                        </select>
+                                    </div>
                                     <div class="invalid-feedback" id="category_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="subCategory">Product Sub Category</label>
-                                    <select id="subCategory" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="subCategoryId">
-                                        <option v-for="(category, indx) in subCategories" :value="category.id" :key="indx">{{ category.name }}</option>
-                                    </select>
+                                    <div class="input-group input-group-seamless">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="material-icons">folder</i>
+                                            </div>
+                                        </div>
+                                        <select id="subCategory" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="subCategoryId">
+                                            <option v-for="(category, indx) in subCategories" :value="category.id" :key="indx">{{ category.name }}</option>
+                                        </select>
+                                    </div>
                                     <div class="invalid-feedback" id="subCategory_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="brand">Product Brand</label>
-                                    <select id="brand" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="brandId">
-                                        <option v-for="(brand, indx) in brands" :value="brand.id" :key="indx">{{ brand.name }}</option>
-                                    </select>
+                                    <div class="input-group input-group-seamless">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="material-icons">folder</i>
+                                            </div>
+                                        </div>
+                                        <select id="brand" class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="brandId">
+                                            <option v-for="(brand, indx) in brands" :value="brand.id" :key="indx">{{ brand.name }}</option>
+                                        </select>
+                                    </div>
                                     <div class="invalid-feedback" id="brand_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -74,7 +95,7 @@
             <div class="card mb-2" id="attributes">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
-                        <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">create</i> Product Attributes</a>
+                        <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">create</i> Product Specifications</a>
                     </h5>
                 </div>
                 <div class="card-body p-4 border border-top-0">
@@ -303,10 +324,10 @@
                     var name = i + '_name';
                     var value = i + '_value';
                     if (!$("#" + name).val().length > 0)
-                        this.showError(name, "Attribute name is required");
+                        this.showError(name, "Specification name is required");
 
                     if (!$("#" + value).val().length > 0)
-                        this.showError(value, "Attribute value is required");
+                        this.showError(value, "Specification value is required");
                 }
             }
         },

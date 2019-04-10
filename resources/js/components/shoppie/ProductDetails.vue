@@ -1,109 +1,98 @@
 <template>
     <div>
-        <div class="card">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 py-4">
-                        <div class="prod-avatar">
-                            <ul class="slider-for-gold">
-                                <li><img src="/images/product/detail-gold1.jpg" alt=""></li>
-                                <li><img src="/images/product/detail-gold2.jpg" alt=""></li>
-                                <li><img src="/images/product/detail-gold3.jpg" alt=""></li>
-                                <li><img src="/images/product/detail-gold1.jpg" alt=""></li>
-                            </ul>
-                            <ul class="slider-nav-gold">
-                                <li><img src="/images/product/detail-gold1.jpg" alt=""></li>
-                                <li><img src="/images/product/detail-gold2.jpg" alt=""></li>
-                                <li><img src="/images/product/detail-gold3.jpg" alt=""></li>
-                                <li><img src="/images/product/detail-gold1.jpg" alt=""></li>
-                            </ul>
+        <div class="container py-2">
+            <div class="row">
+                <div class="col-md-3 px-2">
+                    <rating-meter :reviewable="product"></rating-meter>
+
+                    <div class="card card-small border" v-if="hasAttributes">
+                        <div class="card-header border-bottom">
+                            <h5 class="m-0">Product Specifications</h5>
                         </div>
-                    </div>
-                    <div class="col-lg-6 p-4 border-left product-details">
-                        <h3 class="title mb-3">{{ product.name }}</h3>
-                        <div class="d-flex align-items-center justify-content-between flex-column flex-sm-row mb-3">
-                            <ul class="price list-inline no-margin">
-                                <li class="list-inline-item current" v-if="product.discount">{{ product.currency_code }} {{ product.discounted_price }}</li>
-                                <li class="list-inline-item" :class="{original: product.discount, current: !product.discount}">{{ product.currency_code }} {{ product.price }}</li>
-                            </ul>
-                        </div>
-                        <dl class="my-2">
-                            <dt>Description</dt>
-                            <dd>
-                                <p class="my-2">{{ product.description }}</p>
-                            </dd>
-                        </dl>
-                        <dl class="row">
-                            <dt class="col-sm-3">Brand</dt>
-                            <dd class="col-sm-9">{{ product.brand_name }}</dd>
-
-                            <dt class="col-sm-3">Category</dt>
-                            <dd class="col-sm-9">{{ product.sub_category.category.name }}</dd>
-
-                            <dt class="col-sm-3">Subcategory</dt>
-                            <dd class="col-sm-9">{{ product.sub_category.name }}</dd>
-
-                            <dt class="col-sm-3">Orders</dt>
-                            <dd class="col-sm-9">154 orders</dd>
-                        </dl>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <dl class="dlist-inline">
-                                    <dt>Quantity: </dt>
-                                    <dd>
-                                        <select class="form-control form-control-sm custom-select custom-select-sm" style="width:70px;" v-model="quantity">
-                                            <option value="1">1</option>
-                                        </select>
-                                    </dd>
-                                </dl>
+                        <div class="card-body p-0">
+                            <div class="list-group border-0">
+                                <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex" v-for="(attribute, indx) in attributes">
+                                    <span><i class="material-icons">label</i> {{ attribute.name }}</span> <span class="ml-auto">{{ attribute.value }}</span>
+                                </a>
                             </div>
                         </div>
-                        <hr>
-                        <a href="javascript:void(0)" class="mb-2 btn btn-pill btn-accent mr-2" @click="cartAction" :class="{disabled: cartStatusLoading}">
-                            <i class="fa fa-shopping-cart"></i> {{ cartText }}
-                        </a>
-                        <a href="javascript:void(0)" class="mb-2 btn btn-pill btn-outline-primary mr-2" @click="favouritesAction" :class="{disabled: favoriteStatusLoading}">
-                            <i class="fa fa-heart"></i> {{ favoriteText }}
-                        </a>
-                        <a :href="messageUrl" class="mb-2 btn btn-pill btn-info mr-2" >
-                            <i class="material-icons">message</i> Message Supplier
-                        </a>
                     </div>
+
+                    <related-products :product="product" :url="url"></related-products>
+
                 </div>
-            </div>
-        </div>
-        <div class="header-navbar collapse d-lg-flex p-0 bg-white border-bottom border-top sticky">
-            <div class="container p-0">
-                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                    <li class="nav-item">
-                        <a href="javascript:void(0)" @click="showReviews" class="nav-link" :class="{active: reviews}"><i class="material-icons">rate_review</i> Reviews</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="container py-4">
-            <div v-if="reviews">
-                <div class="row">
-                    <div class="col-md-4">
-                        <rating-meter :reviewable="product"></rating-meter>
+                <div class="col-md-9 px-2">
+                    <div class="card border mb-2">
+                        <div class="row no-gutters">
+                            <aside class="col-sm-5 border-right">
+                                <article class="gallery-wrap">
+                                    <div class="img-big-wrap pt-4">
+                                        <div> <a href="/images/product/detail-gold1.jpg" data-fancybox=""><img src="/images/product/detail-gold1.jpg"></a></div>
+                                    </div> <!-- slider-product.// -->
+                                    <div class="img-small-wrap">
+                                        <div class="item-gallery"> <img src="/images/product/detail-gold1.jpg"></div>
+                                        <div class="item-gallery"> <img src="/images/product/detail-gold2.jpg"></div>
+                                        <div class="item-gallery"> <img src="/images/product/detail-gold3.jpg"></div>
+                                        <div class="item-gallery"> <img src="/images/product/detail-gold1.jpg"></div>
+                                    </div> <!-- slider-nav.// -->
+                                </article> <!-- gallery-wrap .end// -->
+                            </aside>
+                            <aside class="col-sm-7">
+                                <article class="p-5">
+                                    <h3 class="h6 text-uppercase no-margin-bottom text-ellipsis mb-3">{{ product.name }}</h3>
+                                    <ul class="mb-3 price list-inline no-margin">
+                                        <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currency_code }} {{ product.discounted_price }}</li>
+                                        <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currency_code }} {{ product.price }}</li>
+                                    </ul>
+                                    <dl>
+                                        <dt>Description</dt>
+                                        <dd>
+                                            <p>{{ product.description }}</p>
+                                        </dd>
+                                    </dl>
+                                    <dl class="row">
+                                        <dt class="col-sm-4">Brand</dt>
+                                        <dd class="col-sm-8">{{ product.brand_name }}</dd>
 
-                        <div class="card card-small border" v-if="hasAttributes">
-                            <div class="card-header border-bottom">
-                                <h5 class="m-0">Product Attributes</h5>
-                            </div>
-                            <div class="card-body">
-                                <dl class="dlist-inline" v-for="(attribute, indx) in attributes">
-                                    <dt class="text-muted">{{ attribute.name }}: </dt>
-                                    <dd>{{ attribute.value }}</dd>
-                                </dl>
-                            </div>
+                                        <dt class="col-sm-4">Category</dt>
+                                        <dd class="col-sm-8">{{ product.sub_category.category.name }}</dd>
+
+                                        <dt class="col-sm-4">Subcategory</dt>
+                                        <dd class="col-sm-8">{{ product.sub_category.name }}</dd>
+
+                                        <dt class="col-sm-4">Orders</dt>
+                                        <dd class="col-sm-8">154 orders</dd>
+                                    </dl>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <dl class="dlist-inline">
+                                                <dt>Quantity: </dt>
+                                                <dd>
+                                                    <select class="form-control form-control-sm custom-select custom-select-sm" style="width:70px;" v-model="quantity">
+                                                        <option value="1">1</option>
+                                                    </select>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <a href="javascript:void(0)" class="mb-2 btn btn-pill btn-accent mr-2" @click="cartAction" :class="{disabled: cartStatusLoading}">
+                                                <i class="fa fa-shopping-cart"></i> {{ cartText }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <a href="javascript:void(0)" class="mb-2 btn btn-pill btn-outline-primary mr-2" @click="favouritesAction" :class="{disabled: favoriteStatusLoading}">
+                                        <i class="fa fa-heart"></i> {{ favoriteText }}
+                                    </a>
+                                    <a :href="messageUrl" class="mb-2 btn btn-pill btn-info mr-2" >
+                                        <i class="material-icons">message</i> Message Supplier
+                                    </a>
+                                </article>
+                            </aside>
                         </div>
-
                     </div>
-                    <div class="col-md-8">
-                        <reviews :reviewable="product" reviewable-type="product"></reviews>
-                    </div>
+                    <reviews :reviewable="product" reviewable-type="product"></reviews>
                 </div>
             </div>
         </div>
@@ -116,7 +105,6 @@
         name: "ProductDetails",
         components: {RelatedProducts},
         mounted() {
-            this.loadImages();
             this.loadProduct();
         },
         data() {
@@ -157,67 +145,6 @@
             }
         },
         methods: {
-            loadImages() {
-                $('.slider-for-gold').slick({
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    arrows: false,
-                    slide: 'li',
-                    fade: false,
-                    asNavFor: '.slider-nav-gold'
-                });
-
-                $('.slider-nav-gold').slick({
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    asNavFor: '.slider-for-gold',
-                    dots: false,
-                    arrows: true,
-                    slide: 'li',
-                    vertical: true,
-                    centerMode: true,
-                    centerPadding: '0',
-                    focusOnSelect: true,
-                    responsive: [
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 1,
-                                infinite: true,
-                                vertical: false,
-                                centerMode: true,
-                                dots: false,
-                                arrows: false
-                            }
-                        },
-                        {
-                            breakpoint: 641,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 1,
-                                infinite: true,
-                                vertical: true,
-                                centerMode: true,
-                                dots: false,
-                                arrows: false
-                            }
-                        },
-                        {
-                            breakpoint: 420,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 1,
-                                infinite: true,
-                                vertical: false,
-                                centerMode: true,
-                                dots: false,
-                                arrows: false
-                            }
-                        }
-                    ]
-                });
-            },
             loadProduct() {
                 let requests = [this.isInCart(), this.isInFavorites()];
                 axios.all(requests).then(axios.spread(this.loadStatus));
@@ -285,12 +212,6 @@
                         variables: {id: this.product.id}
                     }).then(this.favoritesStatus).catch(function (error) {});
                 }
-            },
-            showReviews() {
-                this.reviews = true;
-            },
-            showRelated() {
-                this.reviews = false;
             }
         },
         watch: {
@@ -302,5 +223,25 @@
 </script>
 
 <style scoped>
+    .list-group-item {
+        border-right: none;
+        border-left: none;
+    }
 
+    .list-group-item:first-child {
+        border-top: none;
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+    }
+
+    .list-group-item:last-child {
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+        border-bottom: none;
+    }
+
+    .h3, h3 {
+        font-size: 1.5em;
+        line-height: 2.25rem;
+    }
 </style>

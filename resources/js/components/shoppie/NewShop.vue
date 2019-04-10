@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="checkout-process" v-else-if="requirementsLoaded">
-            <div class="card mb-4">
+            <div class="card mb-2">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)">
@@ -20,24 +20,52 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Shop Category</label>
-                                    <select class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="shopCategory" id="shopCategory">
-                                        <option v-for="(category, indx) in categories" :key="indx" :value="category.id">{{ category.name }}</option>
-                                    </select>
+                                    <div class="input-group input-group-seamless">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="material-icons">folder</i>
+                                            </div>
+                                        </div>
+                                        <select class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="shopCategory" id="shopCategory">
+                                            <option v-for="(category, indx) in categories" :key="indx" :value="category.id">{{ category.name }}</option>
+                                        </select>
+                                    </div>
                                     <div class="invalid-feedback" id="shopCategory_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" v-model="name">
+                                    <div class="input-group input-group-seamless">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="material-icons">shop</i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" id="name" v-model="name">
+                                    </div>
                                     <div class="invalid-feedback" id="name_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="phoneNumber">Phone Number</label>
-                                    <input type="text" class="form-control" id="phoneNumber" v-model="phoneNumber">
+                                    <div class="input-group input-group-seamless">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="material-icons">phone</i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" id="phoneNumber" v-model="phoneNumber">
+                                    </div>
                                     <div class="invalid-feedback" id="phoneNumber_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="emailAddress">Email</label>
-                                    <input type="email" class="form-control" id="emailAddress" v-model="emailAddress">
+                                    <div class="input-group input-group-seamless">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="material-icons">email</i>
+                                            </div>
+                                        </div>
+                                        <input type="email" class="form-control" id="emailAddress" v-model="emailAddress">
+                                    </div>
                                     <div class="invalid-feedback" id="emailAddress_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-12">

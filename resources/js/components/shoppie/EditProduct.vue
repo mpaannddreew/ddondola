@@ -70,7 +70,7 @@
             <div class="card mb-2" id="attributes">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
-                        <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">create</i> Product Attributes</a>
+                        <a class="btn btn-link" href="javascript:void(0)"><span>02</span><i class="material-icons">create</i> Product Specifications</a>
                     </h5>
                 </div>
                 <div class="card-body p-4 border border-top-0">
@@ -228,10 +228,10 @@
                     var name = i + '_name';
                     var value = i + '_value';
                     if (!$("#" + name).val().length > 0)
-                        this.showError(name, "Attribute name is required");
+                        this.showError(name, "Specification name is required");
 
                     if (!$("#" + value).val().length > 0)
-                        this.showError(value, "Attribute value is required");
+                        this.showError(value, "Specification value is required");
                 }
             }
         },

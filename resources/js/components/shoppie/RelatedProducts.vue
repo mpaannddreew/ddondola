@@ -1,9 +1,19 @@
 <template>
     <div>
+        <div class="card card-small border my-2" v-if="!loaded">
+            <div class="card-body">
+                <div align="center"><div class="loader"></div></div>
+            </div>
+        </div>
         <div v-if="hasRelated && loaded">
-            <div class="products-grid p-0 mb-4">
+            <div class="products-grid p-0 my-2">
+                <div class="card card-small border mb-2">
+                    <div class="card-header">
+                        <h5 class="m-0">Related Products</h5>
+                    </div>
+                </div>
                 <div class="row">
-                    <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
+                    <div class="item col-xl-12 col-md-6" v-for="(product, indx) in products">
                         <div is="product" :key="indx" :product="product" :url="url"></div>
                     </div>
                 </div>
