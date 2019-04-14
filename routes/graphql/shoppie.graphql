@@ -30,8 +30,8 @@ type Shop implements Muddondozi {
     settings: ShopSettings!
     active: Boolean!
     likes: Int! @method(name: "likeCount")
-    avatar: String! @method(name: "avatar")
-    coverPicture: String! @method(name: "coverPicture")
+    avatar: Image! @method(name: "avatar")
+    coverPicture: Image! @method(name: "coverPicture")
     categories: [ProductCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedCategories")
     subcategories: [ProductSubCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedSubcategories")
     subCategoriesCount: Int! @method(name: "subCategoriesCount")
@@ -43,6 +43,9 @@ type Shop implements Muddondozi {
     productCount: Int! @method(name: "productCount")
     activeOffers: [Product!] @method(name: "activeOffers")
     currencyCode: String! @method(name: "currencyCode")
+    timeline(ordering: String): [Activity!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@timeLine")
+    avatars: [Image!] @method(name: "avatars")
+    coverPictures: [Image!] @method(name: "coverPictures")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -137,6 +140,7 @@ type Product {
     discount: Int! @method(name: "discount")
     discountedPrice: Int! @method(name: "discountedPrice")
     currencyCode: String! @method(name: "currencyCode")
+    images: [Image!] @method(name: "productImages")
     cartPivot: CartPivot
     orderPivot: OrderPivot
     created_at: DateTime!
@@ -186,7 +190,10 @@ type ProductOffer {
     discount: String!
     start_date: Date!
     end_date: Date!
-    cancel: Boolean!
+    cancelled: Boolean! @method(name: "cancelled")
+    active: Boolean! @method(name: "isActive")
+    started: Boolean! @method(name: "started")
+    ended: Boolean! @method(name: "ended")
     created_at: DateTime!
     updated_at: DateTime!
 }

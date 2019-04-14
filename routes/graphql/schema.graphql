@@ -6,6 +6,10 @@ interface Muddondozi @interface(resolver: "Ddondola\\Http\\GraphQL\\Interfaces\\
     id: ID!
     code: String!
     type: String!
+    name: String!
+    avatar: [Image!]
+    coverPicture: Image!
+    timeline: [Activity!]
 }
 
 type Country {
@@ -40,16 +44,24 @@ type User implements Muddondozi {
     profile: UserProfile!
     settings: UserSettings!
     active: Boolean!
-    avatar: String! @method(name: "avatar")
-    coverPicture: String! @method(name: "coverPicture")
+    avatar: Image! @method(name: "avatar")
+    coverPicture: Image! @method(name: "coverPicture")
     shops(categoryId: Int): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
     favouriteProducts(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     followers: [User!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedFollowers")
     followerCount: Int! @method(name: "followerCount")
     following: [User!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedFollowing")
     followingCount: Int! @method(name: "followingCount")
+    timeline(ordering: String): [Activity!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@timeLine")
+    news(ordering: String): [Activity!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@news")
+    avatars: [Image!] @method(name: "avatars")
+    coverPictures: [Image!] @method(name: "coverPictures")
     created_at: DateTime!
     updated_at: DateTime!
+}
+
+type Image {
+    url: String!
 }
 
 type Query {

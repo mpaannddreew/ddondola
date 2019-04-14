@@ -22,11 +22,9 @@ class AccountMutator
     {
         $user = app(UserRepository::class)->id($args["id"]);
         if ($context->user()->isFollowing($user)) {
-            $context->user()->unfollow($user);
-            return false;
+            return app(UserRepository::class)->unFollow($context->user(), $user);
         }
 
-        $context->user()->follow($user);
-        return true;
+        return app(UserRepository::class)->follow($context->user(), $user);
     }
 }

@@ -55,6 +55,7 @@ class UserRepository
         if (!$follower->isFollowing($followable)) {
             try {
                 $follower->follow($followable);
+                $follower->addActivity($followable, 'follow');
                 return true;
             } catch (\Exception $e) {}
         }
@@ -72,7 +73,8 @@ class UserRepository
     public function unFollow(User $follower, User $followable) {
         if ($follower->isFollowing($followable)) {
             $follower->unfollow($followable);
-            return true;
+            $follower->removeActivity($followable, 'follow');
+            return false;
         }
 
         return false;

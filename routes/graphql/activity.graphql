@@ -22,6 +22,29 @@ type Reviewed {
     review: Review
 }
 
+type Subject {
+    type: String!
+    user: User
+    shop: Shop
+    product: Product
+}
+
+type Foreign {
+    type: String!
+    review: Review
+    offer: ProductOffer
+}
+
+type Activity {
+    id: ID!
+    verb: String!
+    actor: Muddondozi!
+    subject: Subject! @method(name: "translatedSubject")
+    foreign: Foreign @method(name: "translatedForeign")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
 extend type Query {
     review(id: ID! @eq): Review! @find(model: "Activity\\Review")
     isReviewed(entity: Reviewable!): Reviewed! @field(resolver: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@isReviewed")

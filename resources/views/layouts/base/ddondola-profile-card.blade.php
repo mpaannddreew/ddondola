@@ -4,7 +4,7 @@
         <div class="col-md-3 py-4 px-2">
             <div class=" page-sidebar">
                 <div class="profile-card border">
-                    <img src="{{ Auth::user()->avatar() }}" alt="user" class="profile-photo">
+                    <img src="{{ Auth::user()->avatar()['url'] }}" alt="user" class="profile-photo">
                     <h5 class="text-ellipsis"><a href="{{ route('my.profile') }}">{{ Auth::user()->name() }}</a></h5>
                     <a href="{{ route("my.followers") }}"><i class="ion ion-android-person-add"></i> {{ Auth::user()->viewFollower() }}</a>
                 </div>

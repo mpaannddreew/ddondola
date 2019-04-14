@@ -1,8 +1,8 @@
 <template>
     <div class="friend-card border">
-        <img :src="user.coverPicture" alt="profile-cover" class="img-responsive cover">
+        <img :src="user.coverPicture.url" alt="profile-cover" class="img-responsive cover">
         <div class="card card-info pb-3">
-            <img :src="user.avatar" alt="user" class="profile-photo-lg">
+            <img :src="user.avatar.url" alt="user" class="profile-photo-lg">
             <div class="friend-info">
                 <button v-if="!isMe" class="pull-right btn btn-sm btn-pill btn-outline-primary" @click="performAction" :class="{ active: follow, disabled: loading }">
                     <i class="material-icons mr-1">person_add</i> {{ text }}

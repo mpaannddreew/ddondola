@@ -7,7 +7,7 @@
 
                     <div class="card card-small border" v-if="hasAttributes">
                         <div class="card-header border-bottom">
-                            <h5 class="m-0">Product Specifications</h5>
+                            <h5 class="m-0"><i class="material-icons">short_text</i> Product Specifications</h5>
                         </div>
                         <div class="card-body p-0">
                             <div class="list-group border-0">
@@ -24,7 +24,7 @@
                 <div class="col-md-9 px-2">
                     <div class="card border mb-2">
                         <div class="row no-gutters">
-                            <aside class="col-sm-5 border-right">
+                            <aside class="col-sm-6 border-right">
                                 <article class="gallery-wrap">
                                     <div class="img-big-wrap pt-4">
                                         <div> <a href="/images/product/detail-gold1.jpg" data-fancybox=""><img src="/images/product/detail-gold1.jpg"></a></div>
@@ -37,9 +37,9 @@
                                     </div> <!-- slider-nav.// -->
                                 </article> <!-- gallery-wrap .end// -->
                             </aside>
-                            <aside class="col-sm-7">
-                                <article class="p-5">
-                                    <h3 class="h6 text-uppercase no-margin-bottom text-ellipsis mb-3">{{ product.name }}</h3>
+                            <aside class="col-sm-6">
+                                <article class="p-4 py-5">
+                                    <h3 class="text-uppercase no-margin-bottom text-ellipsis mb-3">{{ product.name }}</h3>
                                     <ul class="mb-3 price list-inline no-margin">
                                         <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currency_code }} {{ product.discounted_price }}</li>
                                         <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currency_code }} {{ product.price }}</li>

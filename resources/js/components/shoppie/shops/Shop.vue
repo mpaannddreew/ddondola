@@ -1,8 +1,8 @@
 <template>
     <div class="friend-card border">
-        <img :src="shop.coverPicture" alt="profile-cover" class="img-responsive cover">
+        <img :src="shop.coverPicture.url" alt="profile-cover" class="img-responsive cover">
         <div class="card card-info pb-3">
-            <img :src="shop.avatar" alt="user" class="profile-photo-lg">
+            <img :src="shop.avatar.url" alt="user" class="profile-photo-lg">
             <div class="friend-info">
                 <button class="pull-right btn btn-sm btn-pill btn-outline-primary" @click="performAction" :class="{ active: like, disabled: loading }">
                     <i class="material-icons mr-1">thumb_up</i> {{ text }}

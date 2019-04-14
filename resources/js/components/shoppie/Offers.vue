@@ -27,6 +27,7 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Cancelled</th>
+                    <th>active</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -56,7 +57,8 @@
                         <td class="text-center">{{ offer.discount }}%</td>
                         <td>{{ humanize(offer.start_date) }}</td>
                         <td>{{ humanize(offer.end_date) }}</td>
-                        <td>{{ offer.cancel }}</td>
+                        <td>{{ offer.cancelled }}</td>
+                        <td>{{ offer.active }}</td>
                         <td>
                             <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
                                 <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
@@ -88,7 +90,7 @@
                                             <input type="text" class="input-sm form-control form-control-sm" placeholder="End Date" id="end_date">
                                             <span class="input-group-append">
                                                 <span class="input-group-text">
-                                                  <i class="material-icons"></i>
+                                                  <i class="material-icons">date_range</i>
                                                 </span>
                                             </span>
                                         </div>

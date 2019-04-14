@@ -3,14 +3,14 @@
         <div class="user-post">
             <div class="friend-info">
                 <figure>
-                    <img alt="" :src="review.reviewer.avatar" class="img-fluid rounded-circle">
+                    <img alt="" :src="review.reviewer.avatar.url" class="img-fluid rounded-circle">
                 </figure>
                 <div class="friend-name">
                     <ins>
                         <a :href="'/people/' + review.reviewer.code" class="name ">{{ review.reviewer.name }}</a>
                     </ins>
                     <span>
-                        <span class="text-warning" v-html="starHtml"></span> – {{ date }}
+                        <span class="text-warning" v-html="starHtml"></span> – <span class="time">{{ date }}</span>
                     </span>
                 </div>
                 <div class="description mt-2">
@@ -34,7 +34,7 @@
         },
         computed: {
             date() {
-                return Moment(this.review.created_at).fromNow();
+                return (Moment(this.review.created_at).fromNow()).toLowerCase();
             },
             starHtml() {
                 var stars = "";
@@ -55,5 +55,7 @@
 </script>
 
 <style scoped>
-
+    span.time {
+        text-transform: lowercase !important;
+    }
 </style>

@@ -154,6 +154,9 @@ window.graphql = {
                 averageRating
                 discountedPrice
                 currencyCode
+                images {
+                  url
+                }
                 category {
                   name
                 }
@@ -192,6 +195,9 @@ window.graphql = {
                 averageRating
                 discountedPrice
                 currencyCode
+                images {
+                  url
+                }
                 category {
                   name
                 }
@@ -230,6 +236,9 @@ window.graphql = {
                 averageRating
                 discountedPrice
                 currencyCode
+                images {
+                  url
+                }
                 category {
                   name
                 }
@@ -262,11 +271,15 @@ window.graphql = {
               productCount
               likes
               reviewCount
-              coverPicture
-              avatar
               currencyCode
               category {
                 name
+              }
+              avatar{
+                url
+              }
+              coverPicture {
+                url
               }
             }
             paginatorInfo {
@@ -291,8 +304,12 @@ window.graphql = {
                 productCount
                 likes
                 reviewCount
-                coverPicture
-                avatar
+                avatar{
+                  url
+                }
+                coverPicture {
+                  url
+                }
                 currencyCode
                 category {
                   name
@@ -325,6 +342,9 @@ window.graphql = {
               averageRating
               discountedPrice
               currencyCode
+              images {
+                url
+              }
               category {
                 name
               }
@@ -375,6 +395,9 @@ window.graphql = {
               averageRating
               discountedPrice
               currencyCode
+              images {
+                url
+              }
               category {
                 name
               }
@@ -459,8 +482,12 @@ window.graphql = {
               id
               code
               name
-              avatar
-              coverPicture
+              avatar{
+                url
+              }
+              coverPicture {
+                url
+              }
               followerCount
               followingCount
             }
@@ -483,8 +510,12 @@ window.graphql = {
                 id
                 code
                 name
-                avatar
-                coverPicture
+                avatar{
+                  url
+                }
+                coverPicture {
+                  url
+                }
                 followerCount
                 followingCount
               }
@@ -508,8 +539,12 @@ window.graphql = {
                 id
                 code
                 name
-                avatar
-                coverPicture
+                avatar{
+                  url
+                }
+                coverPicture {
+                  url
+                }
                 followerCount
                 followingCount
               }
@@ -533,8 +568,12 @@ window.graphql = {
                 id
                 code
                 name
-                avatar
-                coverPicture
+                avatar{
+                  url
+                }
+                coverPicture {
+                  url
+                }
                 followerCount
                 followingCount
               }
@@ -558,8 +597,12 @@ window.graphql = {
                 id
                 code
                 name
-                avatar
-                coverPicture
+                avatar{
+                  url
+                }
+                coverPicture {
+                  url
+                }
                 followerCount
                 followingCount
               }
@@ -591,6 +634,9 @@ window.graphql = {
                   averageRating
                   discountedPrice
                   currencyCode
+                  images {
+                    url
+                  }
                   category {
                     name
                   }
@@ -625,6 +671,9 @@ window.graphql = {
             averageRating
             discountedPrice
             currencyCode
+            images{
+              url
+            }
             category {
               name
             }
@@ -642,8 +691,12 @@ window.graphql = {
             name
             code
             likes
-            avatar
-            coverPicture
+            avatar{
+              url
+            }
+            coverPicture {
+              url
+            }
             reviewCount
             category {
               name
@@ -655,8 +708,12 @@ window.graphql = {
             id
             code
             name
-            avatar
-            coverPicture
+            avatar{
+              url
+            }
+            coverPicture {
+              url
+            }
             followerCount
             followingCount
           }
@@ -703,7 +760,12 @@ window.graphql = {
                     created_at
                     reviewer {
                         name
-                        avatar
+                        avatar{
+                          url
+                        }
+                        coverPicture {
+                          url
+                        }
                         code
                     }
                 }
@@ -730,7 +792,12 @@ window.graphql = {
                     created_at
                     reviewer {
                         name
-                        avatar
+                        avatar{
+                          url
+                        }
+                        coverPicture {
+                          url
+                        }
                         code
                     }
                 }
@@ -768,6 +835,9 @@ window.graphql = {
                 code
                 discountedPrice
                 currencyCode
+                images {
+                  url
+                }
                 pivot:cartPivot {
                   id
                   sum
@@ -786,7 +856,8 @@ window.graphql = {
                 discount
                 start_date
                 end_date
-                cancel
+                cancelled
+                active
               }
               paginatorInfo {
                 count
@@ -824,6 +895,9 @@ window.graphql = {
               averageRating
               discountedPrice
               currencyCode
+              images {
+                url
+              }
               category {
                 name
               }
@@ -838,7 +912,385 @@ window.graphql = {
                   discount
                   start_date
                   end_date
+                  cancelled
+                  active
                 }
+              }
+            }
+          }
+        }`,
+    myTimeline: `query myTimeline($ordering: String, $count: Int!, $page: Int!) {
+          me {
+            timeline(ordering: $ordering, count: $count, page: $page) {
+              data {
+                id
+                verb
+                actor {
+                  id
+                  name
+                  type
+                  code
+                  avatar{
+                    url
+                  }
+                  coverPicture {
+                    url
+                  }
+                }
+                subject {
+                  type
+                  product {
+                    id
+                    name
+                    code
+                    description
+                    price
+                    discountedPrice
+                    currencyCode
+                    images {
+                      url
+                    }
+                    brand {
+                      name
+                    }
+                    category {
+                      name
+                    }
+                    subcategory {
+                      name
+                    }
+                  }
+                  user {
+                    id
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                  }
+                  shop {
+                    id
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                    category {
+                      name
+                    }
+                    profile {
+                      description
+                    }
+                  }
+                }
+                foreign {
+                  review {
+                    rating
+                    body
+                  }
+                  offer {
+                    discount
+                    start_date
+                    end_date
+                    cancelled
+                    active
+                    started
+                    ended
+                  }
+                }
+                created_at
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    myNews: `query myNews($ordering: String, $count: Int!, $page: Int!) {
+          me {
+            news(ordering: $ordering, count: $count, page: $page) {
+              data {
+                id
+                verb
+                actor {
+                  id
+                  name
+                  type
+                  code
+                  avatar{
+                    url
+                  }
+                  coverPicture {
+                    url
+                  }
+                }
+                subject {
+                  type
+                  product {
+                    id
+                    name
+                    code
+                    description
+                    price
+                    discountedPrice
+                    currencyCode
+                    images {
+                      url
+                    }
+                    brand {
+                      name
+                    }
+                    category {
+                      name
+                    }
+                    subcategory {
+                      name
+                    }
+                  }
+                  user {
+                    id
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                  }
+                  shop {
+                    id
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                    category {
+                      name
+                    }
+                    profile {
+                      description
+                    }
+                  }
+                }
+                foreign {
+                  review {
+                    rating
+                    body
+                  }
+                  offer {
+                    discount
+                    start_date
+                    end_date
+                    cancelled
+                    active
+                    started
+                    ended
+                  }
+                }
+                created_at
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    userTimeline: `query userTimeline($id: ID! $ordering: String, $count: Int!, $page: Int!) {
+          user(id: $id) {
+            timeline(ordering: $ordering, count: $count, page: $page) {
+              data {
+                id
+                verb
+                actor {
+                  id
+                  name
+                  type
+                  code
+                  avatar{
+                    url
+                  }
+                  coverPicture {
+                    url
+                  }
+                }
+                subject {
+                  type
+                  product {
+                    id
+                    name
+                    code
+                    description
+                    price
+                    discountedPrice
+                    currencyCode
+                    images {
+                      url
+                    }
+                    brand {
+                      name
+                    }
+                    category {
+                      name
+                    }
+                    subcategory {
+                      name
+                    }
+                  }
+                  user {
+                    id
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                  }
+                  shop {
+                    id
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                    category {
+                      name
+                    }
+                    profile {
+                      description
+                    }
+                  }
+                }
+                foreign {
+                  review {
+                    rating
+                    body
+                  }
+                  offer {
+                    discount
+                    start_date
+                    end_date
+                    cancelled
+                    active
+                    started
+                    ended
+                  }
+                }
+                created_at
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    shopTimeline: `query shopTimeline($id: ID! $ordering: String, $count: Int!, $page: Int!) {
+          shop(id: $id) {
+            timeline(ordering: $ordering, count: $count, page: $page) {
+              data {
+                id
+                verb
+                actor {
+                  id
+                  name
+                  type
+                  code
+                  avatar{
+                    url
+                  }
+                  coverPicture {
+                    url
+                  }
+                }
+                subject {
+                  type
+                  product {
+                    id
+                    name
+                    code
+                    description
+                    price
+                    discountedPrice
+                    currencyCode
+                    images {
+                      url
+                    }
+                    brand {
+                      name
+                    }
+                    category {
+                      name
+                    }
+                    subcategory {
+                      name
+                    }
+                  }
+                  user {
+                    id
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                  }
+                  shop {
+                    id
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                    category {
+                      name
+                    }
+                    profile {
+                      description
+                    }
+                  }
+                }
+                foreign {
+                  review {
+                    rating
+                    body
+                  }
+                  offer {
+                    discount
+                    start_date
+                    end_date
+                    cancelled
+                    active
+                    started
+                    ended
+                  }
+                }
+                created_at
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
               }
             }
           }

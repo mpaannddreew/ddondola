@@ -9,7 +9,7 @@
             <div class="products-grid p-0 my-2">
                 <div class="card card-small border mb-2">
                     <div class="card-header">
-                        <h5 class="m-0">Related Products</h5>
+                        <h5 class="m-0"><i class="material-icons">short_text</i> Related Products</h5>
                     </div>
                 </div>
                 <div class="row">

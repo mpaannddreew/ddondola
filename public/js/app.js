@@ -1786,8 +1786,171 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Activity"
+  name: "Activity",
+  data: function data() {
+    return {};
+  },
+  props: {
+    activity: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    actor: function actor() {
+      return this.activity.actor;
+    },
+    subject: function subject() {
+      return this.activity.subject;
+    },
+    foreign: function foreign() {
+      return this.activity.foreign;
+    },
+    subjectType: function subjectType() {
+      return _.lowerCase(this.subject.type);
+    },
+    time: function time() {
+      return _.lowerCase(Moment(this.activity.created_at).fromNow());
+    },
+    actorProfile: function actorProfile() {
+      return (_.lowerCase(this.actor.type) === 'user' ? "/people/" : "/shops/") + this.actor.code;
+    },
+    action: function action() {
+      if (this.activity.verb === 'add') {
+        return 'added a new product';
+      } else if (this.activity.verb === 'wishlist') {
+        return 'wishlisted product';
+      } else if (this.activity.verb === 'follow') {
+        return 'is following';
+      } else if (this.activity.verb === 'like') {
+        return 'likes shop';
+      } else if (this.activity.verb === 'review') {
+        return "reviewed " + this.subjectType.toString();
+      } else if (this.activity.verb === 'offer') {
+        return "added a new offer for product";
+      }
+    },
+    subjectUrl: function subjectUrl() {
+      if (this.subjectType === 'user') {
+        return "/people/" + this.subject.user.code;
+      } else if (this.subjectType === 'product') {
+        return "/products/" + this.subject.product.code;
+      } else if (this.subjectType === 'shop') {
+        return "/shops/" + this.subject.shop.code;
+      }
+
+      return '';
+    },
+    subjectName: function subjectName() {
+      if (this.subjectType === 'user') {
+        return this.subject.user.name;
+      } else if (this.subjectType === 'product') {
+        return this.subject.product.name;
+      } else if (this.subjectType === 'shop') {
+        return this.subject.shop.name;
+      }
+
+      return '';
+    },
+    subjectHasImages: function subjectHasImages() {
+      return this.subjectType === 'product' && this.activity.verb !== 'review' && this.activity.verb !== 'offer';
+    },
+    foreignIsReview: function foreignIsReview() {
+      return this.foreign && this.activity.verb === 'review' && this.foreign !== null;
+    },
+    foreignIsOffer: function foreignIsOffer() {
+      return this.subjectType === 'product' && this.activity.verb === 'offer' && this.foreign !== null;
+    },
+    starHtml: function starHtml() {
+      var stars = "";
+
+      if (this.foreignIsReview) {
+        var difference = 5 - this.foreign.review.rating;
+
+        for (var i = 1; i <= this.foreign.review.rating; i++) {
+          stars += '<i class="fa fa-star"></i>';
+
+          if (i === this.foreign.review.rating && difference > 0) {
+            for (var j = 1; j <= difference; j++) {
+              stars += '<i class="fa fa-star-o"></i>';
+            }
+          }
+        }
+      }
+
+      return stars;
+    },
+    discountedPrice: function discountedPrice() {
+      if (this.foreignIsOffer) return this.subject.product.price - this.subject.product.price * (this.foreign.offer.discount / 100);
+      return "";
+    },
+    offerTimeline: function offerTimeline() {
+      if (this.foreignIsOffer) return "[<i class='material-icons'>date_range</i> " + this.humanize(this.foreign.offer.start_date) + " - " + this.humanize(this.foreign.offer.end_date) + "]";
+      return "";
+    },
+    offerState: function offerState() {
+      if (this.foreignIsOffer) return {
+        'text-danger': this.foreign.offer.ended,
+        'text-warning': !this.foreign.offer.started,
+        'text-success': this.foreign.offer.started && !this.foreign.offer.ended
+      };
+      return {
+        'text-muted': true
+      };
+    }
+  },
+  methods: {
+    humanize: function humanize(datetime) {
+      return Moment(datetime).format("dddd, MMMM Do YYYY");
+    }
+  }
 });
 
 /***/ }),
@@ -1818,15 +1981,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Feed",
   components: {
     Activity: _Activity__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.initialCount();
+    this.fetchActivities();
+  },
   data: function data() {
-    return {};
+    return {
+      ordering: 'latest',
+      activities: [],
+      paginatorInfo: null,
+      loaded: false,
+      loadingMore: false,
+      count: 0
+    };
   },
   props: {
     actor: {
@@ -1844,7 +2042,83 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     title: function title() {
-      return this.feedType === 'timeline' ? 'Timeline' : 'News Feed';
+      return this.feedType === 'timeline' ? 'Timeline' : 'News Feeds';
+    },
+    hasActivities: function hasActivities() {
+      return this.activities.length > 0;
+    },
+    variables: function variables() {
+      var variables = {
+        count: this.count,
+        page: 1,
+        ordering: this.ordering
+      };
+
+      if (this.actor && (this.actorType === 'user' || this.actorType === 'shop')) {
+        variables["id"] = this.actor.id;
+      }
+
+      return variables;
+    },
+    query: function query() {
+      if (this.actor && this.actorType === 'user') {
+        return graphql.userTimeline;
+      } else if (this.actor && this.actorType === 'shop') {
+        return graphql.shopTimeline;
+      } else if (!this.actor && this.actorType === 'user' && this.feedType === 'timeline') {
+        return graphql.myTimeline;
+      } else {
+        return graphql.myNews;
+      }
+    },
+    loaderDisabled: function loaderDisabled() {
+      if (this.paginatorInfo) {
+        return !this.paginatorInfo.hasMorePages;
+      }
+
+      return true;
+    }
+  },
+  methods: {
+    initialCount: function initialCount() {
+      this.count = graphql.rowCount;
+    },
+    fetchActivities: function fetchActivities() {
+      axios.post(graphql.api, {
+        query: this.query,
+        variables: this.variables
+      }).then(this.loadActivities).catch(function (error) {});
+    },
+    loadActivities: function loadActivities(response) {
+      this.loaded = true;
+      this.loadingMore = false;
+
+      if (this.actor && this.actorType === 'user') {
+        this.activities = response.data.data.user.timeline.data;
+        this.paginatorInfo = response.data.data.user.timeline.paginatorInfo;
+      } else if (this.actor && this.actorType === 'shop') {
+        this.activities = response.data.data.shop.timeline.data;
+        this.paginatorInfo = response.data.data.shop.timeline.paginatorInfo;
+      } else if (!this.actor && this.actorType === 'user' && this.feedType === 'timeline') {
+        this.activities = response.data.data.me.timeline.data;
+        this.paginatorInfo = response.data.data.me.timeline.paginatorInfo;
+      } else {
+        this.activities = response.data.data.me.news.data;
+        this.paginatorInfo = response.data.data.me.news.paginatorInfo;
+      }
+    },
+    loadMore: function loadMore() {
+      this.loadingMore = true;
+      this.count += graphql.rowCount;
+      this.fetchActivities();
+    }
+  },
+  watch: {
+    ordering: function ordering(data) {
+      this.loaded = false;
+      this.activities = [];
+      this.initialCount();
+      this.fetchActivities();
     }
   }
 });
@@ -1966,7 +2240,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     date: function date() {
-      return Moment(this.review.created_at).fromNow();
+      return Moment(this.review.created_at).fromNow().toLowerCase();
     },
     starHtml: function starHtml() {
       var stars = "";
@@ -2968,7 +3242,7 @@ __webpack_require__.r(__webpack_exports__);
         templates: {
           header: '<div class="card border-bottom">\n' + '           <article class="card-group-item">\n' + '              <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Shops</h6></header>\n' + '           </article> <!-- card-group-item.// -->\n' + '       </div>',
           suggestion: function suggestion(data) {
-            return '<div>\n' + '      <a href="/shops/' + data.code + '">' + '        <div class="row py-2 px-4 border-bottom">\n' + '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' + '                <img class="rounded" src="' + data.avatar + '">\n' + '            </div>\n' + '            <div class="col pl-3">\n' + '                <h6 class="m-0">' + data.name + '</h6>\n' + '                <span class="text-light">' + data.category.name + ' | ' + data.reviewCount + ' Review(s) | ' + data.likes + ' Like(s)</span>\n' + '            </div>\n' + '        </div>\n' + '    </div>';
+            return '<div>\n' + '      <a href="/shops/' + data.code + '">' + '        <div class="row py-2 px-4 border-bottom">\n' + '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' + '                <img class="rounded" src="' + data.avatar.url + '">\n' + '            </div>\n' + '            <div class="col pl-3">\n' + '                <h6 class="m-0">' + data.name + '</h6>\n' + '                <span class="text-light">' + data.category.name + ' | ' + data.reviewCount + ' Review(s) | ' + data.likes + ' Like(s)</span>\n' + '            </div>\n' + '        </div>\n' + '    </div>';
           }
         }
       }, {
@@ -2980,7 +3254,7 @@ __webpack_require__.r(__webpack_exports__);
         templates: {
           header: '<div class="card border-bottom">\n' + '            <article class="card-group-item">\n' + '                <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">People</h6></header>\n' + '            </article> <!-- card-group-item.// -->\n' + '        </div>',
           suggestion: function suggestion(data) {
-            return '<div>\n' + '     <a href="/people/' + data.code + '">' + '        <div class="row py-2 px-4 border-bottom">\n' + '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' + '                <img class="rounded" src=" ' + data.avatar + ' ">\n' + '            </div>\n' + '            <div class="col pl-3">\n' + '                <h6 class="m-0">' + data.name + '</h6>\n' + '                <span class="text-light">' + data.followerCount + ' Follower(s) | ' + data.followingCount + ' Following</span>\n' + '            </div>\n' + '        </div>\n' + '    </a>' + '  </div>';
+            return '<div>\n' + '     <a href="/people/' + data.code + '">' + '        <div class="row py-2 px-4 border-bottom">\n' + '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' + '                <img class="rounded" src=" ' + data.avatar.url + ' ">\n' + '            </div>\n' + '            <div class="col pl-3">\n' + '                <h6 class="m-0">' + data.name + '</h6>\n' + '                <span class="text-light">' + data.followerCount + ' Follower(s) | ' + data.followingCount + ' Following</span>\n' + '            </div>\n' + '        </div>\n' + '    </a>' + '  </div>';
           }
         }
       }).on('typeahead:asyncrequest', this.showSpinner).on('typeahead:asynccancel typeahead:asyncreceive', this.hideSpinner);
@@ -5604,6 +5878,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditProduct",
   mounted: function mounted() {
@@ -5688,6 +5963,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.subCategoryId.length > 0) this.showError('subCategory', "Please choose a subcategory");
       if (!this.brandId.length > 0) this.showError('brand', "Please choose a brand");
       if (!this.price.length > 0) this.showError('price', "Product general price is required");
+      if (!this.description.length > 0) this.showError('description', "Product description is required");
       this.validateAttributes();
 
       if (!this.error) {
@@ -6004,6 +6280,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewProduct",
   mounted: function mounted() {
@@ -6083,6 +6360,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.subCategoryId.length > 0) this.showError('subCategory', "Please choose a subcategory");
       if (!this.brandId.length > 0) this.showError('brand', "Please choose a brand");
       if (!this.price.length > 0) this.showError('price', "Product general price is required");
+      if (!this.description.length > 0) this.showError('description', "Product description is required");
       if (!this.quantity.length > 0) this.showError('quantity', "Product initial stock quantity is required");
       if (!this.notifyBelowQuantity.length > 0) this.showError('notifyBelowQuantity', "Product minimum stock indicator is required");
       this.validateAttributes();
@@ -6472,6 +6750,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -14971,6 +15251,44 @@ Emitter.prototype.listeners = function(event){
 Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nspan.time[data-v-028893f4] {\n    text-transform: lowercase !important;\n}\n.photos[data-v-028893f4] {\n    list-style: outside none none;\n    margin-bottom: 0;\n    padding-left: 0;\n}\n.photos > li[data-v-028893f4] {\n    display: inline-block;\n    min-width: 32.3%;\n    width: 32.3%;\n    margin: 0 1.3px;\n}\n.photos > li:hover a img[data-v-028893f4] {\n    transform: scale(1.01);\n}\n.photos > li a[data-v-028893f4] {\n    display: inline-block;\n    overflow: hidden;\n    width: 100%;\n}\n.photos > li a img[data-v-028893f4] {\n    width: 100%;\n}\n.post-meta[data-v-028893f4] {\n    float: left;\n    margin-top: 15px;\n    width: 100%;\n}\n.post-meta > img[data-v-028893f4] {\n    float: left;\n    width: 100%;\n}\n.description[data-v-028893f4] {\n    float: left;\n    margin-top: 12px;\n    width: 100%;\n}\n.description > p[data-v-028893f4] {\n    margin-bottom: 20px;\n}\n.description > span[data-v-028893f4] {\n    color: #2a2a2a;\n    font-size: 18px;\n    font-weight: 600;\n    line-height: 28px;\n    display: inline-block;\n    margin-bottom: 5px;\n}\n.description > p a[data-v-028893f4] {\n    font-weight: 600;\n}\n.linked-image[data-v-028893f4] {\n    display: inline-block;\n    width: 20%;\n    vertical-align: top;\n    float: none;\n    margin-bottom: 15px;\n}\n.align-left[data-v-028893f4] {\n    float: left;\n    margin-right: 20px;\n}\n.post-meta .detail[data-v-028893f4] {\n    display: inline-block;\n    width: 78%;\n}\n.post-meta .detail > a > span[data-v-028893f4] {\n    font-size: 24px;\n    font-weight: 300;\n}\n.post-meta .detail > a[data-v-028893f4] {\n    font-size: 12px;\n    letter-spacing: 1px;\n}\n.post-meta .detail > a[data-v-028893f4]:hover {\n    color: red;\n}\n.align-right[data-v-028893f4] {\n    float: right;\n    margin-left: 20px;\n}\n.post-meta .linked-image.align-left a img[data-v-028893f4] {\n\n    height: auto;\n    max-width: 100%;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nspan.time[data-v-ec7d4a06] {\n    text-transform: lowercase !important;\n}\n", ""]);
+
+// exports
 
 
 /***/ }),
@@ -54800,6 +55118,66 @@ module.exports = function (str) {
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ddondola/AccountSettings.vue?vue&type=style&index=0&id=eff6b6aa&scoped=true&lang=css&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ddondola/AccountSettings.vue?vue&type=style&index=0&id=eff6b6aa&scoped=true&lang=css& ***!
@@ -60211,63 +60589,230 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "central-meta item" }, [
-      _c("div", { staticClass: "user-post" }, [
-        _c("div", { staticClass: "friend-info" }, [
-          _c("figure", [
-            _c("img", {
-              staticClass: "img-fluid rounded-circle",
-              attrs: { alt: "", src: "/images/avatars/0.jpg" }
-            })
+  return _c("div", { staticClass: "central-meta item" }, [
+    _c("div", { staticClass: "user-post" }, [
+      _c("div", { staticClass: "friend-info" }, [
+        _c("figure", [
+          _c("img", {
+            staticClass: "img-fluid rounded-circle",
+            attrs: { alt: "", src: _vm.actor.avatar.url }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "friend-name" }, [
+          _c("ins", [
+            _c(
+              "a",
+              { staticClass: "name", attrs: { href: _vm.actorProfile } },
+              [_vm._v(_vm._s(_vm.actor.name))]
+            ),
+            _vm._v(" " + _vm._s(_vm.action) + " "),
+            _c("a", { staticClass: "name", attrs: { href: _vm.subjectUrl } }, [
+              _vm._v(_vm._s(_vm.subjectName))
+            ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "friend-name" }, [
-            _c("ins", [
-              _c("a", { staticClass: "name", attrs: { href: "#" } }, [
-                _vm._v("Jeffery Lalor")
-              ]),
-              _vm._v(" added "),
-              _c("a", { staticClass: "name", attrs: { href: "#" } }, [
-                _vm._v("Loren Gatlin")
-              ]),
-              _vm._v(" and "),
-              _c("a", { staticClass: "name", attrs: { href: "#" } }, [
-                _vm._v("Tarah Shropshire")
-              ]),
-              _vm._v(" to project "),
-              _c("a", { attrs: { href: "#" } }, [
-                _vm._v("Patient appointment booking")
+          _c("span", { staticClass: "time" }, [
+            _vm._v(_vm._s(_vm.time) + " "),
+            _c("span", {
+              class: _vm.offerState,
+              domProps: { innerHTML: _vm._s(_vm.offerTimeline) }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.subjectType === "product" &&
+        _vm.activity.verb !== "review" &&
+        _vm.activity.verb !== "offer"
+          ? _c("div", { staticClass: "description my-2" }, [
+              _vm.subject.product.description
+                ? _c("p", { staticClass: "text-ellipsis m-0" }, [
+                    _c("i", { staticClass: "material-icons" }, [
+                      _vm._v("description")
+                    ]),
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm.subject.product.description) +
+                        "\n                "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("p", { staticClass: "m-0 mt-1" }, [
+                _c("span", { staticClass: "badge badge-info mr-1" }, [
+                  _vm._v(_vm._s(_vm.subject.product.brand.name))
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "badge badge-info mr-1" }, [
+                  _vm._v(_vm._s(_vm.subject.product.category.name))
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "badge badge-info mr-1" }, [
+                  _vm._v(_vm._s(_vm.subject.product.subcategory.name))
+                ])
+              ])
+            ])
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.subjectHasImages
+      ? _c("div", { staticClass: "post-meta m-0" }, [
+          _c(
+            "ul",
+            { staticClass: "photos gallery-small" },
+            _vm._l(_vm.subject.product.images, function(image, indx) {
+              return _c("li", [
+                _c(
+                  "a",
+                  {
+                    key: indx,
+                    staticClass: "strip",
+                    attrs: {
+                      href: image.url,
+                      title: "",
+                      "data-strip-group": "mygroup",
+                      "data-strip-group-options": "loop: false"
+                    }
+                  },
+                  [_c("img", { attrs: { src: image.url, alt: "" } })]
+                )
+              ])
+            }),
+            0
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.subjectType === "shop" && _vm.activity.verb !== "review"
+      ? _c(
+          "div",
+          {
+            staticClass: "post-meta mt-2 bg-light border",
+            staticStyle: { "border-radius": "4px" }
+          },
+          [
+            _c("div", { staticClass: "linked-image align-left m-0 mr-2" }, [
+              _c("a", { attrs: { title: "", href: _vm.subjectUrl } }, [
+                _c("img", {
+                  attrs: { alt: "", src: _vm.subject.shop.avatar.url }
+                })
               ])
             ]),
             _vm._v(" "),
-            _c("span", [_vm._v("published: june,2 2018 19:PM")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "description mt-2" }, [
-            _c("p", { staticClass: "m-0" }, [
-              _vm._v(
-                "\n                    Curabitur World's most beautiful car in "
-              ),
-              _c("a", { attrs: { title: "", href: "#" } }, [
-                _vm._v("#test drive booking !")
+            _c("div", { staticClass: "detail" }, [
+              _c("a", { attrs: { href: _vm.subjectUrl } }, [
+                _c("span", { staticClass: "text-primary text-ellipsis" }, [
+                  _vm._v(_vm._s(_vm.subjectName))
+                ])
               ]),
-              _vm._v(
-                " the most beatuiful car available in america and the saudia arabia, you can book your test drive by our official website\n                "
+              _vm._v(" "),
+              _c("p", { staticClass: "my-1 text-ellipsis" }, [
+                _c("i", { staticClass: "material-icons" }, [
+                  _vm._v("description")
+                ]),
+                _vm._v(" " + _vm._s(_vm.subject.shop.profile.description))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "badge badge-secondary m-0" }, [
+                _vm._v(_vm._s(_vm.subject.shop.category.name))
+              ])
+            ])
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.foreignIsReview
+      ? _c(
+          "div",
+          {
+            staticClass: "post-meta mt-2 bg-light border p-2",
+            staticStyle: { "border-radius": "4px" }
+          },
+          [
+            _c("div", { staticClass: "d-flex align-items-center flex-row" }, [
+              _c("div", { staticClass: "p-2 h2 text-warning m-0" }, [
+                _c("span", [_vm._v(_vm._s(_vm.foreign.review.rating) + ".0")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "p-2",
+                  staticStyle: { display: "inline-block", width: "87%" }
+                },
+                [
+                  _c("p", { staticClass: "m-0" }, [
+                    _c("span", {
+                      staticClass: "text-warning",
+                      domProps: { innerHTML: _vm._s(_vm.starHtml) }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "m-0 text-ellipsis" }, [
+                    _vm._v(_vm._s(_vm.foreign.review.body))
+                  ])
+                ]
               )
             ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.foreignIsOffer
+      ? _c(
+          "div",
+          {
+            staticClass: "post-meta mt-2 bg-light border",
+            staticStyle: { "border-radius": "4px" }
+          },
+          [
+            _c("div", { staticClass: "linked-image align-left m-0 mr-2" }, [
+              _c("a", { attrs: { title: "", href: _vm.subjectUrl } }, [
+                _c("img", {
+                  attrs: { alt: "", src: _vm.subject.product.images[0].url }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "detail" }, [
+              _c("a", { attrs: { href: _vm.subjectUrl } }, [
+                _c("span", { staticClass: "text-primary text-ellipsis" }, [
+                  _vm._v(_vm._s(_vm.subjectName))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "my-1 text-ellipsis" }, [
+                _c("i", { staticClass: "material-icons" }, [
+                  _vm._v("description")
+                ]),
+                _vm._v(" " + _vm._s(_vm.subject.product.description))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "price-wrap" }, [
+                _c("span", { staticClass: "price-new b" }, [
+                  _vm._v(
+                    _vm._s(_vm.subject.product.currencyCode) +
+                      " " +
+                      _vm._s(_vm.discountedPrice)
+                  )
+                ]),
+                _vm._v(" "),
+                _c("del", { staticClass: "price-old text-muted" }, [
+                  _vm._v(
+                    _vm._s(_vm.subject.product.currencyCode) +
+                      " " +
+                      _vm._s(_vm.subject.product.price)
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -60289,39 +60834,146 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "card card-small border" }, [
-      _c("div", { staticClass: "card-header border-bottom" }, [
-        _c("h5", { staticClass: "m-0" }, [
-          _c("img", {
-            staticStyle: { filter: "grayscale(100%)" },
-            attrs: { src: "/images/feed.png", alt: "" }
-          }),
-          _vm._v(" " + _vm._s(_vm.title))
-        ])
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "card card-small border" }, [
+        _c("div", { staticClass: "card-header border-bottom" }, [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              {
+                staticClass: "col-12 col-sm-6 text-center text-sm-left mb-sm-0"
+              },
+              [
+                _c("h5", { staticClass: "m-0" }, [
+                  _c("img", {
+                    staticStyle: { filter: "grayscale(100%)" },
+                    attrs: { src: "/images/feed.png", alt: "" }
+                  }),
+                  _vm._v(" " + _vm._s(_vm.title))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-12 col-sm-6 d-flex align-items-center" },
+              [
+                _c("div", { staticClass: "ml-auto" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.ordering,
+                          expression: "ordering"
+                        }
+                      ],
+                      staticClass:
+                        "form-control custom-select custom-select-sm",
+                      attrs: { tabindex: "-98" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.ordering = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "latest" } }, [
+                        _vm._v("Latest")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "oldest" } }, [
+                        _vm._v("Oldest")
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-body p-0" },
+          [
+            !_vm.loaded
+              ? [_vm._m(0)]
+              : !_vm.hasActivities && _vm.loaded
+              ? [_vm._m(1)]
+              : _vm.hasActivities && _vm.loaded
+              ? _vm._l(_vm.activities, function(activity, indx) {
+                  return _c("activity", {
+                    key: indx,
+                    attrs: { activity: activity }
+                  })
+                })
+              : _vm._e()
+          ],
+          2
+        )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body p-0" },
-        [
-          _c("activity"),
-          _vm._v(" "),
-          _c("activity"),
-          _vm._v(" "),
-          _c("activity")
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("a", {
-      staticClass: "btn-view btn-load-more border",
-      attrs: { href: "javascript:void(0)" }
-    })
-  ])
+      _vm.loadingMore ? [_vm._m(2)] : _vm._e(),
+      _vm._v(" "),
+      !_vm.loadingMore
+        ? _c("a", {
+            staticClass: "btn-view btn-load-more border",
+            class: { disabled: _vm.loaderDisabled },
+            attrs: { href: "javascript:void(0)" },
+            on: { click: _vm.loadMore }
+          })
+        : _vm._e()
+    ],
+    2
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-4", attrs: { align: "center" } }, [
+      _c("div", { staticClass: "loader" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-4", attrs: { align: "center" } }, [
+      _c("h4", [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("error_outline")]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("small", [_vm._v("No activity yet")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-4", attrs: { align: "center" } }, [
+      _c("div", { staticClass: "loader" })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -60400,7 +61052,7 @@ var render = function() {
         _c("figure", [
           _c("img", {
             staticClass: "img-fluid rounded-circle",
-            attrs: { alt: "", src: _vm.review.reviewer.avatar }
+            attrs: { alt: "", src: _vm.review.reviewer.avatar.url }
           })
         ]),
         _vm._v(" "),
@@ -60421,7 +61073,8 @@ var render = function() {
               staticClass: "text-warning",
               domProps: { innerHTML: _vm._s(_vm.starHtml) }
             }),
-            _vm._v(" – " + _vm._s(_vm.date) + "\n                ")
+            _vm._v(" – "),
+            _c("span", { staticClass: "time" }, [_vm._v(_vm._s(_vm.date))])
           ])
         ]),
         _vm._v(" "),
@@ -63105,13 +63758,13 @@ var render = function() {
   return _c("div", { staticClass: "friend-card border" }, [
     _c("img", {
       staticClass: "img-responsive cover",
-      attrs: { src: _vm.user.coverPicture, alt: "profile-cover" }
+      attrs: { src: _vm.user.coverPicture.url, alt: "profile-cover" }
     }),
     _vm._v(" "),
     _c("div", { staticClass: "card card-info pb-3" }, [
       _c("img", {
         staticClass: "profile-photo-lg",
-        attrs: { src: _vm.user.avatar, alt: "user" }
+        attrs: { src: _vm.user.avatar.url, alt: "user" }
       }),
       _vm._v(" "),
       _c("div", { staticClass: "friend-info" }, [
@@ -65926,6 +66579,11 @@ var render = function() {
                         _vm.description = $event.target.value
                       }
                     }
+                  }),
+                  _vm._v(" "),
+                  _c("div", {
+                    staticClass: "invalid-feedback",
+                    attrs: { id: "description_feedback" }
                   })
                 ])
               ])
@@ -66506,6 +67164,11 @@ var render = function() {
                             _vm.description = $event.target.value
                           }
                         }
+                      }),
+                      _vm._v(" "),
+                      _c("div", {
+                        staticClass: "invalid-feedback",
+                        attrs: { id: "description_feedback" }
                       })
                     ])
                   ])
@@ -67494,7 +68157,9 @@ var render = function() {
                           _vm._v(_vm._s(_vm.humanize(offer.end_date)))
                         ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(offer.cancel))]),
+                        _c("td", [_vm._v(_vm._s(offer.cancelled))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(offer.active))]),
                         _vm._v(" "),
                         _vm._m(4, true)
                       ])
@@ -67661,6 +68326,8 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("th", [_vm._v("Cancelled")]),
           _vm._v(" "),
+          _c("th", [_vm._v("active")]),
+          _vm._v(" "),
           _c("th")
         ])
       ]
@@ -67767,7 +68434,7 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("span", { staticClass: "input-group-append" }, [
             _c("span", { staticClass: "input-group-text" }, [
-              _c("i", { staticClass: "material-icons" }, [_vm._v("")])
+              _c("i", { staticClass: "material-icons" }, [_vm._v("date_range")])
             ])
           ])
         ]
@@ -68115,13 +68782,13 @@ var render = function() {
               _c("div", { staticClass: "row no-gutters" }, [
                 _vm._m(1),
                 _vm._v(" "),
-                _c("aside", { staticClass: "col-sm-7" }, [
-                  _c("article", { staticClass: "p-5" }, [
+                _c("aside", { staticClass: "col-sm-6" }, [
+                  _c("article", { staticClass: "p-4 py-5" }, [
                     _c(
                       "h3",
                       {
                         staticClass:
-                          "h6 text-uppercase no-margin-bottom text-ellipsis mb-3"
+                          "text-uppercase no-margin-bottom text-ellipsis mb-3"
                       },
                       [_vm._v(_vm._s(_vm.product.name))]
                     ),
@@ -68332,14 +68999,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header border-bottom" }, [
-      _c("h5", { staticClass: "m-0" }, [_vm._v("Product Specifications")])
+      _c("h5", { staticClass: "m-0" }, [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("short_text")]),
+        _vm._v(" Product Specifications")
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("aside", { staticClass: "col-sm-5 border-right" }, [
+    return _c("aside", { staticClass: "col-sm-6 border-right" }, [
       _c("article", { staticClass: "gallery-wrap" }, [
         _c("div", { staticClass: "img-big-wrap pt-4" }, [
           _c("div", [
@@ -68600,7 +69270,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card card-small border mb-2" }, [
       _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "m-0" }, [_vm._v("Related Products")])
+        _c("h5", { staticClass: "m-0" }, [
+          _c("i", { staticClass: "material-icons" }, [_vm._v("short_text")]),
+          _vm._v(" Related Products")
+        ])
       ])
     ])
   }
@@ -69897,7 +70570,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-9 px-2" }, [
+          _c("div", { staticClass: "col-md-9" }, [
             _c(
               "div",
               { staticClass: "products-grid p-0", attrs: { id: "products" } },
@@ -70081,7 +70754,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header border-bottom" }, [
       _c("h6", { staticClass: "m-0" }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("folder")]),
+        _c("i", { staticClass: "material-icons" }, [_vm._v("short_text")]),
         _vm._v(" Product Categories")
       ])
     ])
@@ -70092,7 +70765,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header border-bottom" }, [
       _c("h6", { staticClass: "m-0" }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("folder")]),
+        _c("i", { staticClass: "material-icons" }, [_vm._v("short_text")]),
         _vm._v(" Brands")
       ])
     ])
@@ -73153,13 +73826,13 @@ var render = function() {
   return _c("div", { staticClass: "friend-card border" }, [
     _c("img", {
       staticClass: "img-responsive cover",
-      attrs: { src: _vm.shop.coverPicture, alt: "profile-cover" }
+      attrs: { src: _vm.shop.coverPicture.url, alt: "profile-cover" }
     }),
     _vm._v(" "),
     _c("div", { staticClass: "card card-info pb-3" }, [
       _c("img", {
         staticClass: "profile-photo-lg",
-        attrs: { src: _vm.shop.avatar, alt: "user" }
+        attrs: { src: _vm.shop.avatar.url, alt: "user" }
       }),
       _vm._v(" "),
       _c("div", { staticClass: "friend-info" }, [
@@ -88214,7 +88887,9 @@ window.SearchHeaders = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Activity_vue_vue_type_template_id_028893f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Activity.vue?vue&type=template&id=028893f4&scoped=true& */ "./resources/js/components/activity/Activity.vue?vue&type=template&id=028893f4&scoped=true&");
 /* harmony import */ var _Activity_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Activity.vue?vue&type=script&lang=js& */ "./resources/js/components/activity/Activity.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Activity_vue_vue_type_style_index_0_id_028893f4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css& */ "./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -88222,7 +88897,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Activity_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Activity_vue_vue_type_template_id_028893f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Activity_vue_vue_type_template_id_028893f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -88251,6 +88926,22 @@ component.options.__file = "resources/js/components/activity/Activity.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Activity_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Activity.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Activity.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Activity_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css& ***!
+  \****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Activity_vue_vue_type_style_index_0_id_028893f4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Activity.vue?vue&type=style&index=0&id=028893f4&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Activity_vue_vue_type_style_index_0_id_028893f4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Activity_vue_vue_type_style_index_0_id_028893f4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Activity_vue_vue_type_style_index_0_id_028893f4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Activity_vue_vue_type_style_index_0_id_028893f4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Activity_vue_vue_type_style_index_0_id_028893f4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -88421,7 +89112,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Review_vue_vue_type_template_id_ec7d4a06_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Review.vue?vue&type=template&id=ec7d4a06&scoped=true& */ "./resources/js/components/activity/Review.vue?vue&type=template&id=ec7d4a06&scoped=true&");
 /* harmony import */ var _Review_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Review.vue?vue&type=script&lang=js& */ "./resources/js/components/activity/Review.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Review_vue_vue_type_style_index_0_id_ec7d4a06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css& */ "./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -88429,7 +89122,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Review_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Review_vue_vue_type_template_id_ec7d4a06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Review_vue_vue_type_template_id_ec7d4a06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -88458,6 +89151,22 @@ component.options.__file = "resources/js/components/activity/Review.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Review.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Review.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css& ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_id_ec7d4a06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/activity/Review.vue?vue&type=style&index=0&id=ec7d4a06&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_id_ec7d4a06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_id_ec7d4a06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_id_ec7d4a06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_id_ec7d4a06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_id_ec7d4a06_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -92888,15 +93597,15 @@ window.graphql = {
   createCategory: "mutation createCategory($shopId: ID! $category: NewProductCategory!) {\n          category:createCategory(shopId: $shopId category: $category) {\n            id\n            name\n            productCount\n            categoryCount\n          }\n        }",
   shopProductSubCategories: "query productSubCategories($id: ID! $count: Int! $page: Int!){\n          shop(id: $id) {\n                categories:subcategories(count: $count page: $page) {\n                    data {\n                        id\n                        name\n                        description\n                        productCount\n                        category {\n                          name\n                        }\n                    }\n                    paginatorInfo {\n                        count\n                        currentPage\n                        firstItem\n                        hasMorePages\n                        lastItem\n                        lastPage\n                        perPage\n                        total\n                    }\n                }\n          }\n        }",
   createSubCategory: "mutation createSubCategory($categoryId: ID! $subcategory: NewProductSubCategory!) {\n          category:createSubCategory(categoryId: $categoryId subcategory: $subcategory) {\n            id\n            name\n            productCount\n            category {\n              name\n            }\n          }\n        }",
-  shopProducts: "query shopProducts($shopId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          shop(id: $shopId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                reviewCount\n                averageRating\n                discountedPrice\n                currencyCode\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  categoryProducts: "query categoryProducts($categoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          category:productCategory(id: $categoryId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                reviewCount\n                averageRating\n                discountedPrice\n                currencyCode\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  subcategoryProducts: "query subcategoryProducts($subcategoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          subcategory:productSubCategory(id: $subcategoryId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                reviewCount\n                averageRating\n                discountedPrice\n                currencyCode\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  shops: "query shops($categoryId: Int $count: Int! $page: Int!){\n          shops(categoryId: $categoryId count: $count page: $page) {\n            data {\n              id\n              code\n              name\n              productCount\n              likes\n              reviewCount\n              coverPicture\n              avatar\n              currencyCode\n              category {\n                name\n              }\n            }\n            paginatorInfo {\n              count\n              currentPage\n              firstItem\n              hasMorePages\n              lastItem\n              lastPage\n              perPage\n              total\n            }\n          }\n        }",
-  myShops: "query myShops($categoryId: Int $count: Int! $page: Int!) {\n          me {\n            shops(categoryId: $categoryId count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                productCount\n                likes\n                reviewCount\n                coverPicture\n                avatar\n                currencyCode\n                category {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  products: "query products($filters: ProductFilter $count: Int! $page: Int!) {\n          products(filters: $filters count: $count page: $page) {\n            data {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              discount\n              reviewCount\n              averageRating\n              discountedPrice\n              currencyCode\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n            }\n            paginatorInfo {\n              count\n              currentPage\n              firstItem\n              hasMorePages\n              lastItem\n              lastPage\n              perPage\n              total\n            }\n          }\n        }",
+  shopProducts: "query shopProducts($shopId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          shop(id: $shopId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                reviewCount\n                averageRating\n                discountedPrice\n                currencyCode\n                images {\n                  url\n                }\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  categoryProducts: "query categoryProducts($categoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          category:productCategory(id: $categoryId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                reviewCount\n                averageRating\n                discountedPrice\n                currencyCode\n                images {\n                  url\n                }\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  subcategoryProducts: "query subcategoryProducts($subcategoryId: ID! $filters: ProductFilter $count: Int! $page: Int!) {\n          subcategory:productSubCategory(id: $subcategoryId) {\n            products(filters: $filters count: $count page: $page) {\n              data {\n                id\n                name\n                code\n                active\n                quantity\n                price\n                discount\n                reviewCount\n                averageRating\n                discountedPrice\n                currencyCode\n                images {\n                  url\n                }\n                category {\n                  name\n                }\n                subcategory {\n                  name\n                }\n                brand {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  shops: "query shops($categoryId: Int $count: Int! $page: Int!){\n          shops(categoryId: $categoryId count: $count page: $page) {\n            data {\n              id\n              code\n              name\n              productCount\n              likes\n              reviewCount\n              currencyCode\n              category {\n                name\n              }\n              avatar{\n                url\n              }\n              coverPicture {\n                url\n              }\n            }\n            paginatorInfo {\n              count\n              currentPage\n              firstItem\n              hasMorePages\n              lastItem\n              lastPage\n              perPage\n              total\n            }\n          }\n        }",
+  myShops: "query myShops($categoryId: Int $count: Int! $page: Int!) {\n          me {\n            shops(categoryId: $categoryId count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                productCount\n                likes\n                reviewCount\n                avatar{\n                  url\n                }\n                coverPicture {\n                  url\n                }\n                currencyCode\n                category {\n                  name\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  products: "query products($filters: ProductFilter $count: Int! $page: Int!) {\n          products(filters: $filters count: $count page: $page) {\n            data {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              discount\n              reviewCount\n              averageRating\n              discountedPrice\n              currencyCode\n              images {\n                url\n              }\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n            }\n            paginatorInfo {\n              count\n              currentPage\n              firstItem\n              hasMorePages\n              lastItem\n              lastPage\n              perPage\n              total\n            }\n          }\n        }",
   createProduct: "mutation createProduct($product: NewProduct!){\n          createProduct(product: $product) {\n            id\n            code\n            name\n          }\n        }",
   editProduct: "mutation editProduct($productId: ID! $product: EditProduct!){\n          editProduct(productId: $productId product: $product) {\n            id\n            code\n            name\n          }\n        }",
-  relatedProducts: "query relatedProducts($id: ID!) {\n          product(id: $id) {\n            products:relatedProducts {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              discount\n              reviewCount\n              averageRating\n              discountedPrice\n              currencyCode\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n            }\n          }\n        }",
+  relatedProducts: "query relatedProducts($id: ID!) {\n          product(id: $id) {\n            products:relatedProducts {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              discount\n              reviewCount\n              averageRating\n              discountedPrice\n              currencyCode\n              images {\n                url\n              }\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n            }\n          }\n        }",
   productStock: "query productStock($id: ID! $type: String! $count: Int! $page: Int!){\n          product(id: $id) {\n            stock(type: $type count: $count page: $page) {\n              data {\n                quantity\n                type\n                note\n                user {\n                  name\n                }\n                created_at\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
   updateStock: "mutation updateStock($productId: ID! $stock: NewStock!) {\n          stock:updateStock(productId: $productId stock: $stock) {\n            quantity\n            type\n            note\n            user {\n              name\n            }\n            created_at\n          }\n        }",
   iLikeShop: "query iLikeShop($id: ID!) {\n          like:iLikeShop(id: $id)\n        }",
@@ -92909,25 +93618,29 @@ window.graphql = {
   isFavorite: "query isFavorite($id: ID!) {\n          isFavorite(id: $id)\n        }",
   addToFavorites: "mutation addToFavorites($id: ID!) {\n          isFavorite:addToFavorites(id: $id)\n        }",
   removeFromFavorites: "mutation removeFromFavorites($id: ID!) {\n          isFavorite:removeFromFavorites(id: $id)\n        }",
-  users: "query users($count: Int! $page: Int!) {\n          users(count: $count page: $page) {\n            data {\n              id\n              code\n              name\n              avatar\n              coverPicture\n              followerCount\n              followingCount\n            }\n            paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n          }\n        }",
-  followers: "query followers($id: ID! $count: Int! $page: Int!){\n          user(id: $id) {\n            followers(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar\n                coverPicture\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  following: "query following($id: ID! $count: Int! $page: Int!){\n          user(id: $id) {\n            following(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar\n                coverPicture\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  myFollowers: "query myFollowers($count: Int! $page: Int!){\n          me {\n            followers(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar\n                coverPicture\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  myFollowing: "query myFollowing($count: Int! $page: Int!){\n          me {\n            following(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar\n                coverPicture\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  myFavoriteProducts: "query myFavoriteProducts($filters: ProductFilter $count: Int! $page: Int!){\n          me {\n            products:favouriteProducts(filters: $filters count: $count page: $page) {\n                data {\n                  id\n                  name\n                  code\n                  active\n                  quantity\n                  price\n                  discount\n                  reviewCount\n                  averageRating\n                  discountedPrice\n                  currencyCode\n                  category {\n                    name\n                  }\n                  subcategory {\n                    name\n                  }\n                  brand {\n                    name\n                  }\n                }\n                paginatorInfo {\n                  count\n                  currentPage\n                  firstItem\n                  hasMorePages\n                  lastItem\n                  lastPage\n                  perPage\n                  total\n                }\n            }\n          }\n        }",
-  searchProducts: "query searchProducts($name: String!) {\n          results:searchProducts(name: $name) {\n            id\n            name\n            price\n            code\n            discount\n            reviewCount\n            averageRating\n            discountedPrice\n            currencyCode\n            category {\n              name\n            }\n            subcategory {\n              name\n            }\n            brand {\n              name\n            }\n          }\n        }",
-  searchShops: "query searchShops($name: String!) {\n          results:searchShops(name: $name) {\n            id\n            name\n            code\n            likes\n            avatar\n            coverPicture\n            reviewCount\n            category {\n              name\n            }\n          }\n        }",
-  searchUsers: "query searchUsers($name: String!) {\n          results:searchUsers(name: $name) {\n            id\n            code\n            name\n            avatar\n            coverPicture\n            followerCount\n            followingCount\n          }\n        }",
+  users: "query users($count: Int! $page: Int!) {\n          users(count: $count page: $page) {\n            data {\n              id\n              code\n              name\n              avatar{\n                url\n              }\n              coverPicture {\n                url\n              }\n              followerCount\n              followingCount\n            }\n            paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n          }\n        }",
+  followers: "query followers($id: ID! $count: Int! $page: Int!){\n          user(id: $id) {\n            followers(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar{\n                  url\n                }\n                coverPicture {\n                  url\n                }\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  following: "query following($id: ID! $count: Int! $page: Int!){\n          user(id: $id) {\n            following(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar{\n                  url\n                }\n                coverPicture {\n                  url\n                }\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  myFollowers: "query myFollowers($count: Int! $page: Int!){\n          me {\n            followers(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar{\n                  url\n                }\n                coverPicture {\n                  url\n                }\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  myFollowing: "query myFollowing($count: Int! $page: Int!){\n          me {\n            following(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar{\n                  url\n                }\n                coverPicture {\n                  url\n                }\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  myFavoriteProducts: "query myFavoriteProducts($filters: ProductFilter $count: Int! $page: Int!){\n          me {\n            products:favouriteProducts(filters: $filters count: $count page: $page) {\n                data {\n                  id\n                  name\n                  code\n                  active\n                  quantity\n                  price\n                  discount\n                  reviewCount\n                  averageRating\n                  discountedPrice\n                  currencyCode\n                  images {\n                    url\n                  }\n                  category {\n                    name\n                  }\n                  subcategory {\n                    name\n                  }\n                  brand {\n                    name\n                  }\n                }\n                paginatorInfo {\n                  count\n                  currentPage\n                  firstItem\n                  hasMorePages\n                  lastItem\n                  lastPage\n                  perPage\n                  total\n                }\n            }\n          }\n        }",
+  searchProducts: "query searchProducts($name: String!) {\n          results:searchProducts(name: $name) {\n            id\n            name\n            price\n            code\n            discount\n            reviewCount\n            averageRating\n            discountedPrice\n            currencyCode\n            images{\n              url\n            }\n            category {\n              name\n            }\n            subcategory {\n              name\n            }\n            brand {\n              name\n            }\n          }\n        }",
+  searchShops: "query searchShops($name: String!) {\n          results:searchShops(name: $name) {\n            id\n            name\n            code\n            likes\n            avatar{\n              url\n            }\n            coverPicture {\n              url\n            }\n            reviewCount\n            category {\n              name\n            }\n          }\n        }",
+  searchUsers: "query searchUsers($name: String!) {\n          results:searchUsers(name: $name) {\n            id\n            code\n            name\n            avatar{\n              url\n            }\n            coverPicture {\n              url\n            }\n            followerCount\n            followingCount\n          }\n        }",
   isReviewed: "query isReviewed($entity: Reviewable!) {\n            isReviewed(entity: $entity) {\n                isReviewed\n                review {\n                    id\n                    rating\n                    body\n                }\n            }\n        }",
   addReview: "mutation addReview($entity: Reviewable! $review: ReviewData!) {\n            review:addReview(entity: $entity review: $review) {\n                id\n                rating\n                body\n                created_at\n                reviewer {\n                    name\n                }\n            }\n        }",
   editReview: "mutation editReview($id: ID! $review: ReviewData!) {\n            review:editReview(id: $id review: $review) {\n                id\n                rating\n                body\n                created_at\n                reviewer {\n                    name\n                }\n            }\n        }",
-  shopReviews: "query shopReviews($id: ID! $count: Int! $page: Int!){\n          shop(id: $id) {\n            reviews(count: $count page: $page) {\n                data {\n                    id\n                    rating\n                    body\n                    created_at\n                    reviewer {\n                        name\n                        avatar\n                        code\n                    }\n                }\n                paginatorInfo {\n                    count\n                    currentPage\n                    firstItem\n                    hasMorePages\n                    lastItem\n                    lastPage\n                    perPage\n                    total\n                }\n            }\n          }\n        }",
-  productReviews: "query productReviews($id: ID! $count: Int! $page: Int!){\n          product(id: $id) {\n            reviews(count: $count page: $page) {\n                data {\n                    id\n                    rating\n                    body\n                    created_at\n                    reviewer {\n                        name\n                        avatar\n                        code\n                    }\n                }\n                paginatorInfo {\n                    count\n                    currentPage\n                    firstItem\n                    hasMorePages\n                    lastItem\n                    lastPage\n                    perPage\n                    total\n                }\n            }\n          }\n        }",
+  shopReviews: "query shopReviews($id: ID! $count: Int! $page: Int!){\n          shop(id: $id) {\n            reviews(count: $count page: $page) {\n                data {\n                    id\n                    rating\n                    body\n                    created_at\n                    reviewer {\n                        name\n                        avatar{\n                          url\n                        }\n                        coverPicture {\n                          url\n                        }\n                        code\n                    }\n                }\n                paginatorInfo {\n                    count\n                    currentPage\n                    firstItem\n                    hasMorePages\n                    lastItem\n                    lastPage\n                    perPage\n                    total\n                }\n            }\n          }\n        }",
+  productReviews: "query productReviews($id: ID! $count: Int! $page: Int!){\n          product(id: $id) {\n            reviews(count: $count page: $page) {\n                data {\n                    id\n                    rating\n                    body\n                    created_at\n                    reviewer {\n                        name\n                        avatar{\n                          url\n                        }\n                        coverPicture {\n                          url\n                        }\n                        code\n                    }\n                }\n                paginatorInfo {\n                    count\n                    currentPage\n                    firstItem\n                    hasMorePages\n                    lastItem\n                    lastPage\n                    perPage\n                    total\n                }\n            }\n          }\n        }",
   myCart: "query myCart {\n        me {\n            cart {\n              id\n              sum\n              productCount\n            }\n        }\n    }",
-  myCartProducts: "query myCartProducts {\n        me {\n          cart {\n              sum\n              products {\n                id\n                quantity\n                price\n                name\n                code\n                discountedPrice\n                currencyCode\n                pivot:cartPivot {\n                  id\n                  sum\n                  price\n                  quantity\n                }\n              }\n           }\n        }\n    }",
-  productsOffers: "query productsOffers($id: ID! $ordering: String $count: Int! $page: Int!) {\n          product(id: $id) {\n            offers(ordering: $ordering count: $count page: $page) {\n              data {\n                id\n                discount\n                start_date\n                end_date\n                cancel\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  myCartProducts: "query myCartProducts {\n        me {\n          cart {\n              sum\n              products {\n                id\n                quantity\n                price\n                name\n                code\n                discountedPrice\n                currencyCode\n                images {\n                  url\n                }\n                pivot:cartPivot {\n                  id\n                  sum\n                  price\n                  quantity\n                }\n              }\n           }\n        }\n    }",
+  productsOffers: "query productsOffers($id: ID! $ordering: String $count: Int! $page: Int!) {\n          product(id: $id) {\n            offers(ordering: $ordering count: $count page: $page) {\n              data {\n                id\n                discount\n                start_date\n                end_date\n                cancelled\n                active\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
   createProductOffer: "mutation createProductOffer($productId: ID! $offer: NewOffer!) {\n            offer:createProductOffer(productId: $productId offer: $offer) {\n                id\n                discount\n                start_date\n                end_date\n                cancel\n            }\n        }",
-  activeShopOffers: "query activeShopOffers($shopId: ID! $ordering: String! $count: Int! $page: Int!) {\n          shop(id: $shopId) {\n            deals: activeOffers {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              discount\n              reviewCount\n              averageRating\n              discountedPrice\n              currencyCode\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n              offers(ordering: $ordering, count: $count, page: $page) {\n                data {\n                  discount\n                  start_date\n                  end_date\n                }\n              }\n            }\n          }\n        }"
+  activeShopOffers: "query activeShopOffers($shopId: ID! $ordering: String! $count: Int! $page: Int!) {\n          shop(id: $shopId) {\n            deals: activeOffers {\n              id\n              name\n              code\n              active\n              quantity\n              price\n              discount\n              reviewCount\n              averageRating\n              discountedPrice\n              currencyCode\n              images {\n                url\n              }\n              category {\n                name\n              }\n              subcategory {\n                name\n              }\n              brand {\n                name\n              }\n              offers(ordering: $ordering, count: $count, page: $page) {\n                data {\n                  discount\n                  start_date\n                  end_date\n                  cancelled\n                  active\n                }\n              }\n            }\n          }\n        }",
+  myTimeline: "query myTimeline($ordering: String, $count: Int!, $page: Int!) {\n          me {\n            timeline(ordering: $ordering, count: $count, page: $page) {\n              data {\n                id\n                verb\n                actor {\n                  id\n                  name\n                  type\n                  code\n                  avatar{\n                    url\n                  }\n                  coverPicture {\n                    url\n                  }\n                }\n                subject {\n                  type\n                  product {\n                    id\n                    name\n                    code\n                    description\n                    price\n                    discountedPrice\n                    currencyCode\n                    images {\n                      url\n                    }\n                    brand {\n                      name\n                    }\n                    category {\n                      name\n                    }\n                    subcategory {\n                      name\n                    }\n                  }\n                  user {\n                    id\n                    name\n                    code\n                    avatar {\n                      url\n                    }\n                  }\n                  shop {\n                    id\n                    name\n                    code\n                    avatar {\n                      url\n                    }\n                    category {\n                      name\n                    }\n                    profile {\n                      description\n                    }\n                  }\n                }\n                foreign {\n                  review {\n                    rating\n                    body\n                  }\n                  offer {\n                    discount\n                    start_date\n                    end_date\n                    cancelled\n                    active\n                    started\n                    ended\n                  }\n                }\n                created_at\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  myNews: "query myNews($ordering: String, $count: Int!, $page: Int!) {\n          me {\n            news(ordering: $ordering, count: $count, page: $page) {\n              data {\n                id\n                verb\n                actor {\n                  id\n                  name\n                  type\n                  code\n                  avatar{\n                    url\n                  }\n                  coverPicture {\n                    url\n                  }\n                }\n                subject {\n                  type\n                  product {\n                    id\n                    name\n                    code\n                    description\n                    price\n                    discountedPrice\n                    currencyCode\n                    images {\n                      url\n                    }\n                    brand {\n                      name\n                    }\n                    category {\n                      name\n                    }\n                    subcategory {\n                      name\n                    }\n                  }\n                  user {\n                    id\n                    name\n                    code\n                    avatar {\n                      url\n                    }\n                  }\n                  shop {\n                    id\n                    name\n                    code\n                    avatar {\n                      url\n                    }\n                    category {\n                      name\n                    }\n                    profile {\n                      description\n                    }\n                  }\n                }\n                foreign {\n                  review {\n                    rating\n                    body\n                  }\n                  offer {\n                    discount\n                    start_date\n                    end_date\n                    cancelled\n                    active\n                    started\n                    ended\n                  }\n                }\n                created_at\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  userTimeline: "query userTimeline($id: ID! $ordering: String, $count: Int!, $page: Int!) {\n          user(id: $id) {\n            timeline(ordering: $ordering, count: $count, page: $page) {\n              data {\n                id\n                verb\n                actor {\n                  id\n                  name\n                  type\n                  code\n                  avatar{\n                    url\n                  }\n                  coverPicture {\n                    url\n                  }\n                }\n                subject {\n                  type\n                  product {\n                    id\n                    name\n                    code\n                    description\n                    price\n                    discountedPrice\n                    currencyCode\n                    images {\n                      url\n                    }\n                    brand {\n                      name\n                    }\n                    category {\n                      name\n                    }\n                    subcategory {\n                      name\n                    }\n                  }\n                  user {\n                    id\n                    name\n                    code\n                    avatar {\n                      url\n                    }\n                  }\n                  shop {\n                    id\n                    name\n                    code\n                    avatar {\n                      url\n                    }\n                    category {\n                      name\n                    }\n                    profile {\n                      description\n                    }\n                  }\n                }\n                foreign {\n                  review {\n                    rating\n                    body\n                  }\n                  offer {\n                    discount\n                    start_date\n                    end_date\n                    cancelled\n                    active\n                    started\n                    ended\n                  }\n                }\n                created_at\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
+  shopTimeline: "query shopTimeline($id: ID! $ordering: String, $count: Int!, $page: Int!) {\n          shop(id: $id) {\n            timeline(ordering: $ordering, count: $count, page: $page) {\n              data {\n                id\n                verb\n                actor {\n                  id\n                  name\n                  type\n                  code\n                  avatar{\n                    url\n                  }\n                  coverPicture {\n                    url\n                  }\n                }\n                subject {\n                  type\n                  product {\n                    id\n                    name\n                    code\n                    description\n                    price\n                    discountedPrice\n                    currencyCode\n                    images {\n                      url\n                    }\n                    brand {\n                      name\n                    }\n                    category {\n                      name\n                    }\n                    subcategory {\n                      name\n                    }\n                  }\n                  user {\n                    id\n                    name\n                    code\n                    avatar {\n                      url\n                    }\n                  }\n                  shop {\n                    id\n                    name\n                    code\n                    avatar {\n                      url\n                    }\n                    category {\n                      name\n                    }\n                    profile {\n                      description\n                    }\n                  }\n                }\n                foreign {\n                  review {\n                    rating\n                    body\n                  }\n                  offer {\n                    discount\n                    start_date\n                    end_date\n                    cancelled\n                    active\n                    started\n                    ended\n                  }\n                }\n                created_at\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }"
 };
 
 /***/ }),

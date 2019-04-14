@@ -63,6 +63,7 @@
                         <div class="form-group col-md-12">
                             <label for="description">Product Description</label>
                             <textarea style="min-height: 87px;" id="description" class="form-control" v-model="description"></textarea>
+                            <div class="invalid-feedback" id="description_feedback"></div>
                         </div>
                     </div>
                 </div>
@@ -189,6 +190,9 @@
 
                 if (!this.price.length > 0)
                     this.showError('price', "Product general price is required");
+
+                if (!this.description.length > 0)
+                    this.showError('description', "Product description is required");
 
                 this.validateAttributes();
 

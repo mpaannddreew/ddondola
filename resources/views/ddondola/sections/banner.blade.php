@@ -2,14 +2,14 @@
     <section class="image-bg lis-grediant grediant-bt-dark text-white pb-4 profile-inner">
         <div class="background-image-maker"></div>
         <div class="holder-image">
-            <img src="{{ $user->coverPicture() }}" alt="" class="img-fluid d-none">
+            <img src="{{ $user->coverPicture()['url'] }}" alt="" class="img-fluid d-none">
         </div>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-12 mb-4 mb-lg-0">
                     <a href="javascript:void(0)" class="text-white">
                         <div class="media d-block d-sm-flex text-sm-left text-center">
-                            <img style="width: 100px; height: 100px;" src="{{ $user->avatar() }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 mb-4 mb-md-0" alt="" />
+                            <img style="width: 100px; height: 100px;" src="{{ $user->avatar()['url'] }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 mb-4 mb-md-0" alt="" />
                             <div class="media-body align-self-center">
                                 <h5 class="text-white lis-font-weight-500 lis-line-height-1">{{ $user->name() }}</h5>
                                 <p class="mb-0">{{ $user->viewFollower() }}</p>

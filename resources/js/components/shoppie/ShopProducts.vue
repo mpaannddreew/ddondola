@@ -22,7 +22,7 @@
                 <div class="sidebar">
                     <div class="card card-small border mb-2">
                         <div class="card-header border-bottom">
-                            <h6 class="m-0"><i class="material-icons">folder</i> Product Categories</h6>
+                            <h6 class="m-0"><i class="material-icons">short_text</i> Product Categories</h6>
                         </div>
                         <div class="card-body">
                             <div class="block p-0 m-0">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="card card-small border">
                         <div class="card-header border-bottom">
-                            <h6 class="m-0"><i class="material-icons">folder</i> Brands</h6>
+                            <h6 class="m-0"><i class="material-icons">short_text</i> Brands</h6>
                         </div>
                         <div class="card-body">
                             <div class="block p-0 m-0">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9 px-2">
+            <div class="col-md-9">
                 <div class="products-grid p-0" id="products">
                     <header class="d-flex justify-content-between align-items-start mb-2">
                         <visible-items :paginator-info="paginatorInfo" v-if="showProducts && productsLoaded && paginatorInfo"></visible-items>
