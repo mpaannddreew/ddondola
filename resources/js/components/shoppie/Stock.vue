@@ -6,13 +6,13 @@
                     <div class="col-12 col-sm-6 text-center text-sm-left mb-4 mb-sm-0">
                         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                             <li class="nav-item">
-                                <a href="javascript:void(0);" class="nav-link" :class="{ active: showing === 'all' }" @click="showAll"><i class="material-icons">list</i> All</a>
+                                <a href="javascript:void(0);" class="nav-link" :class="{ active: isShowing('all') }" @click="showAll"><i class="material-icons">list</i> All</a>
                             </li>
                             <li class="nav-item">
-                                <a href="javascript:void(0);"  class="nav-link" :class="{ active: showing === 'in' }" @click="showIn"><i class="material-icons">done</i> In stock</a>
+                                <a href="javascript:void(0);"  class="nav-link" :class="{ active: isShowing('in') }" @click="showIn"><i class="material-icons">done</i> In stock</a>
                             </li>
                             <li class="nav-item">
-                                <a href="javascript:void(0);"  class="nav-link" :class="{ active: showing === 'out' }" @click="showOut"><i class="material-icons">clear</i> Out Stock</a>
+                                <a href="javascript:void(0);"  class="nav-link" :class="{ active: isShowing('out') }" @click="showOut"><i class="material-icons">clear</i> Out Stock</a>
                             </li>
                         </ul>
                     </div>
@@ -218,6 +218,9 @@
             loadPage(page) {
                 this.page = page;
                 this.fetchStock();
+            },
+            isShowing(type) {
+                return this.showing === type;
             }
         },
         computed: {

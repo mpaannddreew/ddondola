@@ -1,38 +1,31 @@
 <template>
     <div>
         <div class="card card-small mb-1 border" style="border-bottom: none !important;">
-            <div class="card-header px-2 border-bottom">
-                <div class="row">
-                    <div class="col-12 col-sm-6 text-center text-sm-left mb-sm-0">
-                        <h5 class="m-0"><i class="material-icons">notifications</i> All Notifications</h5>
+            <div class="card-body p-0" :class="{'border-bottom': !hasNotifications}">
+                <template v-if="!loaded">
+                    <div align="center" class="p-4"><div class="loader"></div></div>
+                </template>
+                <template v-else-if="!hasNotifications && loaded">
+                    <div align="center" class="p-4">
+                        <h4 class="m-0">
+                            <i class="material-icons">error_outline</i>
+                            <br />
+                            <small>You have not received any notifications yet!</small>
+                        </h4>
                     </div>
-                    <div class="col-12 col-sm-6 d-flex align-items-center">
-                        <ul class="ml-auto mb-0" style="list-style: none;">
-                            <li class="dropdown dropdown-action dropdown-menu-sm-left">
-                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-small" style="display: none;">
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="material-icons">notifications_none</i> Mark all as read</a>
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="material-icons">notifications_active</i> Mark all as unread</a>
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="material-icons">delete_forever</i> Delete all</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body p-0">
-                <div class="activity">
+                </template>
+                <div class="activity" v-if="hasNotifications && loaded">
                     <div class="activity-box">
                         <ul class="activity-list">
-                            <template v-for="(indx, notification) in notifications">
-                                <li class="m-0" is="notification" :key="indx"></li>
+                            <template v-for="(notification, indx) in notifications">
+                                <li class="m-0" is="notification" :key="indx" :notification="notification"></li>
                             </template>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <a href="javascript:void(0)" class="btn-view btn-load-more border"></a>
+        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
     </div>
 </template>
 
@@ -41,9 +34,40 @@
     export default {
         name: "Notifications",
         components: {Notification},
+        mounted() {
+            this.fetchNotifications();
+        },
         data() {
             return {
-                notifications: [1, 2, 3, 4]
+                notifications: [],
+                page: 1,
+                loaded: false,
+                paginatorInfo: null
+            }
+        },
+        computed: {
+            hasNotifications() {
+                return this.notifications.length > 0;
+            }
+        },
+        methods: {
+            fetchNotifications() {
+                this.loaded = false;
+                this.notifications = [];
+                axios.post(graphql.api, {
+                    query: graphql.myNotifications,
+                    variables: {count: graphql.rowCount, page: this.page}
+                }).then(this.loadNotifications).catch(function (error) {});
+            },
+            loadNotifications(response) {
+                console.log(JSON.stringify(response.data));
+                this.loaded = true;
+                this.notifications = response.data.data.me.notifications.data;
+                this.paginatorInfo = response.data.data.me.notifications.paginatorInfo;
+            },
+            loadPage(page) {
+                this.page = page;
+                this.fetchNotifications();
             }
         }
     }

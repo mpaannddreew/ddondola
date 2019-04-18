@@ -1,7 +1,7 @@
 @extends('layouts.base.ddondola')
 @section('main')
     <div class="row">
-        <div class="col-md-3 py-4 px-2">
+        <div class="col-md-3 py-2 px-1">
             <div class=" page-sidebar">
                 <div class="profile-card border">
                     <img src="{{ Auth::user()->avatar()['url'] }}" alt="user" class="profile-photo">
@@ -72,10 +72,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 py-4 px-2">
+        <div class="col-md-6 py-2 px-1">
             @yield('page-content')
         </div>
-        <div class="col-md-3 py-4 px-2">
+        <div class="col-md-3 py-2 px-1">
             @include('shoppie::shop.sections.shop-card')
         </div>
     </div>

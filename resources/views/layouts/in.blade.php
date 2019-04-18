@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="{{ asset('slick/slick.css') }}"/>
     <link rel="stylesheet" href="{{ asset('slick/slick-theme.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/ui.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/croppie.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/changes.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/shoppie.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/messenger.css') }}"/>
@@ -28,6 +29,7 @@
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script src="{{ asset('js/jquery.sticky.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.js') }}"></script>
+    <script src="{{ asset('js/croppie.js') }}"></script>
     <script>
         $(function () {
             $(".input-daterange").datepicker({}).val();

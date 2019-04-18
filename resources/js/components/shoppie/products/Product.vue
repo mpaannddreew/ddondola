@@ -66,7 +66,8 @@
                 return this.url + "/products/" + this.product.code;
             },
             imageUrl() {
-                return "/images/products/hoodie-man-1.png";
+                // return "/images/products/hoodie-man-1.png";
+                return this.product.images[0].url;
             },
             soldOut() {
                 return this.product.quantity === 0;

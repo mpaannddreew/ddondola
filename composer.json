@@ -16,7 +16,8 @@
         "nuwave/lighthouse": "^2.6",
         "overtrue/laravel-follow": "^1.1",
         "rinvex/countries": "^5.0",
-        "silber/bouncer": "v1.0.0-rc.3"
+        "silber/bouncer": "v1.0.0-rc.3",
+        "spatie/laravel-medialibrary": "^7.0.0"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
@@ -34,8 +35,9 @@
             "Ddondola\\": "app/",
             "Shoppie\\": "extensions/ddondola/shoppie/src",
             "Messenger\\": "extensions/ddondola/messenger/src",
-            "Pay\\": "extensions/ddondola/pay/src",
-            "Activity\\": "extensions/ddondola/activity/src"
+            "Teller\\": "extensions/ddondola/teller/src",
+            "Activity\\": "extensions/ddondola/activity/src",
+            "Bank\\": "extensions/ddondola/bank/src"
         }
     },
     "autoload-dev": {

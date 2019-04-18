@@ -99,19 +99,7 @@
                 return (_.lowerCase(this.actor.type) === 'user' ? "/people/": "/shops/") + this.actor.code;
             },
             action() {
-                if (this.activity.verb === 'add') {
-                    return 'added a new product'
-                }else if(this.activity.verb === 'wishlist') {
-                    return 'wishlisted product';
-                }else if(this.activity.verb === 'follow') {
-                    return 'is following';
-                }else if(this.activity.verb === 'like') {
-                    return 'likes shop';
-                }else if(this.activity.verb === 'review') {
-                    return "reviewed " + (this.subjectType).toString();
-                }else if(this.activity.verb === 'offer') {
-                    return "added a new offer for product";
-                }
+                return this.activity.action;
             },
             subjectUrl() {
                 if (this.subjectType === 'user') {

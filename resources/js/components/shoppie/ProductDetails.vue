@@ -2,7 +2,7 @@
     <div>
         <div class="container py-2">
             <div class="row">
-                <div class="col-md-3 px-2">
+                <div class="col-md-3 px-1">
                     <rating-meter :reviewable="product"></rating-meter>
 
                     <div class="card card-small border" v-if="hasAttributes">
@@ -21,7 +21,7 @@
                     <related-products :product="product" :url="url"></related-products>
 
                 </div>
-                <div class="col-md-9 px-2">
+                <div class="col-md-9 px-1">
                     <div class="card border mb-2">
                         <div class="row no-gutters">
                             <aside class="col-sm-6 border-right">

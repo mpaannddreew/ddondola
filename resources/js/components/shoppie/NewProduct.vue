@@ -167,7 +167,7 @@
                                                     <div class="dropzone dz-clickable">
                                                         <div class="dz-default dz-message">
                                                             <label class="text-reagent-gray mb-0">
-                                                                <i class="material-icons mr-1"></i> Add Product Images <input class="d-none" type="file" multiple accept="image/*">
+                                                                <i class="material-icons mr-1"></i> Add Product Images <input class="d-none" type="file" accept="image/*" @change="handleImages">
                                                             </label>
                                                         </div>
                                                     </div>
@@ -333,6 +333,9 @@
                     if (!$("#" + value).val().length > 0)
                         this.showError(value, "Specification value is required");
                 }
+            },
+            handleImages(e) {
+
             }
         },
         watch: {

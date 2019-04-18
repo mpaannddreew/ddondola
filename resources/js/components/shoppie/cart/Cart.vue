@@ -65,10 +65,10 @@
             <section class="order-details py-2">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6 pl-0 pr-2">
+                        <div class="col-lg-6 pl-0 pr-1">
                             <coupon-code></coupon-code>
                         </div>
-                        <div class="col-lg-6 pr-0 pl-2">
+                        <div class="col-lg-6 pr-0 pl-1">
                             <order-summary></order-summary>
                         </div>
                     </div>

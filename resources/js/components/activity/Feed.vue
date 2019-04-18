@@ -35,7 +35,7 @@
         <template v-if="loadingMore">
             <div align="center" class="p-4"><div class="loader"></div></div>
         </template>
-        <a href="javascript:void(0)" v-if="!loadingMore" @click="loadMore" class="btn-view btn-load-more border" :class="{disabled: loaderDisabled}"></a>
+        <a href="javascript:void(0)" v-if="!loadingMore && loaded" @click="loadMore" class="btn-view btn-load-more border" :class="{disabled: loaderDisabled}"></a>
     </div>
 </template>
 
@@ -74,7 +74,7 @@
         },
         computed: {
             title() {
-                return this.feedType === 'timeline' ? 'Timeline': 'News Feeds';
+                return this.feedType === 'timeline' ? 'Timeline': 'News Feed';
             },
             hasActivities() {
                 return this.activities.length > 0;

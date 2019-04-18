@@ -17,7 +17,8 @@
                                             <div class="dropzone dz-clickable">
                                                 <div class="dz-default dz-message">
                                                     <label class="text-reagent-gray mb-0">
-                                                        <i class="material-icons">add_a_photo</i> Change Profile Picture <input class="d-none" type="file" multiple accept="image/*">
+                                                        <i class="material-icons">add_a_photo</i> Change Profile Picture
+                                                        <input class="d-none" type="file" accept="image/*" @change="handleSelectedImage">
                                                     </label>
                                                 </div>
                                             </div>
@@ -35,7 +36,17 @@
 
 <script>
     export default {
-        name: "AccountProfilePictures"
+        name: "AccountProfilePictures",
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            handleSelectedImage(e) {
+
+            }
+        }
     }
 </script>
 

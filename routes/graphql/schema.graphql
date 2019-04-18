@@ -32,6 +32,15 @@ type UserSettings {
     discount: String
 }
 
+type Notification {
+    id: ID!
+    notifiable: Muddondozi
+    data: String! @method(name: "translatedData")
+    read_at: DateTime
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
 type User implements Muddondozi {
     id: ID!
     code: String!
@@ -56,6 +65,7 @@ type User implements Muddondozi {
     news(ordering: String): [Activity!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@news")
     avatars: [Image!] @method(name: "avatars")
     coverPictures: [Image!] @method(name: "coverPictures")
+    notifications: [Notification!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@notifications")
     created_at: DateTime!
     updated_at: DateTime!
 }

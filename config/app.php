@@ -160,9 +160,13 @@ return [
         Ddondola\Providers\EventServiceProvider::class,
         Ddondola\Providers\RouteServiceProvider::class,
 
+        /*
+         * Ddondola Platform Service Providers
+         */
         Shoppie\ShoppieServiceProvider::class,
         Messenger\MessengerServiceProvider::class,
         Activity\ActivityServiceProvider::class,
+        Bank\BankServiceProvider::class,
 
     ],
 
@@ -213,7 +217,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Shoppie' => \Shoppie\Facades\Shoppie::class,
-        'Activity' => \Activity\Facades\ActivityManager::class
+        'Activity' => \Activity\Facades\ActivityManager::class,
+        'Bank' => \Bank\Facades\Bank::class
     ],
 
 ];

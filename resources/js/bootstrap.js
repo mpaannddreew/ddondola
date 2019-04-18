@@ -6,6 +6,7 @@ window.Collect = require('collect.js');
 window.Bloodhound = require('bloodhound-js');
 window.QueryString = require('query-string');
 window.Swal = require('sweetalert2');
+window.Croppie = require('croppie');
 
 window.DToast = function(type, title) {
     const Toast = Swal.mixin({

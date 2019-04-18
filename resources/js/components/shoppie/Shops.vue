@@ -22,12 +22,11 @@
                     <h4>
                         <i class="material-icons">error_outline</i>
                         <br />
+                        <small>There are no shops in the directory yet!</small>
                         <template v-if="mine">
-                            <small>You have not created any shops yet!</small>
                             <br />
                             <a :href="createShopUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Create Shop</a>
                         </template>
-                        <small v-else-if="!mine">There are no shops in the directory yet!</small>
                     </h4>
                 </div>
             </template>

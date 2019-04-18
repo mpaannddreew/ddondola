@@ -1,7 +1,7 @@
 <template>
     <tr class="cart-item">
         <td class="row-close close-1" data-title="product-remove"><a href="#"><i class="ion-close-circled"></i></a></td>
-        <td class="row-img"><img src="/images/cart/cart-inner-img-1.jpg" alt="cart-img"></td>
+        <td class="row-img"><img :src="product.images[0].url" alt="cart-img"></td>
         <td class="product-name" data-title="Product"><a :href="productUrl">{{ product.name }}</a></td>
         <td class="product-price" data-title="Price"><p>{{ product.currencyCode }} {{ product.pivot.price }}</p></td>
         <td class="product-quantity" data-title="Quantity">

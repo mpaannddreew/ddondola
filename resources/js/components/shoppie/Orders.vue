@@ -4,16 +4,16 @@
             <div class="container p-0">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link active"><i class="material-icons">list</i> All</a>
+                        <a href="javascript:void(0)" class="nav-link" @click="showAll" :class="{ active: isShowing('all') }" ><i class="material-icons">list</i> All</a>
                     </li>
                     <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link"><i class="material-icons">done</i> Completed</a>
+                        <a href="javascript:void(0)" class="nav-link" @click="showCompleted" :class="{ active: isShowing('completed') }" ><i class="material-icons">done</i> Completed</a>
                     </li>
                     <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link"><i class="material-icons">help</i> Pending</a>
+                        <a href="javascript:void(0)" class="nav-link" @click="showPending" :class="{ active: isShowing('pending') }" ><i class="material-icons">help</i> Pending</a>
                     </li>
                     <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link"><i class="material-icons">clear</i> Cancelled</a>
+                        <a href="javascript:void(0)" class="nav-link" @click="showCancelled" :class="{ active: isShowing('cancelled') }" ><i class="material-icons">clear</i> Cancelled</a>
                     </li>
                 </ul>
             </div>
@@ -76,7 +76,48 @@
 
 <script>
     export default {
-        name: "Orders"
+        name: "Orders",
+        data() {
+            return {
+                orders: [],
+                page: 1,
+                loaded: false,
+                showing: 'all',
+                paginatorInfo: null
+            }
+        },
+        methods: {
+            fetchOrders() {
+
+            },
+            showAll() {
+                this.loaded = false;
+                this.showing = 'all';
+                this.loadPage(1);
+            },
+            showCompleted() {
+                this.loaded = false;
+                this.showing = 'completed';
+                this.loadPage(1);
+            },
+            showPending() {
+                this.loaded = false;
+                this.showing = 'pending';
+                this.loadPage(1);
+            },
+            showCancelled() {
+                this.loaded = false;
+                this.showing = 'cancelled';
+                this.loadPage(1);
+            },
+            loadPage(page) {
+                this.page = page;
+                this.fetchOrders();
+            },
+            isShowing(type) {
+                return this.showing === type;
+            }
+        }
     }
 </script>
 

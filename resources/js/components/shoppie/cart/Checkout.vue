@@ -29,8 +29,8 @@
                                     <tbody>
                                     <template v-for="(product, indx) in products">
                                         <tr class="row-2">
-                                            <td class="row-img"><img src="/images/cart/cart-inner-img-1.jpg" alt="cart-img"></td>
-                                            <td class="product-name"><a :href="'/products/ + product.code'">{{ product.name }}</a></td>
+                                            <td class="row-img"><img :src="product.images[0].url" alt="cart-img"></td>
+                                            <td class="product-name"><a :href="'/products/' + product.code">{{ product.name }}</a></td>
                                             <td class="product-price">{{ product.currencyCode }} {{ product.pivot.price }}</td>
                                             <td class="product-quantity">{{ product.pivot.quantity }}</td>
                                             <td class="product-subtotal">{{ product.currencyCode }} {{ product.pivot.sum }}</td>

@@ -11,7 +11,7 @@
         <div class="dropdown-menu dropdown-menu-small dropdown-menu-right">
             <a class="dropdown-item" href="{{ route('my.profile') }}"><i class="material-icons">account_circle</i> Profile</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('my.orders') }}"><i class="material-icons">description</i> Orders</a>
+            <a class="dropdown-item" href="{{ route('my.settings') }}"><i class="material-icons">settings</i> Settings</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="material-icons text-danger">&#xE879;</i> Logout

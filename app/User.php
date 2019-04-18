@@ -3,6 +3,7 @@
 namespace Ddondola;
 
 use Activity\Traits\Reviewer;
+use Bank\Traits\Holder;
 use Ddondola\Traits\Muddondozi;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
@@ -15,13 +16,13 @@ use Overtrue\LaravelFollow\Traits\CanFollow;
 use Overtrue\LaravelFollow\Traits\CanLike;
 use Shoppie\Shop;
 use Shoppie\Traits\Buyer;
-use Shoppie\Traits\Identifier;
 use Shoppie\Traits\Seller;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Seller, Buyer, HasApiTokens, CanLike, CanFollow,
-        CanBeFollowed, CanFavorite, Identifier, Reviewer, Muddondozi;
+    use Notifiable, Seller, Buyer, HasApiTokens, CanLike, CanFollow, Holder,
+        CanBeFollowed, CanFavorite, Reviewer, Muddondozi, HasMediaTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -117,5 +118,29 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function communityActivities() {
         return $this->followingActivities()->merge($this->likesActivities());
+    }
+
+    /**
+     * Get the entity's notifications.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable')->orderBy('created_at', 'desc');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->code = \Illuminate\Support\Str::uuid()->toString();
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return "code";
     }
 }

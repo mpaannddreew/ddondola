@@ -38,6 +38,7 @@ type Foreign {
 type Activity {
     id: ID!
     verb: String!
+    action: String! @method(name: "derivedAction")
     actor: Muddondozi!
     subject: Subject! @method(name: "translatedSubject")
     foreign: Foreign @method(name: "translatedForeign")

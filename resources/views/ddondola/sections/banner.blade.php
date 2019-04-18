@@ -30,6 +30,7 @@
                         <li class="nav-item"><a href="{{ route('my.profile') }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>
                         <li class="nav-item"><a href="{{ route('my.followers') }}" class="nav-link @yield('followers-active')"><i class="material-icons">people</i> Followers</a></li>
                         <li class="nav-item"><a href="{{ route('my.following') }}" class="nav-link @yield('following-active')"><i class="material-icons">people_outline</i> Following</a></li>
+                        <li class="nav-item"><a href="{{ route('my.notifications') }}" class="nav-link @yield('notifications-active')"><i class="material-icons">notifications_active</i> Notifications</a></li>
                         <li class="nav-item"><a href="{{ route('my.settings') }}" class="nav-link @yield('settings-active')"><i class="material-icons">settings</i> Settings</a></li>
                     @else
                         <li class="nav-item"><a href="{{ route('user.profile', ['user' => $user->code]) }}" class="nav-link @yield('profile-active')"><i class="material-icons">account_circle</i> Profile</a></li>

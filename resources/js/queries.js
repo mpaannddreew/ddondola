@@ -925,6 +925,7 @@ window.graphql = {
               data {
                 id
                 verb
+                action
                 actor {
                   id
                   name
@@ -1019,6 +1020,7 @@ window.graphql = {
               data {
                 id
                 verb
+                action
                 actor {
                   id
                   name
@@ -1113,6 +1115,7 @@ window.graphql = {
               data {
                 id
                 verb
+                action
                 actor {
                   id
                   name
@@ -1207,6 +1210,7 @@ window.graphql = {
               data {
                 id
                 verb
+                action
                 actor {
                   id
                   name
@@ -1281,6 +1285,37 @@ window.graphql = {
                   }
                 }
                 created_at
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    myNotifications: `query myNotifications($count: Int!, $page: Int!) {
+          me {
+            notifications(count: $count, page: $page) {
+              data {
+                id
+                notifiable {
+                  id
+                  name
+                  type
+                  code
+                  avatar {
+                    url
+                  }
+                }
+                read_at
+                created_at
+                data
               }
               paginatorInfo {
                 count

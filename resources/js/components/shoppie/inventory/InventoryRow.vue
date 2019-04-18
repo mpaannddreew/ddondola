@@ -1,7 +1,7 @@
 <template>
     <tr>
         <td class="lo-stats__image">
-            <img class="border rounded" src="/images/orders/product-order-1.jpg">
+            <img class="border rounded" :src="product.images[0].url">
         </td>
         <td class="lo-stats__order-details">
             <span>{{ product.name }}</span>

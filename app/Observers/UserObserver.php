@@ -15,6 +15,7 @@ class UserObserver
     public function created(User $user)
     {
         $user->createCart();
+        $user->createAccount();
     }
 
     /**

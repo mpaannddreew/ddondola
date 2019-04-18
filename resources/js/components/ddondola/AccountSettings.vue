@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-3 px-2">
+        <div class="col-md-3 px-1">
             <div class="card card-small border">
                 <div class="card-header border-bottom">
                     <h5 class="mb-0"><i class="fa fa-cog"></i> Account Settings</h5>
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8 px-2 checkout-process">
+        <div class="col-md-8 px-1 checkout-process">
             <settings v-if="isActive('settings')"></settings>
             <information v-if="isActive('information')"></information>
             <change-password v-if="isActive('change-password')"></change-password>
