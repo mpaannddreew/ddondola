@@ -1,7 +1,7 @@
 <search></search>
 <ul class="navbar-nav border-left flex-row border-right ml-auto">
     @section('nav-items')
-    <li is="nav-messenger" home-url="/me/messenger/"></li>
+    <li is="nav-messenger" home-url="/me/messenger"></li>
     <li is="nav-cart"></li>
     <li is="nav-tray"></li>
     <li class="nav-item dropdown">

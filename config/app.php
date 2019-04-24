@@ -167,6 +167,7 @@ return [
         Messenger\MessengerServiceProvider::class,
         Activity\ActivityServiceProvider::class,
         Bank\BankServiceProvider::class,
+        Teller\TellerServiceProvider::class,
 
     ],
 
@@ -218,7 +219,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Shoppie' => \Shoppie\Facades\Shoppie::class,
         'Activity' => \Activity\Facades\ActivityManager::class,
-        'Bank' => \Bank\Facades\Bank::class
+        'Bank' => \Bank\Facades\Bank::class,
+        'Payment' => \Teller\Facades\Payment::class
     ],
 
 ];

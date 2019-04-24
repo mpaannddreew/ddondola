@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        \Bank\Facades\Bank::adminAccount();
         $this->countries->addCountries();
         $country = $this->countries->code('ug');
 

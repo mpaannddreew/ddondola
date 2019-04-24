@@ -62656,7 +62656,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "p-4", attrs: { align: "center" } }, [
-      _c("h4", [
+      _c("h4", { staticClass: "m-0" }, [
         _c("i", { staticClass: "material-icons" }, [_vm._v("error_outline")]),
         _vm._v(" "),
         _c("br"),
@@ -66291,7 +66291,7 @@ var render = function() {
       "div",
       { staticClass: "contact-cont" },
       [
-        _c("router-link", { attrs: { to: _vm.homeUrl + "code" } }, [
+        _c("router-link", { attrs: { to: _vm.homeUrl + "/code" } }, [
           _c("div", { staticClass: "pull-left user-img m-r-10" }, [
             _c("a", { attrs: { href: "profile.html", title: "John Doe" } }, [
               _c("img", {
@@ -67602,107 +67602,101 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.showDeal
-    ? _c("div", { staticClass: "deals_item" }, [
-        _vm._m(0),
+  return _c("div", { staticClass: "deals_item" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "deals_content" }, [
+      _c("div", { staticClass: "text-center" }, [
+        _c("span", { staticClass: "text-muted d-block" }, [
+          _vm._v(_vm._s(_vm.deal.subcategory.name))
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "deals_content" }, [
-          _c("div", { staticClass: "text-center" }, [
-            _c("span", { staticClass: "text-muted d-block" }, [
-              _vm._v(_vm._s(_vm.deal.subcategory.name))
-            ]),
-            _vm._v(" "),
-            _c("a", { attrs: { href: "/products/" + _vm.deal.code } }, [
-              _c("h4", { staticClass: "mb-2 text-ellipsis" }, [
-                _vm._v(_vm._s(_vm.deal.name))
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "text-center" }, [
-            _c("ul", { staticClass: "price list-inline no-margin" }, [
-              _c(
-                "li",
-                {
-                  staticClass:
-                    "list-inline-item deals_item_price_a text-primary"
-                },
-                [
-                  _vm._v(
-                    _vm._s(_vm.deal.currencyCode) +
-                      " " +
-                      _vm._s(_vm.deal.discountedPrice)
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticClass: "list-inline-item deals_item_price_a",
-                  staticStyle: { "text-decoration": "line-through" }
-                },
-                [
-                  _vm._v(
-                    _vm._s(_vm.deal.currencyCode) + " " + _vm._s(_vm.deal.price)
-                  )
-                ]
+        _c("a", { attrs: { href: "/products/" + _vm.deal.code } }, [
+          _c("h4", { staticClass: "mb-2 text-ellipsis" }, [
+            _vm._v(_vm._s(_vm.deal.name))
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-center" }, [
+        _c("ul", { staticClass: "price list-inline no-margin" }, [
+          _c(
+            "li",
+            { staticClass: "list-inline-item deals_item_price_a text-primary" },
+            [
+              _vm._v(
+                _vm._s(_vm.deal.currencyCode) +
+                  " " +
+                  _vm._s(_vm.deal.discountedPrice)
               )
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2),
+            ]
+          ),
           _vm._v(" "),
           _c(
-            "div",
+            "li",
             {
-              staticClass:
-                "deals_timer d-flex flex-row justify-content-center mt-2"
+              staticClass: "list-inline-item deals_item_price_a",
+              staticStyle: { "text-decoration": "line-through" }
             },
             [
-              _c("div", { staticClass: "deals_timer_content" }, [
-                _c("div", { staticClass: "deals_timer_box clearfix" }, [
-                  _c("div", { staticClass: "deals_timer_unit border-right" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "deals_timer_hr",
-                        attrs: { id: "deals_timer1_hr" }
-                      },
-                      [_vm._v(_vm._s(_vm.hours))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "deals_timer_unit border-right" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "deals_timer_min",
-                        attrs: { id: "deals_timer1_min" }
-                      },
-                      [_vm._v(_vm._s(_vm.minutes))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "deals_timer_unit" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "deals_timer_sec",
-                        attrs: { id: "deals_timer1_sec" }
-                      },
-                      [_vm._v(_vm._s(_vm.seconds))]
-                    )
-                  ])
-                ])
-              ])
+              _vm._v(
+                _vm._s(_vm.deal.currencyCode) + " " + _vm._s(_vm.deal.price)
+              )
             ]
           )
         ])
-      ])
-    : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "deals_timer d-flex flex-row justify-content-center mt-2"
+        },
+        [
+          _c("div", { staticClass: "deals_timer_content" }, [
+            _c("div", { staticClass: "deals_timer_box clearfix" }, [
+              _c("div", { staticClass: "deals_timer_unit border-right" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "deals_timer_hr",
+                    attrs: { id: "deals_timer1_hr" }
+                  },
+                  [_vm._v(_vm._s(_vm.hours))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "deals_timer_unit border-right" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "deals_timer_min",
+                    attrs: { id: "deals_timer1_min" }
+                  },
+                  [_vm._v(_vm._s(_vm.minutes))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "deals_timer_unit" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "deals_timer_sec",
+                    attrs: { id: "deals_timer1_sec" }
+                  },
+                  [_vm._v(_vm._s(_vm.seconds))]
+                )
+              ])
+            ])
+          ])
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -69982,7 +69976,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "4" } }, [
+      _c("td", { attrs: { colspan: "6" } }, [
         _c("div", { attrs: { align: "center" } }, [
           _c("div", { staticClass: "loader" })
         ])
@@ -69994,7 +69988,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "4" } }, [
+      _c("td", { attrs: { colspan: "6" } }, [
         _c("div", { attrs: { align: "center" } }, [
           _c("h4", { staticClass: "m-0" }, [
             _c("i", { staticClass: "material-icons" }, [
@@ -90379,31 +90373,23 @@ var ChatArea = __webpack_require__(/*! ./components/messenger/ChatArea.vue */ ".
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: [{
-    path: '/me/messenger/',
+    path: '/me/messenger',
     component: Messenger,
     children: [{
-      // UserProfile will be rendered inside User's <router-view>
-      // when /user/:id/profile is matched
       path: '/',
       component: ChatArea
     }, {
-      // UserPosts will be rendered inside User's <router-view>
-      // when /user/:id/posts is matched
-      path: ':converser_code',
+      path: '/:converser_code',
       component: ChatArea
     }]
   }, {
-    path: '/shops/:shop_code/messenger/',
+    path: '/shops/:shop_code/messenger',
     component: Messenger,
     children: [{
-      // UserProfile will be rendered inside User's <router-view>
-      // when /user/:id/profile is matched
       path: '/',
       component: ChatArea
     }, {
-      // UserPosts will be rendered inside User's <router-view>
-      // when /user/:id/posts is matched
-      path: ':converser_code',
+      path: '/:converser_code',
       component: ChatArea
     }]
   }]

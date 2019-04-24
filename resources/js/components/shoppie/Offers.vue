@@ -34,14 +34,14 @@
                 <tbody>
                 <template v-if="!loaded">
                     <tr>
-                        <td colspan="4">
+                        <td colspan="6">
                             <div align="center"><div class="loader"></div></div>
                         </td>
                     </tr>
                 </template>
                 <template v-else-if="!hasOffers && loaded">
                     <tr>
-                        <td colspan="4">
+                        <td colspan="6">
                             <div align="center">
                                 <h4 class="m-0">
                                     <i class="material-icons">error_outline</i>

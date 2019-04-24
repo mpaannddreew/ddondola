@@ -22,7 +22,7 @@
                 </template>
                 <template v-else-if="!hasActivities && loaded">
                     <div align="center" class="p-4">
-                        <h4>
+                        <h4 class="m-0">
                             <i class="material-icons">error_outline</i>
                             <br />
                             <small>No activity yet</small>

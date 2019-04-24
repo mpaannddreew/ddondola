@@ -40,35 +40,27 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/me/messenger/', component: Messenger,
+            path: '/me/messenger', component: Messenger,
             children: [
                 {
-                    // UserProfile will be rendered inside User's <router-view>
-                    // when /user/:id/profile is matched
                     path: '/',
                     component: ChatArea
                 },
                 {
-                    // UserPosts will be rendered inside User's <router-view>
-                    // when /user/:id/posts is matched
-                    path: ':converser_code',
+                    path: '/:converser_code',
                     component: ChatArea
                 }
             ]
         },
         {
-            path: '/shops/:shop_code/messenger/', component: Messenger,
+            path: '/shops/:shop_code/messenger', component: Messenger,
             children: [
                 {
-                    // UserProfile will be rendered inside User's <router-view>
-                    // when /user/:id/profile is matched
                     path: '/',
                     component: ChatArea
                 },
                 {
-                    // UserPosts will be rendered inside User's <router-view>
-                    // when /user/:id/posts is matched
-                    path: ':converser_code',
+                    path: '/:converser_code',
                     component: ChatArea
                 }
             ]

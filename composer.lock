@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2649e38875ea1ccf9d232a0b6e5aa001",
+    "content-hash": "22280e2adb056463d7721668f9ef8618",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -662,6 +662,40 @@
                 "event-emitter"
             ],
             "time": "2017-07-23T21:35:13+00:00"
+        },
+        {
+            "name": "fannypack/momo",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpaannddreew/momo.git",
+                "reference": "d5e65c724cb1dcfcde2176ec4a158fe4d538c105"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpaannddreew/momo/zipball/d5e65c724cb1dcfcde2176ec4a158fe4d538c105",
+                "reference": "d5e65c724cb1dcfcde2176ec4a158fe4d538c105",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3",
+                "ramsey/uuid": "^3.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FannyPack\\Momo\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Mpande Andrew",
+                    "email": "andrewmvp007@gmail.com"
+                }
+            ],
+            "description": "MTN MOMO api implementation",
+            "time": "2019-04-20T22:42:25+00:00"
         },
         {
             "name": "fideloper/proxy",

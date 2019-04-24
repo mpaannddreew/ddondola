@@ -1,7 +1,7 @@
 <template>
     <li>
         <div class="contact-cont">
-            <router-link :to="homeUrl + 'code'">
+            <router-link :to="homeUrl + '/code'">
                 <div class="pull-left user-img m-r-10">
                     <a href="profile.html" title="John Doe">
                         <img src="/images/avatars/0.jpg" alt="" class="w-40 rounded-circle">

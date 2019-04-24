@@ -1,5 +1,5 @@
 <template>
-    <div class="deals_item" v-if="showDeal">
+    <div class="deals_item">
         <div class="deals_image">
             <img src="/images/products/hoodie-man-1.png" alt="">
         </div>
