@@ -89,14 +89,14 @@ window.graphql = {
             }
           }
         }`,
-    createBrand: `mutation createBrand($shopId: ID! $brand: NewBrand!) {
+    createBrand: `mutation createBrand($shopId: ID! $brand: ShopResource!) {
           brand:createBrand(shopId: $shopId brand: $brand) {
             id
             name
             productCount
           }
         }`,
-    createCategory: `mutation createCategory($shopId: ID! $category: NewProductCategory!) {
+    createCategory: `mutation createCategory($shopId: ID! $category: ShopResource!) {
           category:createCategory(shopId: $shopId category: $category) {
             id
             name
@@ -129,7 +129,7 @@ window.graphql = {
                 }
           }
         }`,
-    createSubCategory: `mutation createSubCategory($categoryId: ID! $subcategory: NewProductSubCategory!) {
+    createSubCategory: `mutation createSubCategory($categoryId: ID! $subcategory: ShopResource!) {
           category:createSubCategory(categoryId: $categoryId subcategory: $subcategory) {
             id
             name
@@ -661,7 +661,7 @@ window.graphql = {
           }
         }`,
     searchProducts: `query searchProducts($name: String!) {
-          results:searchProducts(name: $name) {
+          products:searchProducts(name: $name) {
             id
             name
             price
@@ -686,7 +686,7 @@ window.graphql = {
           }
         }`,
     searchShops: `query searchShops($name: String!) {
-          results:searchShops(name: $name) {
+          shops:searchShops(name: $name) {
             id
             name
             code
@@ -704,7 +704,7 @@ window.graphql = {
           }
         }`,
     searchUsers: `query searchUsers($name: String!) {
-          results:searchUsers(name: $name) {
+          users:searchUsers(name: $name) {
             id
             code
             name
@@ -878,7 +878,7 @@ window.graphql = {
                 discount
                 start_date
                 end_date
-                cancel
+                cancelled
             }
         }`,
     activeShopOffers: `query activeShopOffers($shopId: ID! $ordering: String! $count: Int! $page: Int!) {
@@ -907,7 +907,7 @@ window.graphql = {
               brand {
                 name
               }
-              offers(ordering: $ordering, count: $count, page: $page) {
+              offers(ordering: $ordering count: $count page: $page) {
                 data {
                   discount
                   start_date
@@ -919,9 +919,9 @@ window.graphql = {
             }
           }
         }`,
-    myTimeline: `query myTimeline($ordering: String, $count: Int!, $page: Int!) {
+    myTimeline: `query myTimeline($ordering: String $count: Int! $page: Int!) {
           me {
-            timeline(ordering: $ordering, count: $count, page: $page) {
+            timeline(ordering: $ordering count: $count page: $page) {
               data {
                 id
                 verb
@@ -1014,9 +1014,9 @@ window.graphql = {
             }
           }
         }`,
-    myNews: `query myNews($ordering: String, $count: Int!, $page: Int!) {
+    myNews: `query myNews($ordering: String $count: Int! $page: Int!) {
           me {
-            news(ordering: $ordering, count: $count, page: $page) {
+            news(ordering: $ordering count: $count page: $page) {
               data {
                 id
                 verb
@@ -1109,9 +1109,9 @@ window.graphql = {
             }
           }
         }`,
-    userTimeline: `query userTimeline($id: ID! $ordering: String, $count: Int!, $page: Int!) {
+    userTimeline: `query userTimeline($id: ID! $ordering: String $count: Int! $page: Int!) {
           user(id: $id) {
-            timeline(ordering: $ordering, count: $count, page: $page) {
+            timeline(ordering: $ordering count: $count page: $page) {
               data {
                 id
                 verb
@@ -1204,9 +1204,9 @@ window.graphql = {
             }
           }
         }`,
-    shopTimeline: `query shopTimeline($id: ID! $ordering: String, $count: Int!, $page: Int!) {
+    shopTimeline: `query shopTimeline($id: ID! $ordering: String $count: Int! $page: Int!) {
           shop(id: $id) {
-            timeline(ordering: $ordering, count: $count, page: $page) {
+            timeline(ordering: $ordering count: $count page: $page) {
               data {
                 id
                 verb
@@ -1299,9 +1299,9 @@ window.graphql = {
             }
           }
         }`,
-    myNotifications: `query myNotifications($count: Int!, $page: Int!) {
+    myNotifications: `query myNotifications($count: Int! $page: Int!) {
           me {
-            notifications(count: $count, page: $page) {
+            notifications(count: $count page: $page) {
               data {
                 id
                 notifiable {
@@ -1328,6 +1328,308 @@ window.graphql = {
                 total
               }
             }
+          }
+        }`,
+    myConversations: `query myConversations($count: Int! $page: Int!) {
+          me {
+            conversations(count: $count page: $page) {
+              data {
+                id
+                initiator {
+                  id
+                  name
+                  type
+                  code
+                  avatar {
+                    url
+                  }
+                }
+                participant {
+                  id
+                  name
+                  type
+                  code
+                  avatar {
+                    url
+                  }
+                }
+                latestMessage {
+                  message
+                  created_at
+                }
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    shopConversations: `query shopConversations($id: ID! $count: Int! $page: Int!) {
+          shop(id: $id) {
+            conversations(count: $count page: $page) {
+              data {
+                id
+                initiator {
+                  id
+                  name
+                  type
+                  code
+                  avatar {
+                    url
+                  }
+                }
+                participant {
+                  id
+                  name
+                  type
+                  code
+                  avatar {
+                    url
+                  }
+                }
+                latestMessage {
+                  message
+                  created_at
+                }
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    shopContacts: `query shopContacts($id: ID! $count: Int! $page: Int!){
+          shop(id: $id) {
+            contacts(count: $count page: $page) {
+              data {
+                id
+                code
+                name
+                avatar{
+                  url
+                }
+                coverPicture {
+                  url
+                }
+                followerCount
+                followingCount
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    myContacts: `query myContacts($count: Int! $page: Int!){
+          me {
+            contacts(count: $count page: $page) {
+              data {
+                id
+                code
+                name
+                avatar{
+                  url
+                }
+                coverPicture {
+                  url
+                }
+                followerCount
+                followingCount
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    conversation: `query conversation($initiator: String $participant: String!) {
+          conversation(initiator: $initiator participant: $participant) {
+            id
+            initiator {
+              id
+              name
+              type
+              code
+              avatar {
+                url
+              }
+            }
+            participant {
+              id
+              name
+              type
+              code
+              avatar {
+                url
+              }
+            }
+          }
+        }`,
+    conversationMessages: `query conversationMessages($initiator: String $participant: String! $count: Int! $page: Int!) {
+          conversation(initiator: $initiator participant: $participant) {
+            messages(count: $count page: $page) {
+              data {
+                id
+                message
+                sender {
+                  id
+                  name
+                  type
+                  code
+                  avatar {
+                    url
+                  }
+                }
+                created_at
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    startConversation: `mutation startConversation($initiator: String $participant: String!) {
+          conversation:startConversation(initiator: $initiator participant: $participant) {
+            id
+            initiator {
+              id
+              name
+              type
+              code
+              avatar {
+                url
+              }
+            }
+            participant {
+              id
+              name
+              type
+              code
+              avatar {
+                url
+              }
+            }
+          }
+        }`,
+    myOrders: `query myOrders($page: Int! $count: Int!) {
+          me {
+            orders(page: $page count: $count) {
+              data {
+                id
+                code
+                sum
+                productCount
+                currencyCode
+                created_at
+                firstProduct {
+                  images {
+                    url
+                  }
+                }
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    myOrderProducts: `query myOrderProducts($id: ID! $page: Int! $count: Int!) {
+          order(id: $id) {
+            products(page: $page count: $count) {
+              data {
+                id
+                quantity
+                price
+                name
+                code
+                discountedPrice
+                currencyCode
+                images {
+                  url
+                }
+                pivot: orderPivot {
+                  id
+                  sum
+                  price
+                  quantity
+                  receipt_confirmed
+                  delivery_confirmed
+                }
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    editCategory: `mutation editCategory($categoryId: ID! $category: ShopResource!) {
+          editCategory(categoryId: $categoryId category: $category) {
+            id
+            name
+            description
+          }
+        }`,
+    editSubCategory: `mutation editSubCategory($categoryId: ID! $subcategory: ShopResource!) {
+          editSubCategory(categoryId: $categoryId subcategory: $subcategory) {
+            id
+            name
+            description
+          }
+        }`,
+    editBrand: `mutation editBrand($brandId: ID! $brand: ShopResource!) {
+          editBrand(brandId: $brandId brand: $brand) {
+            id
+            name
+            description
           }
         }`
 };

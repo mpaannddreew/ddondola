@@ -13,17 +13,21 @@
                     </select>
                 </div>
             </header>
-            <div align="center" v-if="!loaded"><div class="loader"></div></div>
-            <div align="center" v-else-if="!showProducts && loaded">
-                <h4>
-                    <i class="material-icons">error_outline</i>
-                    <br />
-                    <small>There are no products in the directory yet!</small>
-                </h4>
+            <div class="card card-small border" v-if="!loaded || (!showProducts && loaded)">
+                <div class="card-body">
+                    <div align="center" v-if="!loaded">
+                        <div class="loader"></div>
+                        <p class="m-0">{{ loadingMessage }}</p>
+                    </div>
+                    <div align="center" v-else-if="!showProducts && loaded">
+                        <h4 class="m-0"><i class="material-icons">error</i></h4>
+                        <p class="m-0">{{ noProductsMessage }}</p>
+                    </div>
+                </div>
             </div>
             <template v-else-if="showProducts && loaded">
                 <div class="row">
-                    <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
+                    <div class="item col-xl-3 col-md-6 px-2" v-for="(product, indx) in products">
                         <div is="product" :product="product" :url="url" :key="indx"></div>
                     </div>
                 </div>
@@ -67,6 +71,20 @@
             },
             query() {
                 return this.myFavorites ? graphql.myFavoriteProducts: graphql.products;
+            },
+            loadingMessage() {
+                if (this.myFavorites) {
+                    return "Loading your wishlist..."
+                }
+
+                return "Loading products...";
+            },
+            noProductsMessage() {
+                if (this.myFavorites) {
+                    return "Your wishlist is empty!"
+                }
+
+                return "There are no products in the directory yet!";
             }
         },
         methods: {

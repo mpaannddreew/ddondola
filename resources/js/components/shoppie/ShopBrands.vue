@@ -34,38 +34,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <template v-if="!loaded">
+                <template v-if="!loaded || (!showBrands && loaded)">
                     <tr>
-                        <td colspan="3">
-                            <div align="center"><div class="loader"></div></div>
-                        </td>
-                    </tr>
-                </template>
-                <template v-else-if="!showBrands && loaded">
-                    <tr>
-                        <td colspan="3">
-                            <div align="center">
-                                <h4 class="m-0">
-                                    <i class="material-icons">error_outline</i>
-                                    <br />
-                                    <small>You have not added any brands yet!</small>
-                                </h4>
+                        <td colspan="4">
+                            <div align="center" v-if="!loaded">
+                                <div class="loader"></div>
+                                <p class="m-0">Loading brands...</p>
+                            </div>
+                            <div align="center" v-if="!showBrands && loaded">
+                                <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                <p class="m-0">You have not added any brands yet!</p>
                             </div>
                         </td>
                     </tr>
                 </template>
                 <template v-else-if="showBrands && loaded">
-                    <tr v-for="(brand, indx) in brands">
-                        <td>{{ brand.name }}</td>
-                        <td class="lo-stats__items text-center">{{ brand.productCount }}</td>
-                        <td>{{ brand.description }}</td>
-                        <td>
-                            <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
-                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+                    <tr is="shop-brand" v-for="(brand, indx) in brands" :brand="brand" :key="indx" v-on:done-saving="loadBrands"></tr>
                 </template>
                 </tbody>
             </table>
@@ -104,8 +88,10 @@
 </template>
 
 <script>
+    import ShopBrand from "./inventory/ShopBrand";
     export default {
         name: "ShopBrands",
+        components: {ShopBrand},
         mounted() {
             this.loadBrands();
         },

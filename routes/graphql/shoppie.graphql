@@ -44,6 +44,9 @@ type Shop implements Muddondozi {
     activeOffers: [Product!] @method(name: "activeOffers")
     currencyCode: String! @method(name: "currencyCode")
     timeline(ordering: String): [Activity!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@timeLine")
+    messages: [Message!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@messages")
+    conversations: [Conversation!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@conversations")
+    contacts: [User!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@contacts")
     avatars: [Image!] @method(name: "avatars")
     coverPictures: [Image!] @method(name: "coverPictures")
     created_at: DateTime!
@@ -112,7 +115,8 @@ type OrderPivot {
     price: String!
     quantity: String!
     sum: Int! @method(name: "sum")
-    delivered: Boolean!
+    receipt_confirmed: Boolean!
+    delivery_confirmed: Boolean!
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -160,10 +164,12 @@ type Cart {
 type Order {
     id: ID!
     code: String!
-    amount: String!
+    sum: Int! @method(name: "sum")
     owner: User! @belongsTo
-    cleared: Boolean!
-    products: [Product!] @hasMany
+    products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
+    productCount: Int! @method(name: "productCount")
+    currencyCode: String! @method(name: "currencyCode")
+    firstProduct: Product! @method(name: "firstProduct")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -207,17 +213,7 @@ input NewShop {
     address: String!
 }
 
-input NewBrand {
-    name: String!
-    description: String
-}
-
-input NewProductCategory {
-    name: String!
-    description: String
-}
-
-input NewProductSubCategory {
+input ShopResource {
     name: String!
     description: String
 }
@@ -280,13 +276,17 @@ extend type Query {
     isFavorite(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@isFavorite")
     searchProducts(name: String!): [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchProducts")
     searchShops(name: String!): [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchShops")
+    order(id: ID! @eq): Order @find(model: "Shoppie\\Order")
 }
 
 extend type Mutation {
     createShop(shop: NewShop!): Shop! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createShop")
-    createBrand(shopId: ID! brand: NewBrand!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createBrand")
-    createCategory(shopId: ID! category: NewProductCategory!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")
-    createSubCategory(categoryId: ID! subcategory: NewProductSubCategory!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
+    createBrand(shopId: ID! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createBrand")
+    editBrand(brandId: ID! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editBrand")
+    createCategory(shopId: ID! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")
+    editCategory(categoryId: ID! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editCategory")
+    createSubCategory(categoryId: ID! subcategory: ShopResource!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
+    editSubCategory(categoryId: ID! subcategory: ShopResource!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editSubCategory")
     createProduct(product: NewProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProduct")
     editProduct(productId: ID! product: EditProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editProduct")
     updateStock(productId: ID! stock: NewStock!): Stock! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateStock")

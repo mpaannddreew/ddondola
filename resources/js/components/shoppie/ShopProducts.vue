@@ -1,24 +1,28 @@
 <template>
     <div>
-        <div align="center" v-if="!loaded"><div class="loader"></div></div>
-        <div align="center" v-else-if="!showProductsArea && loaded || !brandsHaveProducts && !categoriesHaveProducts">
-            <h4>
-                <i class="material-icons">error_outline</i>
-                <br />
-                <template v-if="!admin">
-                    <small>This shop has no products listed yet!</small>
-                    <br />
-                    <a :href="shopsDirectoryUrl" class="btn btn-xs btn-success"><i class="material-icons">folder_open</i> Discover new shops</a>
-                </template>
-                <template v-else-if="admin">
-                    <small>You have not added any products yet!</small>
-                    <br />
-                    <a :href="newProductUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add Products</a>
-                </template>
-            </h4>
+        <div class="card card-small border" v-if="!loaded || (!showProductsArea && loaded || !brandsHaveProducts && !categoriesHaveProducts)">
+            <div class="card-body">
+                <div align="center" v-if="!loaded">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading shop...</p>
+                </div>
+                <div align="center" v-else-if="!showProductsArea && loaded || !brandsHaveProducts && !categoriesHaveProducts">
+                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                    <template v-if="!admin">
+                        <p class="mb-3">This shop has no products listed yet!</p>
+                        <a :href="shopsDirectoryUrl" class="btn btn-success btn-pill"><i class="material-icons">folder_open</i> Discover new shops</a>
+                    </template>
+                    <template v-if="admin">
+                        <p class="mb-3">You have not added any products yet!</p>
+                        <a :href="newProductUrl" class="btn btn-success btn-pill"><i class="fa fa-plus"></i> Add Products</a>
+                    </template>
+                </div>
+            </div>
         </div>
         <div class="row" v-else-if="showProductsArea && loaded">
             <div class="col-md-3 px-2">
+                <rating-meter :reviewable="shop"></rating-meter>
+                <about-shop class="my-2" :shop="shop"></about-shop>
                 <div class="sidebar">
                     <div class="card card-small border mb-2">
                         <div class="card-header border-bottom">
@@ -76,26 +80,28 @@
                             </select>
                         </div>
                     </header>
-                    <div align="center" v-if="!productsLoaded"><div class="loader"></div></div>
-                    <div align="center" v-else-if="!showProducts && productsLoaded">
-                        <h4>
-                            <i class="material-icons">error_outline</i>
-                            <br />
-                            <template v-if="!admin">
-                                <small>This shop has no products listed yet!</small>
-                                <br />
-                                <a :href="shopsDirectoryUrl" class="btn btn-xs btn-success"><i class="material-icons">folder_open</i> Discover new shops</a>
-                            </template>
-                            <template v-else-if="admin">
-                                <small>You have not added any products yet!</small>
-                                <br />
-                                <a :href="newProductUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add Products</a>
-                            </template>
-                        </h4>
+                    <div class="card card-small border" v-if="!productsLoaded || (!showProducts && productsLoaded)">
+                        <div class="card-body">
+                            <div align="center" v-if="!productsLoaded">
+                                <div class="loader"></div>
+                                <p class="m-0">Loading products...</p>
+                            </div>
+                            <div align="center" v-else-if="!showProducts && productsLoaded">
+                                <h4 class="m-0"><i class="material-icons">remove_shopping_cart</i></h4>
+                                <template v-if="!admin">
+                                    <p class="mb-3">This shop has no products listed yet!</p>
+                                    <a :href="shopsDirectoryUrl" class="btn btn-success btn-pill"><i class="material-icons">folder_open</i> Discover new shops</a>
+                                </template>
+                                <template v-if="admin">
+                                    <p class="mb-3">You have not added any products yet!</p>
+                                    <a :href="newProductUrl" class="btn btn-success btn-pill"><i class="fa fa-plus"></i> Add Products</a>
+                                </template>
+                            </div>
+                        </div>
                     </div>
                     <template v-else-if="showProducts && productsLoaded">
                         <div class="row">
-                            <div class="item col-xl-4 col-md-6" v-for="(product, indx) in products" :key="indx">
+                            <div class="item col-xl-4 col-md-6 px-2" v-for="(product, indx) in products" :key="indx">
                                 <div is="product" :product="product" :url="url"></div>
                             </div>
                         </div>
@@ -238,6 +244,7 @@
                 this.productsRequest().then(this.loadProducts).catch(function (error) {})
             },
             loadProducts(response) {
+                console.log(JSON.stringify(response.data));
                 this.productsLoaded = true;
                 if (this.subcategoryId) {
                     this.products = response.data.data.subcategory.products.data;

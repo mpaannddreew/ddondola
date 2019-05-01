@@ -2,7 +2,10 @@
     <div>
         <div class="card card-small border" v-if="!requirementsLoaded">
             <div class="card-body">
-                <div align="center"><div class="loader"></div></div>
+                <div align="center">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading form...</p>
+                </div>
             </div>
         </div>
         <div class="checkout-process" v-else-if="requirementsLoaded">

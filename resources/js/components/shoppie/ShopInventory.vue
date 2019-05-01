@@ -49,20 +49,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <template v-if="!loaded">
-                        <tr><td colspan="8"><div align="center"><div class="loader"></div></div></td></tr>
-                    </template>
-                    <template v-else-if="!showProducts && loaded">
+                    <template v-if="!loaded || (!showProducts && loaded)">
                         <tr>
-                            <td colspan="8">
-                                <div align="center">
-                                    <h4 class="m-0">
-                                        <i class="material-icons">error_outline</i>
-                                        <br />
-                                        <small>You have not added any products yet!</small>
-                                        <br />
-                                        <a :href="newProductUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add Products</a>
-                                    </h4>
+                            <td colspan="9">
+                                <div align="center" v-if="!loaded">
+                                    <div class="loader"></div>
+                                    <p class="m-0">Loading products...</p>
+                                </div>
+                                <div align="center" v-if="!showProducts && loaded">
+                                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                    <p class="m-0">You have not added any products yet!</p>
                                 </div>
                             </td>
                         </tr>

@@ -1,20 +1,15 @@
 <template>
     <div>
-        <div class="card card-small border" v-if="!loaded">
+        <div class="card card-small border" v-if="!loaded || (loaded && !requirementsLoaded)">
             <div class="card-body">
-                <div align="center"><div class="loader"></div></div>
-            </div>
-        </div>
-        <div class="card card-small border" v-else-if="loaded && !requirementsLoaded">
-            <div class="card-body">
-                <div align="center">
-                    <h4>
-                        <i class="material-icons">error_outline</i>
-                        <br />
-                        <small>You have not added any {{ infoText }} yet!</small>
-                        <br />
-                        <a :href="inventoryUrl + '/' + addUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add {{ infoTextUpper }}</a>
-                    </h4>
+                <div align="center" v-if="!loaded">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading form...</p>
+                </div>
+                <div align="center" v-if="!requirementsLoaded && loaded">
+                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                    <p class="mb-3">You have not added any {{ infoText }} yet!</p>
+                    <a :href="inventoryUrl + '/' + addUrl" class="btn btn-success btn-pill"><i class="fa fa-plus"></i> Add {{ infoTextUpper }}</a>
                 </div>
             </div>
         </div>

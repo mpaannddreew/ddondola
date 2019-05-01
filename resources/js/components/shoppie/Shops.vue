@@ -1,8 +1,13 @@
 <template>
     <div>
-        <template v-if="!loaded">
-            <div align="center"><div class="loader"></div></div>
-        </template>
+        <div class="card card-small border" v-if="!loaded">
+            <div class="card-body">
+                <div align="center">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading shops...</p>
+                </div>
+            </div>
+        </div>
         <div v-else-if="loaded">
             <header class="d-flex justify-content-between align-items-start mb-2">
                 <visible-items :paginator-info="paginatorInfo" v-if="showShops && paginatorInfo"></visible-items>
@@ -14,22 +19,21 @@
                     </select>
                 </div>
             </header>
-            <template v-if="!shopsLoaded">
-                <div align="center"><div class="loader"></div></div>
-            </template>
-            <template v-else-if="!showShops && shopsLoaded">
-                <div align="center">
-                    <h4>
-                        <i class="material-icons">error_outline</i>
-                        <br />
-                        <small>There are no shops in the directory yet!</small>
+            <div class="card card-small border" v-if="!shopsLoaded || (!showShops && shopsLoaded)">
+                <div class="card-body">
+                    <div align="center" v-if="!shopsLoaded">
+                        <div class="loader"></div>
+                        <p class="m-0">Loading shops...</p>
+                    </div>
+                    <div align="center" v-if="!showShops && shopsLoaded">
+                        <h4 class="m-0"><i class="material-icons">error</i></h4>
+                        <p class="mb-3">There are no shops in the directory yet!</p>
                         <template v-if="mine">
-                            <br />
-                            <a :href="createShopUrl" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Create Shop</a>
+                            <a :href="createShopUrl" class="btn btn-success btn-pill"><i class="fa fa-plus"></i> Create Shop</a>
                         </template>
-                    </h4>
+                    </div>
                 </div>
-            </template>
+            </div>
             <div class="friend-list mb-4 mt-2" v-else-if="showShops && shopsLoaded">
                 <div class="row">
                     <template v-for="(shop, indx) in shops">
@@ -89,7 +93,6 @@
                 this.loadShops(shops);
             },
             loadCategories(categories) {
-                console.log(JSON.stringify(categories.data));
                 this.loaded = true;
                 this.categories = categories.data.data.categories;
             },

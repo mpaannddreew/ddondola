@@ -31,7 +31,7 @@ class UserRepository
      * @return User
      */
     public function code($code) {
-        return User::where('code', $code)->first();
+        return User::where('code', "=", $code)->first();
     }
 
     /**

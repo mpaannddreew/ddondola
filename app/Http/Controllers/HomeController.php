@@ -3,14 +3,17 @@
 namespace Ddondola\Http\Controllers;
 
 
+use Ddondola\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Messenger\Facades\Messenger;
+use Shoppie\Repository\ShopRepository;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * HomeController constructor.
      */
     public function __construct() {
         $this->middleware('auth');
@@ -24,7 +27,18 @@ class HomeController extends Controller
         return view('ddondola.me.dashboard');
     }
 
-    public function messenger() {
+    public function messenger($code = null) {
+        if ($code) {
+            $converser = Messenger::resolveParticipant($code);
+            if ($converser) {
+                if ($converser->is(Auth::user())) {
+                    abort(404);
+                }
+            } else {
+                abort(404);
+            }
+        }
+
         return view('ddondola.me.messenger');
     }
 

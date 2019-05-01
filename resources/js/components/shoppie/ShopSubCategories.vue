@@ -37,37 +37,20 @@
                 <tbody>
                 <template>
                     <tr>
-                        <td colspan="4" v-if="!loaded">
-                            <div align="center"><div class="loader"></div></div>
-                        </td>
-                    </tr>
-                </template>
-                <template v-if="!showCategories && loaded">
-                    <tr>
-                        <td colspan="4">
-                            <div align="center">
-                                <h4 class="m-0">
-                                    <i class="material-icons">error_outline</i>
-                                    <br />
-                                    <small>You have not added any subcategories yet!</small>
-                                </h4>
+                        <td colspan="5" v-if="!loaded || (!showCategories && loaded)">
+                            <div align="center" v-if="!loaded">
+                                <div class="loader"></div>
+                                <p class="m-0">Loading subcategories...</p>
+                            </div>
+                            <div align="center" v-if="!showCategories && loaded">
+                                <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                <p class="m-0">You have not added any subcategories yet!</p>
                             </div>
                         </td>
                     </tr>
                 </template>
-                <template v-else-if="showCategories && loaded">
-                    <tr v-for="(category, indx) in categories" :key="indx">
-                        <td>{{ category.name }}</td>
-                        <td>{{ category.category.name }}</td>
-                        <td class="text-center">{{ category.productCount }}</td>
-                        <td>{{ category.description }}</td>
-                        <td>
-                            <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
-                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+                <template v-if="showCategories && loaded">
+                    <tr is="shop-sub-category" v-for="(category, indx) in categories" :key="indx" :category="category" v-on:done-saving="refreshSubCaregories"></tr>
                 </template>
                 </tbody>
             </table>
@@ -78,21 +61,16 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-body p-0">
-                        <div class="card card-small" v-if="!categoriesLoaded">
-                            <div class="card-body" align="center">
-                                <div class="loader"></div>
-                            </div>
-                        </div>
-                        <div class="card card-small" v-else-if="categoriesLoaded && !requirementsLoaded">
-                            <div class="card-body" align="center">
-                                <div align="center">
-                                    <h4>
-                                        <i class="material-icons">error_outline</i>
-                                        <br />
-                                        <small>You have not added any categories yet!</small>
-                                        <br />
-                                        <a :href="inventoryUrl + '/categories'" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Add Categories</a>
-                                    </h4>
+                        <div class="card card-small" v-if="!categoriesLoaded || (categoriesLoaded && !requirementsLoaded)">
+                            <div class="card-body">
+                                <div align="center" v-if="!categoriesLoaded">
+                                    <div class="loader"></div>
+                                    <p class="m-0">Loading categories...</p>
+                                </div>
+                                <div align="center" v-if="categoriesLoaded && !requirementsLoaded">
+                                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                    <p class="mb-3">You have not added any categories yet!</p>
+                                    <a :href="inventoryUrl + '/categories'" class="btn btn-success btn-pill"><i class="fa fa-plus"></i> Add Categories</a>
                                 </div>
                             </div>
                         </div>
@@ -130,8 +108,10 @@
 </template>
 
 <script>
+    import ShopSubCategory from "./inventory/ShopSubCategory";
     export default {
         name: "ShopSubCategories",
+        components: {ShopSubCategory},
         mounted() {
             this.loadCategories();
         },

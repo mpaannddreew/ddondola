@@ -4,16 +4,14 @@
             <div class="mb-2">
                 <div class="row no-gutters">
                     <div class="col-12 col-sm-6 mb-2 mb-lg-0">
-                        <form action="POST">
-                            <div class="input-group input-group-seamless">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="material-icons"></i>
-                                    </div>
+                        <div class="input-group input-group-seamless">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="material-icons"></i>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" placeholder="Filter categories">
                             </div>
-                        </form>
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter categories" id="search_categories">
+                        </div>
                     </div>
                     <div class="col-12 col-sm-6 d-flex align-items-center">
                         <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
@@ -36,39 +34,22 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <template v-if="!loaded">
+                    <template v-if="!loaded || (!showCategories && loaded)">
                         <tr>
-                            <td colspan="4">
-                                <div align="center"><div class="loader"></div></div>
-                            </td>
-                        </tr>
-                    </template>
-                    <template v-if="!showCategories && loaded">
-                        <tr>
-                            <td colspan="4">
-                                <div align="center">
-                                    <h4 class="m-0">
-                                        <i class="material-icons">error_outline</i>
-                                        <br />
-                                        <small>You have not added any categories yet!</small>
-                                    </h4>
+                            <td colspan="5">
+                                <div align="center" v-if="!loaded">
+                                    <div class="loader"></div>
+                                    <p class="m-0">Loading categories...</p>
+                                </div>
+                                <div align="center" v-if="!showCategories && loaded">
+                                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                    <p class="m-0">You have not added any categories yet!</p>
                                 </div>
                             </td>
                         </tr>
                     </template>
                     <template v-else-if="showCategories && loaded">
-                        <tr v-for="(category, indx) in categories" :key="indx">
-                            <td>{{ category.name }}</td>
-                            <td>{{ category.categoryCount }}</td>
-                            <td class="lo-stats__items text-center">{{ category.productCount }}</td>
-                            <td>{{ category.description }}</td>
-                            <td>
-                                <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
-                                    <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
-                                </div>
-                            </td>
-                        </tr>
+                        <tr is="shop-category" v-for="(category, indx) in categories" :category="category" :key="indx" v-on:done-saving="loadCategories"></tr>
                     </template>
                     </tbody>
                 </table>
@@ -108,8 +89,10 @@
 </template>
 
 <script>
+    import ShopCategory from "./inventory/ShopCategory";
     export default {
         name: "ShopCategories",
+        components: {ShopCategory},
         mounted() {
             this.loadCategories();
         },

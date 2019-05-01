@@ -1,21 +1,21 @@
 <template>
     <div>
-        <template v-if="!loaded">
-            <div align="center"><div class="loader"></div></div>
-        </template>
-        <template v-else-if="!hasUsers && loaded">
-            <div align="center">
-                <h4>
-                    <i class="material-icons">error_outline</i>
-                    <br />
-                    <small>This directory is empty!</small>
-                </h4>
+        <div class="card card-small border" v-if="!loaded || (!hasUsers && loaded)">
+            <div class="card-body">
+                <div align="center" v-if="!loaded">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading users...</p>
+                </div>
+                <div align="center" v-if="!hasUsers && loaded">
+                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                    <p class="m-0">This directory is empty!</p>
+                </div>
             </div>
-        </template>
+        </div>
         <div class="friend-list" v-else-if="hasUsers && loaded">
             <div class="row">
                 <template v-for="(_user, indx) in users">
-                    <div class="col-md-4 col-sm-4">
+                    <div class="col-md-4 col-sm-4 px-2">
                         <div is="user-card" :user="_user" :key="indx" :url="url" :is-me="isMe(_user.id)"></div>
                     </div>
                 </template>

@@ -16,18 +16,14 @@
                 </div>
             </div>
             <div class="card-body p-0">
-                <template v-if="!loaded">
-                    <div align="center" class="p-4"><div class="loader"></div></div>
-                </template>
-                <template v-else-if="!hasReviews && loaded">
-                    <div align="center" class="p-4">
-                        <h4>
-                            <i class="material-icons">error_outline</i>
-                            <br />
-                            <small>No reviews about this entity have been added. Be the first!</small>
-                        </h4>
-                    </div>
-                </template>
+                <div align="center" class="p-4" v-if="!loaded">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading reviews...</p>
+                </div>
+                <div align="center" class="p-4" v-if="!hasReviews && loaded">
+                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                    <p class="m-0">No reviews about this entity have been added. Be the first!</p>
+                </div>
                 <review v-else-if="hasReviews && loaded" v-for="(review, indx) in reviews" :review="review" :key="indx"></review>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="friend-card border">
+    <div class="friend-card border mb-2">
         <img :src="user.coverPicture.url" alt="profile-cover" class="img-responsive cover">
         <div class="card card-info pb-3">
             <img :src="user.avatar.url" alt="user" class="profile-photo-lg">

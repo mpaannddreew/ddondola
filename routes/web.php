@@ -28,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::get('/', 'HomeController@profile')->name('my.profile');
         Route::get('/settings', 'HomeController@Settings')->name('my.settings');
         Route::get('/dashboard', 'HomeController@dashboard')->name('my.dashboard');
-        Route::get('/messenger/{any?}', 'HomeController@messenger')->name('my.messenger');
+        Route::get('/messenger/{code?}', 'HomeController@messenger')->name('my.messenger');
         Route::get('/notifications', 'HomeController@notifications')->name('my.notifications');
         Route::get('/followers', 'HomeController@followers')->name('my.followers');
         Route::get('/following', 'HomeController@following')->name('my.following');

@@ -17,7 +17,7 @@
                         </ul>
                     </div>
                     <div class="col-12 col-sm-6 d-flex align-items-center">
-                        <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
+                        <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group">
                             <a href="#update-stock" data-toggle="modal" class="btn btn-success">
                                 <i class="material-icons">mode_edit</i> Update Stock
                             </a>
@@ -38,22 +38,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <template v-if="!loaded">
+                    <template v-if="!loaded || (!showStock && loaded)">
                         <tr>
                             <td colspan="4">
-                                <div align="center"><div class="loader"></div></div>
-                            </td>
-                        </tr>
-                    </template>
-                    <template v-else-if="!showStock && loaded">
-                        <tr>
-                            <td colspan="4">
-                                <div align="center">
-                                    <h4 class="m-0">
-                                        <i class="material-icons">error_outline</i>
-                                        <br />
-                                        <small>No stock!</small>
-                                    </h4>
+                                <div align="center" v-if="!loaded">
+                                    <div class="loader"></div>
+                                    <p class="m-0">Loading stock...</p>
+                                </div>
+                                <div align="center" v-if="!showStock && loaded">
+                                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                    <p class="m-0">No stock!</p>
                                 </div>
                             </td>
                         </tr>

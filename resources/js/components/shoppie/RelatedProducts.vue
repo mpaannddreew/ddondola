@@ -2,7 +2,10 @@
     <div>
         <div class="card card-small border my-2" v-if="!loaded">
             <div class="card-body">
-                <div align="center"><div class="loader"></div></div>
+                <div align="center">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading related products...</p>
+                </div>
             </div>
         </div>
         <div v-if="hasRelated && loaded">

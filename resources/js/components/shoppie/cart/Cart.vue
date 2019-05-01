@@ -1,20 +1,15 @@
 <template>
     <div>
-        <div class="card card-small border" v-if="!loaded">
+        <div class="card card-small border" v-if="!loaded || (!hasProducts && loaded)">
             <div class="card-body">
-                <div align="center"><div class="loader"></div></div>
-            </div>
-        </div>
-        <div class="card card-small border" v-else-if="!hasProducts && loaded">
-            <div class="card-body">
-                <div align="center">
-                    <h4 class="m-0">
-                        <i class="material-icons">error_outline</i>
-                        <br />
-                        <small>You have not added any products to cart!</small>
-                        <br />
-                        <a :href="shoppingUrl" class="btn btn-xs btn-success">Start Shopping</a>
-                    </h4>
+                <div align="center" v-if="!loaded">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading cart...</p>
+                </div>
+                <div align="center" v-if="!hasProducts && loaded">
+                    <h4 class="m-0"><i class="material-icons">remove_shopping_cart</i></h4>
+                    <p class="mb-3">Your cart is empty!</p>
+                    <a :href="shoppingUrl" class="btn btn-success btn-pill"><i class="material-icons">shopping_cart</i> Start Shopping</a>
                 </div>
             </div>
         </div>

@@ -15,11 +15,6 @@
                     <p class="text-ellipsis m-0" v-if="subject.product.description">
                         <i class="material-icons">description</i> {{ subject.product.description }}
                     </p>
-                    <p class="m-0 mt-1">
-                        <span class="badge badge-info mr-1">{{ subject.product.brand.name }}</span>
-                        <span class="badge badge-info mr-1">{{ subject.product.category.name }}</span>
-                        <span class="badge badge-info mr-1">{{ subject.product.subcategory.name }}</span>
-                    </p>
                 </div>
             </div>
         </div>

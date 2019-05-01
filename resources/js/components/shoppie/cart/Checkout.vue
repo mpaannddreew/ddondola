@@ -2,7 +2,10 @@
     <div>
         <div class="card card-small border" v-if="!loaded">
             <div class="card-body">
-                <div align="center"><div class="loader"></div></div>
+                <div align="center">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading cart details...</p>
+                </div>
             </div>
         </div>
         <div class="checkout-process"  v-else-if="loaded && hasProducts">

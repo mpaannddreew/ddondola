@@ -17,10 +17,11 @@
         <td class="lo-stats__items text-center">{{ product.subcategory.name }}</td>
         <td class="lo-stats__items text-center">{{ product.brand.name }}</td>
         <td class="lo-stats__items text-center">{{ product.currencyCode }} {{ product.discountedPrice }}</td>
-        <td class="lo-stats__actions">
-            <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                <a :href="url + '/products/' + product.code" class="btn btn-sm btn-white"><i class="fa fa-wrench"></i></a>
-                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
+        <td>
+            <div class="btn-group d-table ml-auto" role="group">
+                <a :href="productUrl" class="btn btn-sm btn-white" title=""><i class="fa fa-file"></i></a>
+                <a :href="editUrl" class="btn btn-sm btn-white" title=""><i class="material-icons">mode_edit</i></a>
+                <a :href="stockUrl" class="btn btn-sm btn-white"><i class="material-icons">local_mall</i></a>
             </div>
         </td>
     </tr>
@@ -41,12 +42,21 @@
                 type: String,
                 required: true
             }
+        },
+        computed: {
+            productUrl() {
+                return this.url + '/products/' + this.product.code
+            },
+            stockUrl() {
+                return this.productUrl + "/stock"
+            },
+            editUrl() {
+                return this.productUrl + "/edit"
+            }
         }
     }
 </script>
 
 <style scoped>
-    span.code {
-        ;
-    }
+
 </style>

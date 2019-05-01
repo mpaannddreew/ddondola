@@ -85,7 +85,7 @@
                                     '            </div>\n' +
                                     '            <div class="col pl-3">\n' +
                                     '                <h6 class="m-0">' + data.name + '</h6>\n' +
-                                    '                <span class="text-light">' + data.category.name +' | ' + data.subcategory.name + ' | ' + data.brand.name + ' | ' + data.reviewCount + ' Review(s) | UGX ' + data.discountedPrice + '</span>\n' +
+                                    '                <span class="text-light">' + data.reviewCount + ' Review(s) | UGX ' + data.discountedPrice + '</span>\n' +
                                     '            </div>\n' +
                                     '        </div>\n' +
                                     '      </a>' +
@@ -160,8 +160,19 @@
                 this.searching = false;
             },
             transform(data) {
-                console.log(JSON.stringify(data.data));
-                return data.data.results;
+                if (data.data.products) {
+                    return data.data.products;
+                }
+
+                if (data.data.shops) {
+                    return data.data.shops;
+                }
+
+                if (data.data.users) {
+                    return data.data.users;
+                }
+
+                return [];
             },
             productSource() {
                 return new Bloodhound({

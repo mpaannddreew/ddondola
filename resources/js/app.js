@@ -33,38 +33,16 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-let Messenger = require('./components/messenger/Messenger.vue');
-let ChatArea = require('./components/messenger/ChatArea.vue');
+import ChatArea from './components/messenger/ChatArea.vue';
+import ChatAreaEmpty from './components/messenger/ChatAreaEmpty.vue';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        {
-            path: '/me/messenger', component: Messenger,
-            children: [
-                {
-                    path: '/',
-                    component: ChatArea
-                },
-                {
-                    path: '/:converser_code',
-                    component: ChatArea
-                }
-            ]
-        },
-        {
-            path: '/shops/:shop_code/messenger', component: Messenger,
-            children: [
-                {
-                    path: '/',
-                    component: ChatArea
-                },
-                {
-                    path: '/:converser_code',
-                    component: ChatArea
-                }
-            ]
-        }
+        {path: '/me/messenger', component: ChatAreaEmpty},
+        {path: '/me/messenger/:converserCode', component: ChatArea, props: true},
+        {path: '/shops/:code/messenger', component: ChatAreaEmpty, props: true},
+        {path: '/shops/:code/messenger/:converserCode', component: ChatArea, props: true}
     ]
 });
 

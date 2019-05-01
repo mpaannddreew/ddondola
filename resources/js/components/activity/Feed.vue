@@ -17,18 +17,14 @@
                 </div>
             </div>
             <div class="card-body p-0">
-                <template v-if="!loaded">
-                    <div align="center" class="p-4"><div class="loader"></div></div>
-                </template>
-                <template v-else-if="!hasActivities && loaded">
-                    <div align="center" class="p-4">
-                        <h4 class="m-0">
-                            <i class="material-icons">error_outline</i>
-                            <br />
-                            <small>No activity yet</small>
-                        </h4>
-                    </div>
-                </template>
+                <div align="center" class="p-4" v-if="!loaded">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading {{ loadingActivity }}...</p>
+                </div>
+                <div align="center" class="p-4" v-if="!hasActivities && loaded">
+                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                    <p class="m-0">No activity yet!</p>
+                </div>
                 <activity v-else-if="hasActivities && loaded" v-for="(activity, indx) in activities" :activity="activity" :key="indx"></activity>
             </div>
         </div>
@@ -104,6 +100,9 @@
                 }
 
                 return true;
+            },
+            loadingActivity() {
+                return _.lowerCase(this.title);
             }
         },
         methods: {

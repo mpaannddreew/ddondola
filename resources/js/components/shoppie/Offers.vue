@@ -32,22 +32,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <template v-if="!loaded">
+                <template v-if="!loaded || (!hasOffers && loaded)">
                     <tr>
                         <td colspan="6">
-                            <div align="center"><div class="loader"></div></div>
-                        </td>
-                    </tr>
-                </template>
-                <template v-else-if="!hasOffers && loaded">
-                    <tr>
-                        <td colspan="6">
-                            <div align="center">
-                                <h4 class="m-0">
-                                    <i class="material-icons">error_outline</i>
-                                    <br />
-                                    <small>There are no offers added for this product yet!</small>
-                                </h4>
+                            <div align="center" v-if="!loaded">
+                                <div class="loader"></div>
+                                <p class="m-0">Loading offers...</p>
+                            </div>
+                            <div align="center" v-if="!hasOffers && loaded">
+                                <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                <p class="m-0">There are no offers added for this product yet!</p>
                             </div>
                         </td>
                     </tr>
@@ -60,10 +54,9 @@
                         <td>{{ offer.cancelled }}</td>
                         <td>{{ offer.active }}</td>
                         <td>
-                            <div class="btn-group d-table ml-auto" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-edit text-info"></i></button>
-                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-remove text-info"></i></button>
-                                <button type="button" class="btn btn-sm btn-white"><i class="fa fa-trash text-danger"></i></button>
+                            <div class="btn-group d-table ml-auto" role="group">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-white"><i class="fa fa-edit"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-white"><i class="fa fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>

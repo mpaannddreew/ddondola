@@ -2,18 +2,14 @@
     <div>
         <div class="card card-small mb-1 border" style="border-bottom: none !important;">
             <div class="card-body p-0" :class="{'border-bottom': !hasNotifications}">
-                <template v-if="!loaded">
-                    <div align="center" class="p-4"><div class="loader"></div></div>
-                </template>
-                <template v-else-if="!hasNotifications && loaded">
-                    <div align="center" class="p-4">
-                        <h4 class="m-0">
-                            <i class="material-icons">error_outline</i>
-                            <br />
-                            <small>You have not received any notifications yet!</small>
-                        </h4>
-                    </div>
-                </template>
+                <div align="center" v-if="!loaded" class="p-4">
+                    <div class="loader"></div>
+                    <p class="m-0">Loading notifications...</p>
+                </div>
+                <div align="center" v-if="!hasNotifications && loaded" class="p-4">
+                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                    <p class="m-0">You have not received any notifications yet!</p>
+                </div>
                 <div class="activity" v-if="hasNotifications && loaded">
                     <div class="activity-box">
                         <ul class="activity-list">

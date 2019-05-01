@@ -90,7 +90,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function coverPicture() {
         return [
-            'url' => asset('images/hero-area.jpg')
+            'url' => asset('images/banner1.jpg')
         ];
     }
 
@@ -142,5 +142,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRouteKeyName()
     {
         return "code";
+    }
+
+    public function contactIds() {
+        return $this->followings->pluck('id')->merge($this->followers->pluck('id'));
     }
 }

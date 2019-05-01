@@ -6,15 +6,13 @@ body {
     background: linear-gradient(rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0.9)), url("../images/bg/ddondola_doodle.jpg") repeat fixed;
 }
 
-.navbar.align-items-stretch.navbar-light.bg-white.flex-md-nowrap.border-bottom.p-0 {
-    height: 61px;
-    background-color: #ce1d76 !important;
-    border-right: none !important;
-}
-
 .main-content > .main-navbar {
     box-shadow: 0 0.125rem 0.625rem 0 rgba(90, 97, 105, .12);
     background-color: #ce1d76 !important;
+}
+
+.main-content > .main-content-container.container-fluid {
+    min-height: unset !important;
 }
 
 .main-navbar__search input.form-control {
