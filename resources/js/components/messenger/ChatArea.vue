@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body d-flex flex-column">
+                <div class="card-body d-flex flex-column" id="chat-body">
                     <template v-if="!messagesLoaded">
                         <div align="center" class="p-4">
                             <div class="loader"></div>
@@ -48,265 +48,20 @@
                     </template>
                     <template v-else-if="!hasMessages && messagesLoaded">
                         <div align="center" class="p-4">
-                            <h4 class="m-0"><i class="material-icons">error</i></h4>
-                            <p class="mb-0">No messages.</p>
+                            <h4 class="m-0"><i class="material-icons">chat</i></h4>
+                            <p class="mb-0">Empty conversation.</p>
                         </div>
                     </template>
-                    <div class="chats" v-else-if="hasMessages && messagesLoaded">
-                        <div class="chat chat-right">
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>Hello. What can I do for you?</p>
-                                        <span class="chat-time">8:30 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat-line">
-                            <span class="chat-date">October 8th, 2015</span>
-                        </div>
-                        <div class="chat chat-left">
-                            <div class="chat-avatar">
-                                <a href="#" class="avatar">
-                                    <img alt="John Doe" src="/images/avatars/0.jpg" class="img-fluid rounded-circle">
-                                </a>
-                            </div>
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>I'm just looking around.</p>
-                                        <p>Will you tell me something about yourself? </p>
-                                        <span class="chat-time">8:35 am</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>Are you there? That time!</p>
-                                        <span class="chat-time">8:40 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-right">
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>Where?</p>
-                                        <span class="chat-time">8:35 am</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>OK, my name is Limingqiang. I like singing, playing basketballand so on.</p>
-                                        <span class="chat-time">8:42 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-left">
-                            <div class="chat-avatar">
-                                <a href="#" class="avatar">
-                                    <img alt="John Doe" src="/images/avatars/0.jpg" class="img-fluid rounded-circle">
-                                </a>
-                            </div>
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>You wait for notice.</p>
-                                        <span class="chat-time">8:30 am</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>Consectetuorem ipsum dolor sit?</p>
-                                        <span class="chat-time">8:50 am</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>OK?</p>
-                                        <span class="chat-time">8:55 am</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble">
-                                    <div class="chat-content img-content">
-                                        <div class="chat-img-group clearfix">
-                                            <p>Uploaded 3 Images</p>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">placeholder.jpg</div>
-                                                    <div class="chat-file-desc">842 KB</div>
-                                                </div>
-                                            </a>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">842 KB</div>
-                                                </div>
-                                            </a>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">placeholder.jpg</div>
-                                                    <div class="chat-file-desc">842 KB</div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <span class="chat-time">9:00 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-right">
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>OK!</p>
-                                        <span class="chat-time">9:00 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-left">
-                            <div class="chat-avatar">
-                                <a href="#" class="avatar">
-                                    <img alt="John Doe" src="/images/avatars/0.jpg" class="img-fluid rounded-circle">
-                                </a>
-                            </div>
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>Uploaded 3 files</p>
-                                        <ul class="attach-list">
-                                            <li><i class="fa fa-file"></i> <a href="#">example.avi</a></li>
-                                            <li><i class="fa fa-file"></i> <a href="#">activity.psd</a></li>
-                                            <li><i class="fa fa-file"></i> <a href="#">example.psd</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>Consectetuorem ipsum dolor sit?</p>
-                                        <span class="chat-time">8:50 am</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>OK?</p>
-                                        <span class="chat-time">8:55 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-right">
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content img-content">
-                                        <div class="chat-img-group clearfix">
-                                            <p>Uploaded 6 Images</p>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">placeholder.jpg</div>
-                                                    <div class="chat-file-desc">842 KB</div>
-                                                </div>
-                                            </a>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">842 KB</div>
-                                                </div>
-                                            </a>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">placeholder.jpg</div>
-                                                    <div class="chat-file-desc">842 KB</div>
-                                                </div>
-                                            </a>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">placeholder.jpg</div>
-                                                    <div class="chat-file-desc">842 KB</div>
-                                                </div>
-                                            </a>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">placeholder.jpg</div>
-                                                    <div class="chat-file-desc">842 KB</div>
-                                                </div>
-                                            </a>
-                                            <a class="chat-img-attach" href="#">
-                                                <img alt="" src="/images/placeholder.jpg" width="182" height="137">
-                                                <div class="chat-placeholder">
-                                                    <div class="chat-img-name">placeholder.jpg</div>
-                                                    <div class="chat-file-desc">842 KB</div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <span class="chat-time">9:00 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-left">
-                            <div class="chat-avatar">
-                                <a href="#" class="avatar">
-                                    <img alt="John Doe" src="/images/avatars/0.jpg" class="img-fluid rounded-circle">
-                                </a>
-                            </div>
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <ul class="attach-list">
-                                            <li class="pdf-file"><i class="fa fa-file-pdf-o"></i> <a href="#">Document_2016.pdf</a></li>
-                                        </ul>
-                                        <span class="chat-time">9:00 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-right">
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <ul class="attach-list">
-                                            <li class="pdf-file"><i class="fa fa-file-pdf-o"></i> <a href="#">Document_2016.pdf</a></li>
-                                        </ul>
-                                        <span class="chat-time">9:00 am</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat chat-left">
-                            <div class="chat-avatar">
-                                <a href="#" class="avatar">
-                                    <img alt="John Doe" src="/images/avatars/0.jpg" class="img-fluid rounded-circle">
-                                </a>
-                            </div>
-                            <div class="chat-body">
-                                <div class="chat-bubble">
-                                    <div class="chat-content">
-                                        <p>Typing ...</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="chats" v-else-if="hasMessages && messagesLoaded" id="chats">
+                        <chat-group v-for="(group, indx) in groupedMessages" :key="indx" :group="group" :code="code" :converser-code="converserCode"></chat-group>
                     </div>
                 </div>
                 <div class="card-footer border-top p-0">
-                    <div class="typing-msg border-0">
+                    <div class="typing-msg border-0 py-4">
                         <form>
-                            <textarea placeholder="Type a message here" class="pr-5"></textarea>
-                            <button type="button"><i class="fa fa-send"></i></button>
+                            <textarea placeholder="Type a message here" class="pr-5" v-model="text"></textarea>
+                            <button type="button" @click="sendMessage" :class="{disabled: !hasText || sending}"><i class="fa fa-send"></i></button>
                         </form>
-                        <ul class="ft-options">
-                            <li><a href="#" title=""><i class="fa fa-paperclip"></i></a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -315,9 +70,15 @@
 </template>
 
 <script>
+    import ChatGroup from "./ChatGroup";
     export default {
         name: "ChatArea",
-        mounted() {},
+        components: {ChatGroup},
+        mounted() {
+            this.listen();
+            var chat_body = $("#chat-body");
+            chat_body.scrollTop = chat_body.scrollHeight;
+        },
         data() {
             return {
                 message: "",
@@ -327,7 +88,9 @@
                 messagesLoaded: false,
                 loadingMoreMessages: false,
                 count: 0,
-                paginatorInfo: null
+                paginatorInfo: null,
+                text: '',
+                sending: false
             }
         },
         created () {
@@ -348,6 +111,12 @@
                 if (this.code) {
                     variables["initiator"] = this.code;
                 }
+
+                return variables;
+            },
+            sendVariables() {
+                var variables = this.conversationVariables;
+                variables["message"] = this.text;
 
                 return variables;
             },
@@ -373,6 +142,16 @@
                 }
 
                 return null;
+            },
+            hasText() {
+                return this.text.length > 0;
+            },
+            groupedMessages() {
+                return _.groupBy(_.sortBy(this.messages, function (message) {
+                    return Moment(message.created_at);
+                }), function(message){
+                    return Moment(message.created_at).format("MMMM Do YYYY");
+                });
             }
         },
         methods: {
@@ -390,6 +169,14 @@
             loadConversation(response) {
                 this.loaded = true;
                 this.conversation = response.data.data.conversation;
+                this.message = null;
+                this.watchConversation();
+            },
+            watchConversation() {
+                Echo.private(`conversation.${parseInt(this.conversation.id)}`)
+                    .listen('.new.message', (e) => {
+                        this.messages.push(e);
+                    });
             },
             startConversation() {
                 this.message = "starting conversation...";
@@ -417,6 +204,20 @@
             },
             isConverser(code) {
                 return this.converserCode === code;
+            },
+            sendMessage() {
+                this.sending = true;
+                axios.post(graphql.api, {
+                    query: graphql.sendMessage,
+                    variables: this.sendVariables
+                }).then(this.messageSent).catch(function (error) {});
+            },
+            messageSent(response) {
+                this.sending = false;
+                this.text = '';
+            },
+            listen() {
+
             }
         },
         watch: {
@@ -426,6 +227,17 @@
                     this.initialCount();
                     this.fetchMessages();
                 }
+            },
+            text(data) {
+                if (data) {
+                    // todo show typing indicators to others
+                }
+            },
+            message: {
+                handler(data) {
+
+                },
+                deep: true
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <div class="card card-small h-100 border-right" style="border-radius: 0; box-shadow: none;">
-        <div class="card-header border-bottom bg-light" style="padding: 0.44rem;">
+        <div class="card-header border-bottom bg-light" style="padding: 0.43rem;">
             <div class="row bg-light m-0">
                 <div class="col-12 col-sm-2 mb-sm-0 p-0">
                     <a href="javascript:void(0)" class="btn btn-sm btn-link mr-auto ml-auto mr-sm-auto ml-sm-0 mt-3 mt-sm-0" @click="showOwnRepository">
@@ -109,6 +109,7 @@
                 })
                 .on('typeahead:asyncrequest', this.showSpinner)
                 .on('typeahead:asynccancel typeahead:asyncreceive', this.hideSpinner);
+
             },
             showSpinner() {
                 this.shops = [];

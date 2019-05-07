@@ -32,7 +32,7 @@
 }
 
 .messenger .chat-area .card .card-header {
-    padding: 0.36rem;
+    padding: 0.35rem;
 }
 
 .messenger .chat-area .card .card-body {
@@ -60,7 +60,7 @@
 }
 
 .messenger .chat-list .card .card-header {
-    padding: 0.5rem;
+    padding: 0.49rem;
 }
 
 .chat-list .user-name {
@@ -205,7 +205,7 @@
 }
 
 .chats {
-    padding: 30px 15px;
+    padding: 30px;
 }
 
 .chat-body {
@@ -986,11 +986,12 @@
     height: 30px;
     background-color: #fff;
     padding: 0 20px;
-    color: #b2b2b2;
+    color: #888;
     font-size: 16px;
     border: 0;
     resize: none;
 }
+
 .typing-msg form button {
     color: #b31e5a;
     font-size: 18px;

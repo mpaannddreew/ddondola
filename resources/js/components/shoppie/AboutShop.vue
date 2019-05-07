@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card card-small mb-2 border">
+        <div class="card card-small border">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item p-4">
                     <strong class="text-muted d-block mb-2"><i class="fa fa-info-circle"></i> About</strong>

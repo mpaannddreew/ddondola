@@ -22,7 +22,6 @@
         <div class="row" v-else-if="showProductsArea && loaded">
             <div class="col-md-3 px-2">
                 <rating-meter :reviewable="shop"></rating-meter>
-                <about-shop class="my-2" :shop="shop"></about-shop>
                 <div class="sidebar">
                     <div class="card card-small border mb-2">
                         <div class="card-header border-bottom">

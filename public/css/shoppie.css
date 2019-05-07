@@ -1103,9 +1103,6 @@ ul.order-menu strong.price-total {
     font-size: 14px;
     margin-top: 5px;
 }
-.payment-text {
-    display: none;
-}
 .chek-form .form-check:first-child .payment-text {
     display: block;
 }
@@ -1174,7 +1171,7 @@ ul.order-menu strong.price-total {
     text-align: center;
     display: inline-block;
 }
-.checkout-process .card-header .btn.btn-link i {
+.checkout-process .card-header .btn.btn-link > i {
     position: absolute;
     right: 20px;
     top: 50%;

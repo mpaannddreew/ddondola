@@ -5,7 +5,6 @@ namespace Ddondola\Providers;
 use Ddondola\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Shoppie\Facades\Shoppie;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,7 +25,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         Route::model('user', User::class);
-        Shoppie::routes();
 
         parent::boot();
     }

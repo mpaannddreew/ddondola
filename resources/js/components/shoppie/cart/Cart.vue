@@ -31,8 +31,13 @@
                                 </thead>
                                 <tbody>
                                 <template v-for="(product, indx) in products">
-                                    <tr is="cart-entry" :key="indx" :product="product" v-on:product="removedFromCart"></tr>
+                                    <tr is="cart-entry" :key="indx" :product="product" v-on:deleted="removedFromCart" v-on:cart-updated="fetchCartProducts"></tr>
                                 </template>
+                                <tr class="row-6">
+                                    <td class="text-left border-bottom-0 text-uppercase" colspan="4">Cart Total</td>
+                                    <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum }}</td>
+                                    <td></td>
+                                </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -57,36 +62,23 @@
                     </div>
                 </div>
             </section>
-            <section class="order-details py-2">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 pl-0 pr-1">
-                            <coupon-code></coupon-code>
-                        </div>
-                        <div class="col-lg-6 pr-0 pl-1">
-                            <order-summary></order-summary>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </template>
     </div>
 </template>
 
 <script>
     import CartEntry from "./CartEntry";
-    import CouponCode from "./CouponCode";
-    import OrderSummary from "./OrderSummary";
     export default {
         name: "Cart",
-        components: {OrderSummary, CouponCode, CartEntry},
+        components: {CartEntry},
         mounted() {
             this.fetchCartProducts();
         },
         data() {
             return {
                 products: [],
-                loaded: false
+                loaded: false,
+                sum: null
             }
         },
         props: {
@@ -102,6 +94,9 @@
         computed: {
             hasProducts() {
                 return this.products.length > 0;
+            },
+            currencyCode() {
+                return this.products[0].currencyCode;
             }
         },
         methods: {
@@ -111,7 +106,9 @@
             },
             loadCartProducts(response) {
                 this.loaded = true;
+                this.products = [];
                 this.products = response.data.data.me.cart.products;
+                this.sum = response.data.data.me.cart.sum;
             },
             removedFromCart(product) {
                 this.products = Collect(this.products).reject(function(value, key) {

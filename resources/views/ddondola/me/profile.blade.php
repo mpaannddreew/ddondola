@@ -7,7 +7,7 @@
             <about :user="{{ Auth::user() }}"></about>
         </div>
         <div class="col-md-6 px-1">
-            <feed></feed>
+            <feed :admin="true"></feed>
         </div>
         <div class="col-md-3 px-1">
             @include('shoppie::shop.sections.shop-card')

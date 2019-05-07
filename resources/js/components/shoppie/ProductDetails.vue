@@ -5,7 +5,7 @@
                 <div class="col-md-3 px-1">
                     <rating-meter :reviewable="product"></rating-meter>
 
-                    <div class="card card-small border" v-if="hasAttributes">
+                    <div class="card card-small border mb-2" v-if="hasAttributes">
                         <div class="card-header border-bottom">
                             <h5 class="m-0"><i class="material-icons">short_text</i> Product Specifications</h5>
                         </div>

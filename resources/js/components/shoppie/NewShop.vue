@@ -13,7 +13,8 @@
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)">
-                            <span>01</span><i class="material-icons">info</i> General Information
+                            <span><i class="material-icons">more_vert</i></span>
+                            <i class="material-icons">info</i> General Information
                         </a>
                     </h5>
                 </div>

@@ -1,5 +1,5 @@
 <template>
-    <li>
+    <li v-if="lastMessage">
         <div class="contact-cont">
             <a href="javascript:void(0)" @click="transitionTo">
                 <div class="pull-left user-img m-r-10">
@@ -10,11 +10,11 @@
                 </div>
                 <div class="contact-info">
                     <span class="contact-name text-ellipsis">{{ converser.name }}</span>
-                    <span class="contact-date text-ellipsis">Hey there, this is Andrew. Did you get it?</span>
+                    <span class="contact-date text-ellipsis">{{ lastMessage.message }}</span>
                 </div>
             </a>
             <div class="contact-action">
-                <span class="posted_time">1:55 PM</span>
+                <span class="posted_time">{{ lastMessage.created_at|time }}</span>
             </div>
         </div>
     </li>
@@ -23,10 +23,13 @@
 <script>
     export default {
         name: "Conversation",
-        mounted() {},
+        mounted() {
+            this.setLastMessage(this.conversation.latestMessage);
+        },
         data() {
             return {
-
+                lastMessage: null,
+                unreadCount: 0
             }
         },
         props: {
@@ -68,6 +71,24 @@
             },
             transitionTo() {
                 this.$router.push(this.route)
+            },
+            watchConversation() {
+                Echo.private(`conversation.${parseInt(this.conversation.id)}`)
+                    .listen('.new.message', this.setLastMessage);
+            },
+            setLastMessage(message) {
+                this.lastMessage = message;
+            }
+        },
+        filters: {
+            time(date) {
+                if (Moment().isSame(Moment(date), 'd'))
+                    return Moment(date).format("h:mm a");
+
+                if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
+                    return 'Yesterday';
+
+                return Moment(date).format("MM/DD/YY");
             }
         }
     }

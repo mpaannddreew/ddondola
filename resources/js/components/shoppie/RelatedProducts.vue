@@ -1,26 +1,31 @@
 <template>
-    <div>
-        <div class="card card-small border my-2" v-if="!loaded">
-            <div class="card-body">
-                <div align="center">
+    <div class="card card-small border">
+        <div class="card-header border-bottom">
+            <h5 class="m-0"><i class="material-icons">short_text</i> Related Products</h5>
+        </div>
+        <div class="card-body p-0">
+            <template v-if="!loaded">
+                <div align="center" class="m-4">
                     <div class="loader"></div>
                     <p class="m-0">Loading related products...</p>
                 </div>
-            </div>
-        </div>
-        <div v-if="hasRelated && loaded">
-            <div class="products-grid p-0 my-2">
-                <div class="card card-small border mb-2">
-                    <div class="card-header">
-                        <h5 class="m-0"><i class="material-icons">short_text</i> Related Products</h5>
+            </template>
+            <template v-if="hasRelated && loaded">
+                <div class="d-flex align-items-center flex-row latest" v-for="(product, indx) in products">
+                    <div class="p-2 lo-stats__image">
+                        <img class="border rounded" :src="product.images[0].url">
+                    </div>
+                    <div class="p-2 lo-stats__order-details" style="display: inline-block; width: 87%;">
+                        <span><a :href="'/products/' + product.code">{{ product.name }}</a></span>
+                        <span class="text-uppercase">
+                            <ul class="price list-inline no-margin">
+                                <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice }}</li>
+                                <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price }}</li>
+                            </ul>
+                        </span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="item col-xl-12 col-md-6" v-for="(product, indx) in products">
-                        <div is="product" :key="indx" :product="product" :url="url"></div>
-                    </div>
-                </div>
-            </div>
+            </template>
         </div>
     </div>
 </template>

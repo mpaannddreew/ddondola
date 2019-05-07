@@ -14,6 +14,9 @@ window.Bus = new Vue();
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+import VueContentPlaceholders from 'vue-content-placeholders';
+Vue.use(VueContentPlaceholders);
+
 
 /**
  * The following block of code may be used to automatically register your

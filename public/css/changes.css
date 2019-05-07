@@ -469,3 +469,11 @@ button.btn-accent:hover, a.btn-accent:hover {
     min-height: auto !important;
 
 }
+
+.shimmer {
+    border-bottom: 1px solid #e1e5eb!important;
+}
+
+.shimmer:last-child {
+    border-bottom: none !important;
+}

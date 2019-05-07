@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div align="center">
                     <div class="loader"></div>
-                    <p class="m-0">Loading cart details...</p>
+                    <p class="m-0">Preparing checkout...</p>
                 </div>
             </div>
         </div>
@@ -12,7 +12,10 @@
             <div class="card">
                 <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
                     <h5>
-                        <a class="btn btn-link" href="javascript:void(0)"><span>01</span><i class="material-icons">description</i> Order review</a>
+                        <a class="btn btn-link" href="javascript:void(0)">
+                            <span><i class="material-icons">more_vert</i></span>
+                            <i class="material-icons">description</i> Order review
+                        </a>
                     </h5>
                 </div>
                 <div class="card-body p-0">
@@ -32,7 +35,9 @@
                                     <tbody>
                                     <template v-for="(product, indx) in products">
                                         <tr class="row-2">
-                                            <td class="row-img"><img :src="product.images[0].url" alt="cart-img"></td>
+                                            <td class="row-img lo-stats__image">
+                                                <img class="border rounded" :src="product.images[0].url" alt="cart-img">
+                                            </td>
                                             <td class="product-name"><a :href="'/products/' + product.code">{{ product.name }}</a></td>
                                             <td class="product-price">{{ product.currencyCode }} {{ product.pivot.price }}</td>
                                             <td class="product-quantity">{{ product.pivot.quantity }}</td>
@@ -41,17 +46,9 @@
                                     </template>
                                     </tbody>
                                     <tfoot>
-                                    <tr class="row-4">
-                                        <td class="text-left" colspan="4">Cart Subtotal</td>
-                                        <td class="pr_subtotal">{{ currencyCode }} {{ cartSubtotal }}</td>
-                                    </tr>
-                                    <!--<tr class="row-5">-->
-                                        <!--<td class="text-left" colspan="3">Promotional Code</td>-->
-                                        <!--<td class="pr_subtotal">-$5.00</td>-->
-                                    <!--</tr>-->
                                     <tr class="row-6">
                                         <td class="text-left" colspan="4">Order Total</td>
-                                        <td class="product-subtotal">{{ currencyCode }} {{ orderTotal }}</td>
+                                        <td class="product-subtotal text-muted">{{ currencyCode }} {{ cartSubtotal }}</td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -63,7 +60,10 @@
             <div class="card mt-2 border-top">
                 <div class="card-header form-wizard-step border-right border-top-right-radius-0">
                     <h5>
-                        <a class="btn btn-link collapsed" href="javascript:void(0)"><span>02</span><i class="material-icons">payment</i> Payment Method</a>
+                        <a class="btn btn-link collapsed" href="javascript:void(0)">
+                            <span><i class="material-icons">more_vert</i></span>
+                            <i class="material-icons">payment</i> Payment Method
+                        </a>
                     </h5>
                 </div>
                 <div class="card-body border border-top-0">
@@ -71,23 +71,13 @@
                         <div class="checkout-form">
                             <div class="chek-form">
                                 <div class="form-check">
-                                    <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" value="option3" checked="">
-                                    <label class="form-check-label" for="exampleRadios3">Direct Bank Transfer</label>
+                                    <input class="form-check-input" required="" type="radio" name="payment_option" id="mtn" value="mtn" checked="">
+                                    <label class="form-check-label" for="mtn">MTN Mobile Money</label>
                                     <p data-method="option3" class="payment-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios4" value="option4">
-                                    <label class="form-check-label" for="exampleRadios4">Check Payment</label>
-                                    <p data-method="option4" class="payment-text">Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios5" value="option5">
-                                    <label class="form-check-label" for="exampleRadios5">Paypal</label>
-                                    <p data-method="option5" class="payment-text">Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.</p>
                                 </div>
                             </div>
                             <div class="form-wizard-buttons text-md-right">
-                                <button class="btn btn-lg btn-pill btn-outline-primary" type="button">Place order</button>
+                                <button class="btn btn-lg btn-pill btn-outline-primary" type="button"><i class="material-icons">payment</i> Make Payment</button>
                             </div>
                         </div>
                     </div>
@@ -113,9 +103,6 @@
         computed: {
             hasProducts() {
                 return this.products.length > 0;
-            },
-            orderTotal() {
-                return this.cartSubtotal;
             },
             currencyCode() {
                 return this.products[0].currencyCode;

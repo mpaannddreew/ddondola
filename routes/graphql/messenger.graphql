@@ -26,4 +26,5 @@ extend type Query {
 
 extend type Mutation {
     startConversation(initiator: String participant: String!): Conversation! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@createConversation")
+    sendMessage(initiator: String participant: String! message: String): Message! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@sendMessage")
 }

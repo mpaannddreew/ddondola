@@ -22,8 +22,9 @@
                     <p class="m-0">Loading {{ loadingActivity }}...</p>
                 </div>
                 <div align="center" class="p-4" v-if="!hasActivities && loaded">
-                    <h4 class="m-0"><i class="material-icons">error</i></h4>
-                    <p class="m-0">No activity yet!</p>
+                    <h4 class="m-0" v-if="admin">Hi!</h4>
+                    <h4 class="m-0" v-else><i class="material-icons">error</i></h4>
+                    <p class="m-0">{{ noActivityMessage }}</p>
                 </div>
                 <activity v-else-if="hasActivities && loaded" v-for="(activity, indx) in activities" :activity="activity" :key="indx"></activity>
             </div>
@@ -66,6 +67,10 @@
             feedType: {
                 type: String,
                 default: 'timeline'
+            },
+            admin: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {
@@ -103,6 +108,19 @@
             },
             loadingActivity() {
                 return _.lowerCase(this.title);
+            },
+            noActivityMessage() {
+                if (this.actorType === 'shop') {
+                    if (this.admin)
+                        return 'It looks like your shop has no activity. Add some products to your shop to start building your activity pool.';
+
+                    return 'This shop has no activity yet.';
+                }
+
+                if (this.admin)
+                    return 'It looks like you have no activity. Like some shops, follow other people, make shop or product reviews to start building your activity pool.';
+
+                return 'This user has no activity yet.';
             }
         },
         methods: {

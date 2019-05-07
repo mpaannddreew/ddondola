@@ -1631,5 +1631,21 @@ window.graphql = {
             name
             description
           }
+        }`,
+    sendMessage: `mutation sendMessage($initiator: String $participant: String! $message: String) {
+          sendMessage(initiator: $initiator participant: $participant message: $message) {
+            id
+            message
+            sender {
+              id
+              name
+              type
+              code
+              avatar {
+                url
+              }
+            }
+            created_at
+          }
         }`
 };

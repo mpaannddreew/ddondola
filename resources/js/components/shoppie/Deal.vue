@@ -1,7 +1,7 @@
 <template>
     <div class="deals_item">
         <div class="deals_image">
-            <img src="/images/products/hoodie-man-1.png" alt="">
+            <img :src="deal.images[0].url" alt="">
         </div>
         <div class="deals_content">
             <div class="text-center">
