@@ -1,7 +1,10 @@
 <template>
     <div>
         <template v-if="!loaded">
-            <div align="center" class="p-4"><div class="loader"></div></div>
+            <div align="center" class="p-4">
+                <div class="loader"></div>
+                <p>loading conversations...</p>
+            </div>
         </template>
         <template v-else-if="!hasContacts && loaded">
             <div align="center" class="p-4">

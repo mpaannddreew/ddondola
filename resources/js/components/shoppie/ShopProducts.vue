@@ -21,11 +21,10 @@
         </div>
         <div class="row" v-else-if="showProductsArea && loaded">
             <div class="col-md-3 px-2">
-                <rating-meter :reviewable="shop"></rating-meter>
                 <div class="sidebar">
                     <div class="card card-small border mb-2">
                         <div class="card-header border-bottom">
-                            <h6 class="m-0"><i class="material-icons">short_text</i> Product Categories</h6>
+                            <h5 class="m-0"><i class="material-icons">short_text</i> Product Categories</h5>
                         </div>
                         <div class="card-body">
                             <div class="block p-0 m-0">
@@ -50,7 +49,7 @@
                     </div>
                     <div class="card card-small border">
                         <div class="card-header border-bottom">
-                            <h6 class="m-0"><i class="material-icons">short_text</i> Brands</h6>
+                            <h5 class="m-0"><i class="material-icons">short_text</i> Brands</h5>
                         </div>
                         <div class="card-body">
                             <div class="block p-0 m-0">
@@ -86,22 +85,22 @@
                                 <p class="m-0">Loading products...</p>
                             </div>
                             <div align="center" v-else-if="!showProducts && productsLoaded">
-                                <h4 class="m-0"><i class="material-icons">remove_shopping_cart</i></h4>
-                                <template v-if="!admin">
-                                    <p class="mb-3">This shop has no products listed yet!</p>
-                                    <a :href="shopsDirectoryUrl" class="btn btn-success btn-pill"><i class="material-icons">folder_open</i> Discover new shops</a>
-                                </template>
+                                <h4 class="m-0"><i class="material-icons">error</i></h4>
                                 <template v-if="admin">
                                     <p class="mb-3">You have not added any products yet!</p>
                                     <a :href="newProductUrl" class="btn btn-success btn-pill"><i class="fa fa-plus"></i> Add Products</a>
+                                </template>
+                                <template v-else>
+                                    <p class="mb-3">This shop has no products listed yet!</p>
+                                    <a :href="shopsDirectoryUrl" class="btn btn-success btn-pill"><i class="material-icons">folder_open</i> Discover new shops</a>
                                 </template>
                             </div>
                         </div>
                     </div>
                     <template v-else-if="showProducts && productsLoaded">
                         <div class="row">
-                            <div class="item col-xl-4 col-md-6 px-2" v-for="(product, indx) in products" :key="indx">
-                                <div is="product" :product="product" :url="url"></div>
+                            <div class="item col-xl-4 col-md-6" v-for="(product, indx) in products" :key="indx">
+                                <div is="product" :product="product" :auth="auth"></div>
                             </div>
                         </div>
                     </template>
@@ -186,17 +185,15 @@
                 return Collect(this.categories).reject(function(value, key) {
                     return value.productCount === 0;
                 }).count() > 0;
+            },
+            shopsDirectoryUrl() {
+                return '/shops';
+            },
+            newProductUrl() {
+                return this.shopsDirectoryUrl + '/' + this.shop.code + '/inventory/new-product';
             }
         },
         props: {
-            newProductUrl: {
-                type: String,
-                required: false
-            },
-            shopsDirectoryUrl: {
-                type: String,
-                required: false
-            },
             admin: {
                 type: Boolean,
                 required: false,
@@ -206,9 +203,10 @@
                 type: Object,
                 required: true
             },
-            url: {
-                type: String,
-                required: true
+            auth: {
+                type: Boolean,
+                required: false,
+                default: true
             }
         },
         methods: {
@@ -243,7 +241,6 @@
                 this.productsRequest().then(this.loadProducts).catch(function (error) {})
             },
             loadProducts(response) {
-                console.log(JSON.stringify(response.data));
                 this.productsLoaded = true;
                 if (this.subcategoryId) {
                     this.products = response.data.data.subcategory.products.data;

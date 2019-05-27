@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8 px-1 checkout-process">
+        <div class="col-md-9 px-1 checkout-process">
             <settings v-if="isActive('settings')"></settings>
             <information v-if="isActive('information')"></information>
             <change-password v-if="isActive('change-password')"></change-password>

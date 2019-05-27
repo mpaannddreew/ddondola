@@ -4,7 +4,7 @@
         <div class="card card-info pb-3">
             <img :src="shop.avatar.url" alt="user" class="profile-photo-lg">
             <div class="friend-info">
-                <button class="pull-right btn btn-sm btn-pill btn-outline-primary" @click="performAction" :class="{ active: like, disabled: loading }">
+                <button class="pull-right btn btn-sm btn-pill btn-outline-primary" @click="performAction" :class="{ active: like, disabled: loading }" v-if="auth">
                     <i class="material-icons mr-1">thumb_up</i> {{ text }}
                 </button>
                 <h5><a :href="shopUrl" class="profile-link">{{ shop.name }} <i class="fa fa-check-circle" aria-hidden="true" v-if="verified"></i></a></h5>
@@ -29,17 +29,14 @@
             }
         },
         props: {
-            mine: {
-                type: Boolean,
-                required: true
-            },
             shop: {
                 type: Object,
                 required: true
             },
-            url: {
-                type: String,
-                required: true
+            auth: {
+                type: Boolean,
+                required: false,
+                default: true
             }
         },
         methods: {
@@ -49,18 +46,20 @@
                 }
             },
             getCurrentState() {
-                this.loading = true;
-                axios.post(graphql.api, {
-                    query: graphql.iLikeShop,
-                    variables: {id: this.shop.id}
-                }).then(this.loadAction).catch(function (error) {})
+                if (this.auth) {
+                    this.loading = true;
+                    axios.post(graphql.api, {
+                        query: graphql.iLikeShop,
+                        variables: {id: this.shop.id}
+                    }).then(this.loadAction).catch(function (error) {});
+                }
             },
             action() {
                 this.loading = true;
                 axios.post(graphql.api, {
                     query: graphql.likeShop,
                     variables: {id: this.shop.id}
-                }).then(this.loadAction).catch(function (error) {})
+                }).then(this.loadAction).catch(function (error) {});
             },
             loadAction(response) {
                 this.like = response.data.data.like;
@@ -70,7 +69,7 @@
         },
         computed: {
             shopUrl() {
-                return this.url + "/shops/" + this.shop.code;
+                return "/shops/" + this.shop.code;
             },
             text() {
                 return this.like ? 'Unlike': 'Like';

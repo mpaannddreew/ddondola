@@ -1,21 +1,6 @@
 <template>
     <div>
-        <div class="card card-small border">
-            <div class="card-header border-bottom">
-                <div class="row">
-                    <div class="col-12 col-sm-6 text-center text-sm-left mb-sm-0">
-                        <h5 class="m-0"><img src="/images/feed.png" alt="" style="filter: grayscale(100%);"> {{ title }}</h5>
-                    </div>
-                    <div class="col-12 col-sm-6 d-flex align-items-center">
-                        <div class="ml-auto">
-                            <select class="form-control custom-select custom-select-sm" tabindex="-98" v-model="ordering">
-                                <option value="latest">Latest</option>
-                                <option value="oldest">Oldest</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="card card-small border" v-if="!loaded || (!hasActivities && loaded)">
             <div class="card-body p-0">
                 <div align="center" class="p-4" v-if="!loaded">
                     <div class="loader"></div>
@@ -26,7 +11,11 @@
                     <h4 class="m-0" v-else><i class="material-icons">error</i></h4>
                     <p class="m-0">{{ noActivityMessage }}</p>
                 </div>
-                <activity v-else-if="hasActivities && loaded" v-for="(activity, indx) in activities" :activity="activity" :key="indx"></activity>
+            </div>
+        </div>
+        <div class="card card-small border" v-if="hasActivities && loaded">
+            <div class="card-body p-0">
+                <activity v-for="(activity, indx) in activities" :activity="activity" :key="indx"></activity>
             </div>
         </div>
         <template v-if="loadingMore">
@@ -47,7 +36,6 @@
         },
         data() {
             return {
-                ordering: 'latest',
                 activities: [],
                 paginatorInfo: null,
                 loaded: false,
@@ -56,48 +44,18 @@
             }
         },
         props: {
-            actor: {
-                type: Object,
-                required: false
-            },
-            actorType: {
-                type: String,
-                default: 'user'
-            },
-            feedType: {
-                type: String,
-                default: 'timeline'
-            },
             admin: {
                 type: Boolean,
                 default: false
+            },
+            user: {
+                type: Object,
+                required: false
             }
         },
         computed: {
-            title() {
-                return this.feedType === 'timeline' ? 'Timeline': 'News Feed';
-            },
             hasActivities() {
                 return this.activities.length > 0;
-            },
-            variables() {
-                var variables = {count: this.count, page: 1, ordering: this.ordering};
-                if (this.actor && (this.actorType === 'user'|| this.actorType === 'shop')) {
-                    variables["id"] = this.actor.id;
-                }
-
-                return variables;
-            },
-            query() {
-                if (this.actor && this.actorType === 'user') {
-                    return graphql.userTimeline;
-                } else if(this.actor && this.actorType === 'shop') {
-                    return graphql.shopTimeline;
-                }else if(!this.actor && this.actorType === 'user' && this.feedType === 'timeline') {
-                    return graphql.myTimeline;
-                } else {
-                    return graphql.myNews;
-                }
             },
             loaderDisabled() {
                 if (this.paginatorInfo) {
@@ -110,17 +68,25 @@
                 return _.lowerCase(this.title);
             },
             noActivityMessage() {
-                if (this.actorType === 'shop') {
-                    if (this.admin)
-                        return 'It looks like your shop has no activity. Add some products to your shop to start building your activity pool.';
-
-                    return 'This shop has no activity yet.';
-                }
-
                 if (this.admin)
-                    return 'It looks like you have no activity. Like some shops, follow other people, make shop or product reviews to start building your activity pool.';
+                    return 'It looks like you have no activity. Follow other people, make shop or product reviews to start building your activity pool.';
 
                 return 'This user has no activity yet.';
+            },
+            query() {
+                if (this.admin) {
+                    return graphql.myActivity;
+                }
+
+                return graphql.userActivity;
+            },
+            variables() {
+                var variables = {count: this.count, page: 1};
+                if(!this.admin) {
+                    variables["id"] = this.user.id;
+                }
+
+                return variables;
             }
         },
         methods: {
@@ -136,18 +102,12 @@
             loadActivities(response) {
                 this.loaded = true;
                 this.loadingMore = false;
-                if (this.actor && this.actorType === 'user') {
-                    this.activities = response.data.data.user.timeline.data;
-                    this.paginatorInfo = response.data.data.user.timeline.paginatorInfo;
-                } else if(this.actor && this.actorType === 'shop') {
-                    this.activities = response.data.data.shop.timeline.data;
-                    this.paginatorInfo = response.data.data.shop.timeline.paginatorInfo;
-                }else if(!this.actor && this.actorType === 'user' && this.feedType === 'timeline') {
-                    this.activities = response.data.data.me.timeline.data;
-                    this.paginatorInfo = response.data.data.me.timeline.paginatorInfo;
-                } else {
-                    this.activities = response.data.data.me.news.data;
-                    this.paginatorInfo = response.data.data.me.news.paginatorInfo;
+                if (this.admin) {
+                    this.activities = response.data.data.me.activity.data;
+                    this.paginatorInfo = response.data.data.me.activity.paginatorInfo;
+                }else {
+                    this.activities = response.data.data.user.activity.data;
+                    this.paginatorInfo = response.data.data.user.activity.paginatorInfo;
                 }
             },
             loadMore() {

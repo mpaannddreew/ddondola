@@ -6,7 +6,7 @@
         <li class="nav-item">
             <a class="nav-link " href="{{ route('home') }}">
                 <i class="material-icons">public</i>
-                <span>{{ config('app.name', 'Ddondola') }}</span>
+                <span>Home</span>
             </a>
         </li>
     </ul>
@@ -25,6 +25,18 @@
             <a class="nav-link @yield('profile-base-active')" href="{{ route('my.profile') }}">
                 <i class="material-icons">account_circle</i>
                 <span>Profile</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @yield('settings-active')" href="{{ route('my.settings') }}">
+                <i class="material-icons">settings</i>
+                <span>Settings</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @yield('shops-active')" href="{{ route('my.shops') }}">
+                <i class="material-icons">shop_two</i>
+                <span>Shops</span>
             </a>
         </li>
     </ul>

@@ -5,23 +5,27 @@
         </td>
         <td class="lo-stats__order-details">
             <span>{{ product.name }}</span>
-            <span class="text-uppercase">{{ product.code }}</span>
+            <span class="text-uppercase">
+                <mini-rating-meter :reviewable="product"></mini-rating-meter>
+            </span>
         </td>
         <td class="lo-stats__status">
             <div class="d-table mx-auto">
-                <span class="badge badge-pill badge-success">In stock</span>
+                <span class="badge badge-pill" :class="{'badge-success': hasStock, 'badge-danger': !hasStock}">{{ availability }}</span>
             </div>
         </td>
-        <td class="lo-stats__items text-center">{{ product.quantity }}</td>
-        <td class="lo-stats__items text-center">{{ product.category.name }}</td>
-        <td class="lo-stats__items text-center">{{ product.subcategory.name }}</td>
-        <td class="lo-stats__items text-center">{{ product.brand.name }}</td>
+        <td class="lo-stats__items text-center" v-if="inventory">{{ product.quantity }}</td>
+        <td class="lo-stats__items text-center" v-if="inventory">{{ product.brand.name }}</td>
+        <td class="lo-stats__items text-center" v-if="inventory">{{ product.category.name }}</td>
+        <td class="lo-stats__items text-center" v-if="inventory">{{ product.subcategory.name }}</td>
         <td class="lo-stats__items text-center">{{ product.currencyCode }} {{ product.discountedPrice }}</td>
         <td>
             <div class="btn-group d-table ml-auto" role="group">
-                <a :href="productUrl" class="btn btn-sm btn-white" title=""><i class="fa fa-file"></i></a>
-                <a :href="editUrl" class="btn btn-sm btn-white" title=""><i class="material-icons">mode_edit</i></a>
-                <a :href="stockUrl" class="btn btn-sm btn-white"><i class="material-icons">local_mall</i></a>
+                <a :href="productUrl" class="btn btn-sm btn-white" title="">
+                    <i class="fa fa-link"></i> Details
+                </a>
+                <a :href="editUrl" class="btn btn-sm btn-white" title="" v-if="inventory"><i class="material-icons">mode_edit</i></a>
+                <a :href="stockUrl" class="btn btn-sm btn-white" v-if="inventory"><i class="material-icons">local_mall</i></a>
             </div>
         </td>
     </tr>
@@ -38,20 +42,31 @@
                 type: Object,
                 required: true
             },
-            url: {
-                type: String,
-                required: true
+            inventory: {
+                type: Boolean,
+                required: false,
+                default: true
             }
         },
         computed: {
             productUrl() {
-                return this.url + '/products/' + this.product.code
+                return '/products/' + this.product.code
             },
             stockUrl() {
                 return this.productUrl + "/stock"
             },
             editUrl() {
                 return this.productUrl + "/edit"
+            },
+            hasStock() {
+                return this.product.quantity > 0;
+            },
+            availability() {
+                if (this.hasStock) {
+                    return 'In stock';
+                }
+
+                return 'Out of stock';
             }
         }
     }

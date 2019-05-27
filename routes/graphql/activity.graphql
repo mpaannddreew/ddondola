@@ -3,11 +3,19 @@ type Review {
     rating: Int!
     body: String!
     reviewer: User! @belongsTo
+    reviewable: Reviewable! @method(name: "reviewableTranslator")
     created_at: DateTime!
     updated_at: DateTime!
 }
 
-input Reviewable {
+type Reviewable {
+    id: ID!
+    type: String!
+    shop: Shop
+    product: Product
+}
+
+input Reviewee {
     id: ID!
     type: String!
 }
@@ -22,36 +30,12 @@ type Reviewed {
     review: Review
 }
 
-type Subject {
-    type: String!
-    user: User
-    shop: Shop
-    product: Product
-}
-
-type Foreign {
-    type: String!
-    review: Review
-    offer: ProductOffer
-}
-
-type Activity {
-    id: ID!
-    verb: String!
-    action: String! @method(name: "derivedAction")
-    actor: Muddondozi!
-    subject: Subject! @method(name: "translatedSubject")
-    foreign: Foreign @method(name: "translatedForeign")
-    created_at: DateTime!
-    updated_at: DateTime!
-}
-
 extend type Query {
     review(id: ID! @eq): Review! @find(model: "Activity\\Review")
-    isReviewed(entity: Reviewable!): Reviewed! @field(resolver: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@isReviewed")
+    isReviewed(entity: Reviewee!): Reviewed! @field(resolver: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@isReviewed")
 }
 
 extend type Mutation {
-    addReview(entity: Reviewable! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@addReview")
+    addReview(entity: Reviewee! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@addReview")
     editReview(id: ID! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@editReview")
 }

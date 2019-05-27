@@ -2,12 +2,24 @@ window.graphql = {
     api: '/web/api',
     rowCount: 10,
     columnCount: 12,
-    categories: `{
-          categories:shopCategories {
-            id
-            name
-            code
-            description
+    categories: `query categories($count: Int! $page: Int!){
+          categories:shopCategories(count: $count page: $page) {
+            data {
+                id
+                name
+                code
+                description
+            }
+            paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+            }
           }
         }`,
     createShop: `mutation createShop ($shop: NewShop!) {
@@ -262,8 +274,8 @@ window.graphql = {
             }
           }
         }`,
-    shops: `query shops($categoryId: Int $count: Int! $page: Int!){
-          shops(categoryId: $categoryId count: $count page: $page) {
+    shops: `query shops($category: String $count: Int! $page: Int!){
+          shops(category: $category count: $count page: $page) {
             data {
               id
               code
@@ -271,6 +283,7 @@ window.graphql = {
               productCount
               likes
               reviewCount
+              averageRating
               currencyCode
               category {
                 name
@@ -294,9 +307,9 @@ window.graphql = {
             }
           }
         }`,
-    myShops: `query myShops($categoryId: Int $count: Int! $page: Int!) {
+    myShops: `query myShops($count: Int! $page: Int!) {
           me {
-            shops(categoryId: $categoryId count: $count page: $page) {
+            shops(count: $count page: $page) {
               data {
                 id
                 code
@@ -304,6 +317,7 @@ window.graphql = {
                 productCount
                 likes
                 reviewCount
+                averageRating
                 avatar{
                   url
                 }
@@ -328,8 +342,8 @@ window.graphql = {
             }
           }
         }`,
-    products: `query products($filters: ProductFilter $count: Int! $page: Int!) {
-          products(filters: $filters count: $count page: $page) {
+    products: `query products($category: String $filters: ProductFilter $count: Int! $page: Int!) {
+          products(category: $category filters: $filters count: $count page: $page) {
             data {
               id
               name
@@ -718,7 +732,7 @@ window.graphql = {
             followingCount
           }
         }`,
-    isReviewed: `query isReviewed($entity: Reviewable!) {
+    isReviewed: `query isReviewed($entity: Reviewee!) {
             isReviewed(entity: $entity) {
                 isReviewed
                 review {
@@ -728,7 +742,7 @@ window.graphql = {
                 }
             }
         }`,
-    addReview: `mutation addReview($entity: Reviewable! $review: ReviewData!) {
+    addReview: `mutation addReview($entity: Reviewee! $review: ReviewData!) {
             review:addReview(entity: $entity review: $review) {
                 id
                 rating
@@ -919,40 +933,54 @@ window.graphql = {
             }
           }
         }`,
-    myTimeline: `query myTimeline($ordering: String $count: Int! $page: Int!) {
-          me {
-            timeline(ordering: $ordering count: $count page: $page) {
+    myActivity: `query myActivity($count: Int! $page: Int!){
+          me{
+            activity(count: $count page: $page) {
               data {
                 id
-                verb
-                action
-                actor {
+                body
+                rating
+                created_at
+                reviewer {
                   id
                   name
-                  type
                   code
-                  avatar{
-                    url
-                  }
-                  coverPicture {
+                  avatar {
                     url
                   }
                 }
-                subject {
+                reviewable {
+                  id
                   type
+                  shop {
+                    id
+                    name
+                    code
+                    profile {
+                      description
+                    }
+                    category {
+                      name
+                    }
+                    avatar {
+                      url
+                    }
+                    coverPicture {
+                      url
+                    }
+                  }
                   product {
                     id
                     name
                     code
-                    description
                     price
+                    description
                     discountedPrice
+                    discount
                     currencyCode
+                    created_at
                     images {
                       url
-                    }
-                    brand {
-                      name
                     }
                     category {
                       name
@@ -960,94 +988,70 @@ window.graphql = {
                     subcategory {
                       name
                     }
-                  }
-                  user {
-                    id
-                    name
-                    code
-                    avatar {
-                      url
-                    }
-                  }
-                  shop {
-                    id
-                    name
-                    code
-                    avatar {
-                      url
-                    }
-                    category {
+                    brand {
                       name
                     }
-                    profile {
-                      description
+                    shop {
+                      name
+                      code
+                      avatar {
+                        url
+                      }
                     }
                   }
                 }
-                foreign {
-                  review {
-                    rating
-                    body
-                  }
-                  offer {
-                    discount
-                    start_date
-                    end_date
-                    cancelled
-                    active
-                    started
-                    ended
-                  }
-                }
-                created_at
-              }
-              paginatorInfo {
-                count
-                currentPage
-                firstItem
-                hasMorePages
-                lastItem
-                lastPage
-                perPage
-                total
               }
             }
           }
         }`,
-    myNews: `query myNews($ordering: String $count: Int! $page: Int!) {
-          me {
-            news(ordering: $ordering count: $count page: $page) {
+    userActivity: `query userActivity($id: ID! $count: Int! $page: Int!){
+          user(id: $id){
+            activity(count: $count page: $page) {
               data {
                 id
-                verb
-                action
-                actor {
+                body
+                rating
+                created_at
+                reviewer {
                   id
                   name
-                  type
                   code
-                  avatar{
-                    url
-                  }
-                  coverPicture {
+                  avatar {
                     url
                   }
                 }
-                subject {
+                reviewable {
+                  id
                   type
+                  shop {
+                    id
+                    name
+                    code
+                    profile {
+                      description
+                    }
+                    category {
+                      name
+                    }
+                    avatar {
+                      url
+                    }
+                    coverPicture {
+                      url
+                    }
+                  }
                   product {
                     id
                     name
                     code
-                    description
                     price
+                    description
                     discountedPrice
+                    discount
                     currencyCode
+                    created_at
                     images {
                       url
-                    }
-                    brand {
-                      name
                     }
                     category {
                       name
@@ -1055,246 +1059,18 @@ window.graphql = {
                     subcategory {
                       name
                     }
-                  }
-                  user {
-                    id
-                    name
-                    code
-                    avatar {
-                      url
-                    }
-                  }
-                  shop {
-                    id
-                    name
-                    code
-                    avatar {
-                      url
-                    }
-                    category {
-                      name
-                    }
-                    profile {
-                      description
-                    }
-                  }
-                }
-                foreign {
-                  review {
-                    rating
-                    body
-                  }
-                  offer {
-                    discount
-                    start_date
-                    end_date
-                    cancelled
-                    active
-                    started
-                    ended
-                  }
-                }
-                created_at
-              }
-              paginatorInfo {
-                count
-                currentPage
-                firstItem
-                hasMorePages
-                lastItem
-                lastPage
-                perPage
-                total
-              }
-            }
-          }
-        }`,
-    userTimeline: `query userTimeline($id: ID! $ordering: String $count: Int! $page: Int!) {
-          user(id: $id) {
-            timeline(ordering: $ordering count: $count page: $page) {
-              data {
-                id
-                verb
-                action
-                actor {
-                  id
-                  name
-                  type
-                  code
-                  avatar{
-                    url
-                  }
-                  coverPicture {
-                    url
-                  }
-                }
-                subject {
-                  type
-                  product {
-                    id
-                    name
-                    code
-                    description
-                    price
-                    discountedPrice
-                    currencyCode
-                    images {
-                      url
-                    }
                     brand {
                       name
                     }
-                    category {
+                    shop {
                       name
-                    }
-                    subcategory {
-                      name
-                    }
-                  }
-                  user {
-                    id
-                    name
-                    code
-                    avatar {
-                      url
-                    }
-                  }
-                  shop {
-                    id
-                    name
-                    code
-                    avatar {
-                      url
-                    }
-                    category {
-                      name
-                    }
-                    profile {
-                      description
+                      code
+                      avatar {
+                        url
+                      }
                     }
                   }
                 }
-                foreign {
-                  review {
-                    rating
-                    body
-                  }
-                  offer {
-                    discount
-                    start_date
-                    end_date
-                    cancelled
-                    active
-                    started
-                    ended
-                  }
-                }
-                created_at
-              }
-              paginatorInfo {
-                count
-                currentPage
-                firstItem
-                hasMorePages
-                lastItem
-                lastPage
-                perPage
-                total
-              }
-            }
-          }
-        }`,
-    shopTimeline: `query shopTimeline($id: ID! $ordering: String $count: Int! $page: Int!) {
-          shop(id: $id) {
-            timeline(ordering: $ordering count: $count page: $page) {
-              data {
-                id
-                verb
-                action
-                actor {
-                  id
-                  name
-                  type
-                  code
-                  avatar{
-                    url
-                  }
-                  coverPicture {
-                    url
-                  }
-                }
-                subject {
-                  type
-                  product {
-                    id
-                    name
-                    code
-                    description
-                    price
-                    discountedPrice
-                    currencyCode
-                    images {
-                      url
-                    }
-                    brand {
-                      name
-                    }
-                    category {
-                      name
-                    }
-                    subcategory {
-                      name
-                    }
-                  }
-                  user {
-                    id
-                    name
-                    code
-                    avatar {
-                      url
-                    }
-                  }
-                  shop {
-                    id
-                    name
-                    code
-                    avatar {
-                      url
-                    }
-                    category {
-                      name
-                    }
-                    profile {
-                      description
-                    }
-                  }
-                }
-                foreign {
-                  review {
-                    rating
-                    body
-                  }
-                  offer {
-                    discount
-                    start_date
-                    end_date
-                    cancelled
-                    active
-                    started
-                    ended
-                  }
-                }
-                created_at
-              }
-              paginatorInfo {
-                count
-                currentPage
-                firstItem
-                hasMorePages
-                lastItem
-                lastPage
-                perPage
-                total
               }
             }
           }
@@ -1575,9 +1351,48 @@ window.graphql = {
             }
           }
         }`,
-    myOrderProducts: `query myOrderProducts($id: ID! $page: Int! $count: Int!) {
-          order(id: $id) {
-            products(page: $page count: $count) {
+    shopOrders: `query myOrders($shop: String! $page: Int! $count: Int!) {
+          shop:shopByCode(shop: $shop) {
+            orders(page: $page count: $count) {
+              data {
+                id
+                code
+                sum
+                productCount
+                currencyCode
+                created_at
+                by {
+                  code
+                  name
+                  email
+                  avatar {
+                    url
+                  }
+                }
+                firstProduct {
+                  images {
+                    url
+                  }
+                }
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    orderProducts: `query orderProducts($order: String! $shop: String $page: Int! $count: Int!) {
+          order(order: $order) {
+            sum
+            currencyCode
+            products(shop: $shop page: $page count: $count) {
               data {
                 id
                 quantity
@@ -1646,6 +1461,55 @@ window.graphql = {
               }
             }
             created_at
+          }
+        }`,
+    myProductFeed: `query myProductFeed($count: Int! $page: Int!){
+          me {
+            products:recommendedProducts(count: $count page: $page) {
+                data {
+                  id
+                  name
+                  code
+                  description
+                  quantity
+                  price
+                  discount
+                  reviewCount
+                  averageRating
+                  discountedPrice
+                  currencyCode
+                  created_at
+                  images {
+                    url
+                  }
+                  category {
+                    name
+                  }
+                  subcategory {
+                    name
+                  }
+                  brand {
+                    name
+                  }
+                  shop {
+                    name
+                    code
+                    avatar {
+                      url
+                    }
+                  }
+                }
+                paginatorInfo {
+                  count
+                  currentPage
+                  firstItem
+                  hasMorePages
+                  lastItem
+                  lastPage
+                  perPage
+                  total
+                }
+            }
           }
         }`
 };

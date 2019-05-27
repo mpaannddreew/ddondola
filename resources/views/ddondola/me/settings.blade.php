@@ -1,7 +1,16 @@
-@extends('ddondola.me.base.profile-admin')
+@extends('ddondola.me.base.account-admin')
 @section('title')@parent Settings @endsection
-@section('banner')@endsection
 @section('settings-active', 'active')
-@section('profile')
-    <account-settings></account-settings>
+@section('page-header')
+    <div class="page-header row no-gutters py-4">
+        <div class="col">
+            <span class="text-uppercase page-subtitle"><i class="fa fa-user-circle"></i> Account</span>
+            <h3 class="page-title">Settings</h3>
+        </div>
+    </div>
+@endsection
+@section('main')
+    <div class="container py-2">
+        <account-settings></account-settings>
+    </div>
 @endsection

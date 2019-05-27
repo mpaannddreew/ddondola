@@ -14,7 +14,6 @@ use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 use Overtrue\LaravelFollow\Traits\CanLike;
-use Shoppie\Shop;
 use Shoppie\Traits\Buyer;
 use Shoppie\Traits\Seller;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -23,6 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, Seller, Buyer, HasApiTokens, CanLike, CanFollow, Holder,
         CanBeFollowed, CanFavorite, Reviewer, Muddondozi, HasMediaTrait;
+
+    public static $laracombee = ['first_name' => 'string', 'last_name' => 'string', 'email' => 'string'];
 
     /**
      * The attributes that are mass assignable.
@@ -104,22 +105,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->followerCount() . " " . ($this->followerCount() > 1 || $this->followerCount() == 0 ? "followers": "follower");
     }
 
-    private function likesActivities() {
-        return $this->likes(Shop::class)->get()->flatMap(function (Shop $shop){
-            return $shop->activityIds();
-        });
-    }
-
-    private function followingActivities() {
-        return $this->followings->flatMap(function (User $user) {
-            return $user->activityIds();
-        });
-    }
-
-    public function communityActivities() {
-        return $this->followingActivities()->merge($this->likesActivities());
-    }
-
     /**
      * Get the entity's notifications.
      *
@@ -146,5 +131,23 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function contactIds() {
         return $this->followings->pluck('id')->merge($this->followers->pluck('id'));
+    }
+
+    /**
+     * @return array
+     */
+    protected function communityReviewIds()
+    {
+        return $this->followings->flatMap(function (User $user) {
+            return $user->reviewIds();
+        });
+    }
+
+    public function profile($item) {
+        return collect($this->profile)->get($item, '');
+    }
+
+    public function settings($item) {
+        return collect($this->settings)->get($item, '');
     }
 }

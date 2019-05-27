@@ -43,12 +43,13 @@ type Shop implements Muddondozi {
     productCount: Int! @method(name: "productCount")
     activeOffers: [Product!] @method(name: "activeOffers")
     currencyCode: String! @method(name: "currencyCode")
-    timeline(ordering: String): [Activity!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@timeLine")
     messages: [Message!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@messages")
     conversations: [Conversation!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@conversations")
     contacts: [User!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@contacts")
     avatars: [Image!] @method(name: "avatars")
     coverPictures: [Image!] @method(name: "coverPictures")
+    orders: [Order!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shopOrders")
+    orderCount: Int! @method(name: "orderCount")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -140,10 +141,12 @@ type Product {
     reviewCount: Int! @method(name: "reviewCount")
     averageRating: String! @method(name: "averageRating")
     orders: [Order!] @belongsToMany(type: "paginator")
+    orderCount: Int! @method(name: "orderCount")
     carts: [Cart!] @belongsToMany(type: "paginator")
     discount: Int! @method(name: "discount")
     discountedPrice: Int! @method(name: "discountedPrice")
     currencyCode: String! @method(name: "currencyCode")
+    shop: Shop! @method(name: "shop")
     images: [Image!] @method(name: "productImages")
     cartPivot: CartPivot
     orderPivot: OrderPivot
@@ -165,8 +168,8 @@ type Order {
     id: ID!
     code: String!
     sum: Int! @method(name: "sum")
-    owner: User! @belongsTo
-    products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
+    by: User! @belongsTo
+    products(shop: String): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@orderProducts")
     productCount: Int! @method(name: "productCount")
     currencyCode: String! @method(name: "currencyCode")
     firstProduct: Product! @method(name: "firstProduct")
@@ -264,11 +267,12 @@ input ProductFilter {
 }
 
 extend type Query {
-    shopCategories: [ShopCategory!] @all(model: "Shoppie\\ShopCategory")
+    shopCategories: [ShopCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@ShopCategories")
     shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
-    shops(categoryId: Int myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
+    shopByCode(shop: String!): Shop! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shop")
+    shops(category: String myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
     product(id: ID! @eq): Product! @find(model: "Shoppie\\Product")
-    products(filters: ProductFilter myCountry: Boolean): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
+    products(category: String filters: ProductFilter myCountry: Boolean): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
     productCategory(id: ID! @eq): ProductCategory! @find(model: "Shoppie\\ProductCategory")
     productSubCategory(id: ID! @eq): ProductSubCategory! @find(model: "Shoppie\\ProductSubCategory")
     iLikeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@iLikeShop")
@@ -276,7 +280,7 @@ extend type Query {
     isFavorite(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@isFavorite")
     searchProducts(name: String!): [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchProducts")
     searchShops(name: String!): [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchShops")
-    order(id: ID! @eq): Order @find(model: "Shoppie\\Order")
+    order(order: String!): Order @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@order")
 }
 
 extend type Mutation {

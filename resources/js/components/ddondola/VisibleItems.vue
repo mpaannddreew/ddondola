@@ -1,5 +1,5 @@
 <template>
-    <div class="my-2">
+    <div class="my-auto">
         <span class="visible-items" v-if="showItems">Showing <strong>{{ start }}-{{ end }}</strong> of <strong>{{ paginatorInfo.total }}</strong> results</span>
         <span class="visible-items" v-else></span>
     </div>
@@ -25,7 +25,7 @@
                 return (this.paginatorInfo.currentPage - 1) * this.paginatorInfo.perPage;
             },
             start() {
-                return this.paginatorInfo.currentPage === 1 ? 1: this.countBehind();
+                return this.paginatorInfo.currentPage === 1 ? 1: this.countBehind;
             },
             end() {
                 return this.paginatorInfo.currentPage === 1 ? this.paginatorInfo.count: this.start + this.paginatorInfo.count;

@@ -9,12 +9,12 @@
 namespace Ddondola\Traits;
 
 
-use Activity\Traits\Actor;
 use Messenger\Traits\Converser;
+use Teller\Traits\Transactor;
 
 trait Muddondozi
 {
-    use Actor, Converser;
+    use Converser, Transactor;
 
     /**
      * Type of actor

@@ -8,7 +8,7 @@
 require('./bootstrap');
 
 require('./queries');
-
+window.Routes = [];
 window.Vue = require('vue');
 window.Bus = new Vue();
 import VueRouter from 'vue-router';
@@ -38,14 +38,27 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
 import ChatArea from './components/messenger/ChatArea.vue';
 import ChatAreaEmpty from './components/messenger/ChatAreaEmpty.vue';
+import ShopDirectoryArea from './components/shoppie/ShopDirectoryArea.vue';
+import ProductDirectoryArea from './components/shoppie/ProductDirectoryArea.vue';
+import MyOrders from './components/shoppie/MyOrders.vue';
+import OrderDetails from './components/shoppie/orders/OrderDetails.vue';
+import ShopOrders from './components/shoppie/ShopOrders.vue';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {path: '/me/messenger', component: ChatAreaEmpty},
-        {path: '/me/messenger/:converserCode', component: ChatArea, props: true},
-        {path: '/shops/:code/messenger', component: ChatAreaEmpty, props: true},
-        {path: '/shops/:code/messenger/:converserCode', component: ChatArea, props: true}
+        {path: '/me/messenger/:participant', component: ChatArea, props: true},
+        {path: '/me/orders', component: MyOrders},
+        {path: '/me/orders/:order', component: OrderDetails, props: true},
+        {path: '/shops/:initiator/messenger', component: ChatAreaEmpty, props: true},
+        {path: '/shops/:initiator/messenger/:participant', component: ChatArea, props: true},
+        {path: '/shops/:shop/orders', component: ShopOrders, props: true},
+        {path: '/shops/:shop/orders/:order', component: OrderDetails, props: true},
+        {path: '/shops', component: ShopDirectoryArea, props: true},
+        {path: '/shops/:category', component: ShopDirectoryArea, props: true},
+        {path: '/products', component: ProductDirectoryArea, props: true},
+        {path: '/products/:category', component: ProductDirectoryArea, props: true}
     ]
 });
 

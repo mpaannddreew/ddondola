@@ -27,9 +27,9 @@ class HomeController extends Controller
         return view('ddondola.me.dashboard');
     }
 
-    public function messenger($code = null) {
-        if ($code) {
-            $converser = Messenger::resolveParticipant($code);
+    public function messenger($participant = null) {
+        if ($participant) {
+            $converser = Messenger::resolveParticipant($participant);
             if ($converser) {
                 if ($converser->is(Auth::user())) {
                     abort(404);

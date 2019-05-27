@@ -11,6 +11,6 @@
         <div class="main-content-container container-fluid px-4" style="padding: 0 !important; overflow: hidden;">
             @yield('main')
         </div>
-        {{--@include('layouts.sections.footer')--}}
+        @include('layouts.sections.footer')
     </main>
 @endsection

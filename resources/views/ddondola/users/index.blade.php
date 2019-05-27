@@ -1,15 +1,15 @@
 @extends('layouts.base.ddondola-no-container')
-@section('title')@parent Users @endsection
-@section('page-header')
-    <div class="page-header row no-gutters py-4">
-        <div class="col">
-            <span class="text-uppercase page-subtitle"><i class="fa fa-folder-open-o"></i> Directory</span>
-            <h3 class="page-title">People</h3>
-        </div>
-    </div>
-@endsection
+@section('title')@parent People @endsection
+@section('people-active', 'active')
 @section('main')
     <div class="container py-2">
-        <users type="users" url="{{ url("/") }}" :me="{{ Auth::user() }}"></users>
+        <div class="row">
+            <div class="col-md-2">
+                @include('ddondola.sections.shortcuts')
+            </div>
+            <div class="col-md-10 px-1">
+                <users :me="{{ Auth::user() }}"></users>
+            </div>
+        </div>
     </div>
 @endsection

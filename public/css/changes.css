@@ -1,9 +1,9 @@
 body {
-    background: #f8f8f8;
+    /*background: #f8f8f8;*/
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
-    background: linear-gradient(rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0.9)), url("../images/bg/ddondola_doodle.jpg") repeat fixed;
+    /*background: linear-gradient(rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0.9)), url("../images/bg/ddondola_doodle.jpg") repeat fixed;*/
 }
 
 .main-content > .main-navbar {
@@ -204,8 +204,7 @@ body {
 }
 
 .user-profile-bnr {
-    /*background: url(../images/banner_background.jpg) no-repeat;*/
-    /*background-size: cover;*/
+
 }
 
 .user-profile-bnr .wrapper {
@@ -476,4 +475,141 @@ button.btn-accent:hover, a.btn-accent:hover {
 
 .shimmer:last-child {
     border-bottom: none !important;
+}
+
+ul.nav.home li {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
+}
+
+ul.nav.home li:first-child {
+    margin-top: 0px;
+}
+
+ul.nav.home li:last-child {
+    margin-bottom: 0px;
+}
+
+ul.nav.home li:hover, ul.nav.home li.active{
+    background: #FFF;
+    border: 1px solid #e1e5eb;
+    border-radius: 4px;
+}
+
+ul.nav.home li a{
+    color: #868e96;
+    /*font-size: 15px;*/
+}
+
+ul.nav.home li:hover a, ul.nav.home li.active a{
+    color: #d51e76;
+}
+
+.directory {
+    position: relative;
+    height: calc(99.9vh - 7.1rem - 1px);
+    overflow: hidden;
+}
+
+.directory-list {
+    padding: 0;
+    position: relative;
+    width: 350px;
+    float: left;
+    z-index: 9;
+    top: 0;
+    margin-left: 0;
+}
+
+.directory-area {
+    padding: 0;
+    position: relative;
+    width: calc(100% - 350px);
+    float: left;
+}
+
+.directory .card {
+    border-radius: 0 !important;
+    height: calc(99.9vh - 7.1rem - 1px) !important;
+}
+
+.directory .card .card-header {
+    padding: 0.49rem;
+}
+
+.directory .card .card-body {
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.directory .directory-list .card .card-body {
+    background-color: #ffffff;
+}
+
+.directory .directory-area .card .card-body {
+    background-color: #f5f6f8;;
+}
+
+.directory .directory-list .card .card-body div.list-group a {
+    border-right: none !important;
+    border-left: none !important;
+    padding: 13px;
+}
+
+.directory .directory-list .card .card-body div.list-group a.selected {
+    border-left: medium solid #ce1d76 !important;
+    color: #ce1d76;
+}
+
+.directory .directory-list .card .card-body div.list-group a:hover {
+    color: #ce1d76;
+}
+
+.directory .directory-list .card .card-body div.list-group a:first-child {
+    border-top: none !important;
+    border-radius: 0 !important;
+}
+
+.directory .directory-list .card .card-body div.list-group a:last-child {
+    border-bottom: none !important;
+    border-radius: 0 !important;
+}
+
+.directory .directory-area .card .card-body .card {
+    min-height: unset !important;
+    border-top: 1px solid #dee2e6!important;
+    border-bottom: 1px solid #dee2e6!important;
+    height: unset !important;
+}
+
+.directory .directory-area .card .card-body .card .card-body {
+    background: #f5f6f8 !important;
+}
+
+.close-directory-list {
+}
+
+
+@media only screen and (max-width: 768px) {
+    .directory-area {
+        width: 100%;
+    }
+
+    .close-directory-list {
+        margin-left: -350px;
+    }
+
+    .directory-list {
+        position: absolute;
+        -webkit-transition: 0.5s ease-in;
+        -o-transition: 0.5s ease-in;
+        transition: 0.5s ease-in;
+    }
+
+    .directory .directory-area .card .card-body .card {
+        border: 1px solid #dee2e6!important;
+        margin-left: .5rem!important;
+        margin-right: .5rem!important;
+    }
 }

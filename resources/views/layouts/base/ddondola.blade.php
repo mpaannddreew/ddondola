@@ -8,6 +8,6 @@
         <div class="main-content-container @section('container') container @show">
             @yield('main')
         </div>
-        {{--@include('layouts.sections.footer')--}}
+        @include('layouts.sections.footer')
     </main>
 @endsection

@@ -53,7 +53,7 @@
                         </div>
                     </template>
                     <div class="chats" v-else-if="hasMessages && messagesLoaded" id="chats">
-                        <chat-group v-for="(group, indx) in groupedMessages" :key="indx" :group="group" :code="code" :converser-code="converserCode"></chat-group>
+                        <chat-group v-for="(group, indx) in groupedMessages" :key="indx" :group="group" :initiator="initiator" :participant="participant"></chat-group>
                     </div>
                 </div>
                 <div class="card-footer border-top p-0">
@@ -76,8 +76,6 @@
         components: {ChatGroup},
         mounted() {
             this.listen();
-            var chat_body = $("#chat-body");
-            chat_body.scrollTop = chat_body.scrollHeight;
         },
         data() {
             return {
@@ -97,19 +95,19 @@
             this.fetchConversation()
         },
         props: {
-            converserCode: {
+            participant: {
                 type: String,
                 required: true
             },
-            code: {
+            initiator: {
                 type: String
             }
         },
         computed: {
             conversationVariables() {
-                var variables = {participant: this.converserCode};
-                if (this.code) {
-                    variables["initiator"] = this.code;
+                var variables = {participant: this.participant};
+                if (this.initiator) {
+                    variables["initiator"] = this.initiator;
                 }
 
                 return variables;
@@ -187,7 +185,7 @@
                 }).then(this.loadConversation).catch(function (error) {});
             },
             initialCount() {
-                this.count = graphql.rowCount;
+                this.count = 100;
             },
             fetchMessages() {
                 this.messages = [];
@@ -203,7 +201,7 @@
                 this.paginatorInfo = response.data.data.conversation.messages.paginatorInfo;
             },
             isConverser(code) {
-                return this.converserCode === code;
+                return this.participant === code;
             },
             sendMessage() {
                 this.sending = true;

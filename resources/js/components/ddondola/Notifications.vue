@@ -7,7 +7,7 @@
                     <p class="m-0">Loading notifications...</p>
                 </div>
                 <div align="center" v-if="!hasNotifications && loaded" class="p-4">
-                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                    <h4 class="m-0"><i class="material-icons">notifications_active</i></h4>
                     <p class="m-0">You have not received any notifications yet!</p>
                 </div>
                 <div class="activity" v-if="hasNotifications && loaded">

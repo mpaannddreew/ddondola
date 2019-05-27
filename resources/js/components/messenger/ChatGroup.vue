@@ -23,11 +23,11 @@
             }
         },
         props: {
-            converserCode: {
+            participant: {
                 type: String,
                 required: true
             },
-            code: {
+            initiator: {
                 type: String
             },
             group: {
@@ -48,7 +48,7 @@
         },
         methods: {
             mine(chat) {
-                return _.lowerCase(this.converserCode) !== _.lowerCase(chat.sender.code);
+                return _.lowerCase(this.participant) !== _.lowerCase(chat.sender.code);
             }
         }
     }

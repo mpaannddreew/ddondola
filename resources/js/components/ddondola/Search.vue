@@ -81,7 +81,7 @@
                                     '      <a href="/products/' + data.code + '">' +
                                     '        <div class="row py-2 px-4 border-bottom">\n' +
                                     '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' +
-                                    '                <img class="rounded" src="/images/avatars/0.jpg">\n' +
+                                    '                <img class="rounded" src="' + data.images[0].url + '">\n' +
                                     '            </div>\n' +
                                     '            <div class="col pl-3">\n' +
                                     '                <h6 class="m-0">' + data.name + '</h6>\n' +

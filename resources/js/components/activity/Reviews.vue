@@ -4,9 +4,9 @@
             <div class="card-header border-bottom">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-left mb-sm-0">
-                        <h5 class="page-title m-0"><img src="/images/feed.png" alt="" style="filter: grayscale(100%);"> Reviews</h5>
+                        <h5 class="page-title m-0">Reviews</h5>
                     </div>
-                    <div class="col-12 col-sm-6 d-flex align-items-center">
+                    <div class="col-12 col-sm-6 d-flex align-items-center" v-if="auth">
                         <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
                             <a href="#review-form" class="btn btn-success" data-toggle="modal" :class="{disabled: !isReviewedLoaded}">
                                 <i class="material-icons">rate_review</i> {{ reviewText }}
@@ -29,7 +29,7 @@
         </div>
         <!--<a href="javascript:void(0)" class="btn-view btn-load-more border"></a>-->
         <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
-        <div class="modal fade" id="review-form" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="review-form" role="dialog" aria-hidden="true" v-if="auth">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -129,6 +129,11 @@
             reviewableType: {
                 type: String,
                 required: true
+            },
+            auth: {
+                type: Boolean,
+                required: false,
+                default: true
             }
         },
         computed: {
@@ -211,6 +216,7 @@
                 this.addReviewRequest().then(this.loadReview).catch(function (error) {});
             },
             loadReview(response) {
+                console.log(JSON.stringify(response.data));
                 this.loading = false;
                 this.loadAll();
                 if (this.isReviewed) {

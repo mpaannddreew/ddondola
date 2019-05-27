@@ -41,7 +41,7 @@
                                     <div class="input-group input-group-seamless">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
-                                                <i class="material-icons">shop</i>
+                                                <i class="material-icons">shop_two</i>
                                             </div>
                                         </div>
                                         <input type="text" class="form-control" id="name" v-model="name">
@@ -113,6 +113,8 @@
                 shopCategory: '',
                 loading: false,
                 error: false,
+                count: 50,
+                page: 1
             }
         },
         methods: {
@@ -154,11 +156,12 @@
             },
             fetchCategories() {
                 axios.post(graphql.api, {
-                    query: graphql.categories
+                    query: graphql.categories,
+                    variables: {count: this.count, page: this.page}
                 }).then(this.loadCategories).catch(function (error) {});
             },
             loadCategories(response) {
-                this.categories = response.data.data.categories;
+                this.categories = response.data.data.categories.data;
             },
             clearError(id) {
                 $('#' + id).removeClass('is-invalid');

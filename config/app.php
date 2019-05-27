@@ -221,7 +221,7 @@ return [
         'Activity' => \Activity\Facades\ActivityManager::class,
         'Bank' => \Bank\Facades\Bank::class,
         'Payment' => \Teller\Facades\Payment::class,
-        'Messenger' => \Messenger\Facades\Messenger::class
+        'Messenger' => \Messenger\Facades\Messenger::class,
     ],
 
 ];

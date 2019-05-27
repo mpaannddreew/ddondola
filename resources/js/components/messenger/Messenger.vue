@@ -12,14 +12,6 @@
     export default {
         name: "Messenger",
         components: {ChatList},
-        mounted() {
-
-        },
-        data() {
-            return {
-
-            }
-        },
         props: {
             homeUrl: {
                 type: String,
@@ -32,12 +24,6 @@
                 type: String,
                 required: true
             }
-        },
-        computed: {
-
-        },
-        methods: {
-
         }
     }
 </script>

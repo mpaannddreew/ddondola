@@ -11,20 +11,20 @@
             <img :src="imageUrl" alt="product" class="img-fluid">
             <div class="hover-overlay d-flex align-items-center justify-content-center">
                 <div class="CTA d-flex align-items-center justify-content-center">
-                    <a href="javascript:void(0)" @click="cartAction" :class="{disabled: cartStatusLoading || soldOut}">
+                    <a href="javascript:void(0)" @click="cartAction" :class="{disabled: cartStatusLoading || soldOut || !auth}" v-if="auth">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
                     <a :href="productUrl" class="visit-product active">
                         <i class="fa fa-search"></i> View
                     </a>
-                    <a href="javascript:void(0)" @click="favouritesAction" :class="{disabled: favoriteStatusLoading}">
+                    <a href="javascript:void(0)" @click="favouritesAction" :class="{disabled: favoriteStatusLoading || !auth}" v-if="auth">
                         <i class="fa fa-heart"></i>
                     </a>
                 </div>
             </div>
         </div>
         <div class="p-4 title">
-            <ul class="list-inline text-warning" v-html="starHtml"></ul>
+            <mini-rating-meter :reviewable="product"></mini-rating-meter>
             <small class="text-muted">{{ product.subcategory.name }}</small>
             <a :href="productUrl">
                 <h3 class="h6 text-uppercase no-margin-bottom m-0 text-ellipsis">{{ product.name }}</h3>
@@ -56,56 +56,29 @@
                 type: Object,
                 required: true
             },
-            url: {
-                type: String,
-                required: true
+            auth: {
+                type: Boolean,
+                required: false,
+                default: true
             }
         },
         computed: {
             productUrl() {
-                return this.url + "/products/" + this.product.code;
+                return "/products/" + this.product.code;
             },
             imageUrl() {
                 return this.product.images[0].url;
             },
             soldOut() {
                 return this.product.quantity === 0;
-            },
-            starHtml() {
-                var stars = "";
-                var split_rating = this.product.averageRating.split(".");
-                var difference = 5 - parseInt(split_rating[0]);
-                for (var i = 1; i <= parseInt(split_rating[0]); i++) {
-                    stars += '<li><i class="fa fa-star pr-1"></i></li>';
-                    if (i === parseInt(split_rating[0]) && parseInt(split_rating[1]) > 0) {
-                        stars += '<li><i class="fa fa-star-half-full pr-1"></i></li>';
-                    }
-
-                    if (i === parseInt(split_rating[0]) && difference > 0) {
-                        var number = difference;
-                        if (parseInt(split_rating[1]) > 0) {
-                            number = difference - 1;
-                        }
-
-                        for (var j = 1; j <= number; j++) {
-                            stars += '<li><i class="fa fa-star-o pr-1"></i></li>';
-                        }
-                    }
-                }
-
-                if (difference === 5) {
-                    for (var j = 1; j <= difference; j++) {
-                        stars += '<li><i class="fa fa-star-o pr-1"></i></li>';
-                    }
-                }
-                stars += '<li>' + this.product.averageRating + '</li>';
-                return stars;
             }
         },
         methods: {
             loadProduct() {
-                let requests = [this.isInCart(), this.isInFavorites()];
-                axios.all(requests).then(axios.spread(this.loadStatus));
+                if (this.auth) {
+                    let requests = [this.isInCart(), this.isInFavorites()];
+                    axios.all(requests).then(axios.spread(this.loadStatus));
+                }
             },
             loadStatus(cartStatus, favoritesStatus) {
                 this.cartStatus(cartStatus);
