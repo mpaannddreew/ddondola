@@ -44,11 +44,11 @@
                                         <td class="product-subtotal" :class="{'border-bottom-0': shop}">{{ product.currencyCode }} {{ product.pivot.sum }}</td>
                                         <td class="row-close close-2">
                                             <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group">
-                                                <a href="javascript:void(0)" class="btn btn-white text-success" v-if="shop">
-                                                    <i class="material-icons">check</i> Confirm Delivery
+                                                <a href="javascript:void(0)" class="btn btn-white text-success">
+                                                    <i class="material-icons">check</i>
                                                 </a>
-                                                <a href="javascript:void(0)" class="btn btn-white text-success" v-else>
-                                                    <i class="material-icons">check</i> Confirm Receipt
+                                                <a href="javascript:void(0)" class="btn btn-white text-danger">
+                                                    <i class="material-icons">clear</i>
                                                 </a>
                                             </div>
                                         </td>

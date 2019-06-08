@@ -2,14 +2,6 @@
 @section('title') {{ Auth::user()->name() }} - @endsection
 @section('name') Account Admin @endsection
 @section('nav-wrapper')
-    <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item">
-            <a class="nav-link " href="{{ route('home') }}">
-                <i class="material-icons">public</i>
-                <span>Home</span>
-            </a>
-        </li>
-    </ul>
     <h6 class="main-sidebar__nav-title">Dashboards</h6>
     <ul class="nav nav--no-borders flex-column">
         <li class="nav-item">

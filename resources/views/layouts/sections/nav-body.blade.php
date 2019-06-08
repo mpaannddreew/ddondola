@@ -1,3 +1,14 @@
+@auth
+<ul class="navbar-nav flex-row ml-auto">
+    <li class="nav-item border-right dropdown notifications border-radius">
+        <a class="nav-link nav-link-icon text-center" href="{{ route('home') }}">
+            <div class="nav-link-icon__wrapper">
+                <i class="material-icons">public</i>
+            </div>
+        </a>
+    </li>
+</ul>
+@endauth
 <search></search>
 <ul class="navbar-nav border-left flex-row border-right ml-auto">
     @section('nav-items')
@@ -7,7 +18,8 @@
             <li is="nav-tray"></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle mr-2" src="{{ Auth::user()->avatar()['url'] }}" alt="User Avatar"> <span class="d-none d-md-inline-block text-white">{{ Auth::user()->first_name }}</span>
+                    <img class="user-avatar rounded-circle mr-2" src="{{ Auth::user()->avatar()['url'] }}" alt="User Avatar" style="border: medium solid #fff;">
+                    <span class="d-none d-md-inline-block text-white">Hi, {{ Auth::user()->first_name }}!</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-small dropdown-menu-right">
                     <a class="dropdown-item" href="{{ route('my.profile') }}"><i class="material-icons">account_circle</i> Profile</a>

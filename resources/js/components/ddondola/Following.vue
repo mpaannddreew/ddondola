@@ -1,6 +1,9 @@
 <template>
     <div>
         <div class="card card-small lo-stats border">
+            <div class="card-header border-bottom">
+                <h5 class="m-0"><i class="material-icons">people_outline</i> Following</h5>
+            </div>
             <table class="table mb-0">
                 <tbody>
                 <template v-if="!loaded || (!hasUsers && loaded)">

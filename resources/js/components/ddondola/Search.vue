@@ -7,7 +7,7 @@
                     <i class="material-icons text-white" v-else>search</i>
                 </div>
             </div>
-            <input style="padding-left: 1.875rem;" class="navbar-search form-control" id="search" type="text" placeholder="Search" aria-label="Search">
+            <input style="padding-left: 1.875rem;" class="navbar-search form-control" id="search" type="text" placeholder="What are you looking for?" aria-label="Search">
         </div>
     </form>
 </template>

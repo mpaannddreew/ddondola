@@ -297,7 +297,7 @@ thead.bg-light tr th {
 .loader {
     border: 3px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 3px solid #d51e76;
+    border-top: 3px solid #ce1d76;
     width: 25px;
     height: 25px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
@@ -443,7 +443,7 @@ b, strong {
 }
 
 .scrollable a:hover h6 {
-    color: #d51e76;
+    color: #ce1d76;
 }
 
 button.btn-accent:hover, a.btn-accent:hover {
@@ -503,7 +503,7 @@ ul.nav.home li a{
 }
 
 ul.nav.home li:hover a, ul.nav.home li.active a{
-    color: #d51e76;
+    color: #ce1d76;
 }
 
 .directory {

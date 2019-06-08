@@ -41,7 +41,8 @@
             "Messenger\\": "extensions/ddondola/messenger/src",
             "Teller\\": "extensions/ddondola/teller/src",
             "Activity\\": "extensions/ddondola/activity/src",
-            "Bank\\": "extensions/ddondola/bank/src"
+            "Bank\\": "extensions/ddondola/bank/src",
+            "Website\\": "extensions/ddondola/website/src"
         }
     },
     "autoload-dev": {

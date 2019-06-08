@@ -1936,6 +1936,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Feed",
@@ -2491,7 +2494,6 @@ __webpack_require__.r(__webpack_exports__);
       this.addReviewRequest().then(this.loadReview).catch(function (error) {});
     },
     loadReview: function loadReview(response) {
-      console.log(JSON.stringify(response.data));
       this.loading = false;
       this.loadAll();
 
@@ -2924,6 +2926,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Followers",
@@ -3023,6 +3028,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_UserRow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users/UserRow */ "./resources/js/components/ddondola/users/UserRow.vue");
+//
+//
+//
 //
 //
 //
@@ -3244,6 +3252,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Notification */ "./resources/js/components/ddondola/Notification.vue");
+//
+//
+//
 //
 //
 //
@@ -5301,8 +5312,8 @@ __webpack_require__.r(__webpack_exports__);
       return this.homeUrl + "/" + this.contact.code;
     },
     social: function social() {
-      if (this.contact.followerCount && this.contact.followingCount) return '<span class="text-light">' + this.contact.followerCount + ' Follower(s) | ' + this.contact.followingCount + ' Following</span>';
-      if (this.contact.likes) return '<span class="text-light">' + this.contact.category.name + ' | ' + this.contact.likes + ' Like(s) | ' + this.contact.reviewCount + ' Review(s)</span>';
+      if (typeof this.contact.followerCount !== 'undefined' && typeof this.contact.followingCount !== 'undefined') return '<span class="text-light">' + this.contact.followerCount + ' Follower(s) | ' + this.contact.followingCount + ' Following</span>';
+      return '<span class="text-light">' + this.contact.category.name + ' | ' + this.contact.likes + ' Like(s) | ' + this.contact.reviewCount + ' Review(s)</span>';
     }
   },
   methods: {
@@ -9070,10 +9081,6 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     shop: {
       type: Object,
-      required: true
-    },
-    url: {
-      type: String,
       required: true
     },
     myMessengerUrl: {
@@ -75566,63 +75573,63 @@ var render = function() {
   return _c(
     "div",
     [
-      !_vm.loaded || (!_vm.hasActivities && _vm.loaded)
-        ? _c("div", { staticClass: "card card-small border" }, [
-            _c("div", { staticClass: "card-body p-0" }, [
-              !_vm.loaded
-                ? _c(
-                    "div",
-                    { staticClass: "p-4", attrs: { align: "center" } },
-                    [
-                      _c("div", { staticClass: "loader" }),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "m-0" }, [
-                        _vm._v("Loading " + _vm._s(_vm.loadingActivity) + "...")
-                      ])
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.hasActivities && _vm.loaded
-                ? _c(
-                    "div",
-                    { staticClass: "p-4", attrs: { align: "center" } },
-                    [
-                      _vm.admin
-                        ? _c("h4", { staticClass: "m-0" }, [_vm._v("Hi!")])
-                        : _c("h4", { staticClass: "m-0" }, [
-                            _c("i", { staticClass: "material-icons" }, [
-                              _vm._v("error")
-                            ])
-                          ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "m-0" }, [
-                        _vm._v(_vm._s(_vm.noActivityMessage))
-                      ])
-                    ]
-                  )
-                : _vm._e()
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.hasActivities && _vm.loaded
-        ? _c("div", { staticClass: "card card-small border" }, [
-            _c(
-              "div",
-              { staticClass: "card-body p-0" },
-              _vm._l(_vm.activities, function(activity, indx) {
-                return _c("activity", {
-                  key: indx,
-                  attrs: { activity: activity }
+      _c("div", { staticClass: "card card-small border" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-body p-0" },
+          [
+            !_vm.loaded || (!_vm.hasActivities && _vm.loaded)
+              ? [
+                  !_vm.loaded
+                    ? _c(
+                        "div",
+                        { staticClass: "p-4", attrs: { align: "center" } },
+                        [
+                          _c("div", { staticClass: "loader" }),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "m-0" }, [
+                            _vm._v(
+                              "Loading " + _vm._s(_vm.loadingActivity) + "..."
+                            )
+                          ])
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.hasActivities && _vm.loaded
+                    ? _c(
+                        "div",
+                        { staticClass: "p-4", attrs: { align: "center" } },
+                        [
+                          _vm.admin
+                            ? _c("h4", { staticClass: "m-0" }, [_vm._v("Hi!")])
+                            : _c("h4", { staticClass: "m-0" }, [
+                                _c("i", { staticClass: "material-icons" }, [
+                                  _vm._v("error")
+                                ])
+                              ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "m-0" }, [
+                            _vm._v(_vm._s(_vm.noActivityMessage))
+                          ])
+                        ]
+                      )
+                    : _vm._e()
+                ]
+              : _vm._l(_vm.activities, function(activity, indx) {
+                  return _c("activity", {
+                    key: indx,
+                    attrs: { activity: activity }
+                  })
                 })
-              }),
-              1
-            )
-          ])
-        : _vm._e(),
+          ],
+          2
+        )
+      ]),
       _vm._v(" "),
-      _vm.loadingMore ? [_vm._m(0)] : _vm._e(),
+      _vm.loadingMore ? [_vm._m(1)] : _vm._e(),
       _vm._v(" "),
       !_vm.loadingMore && _vm.loaded
         ? _c("a", {
@@ -75637,6 +75644,17 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header border-bottom" }, [
+      _c("h5", { staticClass: "m-0" }, [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("event")]),
+        _vm._v(" Events")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -76858,6 +76876,8 @@ var render = function() {
     "div",
     [
       _c("div", { staticClass: "card card-small lo-stats border" }, [
+        _vm._m(0),
+        _vm._v(" "),
         _c("table", { staticClass: "table mb-0" }, [
           _c(
             "tbody",
@@ -76881,7 +76901,7 @@ var render = function() {
                           _vm._v(" "),
                           !_vm.hasUsers && _vm.loaded
                             ? _c("div", { attrs: { align: "center" } }, [
-                                _vm._m(0),
+                                _vm._m(1),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "m-0" }, [
                                   _vm._v("No followers yet!")
@@ -76928,6 +76948,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header border-bottom" }, [
+      _c("h5", { staticClass: "m-0" }, [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("people")]),
+        _vm._v(" Followers")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("h4", { staticClass: "m-0" }, [
       _c("i", { staticClass: "material-icons" }, [_vm._v("error")])
     ])
@@ -76958,6 +76989,8 @@ var render = function() {
     "div",
     [
       _c("div", { staticClass: "card card-small lo-stats border" }, [
+        _vm._m(0),
+        _vm._v(" "),
         _c("table", { staticClass: "table mb-0" }, [
           _c(
             "tbody",
@@ -76981,7 +77014,7 @@ var render = function() {
                           _vm._v(" "),
                           !_vm.hasUsers && _vm.loaded
                             ? _c("div", { attrs: { align: "center" } }, [
-                                _vm._m(0),
+                                _vm._m(1),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "m-0" }, [
                                   _vm._v("No following yet!")
@@ -77024,6 +77057,17 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header border-bottom" }, [
+      _c("h5", { staticClass: "m-0" }, [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("people_outline")]),
+        _vm._v(" Following")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -77267,6 +77311,8 @@ var render = function() {
           staticStyle: { "border-bottom": "none !important" }
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
             "div",
             {
@@ -77293,7 +77339,7 @@ var render = function() {
                     "div",
                     { staticClass: "p-4", attrs: { align: "center" } },
                     [
-                      _vm._m(0),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("p", { staticClass: "m-0" }, [
                         _vm._v("You have not received any notifications yet!")
@@ -77349,10 +77395,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h4", { staticClass: "m-0" }, [
-      _c("i", { staticClass: "material-icons" }, [
-        _vm._v("notifications_active")
+    return _c("div", { staticClass: "card-header border-bottom" }, [
+      _c("h5", { staticClass: "m-0" }, [
+        _c("i", { staticClass: "material-icons" }, [
+          _vm._v("notifications_active")
+        ]),
+        _vm._v(" Notifications")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", { staticClass: "m-0" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("error")])
     ])
   }
 ]
@@ -77571,7 +77628,7 @@ var render = function() {
           attrs: {
             id: "search",
             type: "text",
-            placeholder: "Search",
+            placeholder: "What are you looking for?",
             "aria-label": "Search"
           }
         })
@@ -89784,69 +89841,7 @@ var render = function() {
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      { staticClass: "row-close close-2" },
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0",
-                                            attrs: { role: "group" }
-                                          },
-                                          [
-                                            _vm.shop
-                                              ? _c(
-                                                  "a",
-                                                  {
-                                                    staticClass:
-                                                      "btn btn-white text-success",
-                                                    attrs: {
-                                                      href: "javascript:void(0)"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "i",
-                                                      {
-                                                        staticClass:
-                                                          "material-icons"
-                                                      },
-                                                      [_vm._v("check")]
-                                                    ),
-                                                    _vm._v(
-                                                      " Confirm Delivery\n                                            "
-                                                    )
-                                                  ]
-                                                )
-                                              : _c(
-                                                  "a",
-                                                  {
-                                                    staticClass:
-                                                      "btn btn-white text-success",
-                                                    attrs: {
-                                                      href: "javascript:void(0)"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "i",
-                                                      {
-                                                        staticClass:
-                                                          "material-icons"
-                                                      },
-                                                      [_vm._v("check")]
-                                                    ),
-                                                    _vm._v(
-                                                      " Confirm Receipt\n                                            "
-                                                    )
-                                                  ]
-                                                )
-                                          ]
-                                        )
-                                      ]
-                                    )
+                                    _vm._m(2, true)
                                   ]
                                 )
                               })
@@ -89940,6 +89935,40 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("th", { staticClass: "row-title" }, [_c("p")])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "row-close close-2" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0",
+          attrs: { role: "group" }
+        },
+        [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-white text-success",
+              attrs: { href: "javascript:void(0)" }
+            },
+            [_c("i", { staticClass: "material-icons" }, [_vm._v("check")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-white text-danger",
+              attrs: { href: "javascript:void(0)" }
+            },
+            [_c("i", { staticClass: "material-icons" }, [_vm._v("clear")])]
+          )
         ]
       )
     ])

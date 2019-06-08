@@ -216,7 +216,6 @@
                 this.addReviewRequest().then(this.loadReview).catch(function (error) {});
             },
             loadReview(response) {
-                console.log(JSON.stringify(response.data));
                 this.loading = false;
                 this.loadAll();
                 if (this.isReviewed) {

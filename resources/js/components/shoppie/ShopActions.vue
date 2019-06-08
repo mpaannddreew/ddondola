@@ -27,10 +27,6 @@
                 type: Object,
                 required: true
             },
-            url: {
-                type: String,
-                required: true
-            },
             myMessengerUrl: {
                 type: String,
                 required: true

@@ -13,10 +13,6 @@
 
 use FannyPack\LaracombeeMultiDB\MultiDBFacade;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
 Route::get('test', function () {
 //    $recommendations = MultiDBFacade::db('shop-mine')->recommendTo(\Illuminate\Support\Facades\Auth::user(), 10)->wait();
 //    return response()->json(['success' => $recommendations['recomms']]);

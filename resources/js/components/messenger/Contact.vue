@@ -43,16 +43,15 @@
                 return this.homeUrl + "/" + this.contact.code;
             },
             social() {
-                if (this.contact.followerCount && this.contact.followingCount)
+                if (typeof this.contact.followerCount !== 'undefined' && typeof this.contact.followingCount !== 'undefined')
                     return '<span class="text-light">' + this.contact.followerCount + ' Follower(s) | ' + this.contact.followingCount + ' Following</span>';
 
-                if (this.contact.likes)
-                    return '<span class="text-light">' + this.contact.category.name + ' | ' + this.contact.likes + ' Like(s) | ' + this.contact.reviewCount + ' Review(s)</span>';
+                return '<span class="text-light">' + this.contact.category.name + ' | ' + this.contact.likes + ' Like(s) | ' + this.contact.reviewCount + ' Review(s)</span>';
             }
         },
         methods: {
             transitionTo() {
-                this.$router.push(this.route)
+                this.$router.push(this.route);
             }
         }
     }
