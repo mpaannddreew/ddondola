@@ -2,16 +2,16 @@
     <div>
         <div class="card card-small border">
             <div class="card-header border-bottom">
-                <h5 class="m-0"><i class="material-icons">local_mall</i> Product Recommendations</h5>
+                <h5 class="m-0"><i class="material-icons">local_mall</i> Suggestions</h5>
             </div>
             <div class="card-body p-0">
                 <div align="center" class="p-4" v-if="!loaded">
                     <div class="loader"></div>
-                    <p class="m-0">Loading recommendations...</p>
+                    <p class="m-0">Loading suggestions...</p>
                 </div>
                 <div align="center" class="p-4" v-if="!showProducts && loaded">
                     <h4 class="m-0"><i class="material-icons">error</i></h4>
-                    <p class="m-0">No recommendations available</p>
+                    <p class="m-0">No suggestions available</p>
                 </div>
                 <template v-if="showProducts && loaded">
                     <feed-product v-for="(product, indx) in products" :product="product" :key="indx"></feed-product>

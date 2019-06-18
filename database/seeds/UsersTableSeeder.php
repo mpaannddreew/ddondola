@@ -35,7 +35,9 @@ class UsersTableSeeder extends Seeder
                 'last_name' => 'Mpande',
                 'email' => 'andrew@ddondola.com',
                 'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => bcrypt('secret')
+                'password' => bcrypt('secret'),
+                'is_staff' => 1,
+                'is_superuser' => 1
             ],
             [
                 'first_name' => 'Faridah',

@@ -2,7 +2,7 @@
     <div>
         <div class="card card-small border">
             <div class="card-header border-bottom">
-                <h5 class="m-0"><i class="material-icons">event</i> Events</h5>
+                <h5 class="m-0">Activity</h5>
             </div>
             <div class="card-body p-0">
                 <template v-if="!loaded || (!hasActivities && loaded)">

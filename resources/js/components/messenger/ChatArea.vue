@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="chat-area" v-if="!loaded || (loaded && !conversation)">
-            <div class="card card-small h-100" style="border-radius: 0; box-shadow: none;">
+        <div class="chat-area">
+            <div class="card card-small h-100" style="border-radius: 0; box-shadow: none;" v-if="!loaded || (loaded && !conversation)">
                 <div class="card-body">
                     <div class="center-xy" v-if="!loaded">
                         <div align="center">
@@ -22,9 +22,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="chat-area" v-if="loaded && conversation">
-            <div class="card card-small h-100" style="border-radius: 0; box-shadow: none;">
+            <div class="card card-small h-100" style="border-radius: 0; box-shadow: none;" v-if="loaded && conversation">
                 <div class="card-header border-bottom d-flex">
                     <div class="contact-cont">
                         <div class="pull-left user-img m-r-10">

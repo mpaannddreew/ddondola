@@ -547,6 +547,11 @@ ul.nav.home li:hover a, ul.nav.home li.active a{
     background-color: #ffffff;
 }
 
+.directory .directory-list .card .input-group.input-group-seamless > input.form-control,
+form.ddondola-search .input-group.input-group-seamless > input.form-control {
+    border-radius: 500px !important;
+}
+
 .directory .directory-area .card .card-body {
     background-color: #f5f6f8;;
 }
@@ -612,4 +617,23 @@ ul.nav.home li:hover a, ul.nav.home li.active a{
         margin-left: .5rem!important;
         margin-right: .5rem!important;
     }
+}
+
+.directory.orders, .directory.admin {
+    height: calc(99.9vh - 3.75rem - 1px) !important;
+}
+
+.directory.orders .card, .directory.admin .card {
+    height: calc(99.9vh - 3.75rem - 1px) !important;
+}
+
+.directory.admin .directory-list .card .card-header {
+    padding-top: 0.552rem;
+    padding-bottom: 0.525rem;
+}
+
+.carousel {
+
+    box-shadow: none !important;
+
 }

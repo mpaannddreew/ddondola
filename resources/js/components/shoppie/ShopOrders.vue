@@ -1,50 +1,23 @@
 <template>
-    <div>
-        <div class="mb-2">
-            <div class="row no-gutters">
-                <div class="col-lg-6 mb-2 mb-lg-0">
-                    <form action="POST">
-                        <div class="input-group input-group-seamless">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="material-icons"></i>
-                                </div>
-                            </div>
-                            <input type="text" class="form-control form-control-sm" placeholder="Filter by buyer">
+    <div class="directory-list close-directory-list">
+        <div class="card card-small h-100 border-right">
+            <div class="card-header border-bottom border-top-radius-0 bg-light" style="padding-top: 0.525rem; padding-bottom: 0.525rem;">
+                <div class="input-group input-group-seamless">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fa fa-search"></i>
                         </div>
-                    </form>
-                </div>
-                <div class="col d-flex align-items-center">
-                    <div class="d-flex ml-lg-auto my-auto">
-                        <form action="POST">
-                            <div class="input-daterange input-group input-group-md w-100">
-                                <input type="text" class="input-sm form-control form-control-sm" name="start" placeholder="Start Date">
-                                <input type="text" class="input-sm form-control form-control-sm" name="end" placeholder="End Date">
-                                <span class="input-group-append">
-                                <span class="input-group-text">
-                                      <i class="material-icons">date_range</i>
-                                </span>
-                            </span>
-                            </div>
-                        </form>
                     </div>
+                    <input class="form-control" type="text" placeholder="Filter orders" aria-label="Search">
                 </div>
             </div>
-        </div>
-        <div class="card card-small lo-stats h-100 border mt-2">
-            <table class="table mb-0">
-                <thead class="py-2 bg-light text-semibold border-bottom">
-                <tr>
-                    <th>Buyer</th>
-                    <th></th>
-                    <th class="text-center">Email</th>
-                    <th class="text-right"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <template v-if="!loaded || (!hasOrders && loaded)">
-                    <tr>
-                        <td colspan="4">
+            <div class="card-body h-100">
+                <div class="flat-card is-auto list-card">
+                    <!--<div class="list-card-header">-->
+                        <!--Orders List-->
+                    <!--</div>-->
+                    <template v-if="!loaded || (!hasOrders && loaded)">
+                        <div class="p-4">
                             <div align="center" v-if="!loaded">
                                 <div class="loader"></div>
                                 <p class="m-0">Loading orders...</p>
@@ -53,26 +26,28 @@
                                 <h4 class="m-0"><i class="material-icons">error</i></h4>
                                 <p class="m-0">You have not received any orders yet!</p>
                             </div>
-                        </td>
-                    </tr>
-                </template>
-                <template v-else-if="hasOrders && loaded">
-                    <template v-for="(order, indx) in orders">
-                        <tr is="shop-order" :order="order" :shop="shop" :key="indx"></tr>
+                        </div>
                     </template>
-                </template>
-                </tbody>
-            </table>
+                    <template v-else-if="hasOrders && loaded">
+                        <!-- List -->
+                        <ul class="p-0">
+                            <!-- List item -->
+                            <template v-for="(order, indx) in orders">
+                                <li is="shop-order" :order="order" :key="indx"></li>
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+            </div>
         </div>
-        <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
     </div>
 </template>
 
 <script>
-    import MyOrder from "./orders/ShopOrder";
+    import ShopOrder from "./orders/ShopOrder";
     export default {
         name: "ShopOrders",
-        components: {MyOrder},
+        components: {ShopOrder},
         mounted() {
             this.fetchOrders();
         },
@@ -82,11 +57,6 @@
                 page: 1,
                 loaded: false,
                 paginatorInfo: null,
-            }
-        },
-        props: {
-            shop: {
-                type: String
             }
         },
         computed: {
@@ -99,7 +69,7 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopOrders,
-                    variables: {shop: this.shop, page: this.page, count: graphql.rowCount}
+                    variables: {shop: this.$route.params.shop, page: this.page, count: graphql.rowCount}
                 }).then(this.loadOrders).catch(function (error) {});
             },
             loadOrders(response) {

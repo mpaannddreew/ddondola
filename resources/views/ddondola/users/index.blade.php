@@ -8,7 +8,7 @@
                 @include('ddondola.sections.shortcuts')
             </div>
             <div class="col-md-10 px-1">
-                <users :me="{{ Auth::user() }}"></users>
+                <people :me="{{ Auth::user() }}"></people>
             </div>
         </div>
     </div>

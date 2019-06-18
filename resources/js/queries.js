@@ -29,6 +29,27 @@ window.graphql = {
             name
           }
         }`,
+    shopByCode: `query shop($shop: String!){
+          shop:shopByCode(shop: $shop) {
+            id
+            code
+            name
+            productCount
+            likes
+            reviewCount
+            averageRating
+            currencyCode
+            category {
+              name
+            }
+            avatar{
+              url
+            }
+            coverPicture {
+              url
+            }
+          }
+        }`,
     shopCategoriesAndBrands: `query shopCategoriesAndBrands($id: ID! $count: Int! $page: Int!) {
           shop(id: $id) {
             subCategoriesCount
@@ -56,8 +77,8 @@ window.graphql = {
             }
           }
         }`,
-    shopProductCategories: `query productCategories($id: ID! $count: Int! $page: Int!){
-          shop(id: $id) {
+    shopProductCategories: `query productCategories($shop: String! $count: Int! $page: Int!){
+          shop:shopByCode(shop: $shop) {
             categories(count: $count page: $page) {
                 data {
                     id
@@ -79,8 +100,8 @@ window.graphql = {
             }
           }
         }`,
-    shopProductBrands: `query productBrands($id: ID! $count: Int! $page: Int!){
-          shop(id: $id) {
+    shopProductBrands: `query productBrands($shop: String! $count: Int! $page: Int!){
+          shop:shopByCode(shop: $shop) {
             brands(count: $count page: $page) {
                 data {
                     id
@@ -101,23 +122,23 @@ window.graphql = {
             }
           }
         }`,
-    createBrand: `mutation createBrand($shopId: ID! $brand: ShopResource!) {
-          brand:createBrand(shopId: $shopId brand: $brand) {
+    createBrand: `mutation createBrand($shop: String! $brand: ShopResource!) {
+          brand:createBrand(shop: $shop brand: $brand) {
             id
             name
             productCount
           }
         }`,
-    createCategory: `mutation createCategory($shopId: ID! $category: ShopResource!) {
-          category:createCategory(shopId: $shopId category: $category) {
+    createCategory: `mutation createCategory($shop: String! $category: ShopResource!) {
+          category:createCategory(shop: $shop category: $category) {
             id
             name
             productCount
             categoryCount
           }
         }`,
-    shopProductSubCategories: `query productSubCategories($id: ID! $count: Int! $page: Int!){
-          shop(id: $id) {
+    shopProductSubCategories: `query productSubCategories($shop: String! $count: Int! $page: Int!){
+          shop:shopByCode(shop: $shop) {
                 categories:subcategories(count: $count page: $page) {
                     data {
                         id
@@ -151,8 +172,8 @@ window.graphql = {
             }
           }
         }`,
-    shopProducts: `query shopProducts($shopId: ID! $filters: ProductFilter $count: Int! $page: Int!) {
-          shop(id: $shopId) {
+    shopProducts: `query shopProducts($shop: String! $filters: ProductFilter $count: Int! $page: Int!) {
+          shop:shopByCode(shop: $shop) {
             products(filters: $filters count: $count page: $page) {
               data {
                 id
@@ -490,12 +511,29 @@ window.graphql = {
     removeFromFavorites: `mutation removeFromFavorites($id: ID!) {
           isFavorite:removeFromFavorites(id: $id)
         }`,
+    userByCode: `query user($user: String!) {
+          user:userByCode(user: $user) {
+            id
+            code
+            name
+            email
+            avatar{
+                url
+            }
+            coverPicture {
+                url
+            }
+            followerCount
+            followingCount
+          }
+        }`,
     users: `query users($count: Int! $page: Int!) {
           users(count: $count page: $page) {
             data {
               id
               code
               name
+              email
               avatar{
                 url
               }
@@ -1392,6 +1430,15 @@ window.graphql = {
           order(order: $order) {
             sum
             currencyCode
+            by {
+              code
+              name
+              email
+              avatar {
+                url
+              }
+            }
+            created_at
             products(shop: $shop page: $page count: $count) {
               data {
                 id

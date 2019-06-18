@@ -20,7 +20,7 @@
 
 <script>
     export default {
-        name: "UserRow",
+        name: "Person",
         mounted() {
             this.getCurrentState();
         },

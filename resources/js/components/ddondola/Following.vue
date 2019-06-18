@@ -21,7 +21,7 @@
                     </tr>
                 </template>
                 <template v-else-if="hasUsers && loaded">
-                    <tr is="user-row" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :auth="auth" :indx="indx"></tr>
+                    <tr is="person" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :auth="auth" :indx="indx"></tr>
                 </template>
                 </tbody>
             </table>
@@ -31,10 +31,10 @@
 </template>
 
 <script>
-    import UserRow from "./users/UserRow";
+    import Person from "./users/Person";
     export default {
         name: "Followers",
-        components: {UserRow},
+        components: {Person},
         mounted() {
             this.fetchUsers();
         },

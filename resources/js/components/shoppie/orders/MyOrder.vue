@@ -1,20 +1,13 @@
 <template>
-    <tr>
-        <td class="lo-stats__image">
-            <img class="border rounded" :src="thumbnail">
-        </td>
-        <td class="lo-stats__order-details">
-            <span class="text-uppercase">{{ order.code }}</span>
-            <span>{{ humanize(order.created_at) }}</span>
-        </td>
-        <td class="lo-stats__items text-center">{{ order.productCount }}</td>
-        <td class="lo-stats__total text-center text-success">{{ order.currencyCode }} {{ order.sum }}</td>
-        <td class="lo-stats__actions">
-            <div class="btn-group d-table ml-auto" role="group">
-                <a href="javascript:void(0)" class="btn btn-sm btn-white" @click="transitionTo"><i class="fa fa-link"></i> View Order</a>
-            </div>
-        </td>
-    </tr>
+    <li class="is-active" data-order="46895" @click="transitionTo">
+        <div>
+            <span class="text-uppercase text-accent mb-1" style="display: block">Order-{{ order.code }}</span>
+            <span class="text-muted" style="display: block">
+                <i class="material-icons">date_range</i> {{ order.created_at|time }}
+            </span>
+        </div>
+        <span class="order-indicator is-progress"></span>
+    </li>
 </template>
 
 <script>
@@ -44,11 +37,19 @@
             }
         },
         methods: {
-            humanize(date) {
-                return Moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
-            },
             transitionTo() {
                 this.$router.push(this.route);
+            }
+        },
+        filters: {
+            time(date) {
+                if (Moment().isSame(Moment(date), 'd'))
+                    return Moment(date).format("h:mm a");
+
+                if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
+                    return 'Yesterday';
+
+                return Moment(date).format("MM/DD/YY");
             }
         }
     }

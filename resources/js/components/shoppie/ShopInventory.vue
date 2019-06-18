@@ -3,7 +3,7 @@
         <div class="mb-2">
             <div class="row no-gutters">
                 <div class="col-lg-6 mb-2 mb-lg-0">
-                    <form action="POST">
+                    <form class="ddondola-search">
                         <div class="input-group input-group-seamless">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -63,7 +63,7 @@
                     </tr>
                 </template>
                 <template v-else-if="showProducts && loaded">
-                    <tr is="inventory-row" v-for="(product, indx) in products" :key="indx" :product="product" :url="url"></tr>
+                    <tr is="inventory-row" v-for="(product, indx) in products" :key="indx" :product="product"></tr>
                 </template>
                 </tbody>
             </table>
@@ -95,16 +95,8 @@
             }
         },
         props: {
-            newProductUrl: {
-                type: String,
-                required: true
-            },
-            url: {
-                type: String,
-                required: true
-            },
             shop: {
-                type: Object,
+                type: String,
                 required: true
             }
         },
@@ -114,7 +106,7 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopProducts,
-                    variables: {shopId: this.shop.id, filters: {ordering: this.ordering}, count: graphql.rowCount, page: this.page}
+                    variables: {shop: this.shop, filters: {ordering: this.ordering}, count: graphql.rowCount, page: this.page}
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {

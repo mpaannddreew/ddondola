@@ -4,14 +4,16 @@
             <div class="mb-2">
                 <div class="row no-gutters">
                     <div class="col-12 col-sm-6 mb-2 mb-lg-0">
-                        <div class="input-group input-group-seamless">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="material-icons"></i>
+                        <form class="ddondola-search">
+                            <div class="input-group input-group-seamless">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="material-icons"></i>
+                                    </div>
                                 </div>
+                                <input type="text" class="form-control form-control-sm" placeholder="Filter categories" id="search_categories">
                             </div>
-                            <input type="text" class="form-control form-control-sm" placeholder="Filter categories" id="search_categories">
-                        </div>
+                        </form>
                     </div>
                     <div class="col-12 col-sm-6 d-flex align-items-center">
                         <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
@@ -115,7 +117,7 @@
         },
         props: {
             shop: {
-                type: Object,
+                type: String,
                 required: true
             }
         },
@@ -125,7 +127,7 @@
                 this.categories = [];
                 axios.post(graphql.api, {
                     query: graphql.shopProductCategories,
-                    variables: {id: this.shop.id, count: graphql.rowCount, page: this.page}
+                    variables: {shop: this.shop, count: graphql.rowCount, page: this.page}
                 }).then(this.loadData).catch(function () {});
             },
             loadData(response) {
@@ -165,7 +167,7 @@
                 axios.post(graphql.api, {
                     query: graphql.createCategory,
                     variables: {
-                        shopId: this.shop.id,
+                        shop: this.shop,
                         category: {
                             name: this.name,
                             description: this.description,

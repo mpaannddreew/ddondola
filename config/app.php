@@ -168,8 +168,7 @@ return [
         Activity\ActivityServiceProvider::class,
         Bank\BankServiceProvider::class,
         Teller\TellerServiceProvider::class,
-        Website\WebsiteServiceProvider::class
-
+        Website\WebsiteServiceProvider::class,
     ],
 
     /*

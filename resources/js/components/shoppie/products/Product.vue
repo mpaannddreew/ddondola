@@ -1,38 +1,49 @@
 <template>
     <div class="card product is-gray border">
-        <div class="image d-flex align-items-center justify-content-center border-bottom">
-            <div class="ribbon ribbon-danger text-uppercase" v-if="soldOut">Sold Out</div>
-            <div class="ribbon ribbon-info text-uppercase" v-else-if="!soldOut && product.discount">-{{ product.discount }}%</div>
-            <div class="ribbon ribbon-warning text-uppercase" v-if="inCart || isFavorite">
-                <i class="fa fa-shopping-cart" v-if="inCart"></i>
-                <template v-if="inCart && isFavorite"> | </template>
-                <i class="fa fa-heart" v-if="isFavorite"></i>
-            </div>
-            <img :src="imageUrl" alt="product" class="img-fluid">
-            <div class="hover-overlay d-flex align-items-center justify-content-center">
-                <div class="CTA d-flex align-items-center justify-content-center">
-                    <a href="javascript:void(0)" @click="cartAction" :class="{disabled: cartStatusLoading || soldOut || !auth}" v-if="auth">
-                        <i class="fa fa-shopping-cart"></i>
-                    </a>
-                    <a :href="productUrl" class="visit-product active">
-                        <i class="fa fa-search"></i> View
-                    </a>
-                    <a href="javascript:void(0)" @click="favouritesAction" :class="{disabled: favoriteStatusLoading || !auth}" v-if="auth">
-                        <i class="fa fa-heart"></i>
-                    </a>
+        <div :id="carouselId" class="main-slide carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="/images/product/9.jpg" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="/images/product/9.jpg" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="/images/product/9.jpg" alt="Third slide">
                 </div>
             </div>
+            <a class="carousel-control-prev" :href="'#' + carouselId" role="button" data-slide="prev">
+                <span class="carousel-control" aria-hidden="true"><i class="fa fa-chevron-left" data-ripple-color="#F0F0F0"></i></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" :href="'#' + carouselId" role="button" data-slide="next">
+                <span class="carousel-control" aria-hidden="true"><i class="fa fa-chevron-right" data-ripple-color="#F0F0F0"></i></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
         <div class="p-4 title">
             <mini-rating-meter :reviewable="product"></mini-rating-meter>
-            <small class="text-muted">{{ product.subcategory.name }}</small>
             <a :href="productUrl">
-                <h3 class="h6 text-uppercase no-margin-bottom m-0 text-ellipsis">{{ product.name }}</h3>
+                <h3 class="h6 no-margin-bottom m-0 text-ellipsis">{{ product.name }}</h3>
             </a>
-            <ul class="price list-inline no-margin">
-                <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice }}</li>
-                <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price }}</li>
-            </ul>
+            <div class="d-flex mt-2">
+                <ul class="price list-inline no-margin my-auto">
+                    <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice }}</li>
+                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price }}</li>
+                </ul>
+                <div class="hover-overlay d-flex align-items-center justify-content-center ml-auto" style="border-radius: 0 !important;" v-if="auth">
+                    <div class="CTA d-flex align-items-center justify-content-center">
+                        <a class="border-radius" href="javascript:void(0)" @click="cartAction"
+                           :class="{disabled: cartStatusLoading || soldOut, 'border-primary text-primary': inCart}">
+                            <i class="fa fa-shopping-cart" :class="{'text-primary': inCart}"></i>
+                        </a>
+                        <a href="javascript:void(0)" @click="favouritesAction"
+                           :class="{disabled: favoriteStatusLoading, 'border-primary text-primary': isFavorite}" class="border-radius ml-1">
+                            <i class="fa fa-heart" :class="{'text-primary': isFavorite}"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -71,6 +82,9 @@
             },
             soldOut() {
                 return this.product.quantity === 0;
+            },
+            carouselId() {
+                return 'main-slide-' + this.product.id;
             }
         },
         methods: {

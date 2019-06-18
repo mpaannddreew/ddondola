@@ -36,29 +36,36 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import ChatArea from './components/messenger/ChatArea.vue';
-import ChatAreaEmpty from './components/messenger/ChatAreaEmpty.vue';
-import ShopDirectoryArea from './components/shoppie/ShopDirectoryArea.vue';
-import ProductDirectoryArea from './components/shoppie/ProductDirectoryArea.vue';
-import MyOrders from './components/shoppie/MyOrders.vue';
-import OrderDetails from './components/shoppie/orders/OrderDetails.vue';
-import ShopOrders from './components/shoppie/ShopOrders.vue';
+import ChatArea from './components/messenger/ChatArea';
+import ChatAreaEmpty from './components/messenger/ChatAreaEmpty';
+import ShopDirectoryArea from './components/shoppie/ShopDirectoryArea';
+import ProductDirectoryArea from './components/shoppie/ProductDirectoryArea';
+import OrderDetailsEmpty from './components/shoppie/orders/OrderDetailsEmpty';
+import OrderDetails from './components/shoppie/orders/OrderDetails';
+import UserDetailsEmpty from './components/ddondola/admin/UserAdminEmpty';
+import UsersDetails from './components/ddondola/admin/UserAdmin';
+import ShopAdminEmpty from './components/shoppie/admin/ShopAdminEmpty';
+import ShopAdmin from './components/shoppie/admin/ShopAdmin';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {path: '/me/messenger', component: ChatAreaEmpty},
         {path: '/me/messenger/:participant', component: ChatArea, props: true},
-        {path: '/me/orders', component: MyOrders},
+        {path: '/me/orders', component: OrderDetailsEmpty},
         {path: '/me/orders/:order', component: OrderDetails, props: true},
         {path: '/shops/:initiator/messenger', component: ChatAreaEmpty, props: true},
         {path: '/shops/:initiator/messenger/:participant', component: ChatArea, props: true},
-        {path: '/shops/:shop/orders', component: ShopOrders, props: true},
+        {path: '/shops/:shop/orders', component: OrderDetailsEmpty, props: true},
         {path: '/shops/:shop/orders/:order', component: OrderDetails, props: true},
         {path: '/shops', component: ShopDirectoryArea, props: true},
         {path: '/shops/:category', component: ShopDirectoryArea, props: true},
         {path: '/products', component: ProductDirectoryArea, props: true},
-        {path: '/products/:category', component: ProductDirectoryArea, props: true}
+        {path: '/products/:category', component: ProductDirectoryArea, props: true},
+        {path: '/admin/users', component: UserDetailsEmpty},
+        {path: '/admin/users/:user', component: UsersDetails, props: true},
+        {path: '/admin/shops', component: ShopAdminEmpty},
+        {path: '/admin/shops/:shop', component: ShopAdmin, props: true}
     ]
 });
 

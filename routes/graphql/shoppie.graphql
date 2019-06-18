@@ -285,9 +285,9 @@ extend type Query {
 
 extend type Mutation {
     createShop(shop: NewShop!): Shop! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createShop")
-    createBrand(shopId: ID! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createBrand")
+    createBrand(shop: String! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createBrand")
     editBrand(brandId: ID! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editBrand")
-    createCategory(shopId: ID! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")
+    createCategory(shop: String! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")
     editCategory(categoryId: ID! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editCategory")
     createSubCategory(categoryId: ID! subcategory: ShopResource!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
     editSubCategory(categoryId: ID! subcategory: ShopResource!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editSubCategory")

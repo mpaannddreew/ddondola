@@ -3,7 +3,7 @@
         <div class="mb-2">
             <div class="row no-gutters">
                 <div class="col-lg-6 mb-2 mb-lg-0">
-                    <form action="POST">
+                    <form class="ddondola-search">
                         <div class="input-group input-group-seamless">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">

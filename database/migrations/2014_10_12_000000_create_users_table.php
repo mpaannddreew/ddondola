@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->text('profile')->nullable();
             $table->text('settings')->nullable();
             $table->boolean('active')->default(1);
+            $table->boolean('is_staff')->default(0);
+            $table->boolean('is_superuser')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -3,14 +3,16 @@
         <div class="mb-2">
             <div class="row no-gutters">
                 <div class="col-12 col-sm-6 mb-2 mb-lg-0">
-                    <div class="input-group input-group-seamless">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="material-icons"></i>
+                    <form class="ddondola-search">
+                        <div class="input-group input-group-seamless">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="material-icons"></i>
+                                </div>
                             </div>
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter people">
                         </div>
-                        <input type="text" class="form-control form-control-sm" placeholder="Filter people">
-                    </div>
+                    </form>
                 </div>
                 <div class="col-12 col-sm-6 d-flex align-items-center">
                     <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">
@@ -37,7 +39,7 @@
         <div class="card card-small lo-stats border" v-if="hasUsers && loaded">
             <table class="table mb-0">
                 <tbody>
-                <tr is="user-row" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :auth="auth" :indx="indx"></tr>
+                <tr is="person" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :auth="auth" :indx="indx"></tr>
                 </tbody>
             </table>
         </div>
@@ -46,10 +48,10 @@
 </template>
 
 <script>
-    import UserRow from "./users/UserRow";
+    import Person from "./users/Person";
     export default {
-        name: "Users",
-        components: {UserRow},
+        name: "People",
+        components: {Person},
         mounted() {
             this.fetchUsers();
         },

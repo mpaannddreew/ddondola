@@ -14,7 +14,17 @@
                 </header>
             </div>
             <div class="card-body h-100">
-                <div class="card card-small lo-stats border-top-radius-0" style="border-top: 0 !important;">
+                <div class="center-xy" v-if="!loaded || (!showShops && loaded)">
+                    <div align="center" v-if="!loaded">
+                        <div class="loader"></div>
+                        <p class="m-0">Loading shops...</p>
+                    </div>
+                    <div align="center" v-if="!showShops && loaded">
+                        <h4 class="m-0"><i class="material-icons">error</i></h4>
+                        <p class="m-0">There are no shops in the directory yet!!</p>
+                    </div>
+                </div>
+                <div class="card card-small lo-stats border-top-radius-0" style="border-top: 0 !important;" v-else-if="showShops && loaded">
                     <table class="table mb-0">
                         <thead class="py-2 bg-light text-semibold">
                         <tr>
@@ -24,23 +34,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <template v-if="!loaded || (!showShops && loaded)">
-                            <tr>
-                                <td colspan="3">
-                                    <div align="center" v-if="!loaded">
-                                        <div class="loader"></div>
-                                        <p class="m-0">Loading shops...</p>
-                                    </div>
-                                    <div align="center" v-if="!showShops && loaded">
-                                        <h4 class="m-0"><i class="material-icons">error</i></h4>
-                                        <p class="m-0">There are no shops in the directory yet!!</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        </template>
-                        <template v-else-if="showShops && loaded">
-                            <tr is="user-shop" v-for="(shop, indx) in shops" :key="indx" :shop="shop" :directory="true"></tr>
-                        </template>
+                        <tr is="user-shop" v-for="(shop, indx) in shops" :key="indx" :shop="shop" :directory="true"></tr>
                         </tbody>
                     </table>
                 </div>

@@ -12,18 +12,20 @@
                 </div>
             </div>
             <div class="card-body h-100">
-                <template v-if="!loaded && !showCategories">
-                    <div align="center" class="p-4">
-                        <div class="loader"></div>
-                        <p>loading categories...</p>
-                    </div>
-                </template>
-                <template v-else-if="!showCategories && loaded">
-                    <div align="center" class="p-4">
-                        <h4 class="m-0"><i class="material-icons">error</i></h4>
-                        <p class="m-0">No categories.</p>
-                    </div>
-                </template>
+                <div class="center-xy" v-if="!loaded && !showCategories || !showCategories && loaded">
+                    <template v-if="!loaded && !showCategories">
+                        <div align="center">
+                            <div class="loader"></div>
+                            <p>loading categories...</p>
+                        </div>
+                    </template>
+                    <template v-else-if="!showCategories && loaded">
+                        <div align="center">
+                            <h4 class="m-0"><i class="material-icons">error</i></h4>
+                            <p class="m-0">No categories.</p>
+                        </div>
+                    </template>
+                </div>
                 <div class="list-group" v-if="loaded && showCategories">
                     <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex" @click="transitionHome" :class="{selected: showingAll}">
                         <span class="category-name text-ellipsis"><i class="material-icons">library_books</i> All {{ directory|ucFirst }}</span>

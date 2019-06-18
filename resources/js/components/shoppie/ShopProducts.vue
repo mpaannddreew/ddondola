@@ -20,39 +20,37 @@
             </div>
         </div>
         <div class="row" v-else-if="showProductsArea && loaded">
-            <div class="col-md-3 px-2">
+            <div class="col-md-3">
                 <div class="sidebar">
-                    <div class="card card-small border mb-2">
-                        <div class="card-header border-bottom">
-                            <h5 class="m-0"><i class="material-icons">short_text</i> Product Categories</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="block p-0 m-0">
-                                <ul class="list-unstyled mr-0">
+                    <div class="card border border-radius">
+                        <article class="card-group-item">
+                            <header class="card-header border-bottom py-2 border-radius bg-light">
+                                <h6 class="title">Categories</h6>
+                            </header>
+                            <div class="card-body p-0">
+                                <ul class="nav flex-column nav-pills nav-coupon-category m-0">
                                     <template v-for="(category, indx) in categories" >
-                                        <li :key="indx" :id="'category-' + category.id" :class="{active: categoryId === category.id}" v-if="category.productCount">
-                                            <a href="javascript:void(0);" class="d-flex justify-content-between align-items-center" @click="showCategory(category.id)">
-                                                <span><i class="material-icons">label</i> {{ category.name }}</span><small>{{ category.productCount }}</small>
+                                        <li class="nav-item active" v-if="category.productCount">
+                                            <a href="javascript:void(0);" class="nav-link" @click="showCategory(category.id)">
+                                                <i class="fa fa-arrow-right"></i>{{ category.name }}
                                             </a>
-                                            <ul class="list-unstyled">
-                                                <template v-for="(subcategory, indx_) in category.categories.data">
-                                                    <li :key="indx_" :id="'subcategory-' + subcategory.id" :class="{active: subcategoryId === subcategory.id}" v-if="subcategory.productCount">
-                                                        <a href="javascript:void(0);" @click="showSubcategory(subcategory.id, category.id)"><i class="material-icons">label_outline</i> {{ subcategory.name }}</a>
-                                                    </li>
-                                                </template>
-                                            </ul>
                                         </li>
+                                        <template v-for="(subcategory, indx_) in category.categories.data">
+                                            <li class="nav-item" v-if="subcategory.productCount">
+                                                <a href="javascript:void(0);" class="nav-link" @click="showSubcategory(subcategory.id, category.id)">
+                                                    <i class="fa fa-minus"></i>{{ subcategory.name }}
+                                                </a>
+                                            </li>
+                                        </template>
                                     </template>
                                 </ul>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card card-small border">
-                        <div class="card-header border-bottom">
-                            <h5 class="m-0"><i class="material-icons">short_text</i> Brands</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="block p-0 m-0">
+                        </article>
+                        <article class="card-group-item">
+                            <header class="card-header border-bottom py-2 bg-light">
+                                <h6 class="title">Brands </h6>
+                            </header>
+                            <div class="card-body py-3">
                                 <template v-for="(brand, indx) in brands">
                                     <div class="custom-control custom-checkbox" :class="{ 'mb-3': indx !== (brands.length - 1) }" :key="indx" v-if="brand.productCount">
                                         <input :id="'brand_' + indx" type="checkbox" name="clothes-brand" class="custom-control-input" v-model="brandIds" :value="brand.id">
@@ -60,7 +58,7 @@
                                     </div>
                                 </template>
                             </div>
-                        </div>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -113,7 +111,6 @@
 
 <script>
     import Product from "./products/Product";
-
     export default {
         name: "ShopProducts",
         components: {Product},
@@ -162,7 +159,7 @@
                 }else if(this.categoryId) {
                     variables["categoryId"] = this.categoryId;
                 }else {
-                    variables["shopId"] = this.shop.id;
+                    variables["shop"] = this.shop.code;
                 }
 
                 return variables;
@@ -241,6 +238,7 @@
                 this.productsRequest().then(this.loadProducts).catch(function (error) {})
             },
             loadProducts(response) {
+                console.log(JSON.stringify(response.data));
                 this.productsLoaded = true;
                 if (this.subcategoryId) {
                     this.products = response.data.data.subcategory.products.data;

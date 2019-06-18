@@ -43,6 +43,10 @@
     background: linear-gradient(rgba(248,248,248,.9), rgba(248,248,248,.9)), url("../images/bg/ddondola_doodle.jpg") repeat fixed;
 }
 
+.messenger .chat-list .card .input-group.input-group-seamless > input.form-control, .messenger .chat-list .card .input-group.input-group-seamless span > input.form-control  {
+    border-radius: 500px !important;
+}
+
 .messenger .chat-list .card .card-body {
     padding: 0;
     overflow-y: hidden;

@@ -15,7 +15,7 @@
                                 <i class="material-icons" v-else>search</i>
                             </div>
                         </div>
-                        <input id="contact_search" class="navbar-search form-control" type="text" placeholder="Search Ddondola" style="margin: 0; padding-left: 1.875rem;">
+                        <input id="contact_search" class="form-control" type="text" placeholder="Search Ddondola" style="margin: 0; padding-left: 1.875rem;">
                     </div>
                 </div>
             </div>
@@ -84,32 +84,45 @@
             }
         },
         methods: {
-            showOwnRepository() {
-                Bus.$emit('show-own-repository');
+            shopDataSet() {
+                return {
+                    name: 'shops',
+                    source: this.shopSource()
+                };
             },
-            initSearch() {
-                $('#contact_search').typeahead({
+            userDataSet() {
+                return {
+                    name: 'users',
+                    source: this.userSource()
+                };
+            },
+            searchOptions() {
+                return {
                     hint: true,
                     highlight: true,
                     minLength: 1,
                     classNames: {
                         wrapper: "w-100",
-                        input: "navbar-search form-control",
-                        hint: "navbar-search form-control",
+                        input: "form-control",
+                        hint: "form-control",
                         menu: "hide",
                     }
-                },
-                {
-                    name: 'shops',
-                    source: this.shopSource()
-                },
-                {
-                    name: 'users',
-                    source: this.userSource()
-                })
-                .on('typeahead:asyncrequest', this.showSpinner)
-                .on('typeahead:asynccancel typeahead:asyncreceive', this.hideSpinner);
+                };
+            },
+            showOwnRepository() {
+                Bus.$emit('show-own-repository');
+            },
+            search() {
+                var $search = $('#contact_search');
+                if (_.lowerCase(this.ownerType.toString()) === 'user') {
+                    return $search.typeahead(this.searchOptions(), this.shopDataSet(), this.userDataSet());
+                }
 
+                return $search.typeahead(this.searchOptions(), this.userDataSet());
+            },
+            initSearch() {
+                this.search().on('typeahead:asyncrequest', this.showSpinner)
+                    .on('typeahead:asynccancel typeahead:asyncreceive', this.hideSpinner);
             },
             showSpinner() {
                 this.shops = [];

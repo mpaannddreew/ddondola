@@ -7,9 +7,9 @@
                     <p class="m-0">Loading cart...</p>
                 </div>
                 <div align="center" v-if="!hasProducts && loaded">
-                    <h4 class="m-0"><i class="material-icons">remove_shopping_cart</i></h4>
-                    <p class="mb-3">Your cart is empty!</p>
-                    <a :href="shoppingUrl" class="btn btn-success btn-pill"><i class="material-icons">shopping_cart</i> Start Shopping</a>
+                    <h4 class="m-0"><i class="fa fa-shopping-bag"></i></h4>
+                    <p class="mb-3">Your cart is currently empty!</p>
+                    <a :href="shoppingUrl" class="btn btn-success btn-pill"><i class="material-icons">check</i> Continue Shopping</a>
                 </div>
             </div>
         </div>

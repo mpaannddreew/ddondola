@@ -3,7 +3,7 @@
         <div class="mb-2">
             <div class="row no-gutters">
                 <div class="col-12 col-sm-6 mb-2 mb-lg-0">
-                    <form action="POST">
+                    <form class="ddondola-search">
                         <div class="input-group input-group-seamless">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -114,7 +114,7 @@
         },
         props: {
             shop: {
-                type: Object,
+                type: String,
                 required: true
             }
         },
@@ -124,7 +124,7 @@
                 this.brands = [];
                 axios.post(graphql.api, {
                     query: graphql.shopProductBrands,
-                    variables: {id: this.shop.id, count: graphql.rowCount, page: this.page}
+                    variables: {shop: this.shop, count: graphql.rowCount, page: this.page}
                 }).then(this.loadData).catch(function () {});
             },
             loadData(response) {
@@ -164,7 +164,7 @@
                 axios.post(graphql.api, {
                     query: graphql.createBrand,
                     variables: {
-                        shopId: this.shop.id,
+                        shop: this.shop,
                         brand: {
                             name: this.name,
                             description: this.description,

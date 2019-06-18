@@ -1,20 +1,13 @@
 <template>
-    <tr>
-        <td class="lo-stats__image">
-            <img class="border rounded" :src="thumbnail">
-        </td>
-        <td class="lo-stats__order-details">
-            <span class="text-uppercase">{{ order.by.name }}</span>
-            <span>{{ humanize(order.created_at) }}</span>
-        </td>
-        <td class="lo-stats__items text-center">{{ order.by.email }}</td>
-        <td class="lo-stats__actions">
-            <div class="btn-group d-table ml-auto" role="group">
-                <a :href="messengerUrl" class="btn btn-sm btn-white"><i class="material-icons">chat</i> Message</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-white" @click="transitionTo"><i class="fa fa-link"></i> View Order</a>
-            </div>
-        </td>
-    </tr>
+    <li class="is-active" data-order="46895" @click="transitionTo">
+        <div>
+            <span class="text-uppercase text-accent mb-1" style="display: block">Order-{{ order.code }}</span>
+            <span class="text-muted" style="display: block">
+            <i class="material-icons">account_circle</i> {{ order.by.name }} [{{ order.created_at|time }}]
+        </span>
+        </div>
+        <span class="order-indicator is-progress"></span>
+    </li>
 </template>
 
 <script>
@@ -30,10 +23,6 @@
             order: {
                 type: Object,
                 required: true
-            },
-            shop: {
-                type: String,
-                required: true
             }
         },
         computed: {
@@ -41,7 +30,7 @@
                 return this.order.by.avatar.url;
             },
             shopUrl() {
-                return '/shops/' + this.shop;
+                return '/shops/' + this.$route.params.shop;
             },
             route() {
                 return this.shopUrl + '/orders/' + this.order.code;
@@ -51,11 +40,19 @@
             }
         },
         methods: {
-            humanize(date) {
-                return Moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
-            },
             transitionTo() {
                 this.$router.push(this.route);
+            }
+        },
+        filters: {
+            time(date) {
+                if (Moment().isSame(Moment(date), 'd'))
+                    return Moment(date).format("h:mm a");
+
+                if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
+                    return 'Yesterday';
+
+                return Moment(date).format("MM/DD/YY");
             }
         }
     }

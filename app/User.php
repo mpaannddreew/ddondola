@@ -48,7 +48,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'settings' => 'array',
         'active' => 'bool',
-        'profile' => 'array'
+        'profile' => 'array',
+        'is_staff' => 'bool',
+        'is_superuser' => 'bool'
     ];
 
     public function country() {

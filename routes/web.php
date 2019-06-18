@@ -11,13 +11,13 @@
 |
 */
 
-use FannyPack\LaracombeeMultiDB\MultiDBFacade;
+//use FannyPack\LaracombeeMultiDB\MultiDBFacade;
 
-Route::get('test', function () {
+//Route::get('test', function () {
 //    $recommendations = MultiDBFacade::db('shop-mine')->recommendTo(\Illuminate\Support\Facades\Auth::user(), 10)->wait();
 //    return response()->json(['success' => $recommendations['recomms']]);
-    return response()->json(app(\Shoppie\Repository\ShopRepository::class)->id(1)->orderIds());
-});
+//    return response()->json(app(\Shoppie\Repository\ShopRepository::class)->id(1)->orderIds());
+//});
 
 Auth::routes(['verify' => true]);
 
@@ -31,6 +31,10 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::get('/notifications', 'HomeController@notifications')->name('my.notifications');
         Route::get('/followers', 'HomeController@followers')->name('my.followers');
         Route::get('/following', 'HomeController@following')->name('my.following');
+    });
+    Route::middleware(['admin.staff'])->prefix('admin')->group(function (){
+        Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
+        Route::get('users/{user?}', 'AdminController@users')->name('admin.users');
     });
 });
 
