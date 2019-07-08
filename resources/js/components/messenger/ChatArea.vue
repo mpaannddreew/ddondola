@@ -1,41 +1,29 @@
 <template>
     <div>
         <div class="chat-area">
-            <div class="card card-small h-100" style="border-radius: 0; box-shadow: none;" v-if="!loaded || (loaded && !conversation)">
-                <div class="card-body">
+            <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;" v-if="!loaded || (loaded && !conversation)">
+                <div class="card-body d-flex flex-column">
                     <div class="center-xy" v-if="!loaded">
                         <div align="center">
                             <div class="loader"></div>
                             <p>{{ message }}</p>
                         </div>
                     </div>
-                    <div v-if="loaded && !conversation">
-                        <div class="error">
-                            <div class="error__content">
-                                <h4 class="m-0"><i class="material-icons">chat</i></h4>
-                                <p class="mb-3">You have not started a conversation with this entity.</p>
-                                <button type="button" class="btn btn-success btn-pill" @click="startConversation">
-                                    <i class="material-icons">check_box</i> Start Conversation
-                                </button>
-                            </div>
+                    <div class="error" v-if="loaded && !conversation">
+                        <div class="error__content">
+                            <h4 class="m-0"><i class="material-icons">chat</i></h4>
+                            <p class="mb-3">You have not started a conversation with this entity.</p>
+                            <button type="button" class="btn btn-success btn-pill" @click="startConversation">
+                                <i class="material-icons">check_box</i> Start Conversation
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card card-small h-100" style="border-radius: 0; box-shadow: none;" v-if="loaded && conversation">
-                <div class="card-header border-bottom d-flex">
-                    <div class="contact-cont">
-                        <div class="pull-left user-img m-r-10">
-                            <a href="javascript:void(0)" :title="converser.name">
-                                <img :src="converser.avatar.url" alt="" class="w-40 rounded-circle">
-                                <span class="status online"></span>
-                            </a>
-                        </div>
-                        <div class="contact-info">
-                            <span class="contact-name text-uppercase text-primary">{{ converser.name }}</span>
-                            <span class="contact-date text-ellipsis">Last seen today at 7:50 AM</span>
-                        </div>
-                    </div>
+            <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;" v-if="loaded && conversation">
+                <div class="card-header border-bottom px-2" style="padding-top: 0.25em;padding-bottom: 0.25em;">
+                    <h5 class="m-0">{{ converser.name }}</h5>
+                    <p class="text-light m-0" style="font-size: small !important;">Last seen today at 7:50 AM</p>
                 </div>
                 <div class="card-body d-flex flex-column" id="chat-body">
                     <template v-if="!messagesLoaded">

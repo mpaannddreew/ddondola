@@ -1,37 +1,46 @@
 <template>
-    <div class="row">
-        <div class="col-md-3 px-1">
-            <div class="card card-small border">
-                <div class="card-header border-bottom">
-                    <h5 class="mb-0"><i class="fa fa-cog"></i> Account Settings</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group border-0">
-                        <a href="javascript:void(0)" class="list-group-item list-group-item-action" @click="toggle('settings')" :class="{selected: isActive('settings')}">
+    <div>
+        <div class="header-navbar collapse d-lg-flex p-0 bg-white border-bottom">
+            <div class="container p-0">
+                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" @click="toggle('settings')" :class="{active: isActive('settings')}">
                             <i class="material-icons">perm_data_setting</i> Settings
                         </a>
-                        <a href="javascript:void(0)" class="list-group-item list-group-item-action" @click="toggle('information')" :class="{selected: isActive('information')}">
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" @click="toggle('information')" :class="{active: isActive('information')}">
                             <i class="material-icons">account_circle</i> General Information
                         </a>
-                        <a href="javascript:void(0)" class="list-group-item list-group-item-action" @click="toggle('change-password')" :class="{selected: isActive('change-password')}">
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" @click="toggle('change-password')" :class="{active: isActive('change-password')}">
                             <i class="material-icons">lock</i> Change Password
                         </a>
-                        <a href="javascript:void(0)" class="list-group-item list-group-item-action" @click="toggle('cover-pictures')" :class="{selected: isActive('cover-pictures')}">
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" @click="toggle('cover-pictures')" :class="{active: isActive('cover-pictures')}">
                             <i class="material-icons">camera_alt</i> Cover Pictures
                         </a>
-                        <a href="javascript:void(0)" class="list-group-item list-group-item-action" @click="toggle('profile-pictures')" :class="{selected: isActive('profile-pictures')}">
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" @click="toggle('profile-pictures')" :class="{active: isActive('profile-pictures')}">
                             <i class="material-icons">portrait</i> Profile Pictures
                         </a>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="col-md-9 px-1 checkout-process">
-            <settings v-if="isActive('settings')"></settings>
-            <information v-if="isActive('information')"></information>
-            <change-password v-if="isActive('change-password')"></change-password>
-            <cover-pictures v-if="isActive('cover-pictures')"></cover-pictures>
-            <profile-pictures v-if="isActive('profile-pictures')"></profile-pictures>
+        <div class="container py-2">
+            <div class="row">
+                <div class="col-md-8 offset-2">
+                    <settings v-if="isActive('settings')"></settings>
+                    <information v-if="isActive('information')"></information>
+                    <change-password v-if="isActive('change-password')"></change-password>
+                    <cover-pictures v-if="isActive('cover-pictures')"></cover-pictures>
+                    <profile-pictures v-if="isActive('profile-pictures')"></profile-pictures>
+                </div>
+            </div>
         </div>
     </div>
 </template>

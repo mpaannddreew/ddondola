@@ -529,68 +529,76 @@ ul.nav.home li:hover a, ul.nav.home li.active a{
     float: left;
 }
 
-.directory .card {
+.directory .card.main {
     border-radius: 0 !important;
     height: calc(99.9vh - 7.1rem - 1px) !important;
 }
 
-.directory .card .card-header {
+.directory .card.main > .card-header {
     padding: 0.49rem;
 }
 
-.directory .card .card-body {
+.directory .card.main > .card-body {
     padding: 0;
     overflow-x: hidden;
 }
 
-.directory .directory-list .card .card-body {
+.directory .directory-list .card.main > .card-body {
     background-color: #ffffff;
 }
 
-.directory .directory-list .card .input-group.input-group-seamless > input.form-control,
+.directory .directory-list .card.main .input-group.input-group-seamless > input.form-control,
 form.ddondola-search .input-group.input-group-seamless > input.form-control {
     border-radius: 500px !important;
 }
 
-.directory .directory-area .card .card-body {
-    background-color: #f5f6f8;;
+.directory .directory-area .card.main > .card-body {
+    background-color: #f5f6f8;
 }
 
-.directory .directory-list .card .card-body div.list-group a {
+.directory .directory-list .card.main > .card-body div.list-group a {
     border-right: none !important;
     border-left: none !important;
     padding: 13px;
 }
 
-.directory .directory-list .card .card-body div.list-group a.selected {
+.directory .directory-list .card.main > .card-body ul.list-group li{
+    border-right: none !important;
+    border-left: none !important;
+}
+
+.directory .directory-list .card.main > .card-body div.list-group a.selected {
     border-left: medium solid #ce1d76 !important;
     color: #ce1d76;
 }
 
-.directory .directory-list .card .card-body div.list-group a:hover {
+.directory .directory-list .card.main > .card-body div.list-group a:hover,
+.directory .directory-list .card.main > .card-body ul.list-group li:hover {
     color: #ce1d76;
 }
 
-.directory .directory-list .card .card-body div.list-group a:first-child {
+.directory .directory-list .card.main > .card-body div.list-group a:first-child,
+.directory .directory-list .card.main > .card-body ul.list-group li:first-child {
     border-top: none !important;
     border-radius: 0 !important;
 }
 
-.directory .directory-list .card .card-body div.list-group a:last-child {
+.directory .directory-list .card.main > .card-body div.list-group a:last-child,
+.directory .directory-list .card.main > .card-body ul.list-group li:last-child {
     border-bottom: none !important;
     border-radius: 0 !important;
 }
 
-.directory .directory-area .card .card-body .card {
+.directory .directory-area .card.main > .card-body .card.lo-stats {
     min-height: unset !important;
     border-top: 1px solid #dee2e6!important;
     border-bottom: 1px solid #dee2e6!important;
     height: unset !important;
 }
 
-.directory .directory-area .card .card-body .card .card-body {
-    background: #f5f6f8 !important;
-}
+/*.directory .directory-area .card.main .card-body .card .card-body {*/
+    /*background: #f5f6f8 !important;*/
+/*}*/
 
 .close-directory-list {
 }
@@ -612,7 +620,7 @@ form.ddondola-search .input-group.input-group-seamless > input.form-control {
         transition: 0.5s ease-in;
     }
 
-    .directory .directory-area .card .card-body .card {
+    .directory .directory-area .card.main .card-body .card {
         border: 1px solid #dee2e6!important;
         margin-left: .5rem!important;
         margin-right: .5rem!important;
@@ -623,11 +631,11 @@ form.ddondola-search .input-group.input-group-seamless > input.form-control {
     height: calc(99.9vh - 3.75rem - 1px) !important;
 }
 
-.directory.orders .card, .directory.admin .card {
+.directory.orders .card.main, .directory.admin .card.main {
     height: calc(99.9vh - 3.75rem - 1px) !important;
 }
 
-.directory.admin .directory-list .card .card-header {
+.directory.admin .directory-list .card.main .card-header {
     padding-top: 0.552rem;
     padding-bottom: 0.525rem;
 }

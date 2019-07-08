@@ -6,7 +6,7 @@
         <a class="nav-link" href="{{ route('my.dashboard') }}"><i class="material-icons">dashboard</i> Dashboard</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('my.orders') }}"><i class="material-icons">local_mall</i> Orders</a>
+        <a class="nav-link" href="{{ route('my.orders') }}"><i class="material-icons">assignment</i> Orders</a>
     </li>
     <li class="nav-item @yield('people-active')">
         <a class="nav-link" href="{{ route('users.index') }}"><i class="material-icons">people</i> People</a>

@@ -1,6 +1,6 @@
 <template>
     <div class="directory-list close-directory-list">
-        <div class="card card-small h-100 border-right">
+        <div class="card card-small h-100 border-right main">
             <div class="card-header border-bottom border-top-radius-0 bg-light" style="padding-top: 0.525rem; padding-bottom: 0.525rem;">
                 <div class="input-group input-group-seamless">
                     <div class="input-group-prepend">
@@ -12,31 +12,27 @@
                 </div>
             </div>
             <div class="card-body h-100">
-                <div class="flat-card is-auto list-card">
+                <div class="center-xy" v-if="!loaded || (!hasOrders && loaded)">
+                    <div align="center" v-if="!loaded">
+                        <div class="loader"></div>
+                        <p class="m-0">Loading orders...</p>
+                    </div>
+                    <div align="center" v-if="!hasOrders && loaded">
+                        <h4 class="m-0"><i class="material-icons">error</i></h4>
+                        <p class="m-0">You have not placed any orders yet!</p>
+                    </div>
+                </div>
+                <div class="flat-card is-auto list-card" v-else-if="hasOrders && loaded">
                     <!--<div class="list-card-header">-->
-                        <!--Orders List-->
+                    <!--Orders List-->
                     <!--</div>-->
-                    <template v-if="!loaded || (!hasOrders && loaded)">
-                        <div class="p-4">
-                            <div align="center" v-if="!loaded">
-                                <div class="loader"></div>
-                                <p class="m-0">Loading orders...</p>
-                            </div>
-                            <div align="center" v-if="!hasOrders && loaded">
-                                <h4 class="m-0"><i class="material-icons">error</i></h4>
-                                <p class="m-0">You have not placed any orders yet!</p>
-                            </div>
-                        </div>
-                    </template>
-                    <template v-else-if="hasOrders && loaded">
-                        <!-- List -->
-                        <ul class="p-0">
-                            <!-- List item -->
-                            <template v-for="(order, indx) in orders">
-                                <li is="my-order" :order="order" :key="indx"></li>
-                            </template>
-                        </ul>
-                    </template>
+                    <!-- List -->
+                    <ul class="p-0">
+                        <!-- List item -->
+                        <template v-for="(order, indx) in orders">
+                            <li is="my-order" :order="order" :key="indx"></li>
+                        </template>
+                    </ul>
                 </div>
             </div>
         </div>

@@ -1,15 +1,16 @@
 <template>
     <div class="directory">
         <categories :directory="directory"></categories>
-        <router-view></router-view>
+        <shop-directory-area></shop-directory-area>
     </div>
 </template>
 
 <script>
     import Categories from "./Categories";
+    import ShopDirectoryArea from "./ShopDirectoryArea";
     export default {
         name: "ShopDirectory",
-        components: {Categories},
+        components: {ShopDirectoryArea, Categories},
         computed: {
             directory() {
                 return 'shops';

@@ -2,7 +2,7 @@
     <div>
         <div class="card card-small border">
             <div class="card-header border-bottom">
-                <h5 class="m-0">Activity</h5>
+                <h5 class="m-0"><i class="material-icons">view_day</i> Activity</h5>
             </div>
             <div class="card-body p-0">
                 <template v-if="!loaded || (!hasActivities && loaded)">
@@ -11,8 +11,7 @@
                         <p class="m-0">Loading {{ loadingActivity }}...</p>
                     </div>
                     <div align="center" class="p-4" v-if="!hasActivities && loaded">
-                        <h4 class="m-0" v-if="admin">Hi!</h4>
-                        <h4 class="m-0" v-else><i class="material-icons">error</i></h4>
+                        <h4 class="m-0"><i class="material-icons">error</i></h4>
                         <p class="m-0">{{ noActivityMessage }}</p>
                     </div>
                 </template>

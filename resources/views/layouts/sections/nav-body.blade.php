@@ -22,6 +22,10 @@
                     <span class="d-none d-md-inline-block text-white">Hi, {{ Auth::user()->first_name }}!</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-small dropdown-menu-right">
+                    @is_staff(Auth::user())
+                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i class="material-icons">apps</i> Administration</a>
+                    <div class="dropdown-divider"></div>
+                    @endis_staff
                     <a class="dropdown-item" href="{{ route('my.profile') }}"><i class="material-icons">account_circle</i> Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('my.settings') }}"><i class="material-icons">settings</i> Settings</a>

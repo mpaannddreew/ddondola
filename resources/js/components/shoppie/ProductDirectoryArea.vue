@@ -1,6 +1,6 @@
 <template>
     <div class="directory-area">
-        <div class="card card-small">
+        <div class="card card-small main">
             <div class="card-header p-0 border-bottom bg-light">
                 <header class="d-flex justify-content-between align-items-start" style="margin: .6rem !important;">
                     <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
@@ -15,7 +15,7 @@
                     </div>
                 </header>
             </div>
-            <div class="card-body h-100 bg-white">
+            <div class="card-body h-100" :class="{'bg-white': showProducts && loaded}">
                 <div class="center-xy" v-if="!loaded || (!showProducts && loaded)">
                     <div align="center" v-if="!loaded">
                         <div class="loader"></div>
@@ -44,12 +44,7 @@
         components: {DirectoryProduct},
         mounted() {
             this.fetchProducts();
-        },
-        props: {
-            category: {
-                type: String,
-                required: false
-            }
+            this.listen();
         },
         data() {
             return {
@@ -57,20 +52,13 @@
                 loaded: false,
                 page: 1,
                 ordering: '',
-                paginatorInfo: null
+                paginatorInfo: null,
+                categoryIds: []
             }
         },
         computed: {
             showProducts() {
                 return this.products.length > 0;
-            },
-            variables() {
-                var variables = {count: graphql.columnCount, filters: {ordering: this.ordering}, page: this.page};
-                if (this.category) {
-                    variables["category"] = this.category
-                }
-
-                return variables;
             }
         },
         methods: {
@@ -79,7 +67,8 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.products,
-                    variables: this.variables
+                    variables: {count: graphql.columnCount, filters: {categoryIds: JSON.stringify(this.categoryIds),
+                            ordering: this.ordering}, page: this.page}
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {
@@ -96,10 +85,16 @@
             },
             last(indx) {
                 return indx % 3 === 0;
+            },
+            listen() {
+                Bus.$on('category-ids', this.showFromCategory);
+            },
+            showFromCategory(ids) {
+                this.categoryIds = ids;
+                this.loadPage(1);
             }
         },
         watch: {
-            '$route': 'fetchProducts',
             ordering(data) {
                 this.loadPage(1);
             }

@@ -8,68 +8,32 @@
                 </div>
             </div>
         </div>
-        <div class="checkout-process" v-else-if="requirementsLoaded">
-            <div class="card mb-2">
-                <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
-                    <h5>
-                        <a class="btn btn-link" href="javascript:void(0)">
-                            <span><i class="material-icons">more_vert</i></span>
-                            <i class="material-icons">info</i> General Information
-                        </a>
-                    </h5>
-                </div>
-                <div class="card-body p-4 border border-top-0">
+        <div v-else-if="requirementsLoaded">
+            <div class="card mb-2 border border-radius">
+                <div class="card-body p-4">
                     <div class="form-row mx-4">
                         <div class="col-lg-12">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Shop Category</label>
-                                    <div class="input-group input-group-seamless">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="material-icons">folder</i>
-                                            </div>
-                                        </div>
-                                        <select class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="shopCategory" id="shopCategory">
-                                            <option v-for="(category, indx) in categories" :key="indx" :value="category.id">{{ category.name }}</option>
-                                        </select>
-                                    </div>
+                                    <select class="form-control form-control-md custom-select custom-select-md" tabindex="-1" aria-hidden="true" v-model="shopCategory" id="shopCategory">
+                                        <option v-for="(category, indx) in categories" :key="indx" :value="category.id">{{ category.name }}</option>
+                                    </select>
                                     <div class="invalid-feedback" id="shopCategory_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="name">Name</label>
-                                    <div class="input-group input-group-seamless">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="material-icons">shop_two</i>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control" id="name" v-model="name">
-                                    </div>
+                                    <input type="text" class="form-control" id="name" v-model="name">
                                     <div class="invalid-feedback" id="name_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="phoneNumber">Phone Number</label>
-                                    <div class="input-group input-group-seamless">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="material-icons">phone</i>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control" id="phoneNumber" v-model="phoneNumber">
-                                    </div>
+                                    <input type="text" class="form-control" id="phoneNumber" v-model="phoneNumber">
                                     <div class="invalid-feedback" id="phoneNumber_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="emailAddress">Email</label>
-                                    <div class="input-group input-group-seamless">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="material-icons">email</i>
-                                            </div>
-                                        </div>
-                                        <input type="email" class="form-control" id="emailAddress" v-model="emailAddress">
-                                    </div>
+                                    <input type="email" class="form-control" id="emailAddress" v-model="emailAddress">
                                     <div class="invalid-feedback" id="emailAddress_feedback"></div>
                                 </div>
                                 <div class="form-group col-md-12">

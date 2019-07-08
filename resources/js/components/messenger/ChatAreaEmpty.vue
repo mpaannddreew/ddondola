@@ -1,6 +1,6 @@
 <template>
     <div class="chat-area">
-        <div class="card card-small h-100" style="border-radius: 0; box-shadow: none;">
+        <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;">
             <div class="card-body d-flex flex-column">
                 <div class="error">
                     <div class="error__content">

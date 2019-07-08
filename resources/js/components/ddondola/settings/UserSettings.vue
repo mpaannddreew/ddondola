@@ -1,15 +1,7 @@
 <template>
     <div>
-        <div class="card mb-2">
-            <div class="card-header form-wizard-step border-right border-top border-top-right-radius-0">
-                <h5>
-                    <a class="btn btn-link" href="javascript:void(0)">
-                        <span><i class="material-icons">more_vert</i></span>
-                        <i class="material-icons">perm_data_setting</i> Settings
-                    </a>
-                </h5>
-            </div>
-            <div class="card-body p-4 border border-top-0">
+        <div class="card border border-radius">
+            <div class="card-body p-4">
                 <div class="form-row">
                     <label for="conversationsEmailsToggle" class="col col-form-label"> Conversations <small class="form-text text-muted"> Sends notification emails with updates for the conversations you are participating in or if someone mentions you. </small>
                     </label>

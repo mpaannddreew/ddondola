@@ -19,7 +19,7 @@
         <td>
             <div class="btn-group d-table ml-auto" role="group">
                 <a :href="shopUrl" class="btn btn-sm btn-white" title=""><i class="fa fa-link"></i> Open</a>
-                <a :href="settingsUrl" class="btn btn-sm btn-white" v-if="!directory"><i class="material-icons">settings</i></a>
+                <a :href="settingsUrl" class="btn btn-sm btn-white" v-if="!directory && !admin"><i class="material-icons">settings</i></a>
             </div>
         </td>
     </tr>
@@ -38,12 +38,19 @@
             },
             directory: {
                 type: Boolean,
-                required: false,
+                default: false
+            },
+            admin: {
+                type: Boolean,
                 default: false
             }
         },
         computed: {
             shopUrl() {
+                if (this.admin) {
+                    return '/admin/shops/' + this.shop.code;
+                }
+
                 return '/shops/' + this.shop.code;
             },
             settingsUrl() {

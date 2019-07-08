@@ -15,6 +15,7 @@ type ShopCategory {
     name: String!
     description: String
     shops(myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
+    shopCount: Int! @method(name: "shopCount")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -60,7 +61,7 @@ type ProductCategory {
     name: String!
     shop: Shop! @belongsTo
     description: String
-    categories: [ProductSubCategory!] @hasMany(type: "paginator")
+    categories: [ProductSubCategory!] @hasMany
     categoryCount: Int! @method(name: "categoryCount")
     products(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     productCount: Int! @method(name: "productCount")
@@ -264,13 +265,20 @@ input EditProduct {
 input ProductFilter {
     ordering: String
     brandIds: String
+    subCategoryIds: String
+    categoryIds: String
+}
+
+input ShopFilter {
+    ordering: String
+    categoryIds: String
 }
 
 extend type Query {
     shopCategories: [ShopCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@ShopCategories")
     shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
     shopByCode(shop: String!): Shop! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shop")
-    shops(category: String myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
+    shops(filters: ShopFilter myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
     product(id: ID! @eq): Product! @find(model: "Shoppie\\Product")
     products(category: String filters: ProductFilter myCountry: Boolean): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
     productCategory(id: ID! @eq): ProductCategory! @find(model: "Shoppie\\ProductCategory")
@@ -281,6 +289,8 @@ extend type Query {
     searchProducts(name: String!): [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchProducts")
     searchShops(name: String!): [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchShops")
     order(order: String!): Order @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@order")
+    featuredProducts: [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@featuredProducts")
+    featuredShops: [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@featuredShops")
 }
 
 extend type Mutation {
@@ -288,7 +298,9 @@ extend type Mutation {
     createBrand(shop: String! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createBrand")
     editBrand(brandId: ID! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editBrand")
     createCategory(shop: String! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")
+    createShopCategory(category: ShopResource!): ShopCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createShopCategory")
     editCategory(categoryId: ID! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editCategory")
+    editShopCategory(categoryId: ID! category: ShopResource!): ShopCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editShopCategory")
     createSubCategory(categoryId: ID! subcategory: ShopResource!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
     editSubCategory(categoryId: ID! subcategory: ShopResource!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editSubCategory")
     createProduct(product: NewProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProduct")

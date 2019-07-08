@@ -1,7 +1,7 @@
 <template>
     <div class="chat-list close-chat-list" id="chat_list">
         <all-contacts v-if="!ownRepositoryActive" :home-url="homeUrl" :owner-id="ownerId" :owner-type="ownerType"></all-contacts>
-        <div class="card card-small h-100 border-right" style="border-radius: 0; box-shadow: none;" v-if="ownRepositoryActive">
+        <div class="card card-small h-100 border-right main" style="border-radius: 0; box-shadow: none;" v-if="ownRepositoryActive">
             <div class="card-header border-bottom bg-light">
                 <div class="row bg-light m-0">
                     <div class="col-12 p-0" :class="{'col-sm-10': conversationsActive, 'col-sm-12': !conversationsActive}">
@@ -19,27 +19,25 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body d-flex flex-column">
+            <div class="card-body">
                 <div class="header-navbar collapse d-lg-flex p-0 bg-light border-bottom">
                     <div class="container p-0">
                         <div class="row">
                             <div class="col">
                                 <ul class="nav nav-tabs nav-justified border-0 flex-column flex-lg-row">
-                                    <li class="nav-item border-right">
-                                        <a href="javascript:void(0)" class="nav-link m-0" :class="{active: conversationsActive}" @click="showConversations"><i class="material-icons">chat</i> Conversations</a>
+                                    <li class="nav-item">
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: conversationsActive}" @click="showConversations"><i class="material-icons">chat</i> Conversations</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:void(0)" class="nav-link m-0" :class="{active: !conversationsActive}" @click="showContacts"><i class="material-icons">contacts</i> Contacts</a>
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: !conversationsActive}" @click="showContacts"><i class="material-icons">contacts</i> Contacts</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="contacts h-100">
-                    <conversations v-if="conversationsActive" :home-url="homeUrl" :owner-id="ownerId" :owner-type="ownerType"></conversations>
-                    <contacts v-if="!conversationsActive" :home-url="homeUrl" :owner-id="ownerId" :owner-type="ownerType"></contacts>
-                </div>
+                <conversations v-if="conversationsActive" :home-url="homeUrl" :owner-id="ownerId" :owner-type="ownerType"></conversations>
+                <contacts v-else :home-url="homeUrl" :owner-id="ownerId" :owner-type="ownerType"></contacts>
             </div>
         </div>
     </div>
@@ -110,5 +108,15 @@
 </script>
 
 <style scoped>
+    .nav-link {
+        margin: 0 !important;
+    }
 
+    .nav-item {
+        border-right:1px solid #e1e5eb!important;
+    }
+
+    .nav-item:last-child {
+        border-right: none !important;
+    }
 </style>

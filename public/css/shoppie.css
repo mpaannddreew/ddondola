@@ -736,188 +736,123 @@
 
 }
 
-.nav-pills.nav-coupon-category {
-    margin-bottom: 30px;
+/*--------------------------------------------
+17. Sidebar & Widgets Styles
+--------------------------------------------*/
+.sidebar {
+    width: 100%;
+    max-width: 400px
 }
-.nav-pills.nav-coupon-category > li > a {
-    text-transform: uppercase;
-    font-size: 13px;
-    z-index: 1;
-    -webkit-border-radius: 0;
-    border-radius: 0;
-    background: #fff;
-    border-bottom: 1px solid #ededed;
-    -webkit-transition: 0.2s;
-    -moz-transition: 0.2s;
-    -o-transition: 0.2s;
-    -ms-transition: 0.2s;
-    transition: 0.2s;
-    height: 40px;
-    line-height: 40px;
-    padding: 0px 0px 0px 55px;
+
+.widget-title {
+    border-bottom: 1px solid #e1e7ec;
+    color: #9da9b9;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase
+}
+
+.widget ul {
+    margin-bottom: 12px
+}
+
+.widget-categories ul, .widget-links ul {
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.widget-categories ul > li, .widget-links ul > li {
     position: relative;
-    margin: 0;
-    color: #666;
+    margin-bottom: 6px;
+    padding-left: 14px
 }
-.nav-pills.nav-coupon-category > li > a .fa {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -o-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    font-size: 18px;
-    position: absolute;
+
+.widget-categories ul > li:last-child, .widget-links ul > li:last-child {
+    margin-bottom: 0
+}
+
+.widget-categories ul > li::before, .widget-links ul > li::before {
     display: block;
-    width: 40px;
-    height: 40px;
-    background: #fbfbfb;
-    top: 0;
+    position: absolute;
+    top: 12px;
     left: 0;
-    text-align: center;
-    line-height: 40px;
-    border-right: 1px solid #ededed;
-    border-bottom: 1px solid #ededed;
+    width: 0;
+    height: 0;
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    transition: -webkit-transform .35s;
+    transition: transform .35s;
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    color: #9da9b9;
+    content: ''
 }
 
-.nav-pills.nav-coupon-category > li > a .fa:before {
-    opacity: 0.65;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=65)";
-    filter: alpha(opacity=65);
-}
-.nav-pills.nav-coupon-category > li > a span {
-    margin-left: 10px;
-    color: #bfbfbf;
-    padding: 1px 7px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    font-size: 10px;
-    -webkit-transition: 0.2s;
-    -moz-transition: 0.2s;
-    -o-transition: 0.2s;
-    -ms-transition: 0.2s;
-    transition: 0.2s;
-}
-.nav-pills.nav-coupon-category > li > a:hover {
-    background: #fbfbfb;
-    padding-left: 65px;
-    color: #ce1d76;
-}
-.nav-pills.nav-coupon-category > li > a:hover .fa {
-    background: #ce1d76;
-    color: #fff;
-}
-.nav-pills.nav-coupon-category > li > a:hover .fa:before {
-    opacity: 1;
-    -ms-filter: none;
-    filter: none;
-}
-.nav-pills.nav-coupon-category > li > a:hover span {
-    background: #ce1d76;
-    color: #fff;
-}
-.nav-pills.nav-coupon-category > li:first-child a {
-    border-top: none;
-}
-.nav-pills.nav-coupon-category > li:last-child a {
-    border-bottom: none;
+.widget-categories ul > li > a, .widget-links ul > li > a {
+    display: inline-block;
+    transition: color .3s;
+    color: #606975;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none
 }
 
-.nav-pills.nav-coupon-category > li:last-child a .fa {
-    border-bottom: none !important;
+.widget-categories ul > li > a:hover, .widget-links ul > li > a:hover {
+    color: #ce1d76
 }
 
-.nav-pills.nav-coupon-category > .active > a {
-    z-index: 2;
-    background: #ce1d76;
-    color: #fff;
+.widget-categories ul > li.active > a, .widget-links ul > li.active > a {
+    color: #ce1d76
 }
-.nav-pills.nav-coupon-category > .active > a span {
-    color: #fff;
-    background: rgba(0,0,0,0.5);
+
+.widget-categories ul > li > span, .widget-links ul > li > span {
+    margin-left: 4px;
+    color: #9da9b9
 }
-.nav-pills.nav-coupon-category > .active > a .fa {
-    background: #ce1d76;
-    color: #fff;
-    border-right: 1px solid #ce1d76;
+
+.widget-categories ul > li.has-children ul, .widget-links ul > li.has-children ul {
+    border-left: 1px solid #dee5ea
 }
-.nav-pills.nav-coupon-category > .active > a .fa:before {
-    opacity: 1;
-    -ms-filter: none;
-    filter: none;
+
+.widget-categories ul > li.has-children ul li::before, .widget-links ul > li.has-children ul li::before {
+    top: 14px;
+    width: 8px;
+    height: 1px;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    border: 0;
+    background-color: #dee5ea;
+    color: transparent
 }
-.nav-pills.nav-coupon-category > .active > a:hover {
-    background: #ce1d76;
-    color: #fff;
-    padding-left: 55px;
+
+.widget-categories ul > li.has-children ul li a, .widget-links ul > li.has-children ul li a {
+    font-size: 13px
 }
-.nav-pills.nav-coupon-category > .active > a:hover span {
-    background: rgba(0,0,0,0.5);
+
+.widget-categories ul > li.has-children ul ul > li, .widget-links ul > li.has-children ul ul > li {
+    margin-bottom: 0
 }
-.nav-pills.nav-coupon-category > .active > a:before {
-    content: '';
-    position: absolute;
-    height: 28px;
-    width: 28px;
-    top: 6px;
-    right: -15px;
-    /*background: #ce1d76;*/
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    display: block;
+
+.widget-categories ul > li.has-children > ul, .widget-links ul > li.has-children > ul {
+    max-height: 0;
+    transition: max-height .6s;
+    overflow: hidden
 }
-.nav-pills.nav-coupon-category.nav-coupon-category-right {
-    margin-right: 0;
-    margin-left: 30px;
+
+.widget-categories ul > li.has-children.expanded::before, .widget-links ul > li.has-children.expanded::before {
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0)
 }
-.nav-pills.nav-coupon-category.nav-coupon-category-right > li > a {
-    padding: 0px 0px 0px 20px;
+
+.widget-categories ul > li.has-children.expanded > ul, .widget-links ul > li.has-children.expanded > ul {
+    max-height: 800px
 }
-.nav-pills.nav-coupon-category.nav-coupon-category-right > li > a [class^="fa fa-"] {
-    left: auto;
-    right: 0;
-    border-left: 1px solid #ededed;
-    border-right: none;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-right > li > a:hover {
-    padding-left: 35px;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-right > .active > a [class^="fa fa-"] {
-    border-left: 1px solid #ce1d76;
-    border-right: none;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-right > .active > a:before {
-    right: auto;
-    left: -15px;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-right > .active > a:hover {
-    padding-left: 20px;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-inline {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    margin: 0;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-inline > li {
-    -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.15);
-    box-shadow: 0 1px 0 rgba(0,0,0,0.15);
-    float: left;
-    display: block;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-inline > li > a {
-    border-bottom: none !important;
-    padding-right: 15px;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-inline > li > a:hover {
-    padding-left: 55px;
-}
-.nav-pills.nav-coupon-category.nav-coupon-category-inline > li.active > a:before {
-    display: none;
-}
+
 
 .cart-black-button {
 

@@ -9,8 +9,9 @@
         </td>
         <td :class="{'border-top-0': isFirst}">
             <div class="btn-group d-table ml-auto" role="group">
-                <a :href="userUrl" class="btn btn-sm btn-white" title=""><i class="material-icons">account_circle</i> Profile</a>
-                <a v-if="!isMe && auth"  href="javascript:void(0)" class="btn btn-sm btn-white" @click="performAction" :class="{ active: follow, disabled: loading }">
+                <a href="javascript:void(0)" class="btn btn-sm btn-white" title="" v-if="admin" @click="showProfile"><i class="material-icons">account_circle</i> Profile</a>
+                <a :href="userUrl" class="btn btn-sm btn-white" title="" v-else><i class="material-icons">account_circle</i> Profile</a>
+                <a v-if="!isMe && auth && !admin"  href="javascript:void(0)" class="btn btn-sm btn-white" @click="performAction" :class="{ active: follow, disabled: loading }">
                     <i class="material-icons">person_add</i> {{ text }}
                 </a>
             </div>
@@ -38,16 +39,14 @@
             },
             isMe: {
                 type: Boolean,
-                required: false,
                 default: false
             },
             indx: {
                 type: Number
             },
-            auth: {
+            admin: {
                 type: Boolean,
-                required: false,
-                default: true
+                default: false
             }
         },
         methods: {
@@ -76,9 +75,15 @@
                 this.follow = response.data.data.follow;
                 this.loaded = true;
                 this.loading = false;
+            },
+            showProfile() {
+                this.$router.push("/admin/users/" + this.user.code);
             }
         },
         computed: {
+            auth() {
+                return Auth;
+            },
             userUrl() {
                 return "/people/" + this.user.code
             },

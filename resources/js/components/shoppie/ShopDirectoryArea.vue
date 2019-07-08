@@ -1,6 +1,6 @@
 <template>
     <div class="directory-area">
-        <div class="card card-small">
+        <div class="card card-small main">
             <div class="card-header p-0 border-bottom bg-light">
                 <header class="d-flex justify-content-between align-items-start" style="margin: .6rem !important;">
                     <visible-items :paginator-info="paginatorInfo" v-if="showShops && paginatorInfo"></visible-items>
@@ -51,12 +51,7 @@
         components: {UserShop},
         mounted() {
             this.fetchShops();
-        },
-        props: {
-            category: {
-                type: String,
-                required: false
-            }
+            this.listen();
         },
         data() {
             return {
@@ -64,7 +59,8 @@
                 page: 1,
                 loaded: false,
                 paginatorInfo: null,
-                ordering: ''
+                ordering: '',
+                categoryIds: []
             }
         },
         methods: {
@@ -76,7 +72,8 @@
             shopsRequest() {
                 return axios.post(graphql.api, {
                     query: graphql.shops,
-                    variables: this.variables
+                    variables: {filters: {categoryIds: JSON.stringify(this.categoryIds), ordering: this.ordering},
+                        count: graphql.rowCount, page: this.page}
                 });
             },
             loadShops(shops) {
@@ -87,24 +84,22 @@
             loadPage(page) {
                 this.page = page;
                 this.fetchShops();
+            },
+            listen() {
+                Bus.$on('category-ids', this.showFromCategory);
+            },
+            showFromCategory(ids) {
+                this.categoryIds = ids;
+                this.loadPage(1);
             }
         },
         computed: {
             showShops() {
                 return this.shops.length > 0;
-            },
-            variables() {
-                var variables = {count: graphql.rowCount, page: this.page};
-                if (this.category) {
-                    variables["category"] = this.category
-                }
-
-                return variables;
             }
         },
         watch: {
-            '$route': 'fetchShops',
-            categoryId(data) {
+            ordering(data) {
                 this.loadPage(1);
             }
         }

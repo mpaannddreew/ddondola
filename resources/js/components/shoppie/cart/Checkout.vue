@@ -57,31 +57,8 @@
                     </div>
                 </div>
             </div>
-            <div class="card mt-2 border-top">
-                <div class="card-header form-wizard-step border-right border-top-right-radius-0">
-                    <h5>
-                        <a class="btn btn-link collapsed" href="javascript:void(0)">
-                            <span><i class="material-icons">more_vert</i></span>
-                            <i class="material-icons">payment</i> Payment Method
-                        </a>
-                    </h5>
-                </div>
-                <div class="card-body border border-top-0">
-                    <div class="check-tab">
-                        <div class="checkout-form">
-                            <div class="chek-form">
-                                <div class="form-check">
-                                    <input class="form-check-input" required="" type="radio" name="payment_option" id="mtn" value="mtn" checked="">
-                                    <label class="form-check-label" for="mtn">MTN Mobile Money</label>
-                                    <p data-method="option3" class="payment-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
-                                </div>
-                            </div>
-                            <div class="form-wizard-buttons text-md-right">
-                                <button class="btn btn-lg btn-pill btn-outline-primary" type="button"><i class="material-icons">payment</i> Make Payment</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-wizard-buttons text-md-right py-2">
+                <button class="btn btn-lg btn-pill btn-outline-primary" type="button"><i class="material-icons">payment</i> Make Payment</button>
             </div>
         </div>
     </div>

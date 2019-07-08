@@ -13,7 +13,10 @@
 
 //use FannyPack\LaracombeeMultiDB\MultiDBFacade;
 
+//use Illuminate\Support\Facades\Auth;
+
 //Route::get('test', function () {
+//    Auth::user()->cart->checkOut();
 //    $recommendations = MultiDBFacade::db('shop-mine')->recommendTo(\Illuminate\Support\Facades\Auth::user(), 10)->wait();
 //    return response()->json(['success' => $recommendations['recomms']]);
 //    return response()->json(app(\Shoppie\Repository\ShopRepository::class)->id(1)->orderIds());

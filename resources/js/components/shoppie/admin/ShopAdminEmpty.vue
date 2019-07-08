@@ -1,6 +1,6 @@
 <template>
     <div class="directory-area">
-        <div class="card card-small h-100">
+        <div class="card card-small h-100 main">
             <div class="card-body d-flex flex-column">
                 <div class="error">
                     <div class="error__content">

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card card-small lo-stats border">
-            <div class="card-header border-bottom">
+            <div class="card-header border-bottom" v-if="!admin">
                 <h5 class="m-0"><i class="material-icons">people_outline</i> Following</h5>
             </div>
             <table class="table mb-0">
@@ -21,7 +21,7 @@
                     </tr>
                 </template>
                 <template v-else-if="hasUsers && loaded">
-                    <tr is="person" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :auth="auth" :indx="indx"></tr>
+                    <tr is="person" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :indx="indx" :admin="admin"></tr>
                 </template>
                 </tbody>
             </table>
@@ -33,7 +33,7 @@
 <script>
     import Person from "./users/Person";
     export default {
-        name: "Followers",
+        name: "Following",
         components: {Person},
         mounted() {
             this.fetchUsers();
@@ -55,10 +55,9 @@
                 type: Object,
                 required: false
             },
-            auth: {
+            admin: {
                 type: Boolean,
-                required: false,
-                default: true
+                default: false
             }
         },
         computed: {
@@ -105,7 +104,7 @@
                 this.fetchUsers();
             },
             isMe(id) {
-                if (this.auth)
+                if (Auth && !this.admin)
                     return parseInt(this.me.id) === parseInt(id);
 
                 return false;

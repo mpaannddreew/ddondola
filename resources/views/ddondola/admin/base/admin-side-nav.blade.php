@@ -20,9 +20,9 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @yield('categories-active')" href="{{ route('admin.shop-categories') }}">
+            <a class="nav-link @yield('categories-active')" href="{{ route('admin.categories') }}">
                 <i class="material-icons">work</i>
-                <span>Shop Categories</span>
+                <span>Categories</span>
             </a>
         </li>
         <li class="nav-item">

@@ -1,10 +1,7 @@
 <template>
     <li class="is-active" data-order="46895" @click="transitionTo">
         <div>
-            <span class="text-uppercase text-accent mb-1" style="display: block">Order-{{ order.code }}</span>
-            <span class="text-muted" style="display: block">
-                <i class="material-icons">date_range</i> {{ order.created_at|time }}
-            </span>
+            <span class="text-uppercase text-accent" style="display: block">Order {{ order.code }}</span>
         </div>
         <span class="order-indicator is-progress"></span>
     </li>

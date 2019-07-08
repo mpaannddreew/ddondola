@@ -217,8 +217,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Shoppie' => \Shoppie\Facades\Shoppie::class,
-        'Activity' => \Activity\Facades\ActivityManager::class,
         'Bank' => \Bank\Facades\Bank::class,
         'Payment' => \Teller\Facades\Payment::class,
         'Messenger' => \Messenger\Facades\Messenger::class,

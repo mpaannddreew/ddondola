@@ -27,15 +27,15 @@
     float: left;
 }
 
-.messenger .card {
+.messenger .card.main {
     height: calc(99.9vh - 3.75rem - 1px) !important;
 }
 
-.messenger .chat-area .card .card-header {
+.messenger .chat-area .card.main .card-header {
     padding: 0.35rem;
 }
 
-.messenger .chat-area .card .card-body {
+.messenger .chat-area .card.main > .card-body {
     background: #f5f6f8;
     padding: 0;
     overflow-y: auto;
@@ -43,27 +43,27 @@
     background: linear-gradient(rgba(248,248,248,.9), rgba(248,248,248,.9)), url("../images/bg/ddondola_doodle.jpg") repeat fixed;
 }
 
-.messenger .chat-list .card .input-group.input-group-seamless > input.form-control, .messenger .chat-list .card .input-group.input-group-seamless span > input.form-control  {
+.messenger .chat-list .card.main .input-group.input-group-seamless > input.form-control, .messenger .chat-list .card.main .input-group.input-group-seamless span > input.form-control  {
     border-radius: 500px !important;
 }
 
-.messenger .chat-list .card .card-body {
+.messenger .chat-list .card.main .card-body {
     padding: 0;
     overflow-y: hidden;
     overflow-x: hidden;
     background-color: #ffffff;
 }
 
-.messenger .chat-list .card .card-body .contacts {
+.messenger .chat-list .card.main .card-body .contacts {
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.messenger .card .card-header {
+.messenger .card.main .card-header {
     padding: 0.87rem 0.87rem;
 }
 
-.messenger .chat-list .card .card-header {
+.messenger .chat-list .card.main .card-header {
     padding: 0.49rem;
 }
 

@@ -1,6 +1,6 @@
 <template>
     <div class="directory-list close-directory-list">
-        <div class="card card-small h-100 border-left border-right">
+        <div class="card card-small h-100 border-left border-right main">
             <div class="card-header border-bottom border-top-radius-0 bg-light">
                 <div class="input-group input-group-seamless">
                     <div class="input-group-prepend">
@@ -13,36 +13,31 @@
             </div>
             <div class="card-body h-100">
                 <div class="center-xy" v-if="!loaded && !showCategories || !showCategories && loaded">
-                    <template v-if="!loaded && !showCategories">
-                        <div align="center">
-                            <div class="loader"></div>
-                            <p>loading categories...</p>
-                        </div>
-                    </template>
-                    <template v-else-if="!showCategories && loaded">
-                        <div align="center">
-                            <h4 class="m-0"><i class="material-icons">error</i></h4>
-                            <p class="m-0">No categories.</p>
-                        </div>
-                    </template>
+                    <div align="center" v-if="!loaded && !showCategories">
+                        <div class="loader"></div>
+                        <p>loading categories...</p>
+                    </div>
+                    <div align="center" v-else-if="!showCategories && loaded">
+                        <h4 class="m-0"><i class="material-icons">error</i></h4>
+                        <p class="m-0">No categories.</p>
+                    </div>
                 </div>
-                <div class="list-group" v-if="loaded && showCategories">
-                    <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex" @click="transitionHome" :class="{selected: showingAll}">
-                        <span class="category-name text-ellipsis"><i class="material-icons">library_books</i> All {{ directory|ucFirst }}</span>
-                        <i class="material-icons ml-auto text-right view-report">chevron_right</i>
-                    </a>
-                    <category :directory="directory" v-for="(category, indx) in categories" :category="category" :key="indx"></category>
-                </div>
+                <ul class="list-group" v-if="loaded && showCategories">
+                    <li class="list-group-item" v-for="(category, indx) in categories" :key="indx">
+                        <div class="custom-control custom-checkbox mb-1">
+                            <input type="checkbox" class="custom-control-input" :id="'category-' + indx" v-model="categoryIds" :value="category.id">
+                            <label class="custom-control-label" :for="'category-' + indx">{{ category.name }}</label>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Category from "./Category";
     export default {
         name: "Categories",
-        components: {Category},
         mounted() {
             this.fetchCategories();
         },
@@ -52,6 +47,7 @@
                 page: 1,
                 loaded: false,
                 paginatorInfo: null,
+                categoryIds: []
             }
         },
         props: {
@@ -76,39 +72,21 @@
                 this.loaded = true;
                 this.categories = categories.data.data.categories.data;
                 this.paginatorInfo = categories.data.data.categories.paginatorInfo;
-            },
-            transitionHome() {
-                this.$router.push("/" + this.directory);
             }
         },
         computed: {
             showCategories() {
                 return this.categories.length > 0;
-            },
-            showingAll() {
-                return typeof this.$route.params.category === 'undefined';
             }
         },
-        filters: {
-            ucFirst(data) {
-                return _.upperFirst(data);
+        watch: {
+            categoryIds(data) {
+                Bus.$emit('category-ids', data);
             }
         }
     }
 </script>
 
 <style scoped>
-    span {
-        display: block;
-    }
 
-    span.category-name {
-        font-weight: 300;
-        font-size: 1rem;
-    }
-
-    span.category-description {
-        font-size: .625rem;
-        color: #818ea3;
-    }
 </style>

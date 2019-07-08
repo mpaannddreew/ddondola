@@ -20,7 +20,8 @@
         },
         data() {
             return {
-                searching: false
+                searching: false,
+                limit: 10
             }
         },
         props: {
@@ -70,6 +71,7 @@
                         display: function(item) {
                             return item.name;
                         },
+                        limit: this.limit,
                         templates: {
                             header: '<div class="card border-bottom">\n' +
                             '            <article class="card-group-item">\n' +
@@ -99,6 +101,7 @@
                         display: function(item) {
                             return item.name;
                         },
+                        limit: this.limit,
                         templates: {
                             header: '<div class="card border-bottom">\n' +
                             '           <article class="card-group-item">\n' +
@@ -127,6 +130,7 @@
                         display: function(item) {
                             return item.name;
                         },
+                        limit: this.limit,
                         templates: {
                             header: '<div class="card border-bottom">\n' +
                             '            <article class="card-group-item">\n' +

@@ -22,6 +22,9 @@ window.DToast = function(type, title) {
     });
 };
 
+let auth = document.head.querySelector('meta[name="auth-state"]');
+window.Auth = parseInt(auth.content) === 1;
+
 /**
  * We'll loading jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This

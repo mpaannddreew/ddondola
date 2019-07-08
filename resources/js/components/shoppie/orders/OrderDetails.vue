@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="directory-area">
-            <div class="card card-small h-100" v-if="!loaded || (!hasProducts && loaded)">
+            <div class="card card-small h-100 main" v-if="!loaded || (!hasProducts && loaded)">
                 <div class="card-body">
                     <div class="center-xy">
                         <div align="center" v-if="!loaded">
@@ -16,35 +16,26 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-small" v-else-if="hasProducts && loaded">
+            <div class="card card-small main" v-else-if="hasProducts && loaded">
                 <div class="card-body h-100">
-                    <div class="header-navbar collapse d-lg-flex p-0 bg-white sticky border-bottom">
-                        <div class="container p-0 px-4">
-                            <div class="row">
-                                <div class="col-12 col-sm-6 text-center text-sm-left mb-4 mb-sm-0">
-                                    <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link active"><i class="fa fa-shopping-bag"></i> Order Details</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-12 col-sm-6 d-flex align-items-center">
-                                    <div class="ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">
-                                        <a class="btn btn-danger btn-sm" href="javascript:void(0)" @click="transitionBack">
-                                            <i class="material-icons">clear</i> Close
-                                        </a>
-                                        <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop">
-                                            <i class="material-icons">description</i> Invoice
-                                        </a>
-                                        <a class="btn btn-white btn-sm" :href="messengerUrl" v-if="shop">
-                                            <i class="material-icons">chat</i> Message Buyer
-                                        </a>
-                                    </div>
+                    <div class="p-5">
+                        <div class="row mb-2">
+                            <div class="col-12 col-sm-6 text-center text-sm-left mb-4 mb-sm-0">
+                                <a class="btn btn-white btn-sm text-danger" href="javascript:void(0)" @click="transitionBack">
+                                    <i class="material-icons">clear</i>
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-6 d-flex align-items-center">
+                                <div class="ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">
+                                    <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop">
+                                        <i class="material-icons">description</i> Invoice
+                                    </a>
+                                    <a class="btn btn-white btn-sm" :href="messengerUrl" v-if="shop">
+                                        <i class="material-icons">chat</i> Message Buyer
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="p-2">
                         <div class="flat-card is-auto order-list-card p-4 border bg-white border-radius">
                             <!-- Orders team member -->
                             <div class="order-block" v-if="shop">
@@ -85,56 +76,52 @@
                                 </div>
                             </div>
                             <!-- Order details -->
-                            <section class="cart-section card border mt-4">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="cart-table table-responsive">
-                                            <table class="table table-bordered text-center">
-                                                <thead>
-                                                <tr class="row-1" style="border-bottom: 0;">
-                                                    <th class="row-title"><p>Item</p></th>
-                                                    <th class="row-title"><p>Product Name</p></th>
-                                                    <th class="row-title"><p>Price</p></th>
-                                                    <th class="row-title"><p>Quantity</p></th>
-                                                    <th class="row-title"><p>Subtotal</p></th>
-                                                    <th class="row-title"><p></p></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <template v-for="(product, indx) in products">
-                                                    <tr class="cart-item" v-for="(product, indx) in products" :key="indx">
-                                                        <td class="row-img lo-stats__image" :class="{'border-bottom-0': shop}">
-                                                            <img class="border rounded" :src="product.images[0].url" alt="product-img">
-                                                        </td>
-                                                        <td class="product-name" :class="{'border-bottom-0': shop}"><a :href="'/products/' + product.code">{{ product.name }}</a></td>
-                                                        <td class="product-price" :class="{'border-bottom-0': shop}">{{ product.currencyCode }} {{ product.pivot.price }}</td>
-                                                        <td class="product-quantity" :class="{'border-bottom-0': shop}">{{ product.pivot.quantity }}</td>
-                                                        <td class="product-subtotal" :class="{'border-bottom-0': shop}">{{ product.currencyCode }} {{ product.pivot.sum }}</td>
-                                                        <td class="row-close close-2">
-                                                            <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group">
-                                                                <a href="javascript:void(0)" class="btn btn-white text-success">
-                                                                    <i class="material-icons">check</i>
-                                                                </a>
-                                                                <a href="javascript:void(0)" class="btn btn-white text-danger">
-                                                                    <i class="material-icons">clear</i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </template>
-                                                <tr class="row-6" v-if="!shop">
-                                                    <td class="text-left border-bottom-0 text-uppercase" colspan="4">Order Total</td>
-                                                    <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum }}</td>
-                                                    <td></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                            <section class="cart-section card mt-4">
+                                <div class="cart-table table-responsive">
+                                    <table class="table table-bordered text-center">
+                                        <thead>
+                                        <tr class="row-1" style="border-bottom: 0;">
+                                            <th class="row-title"><p>Item</p></th>
+                                            <th class="row-title"><p>Product Name</p></th>
+                                            <th class="row-title"><p>Price</p></th>
+                                            <th class="row-title"><p>Quantity</p></th>
+                                            <th class="row-title"><p>Subtotal</p></th>
+                                            <th class="row-title"><p></p></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <template v-for="(product, indx) in products">
+                                            <tr class="cart-item" v-for="(product, indx) in products" :key="indx">
+                                                <td class="row-img lo-stats__image" :class="{'border-bottom-0': shop}">
+                                                    <img class="border rounded" :src="product.images[0].url" alt="product-img">
+                                                </td>
+                                                <td class="product-name" :class="{'border-bottom-0': shop}"><a :href="'/products/' + product.code">{{ product.name }}</a></td>
+                                                <td class="product-price" :class="{'border-bottom-0': shop}">{{ product.currencyCode }} {{ product.pivot.price }}</td>
+                                                <td class="product-quantity" :class="{'border-bottom-0': shop}">{{ product.pivot.quantity }}</td>
+                                                <td class="product-subtotal" :class="{'border-bottom-0': shop}">{{ product.currencyCode }} {{ product.pivot.sum }}</td>
+                                                <td class="row-close close-2">
+                                                    <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group">
+                                                        <a href="javascript:void(0)" class="btn btn-white text-success">
+                                                            <i class="material-icons">check</i>
+                                                        </a>
+                                                        <a href="javascript:void(0)" class="btn btn-white text-danger">
+                                                            <i class="material-icons">clear</i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        <tr class="row-6" v-if="!shop">
+                                            <td class="text-left border-bottom-0 text-uppercase" colspan="4">Order Total</td>
+                                            <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum }}</td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </section>
-                            <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
                         </div>
+                        <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
                     </div>
                 </div>
             </div>

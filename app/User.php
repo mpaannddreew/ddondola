@@ -14,6 +14,7 @@ use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanFavorite;
 use Overtrue\LaravelFollow\Traits\CanFollow;
 use Overtrue\LaravelFollow\Traits\CanLike;
+use Shoppie\Shop;
 use Shoppie\Traits\Buyer;
 use Shoppie\Traits\Seller;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -151,5 +152,25 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function settings($item) {
         return collect($this->settings)->get($item, '');
+    }
+
+    public function resolveProfile() {
+        return [
+            'phone_number' => $this->profile('phone_number'),
+            'description' => $this->profile('description'),
+            'address' => $this->profile('address')
+        ];
+    }
+
+    public function productIdsForCommunityLikedShop() {
+        return $this->followings->flatMap(function (User $user) {
+            return $user->productIdsForLikedShop();
+        });
+    }
+
+    public function productIdsForLikedShop() {
+        return $this->likes(Shop::class)->get()->flatMap(function (Shop $shop) {
+            return $shop->productIds();
+        })->all();
     }
 }

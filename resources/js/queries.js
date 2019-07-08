@@ -9,6 +9,7 @@ window.graphql = {
                 name
                 code
                 description
+                shopCount
             }
             paginatorInfo {
                 count
@@ -48,6 +49,9 @@ window.graphql = {
             coverPicture {
               url
             }
+            profile {
+              email
+            }
           }
         }`,
     shopCategoriesAndBrands: `query shopCategoriesAndBrands($id: ID! $count: Int! $page: Int!) {
@@ -59,12 +63,10 @@ window.graphql = {
                 id
                 name
                 productCount
-                categories(count: $count page: $page) {
-                  data {
-                    id
-                    name
-                    productCount
-                  }
+                categories {
+                  id
+                  name
+                  productCount
                 }
               }
             }
@@ -73,6 +75,35 @@ window.graphql = {
                 id
                 name
                 productCount
+              }
+            }
+          }
+        }`,
+    shopCategoriesAndSubCategories: `query shopCategoriesAndSubCategories($shop: String! $count: Int! $page: Int!) {
+          shop:shopByCode(shop: $shop) {
+            subCategoriesCount
+            name
+            categories(count: $count page: $page) {
+              data {
+                id
+                code
+                name
+                productCount
+                categories {
+                  id
+                  name
+                  productCount
+                }
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
               }
             }
           }
@@ -135,6 +166,14 @@ window.graphql = {
             name
             productCount
             categoryCount
+          }
+        }`,
+    createShopCategory: `mutation createShopCategory($category: ShopResource!) {
+          category:createCategory(category: $category) {
+            id
+            name
+            shopCount
+            description
           }
         }`,
     shopProductSubCategories: `query productSubCategories($shop: String! $count: Int! $page: Int!){
@@ -295,8 +334,8 @@ window.graphql = {
             }
           }
         }`,
-    shops: `query shops($category: String $count: Int! $page: Int!){
-          shops(category: $category count: $count page: $page) {
+    shops: `query shops($filters: ShopFilter $count: Int! $page: Int!){
+          shops(filters: $filters count: $count page: $page) {
             data {
               id
               code
@@ -330,6 +369,41 @@ window.graphql = {
         }`,
     myShops: `query myShops($count: Int! $page: Int!) {
           me {
+            shops(count: $count page: $page) {
+              data {
+                id
+                code
+                name
+                productCount
+                likes
+                reviewCount
+                averageRating
+                avatar{
+                  url
+                }
+                coverPicture {
+                  url
+                }
+                currencyCode
+                category {
+                  name
+                }
+              }
+              paginatorInfo {
+                count
+                currentPage
+                firstItem
+                hasMorePages
+                lastItem
+                lastPage
+                perPage
+                total
+              }
+            }
+          }
+        }`,
+    userShops: `query userShops($user: String! $count: Int! $page: Int!) {
+          user:userByCode(user: $user) {
             shops(count: $count page: $page) {
               data {
                 id
@@ -445,6 +519,28 @@ window.graphql = {
             }
           }
         }`,
+    featuredProducts: `query featuredProducts {
+          products: featuredProducts {
+            name
+            code
+            reviewCount
+            averageRating
+            images {
+              url
+            }
+          }
+        }`,
+    featuredShops: `query featuredShops {
+          shops:featuredShops {
+            code
+            name
+            reviewCount
+            averageRating
+            avatar {
+              url
+            }
+          }
+        }`,
     productStock: `query productStock($id: ID! $type: String! $count: Int! $page: Int!){
           product(id: $id) {
             stock(type: $type count: $count page: $page) {
@@ -525,6 +621,11 @@ window.graphql = {
             }
             followerCount
             followingCount
+            profile {
+                phone_number
+                description
+                address
+            }
           }
         }`,
     users: `query users($count: Int! $page: Int!) {
@@ -1475,6 +1576,13 @@ window.graphql = {
         }`,
     editCategory: `mutation editCategory($categoryId: ID! $category: ShopResource!) {
           editCategory(categoryId: $categoryId category: $category) {
+            id
+            name
+            description
+          }
+        }`,
+    editShopCategory: `mutation editShopCategory($categoryId: ID! $category: ShopResource!) {
+          editShopCategory(categoryId: $categoryId category: $category) {
             id
             name
             description

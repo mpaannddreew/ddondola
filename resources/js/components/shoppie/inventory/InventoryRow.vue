@@ -15,17 +15,19 @@
             </div>
         </td>
         <td class="lo-stats__items text-center">{{ product.quantity }}</td>
-        <td class="lo-stats__items text-center">{{ product.brand.name }}</td>
-        <td class="lo-stats__items text-center">{{ product.category.name }}</td>
-        <td class="lo-stats__items text-center">{{ product.subcategory.name }}</td>
+        <td class="lo-stats__items text-center" v-if="!admin">{{ product.brand.name }}</td>
+        <td class="lo-stats__items text-center" v-if="!admin">{{ product.category.name }}</td>
+        <td class="lo-stats__items text-center" v-if="!admin">{{ product.subcategory.name }}</td>
         <td class="lo-stats__items text-center">{{ product.currencyCode }} {{ product.discountedPrice }}</td>
         <td>
             <div class="btn-group d-table ml-auto" role="group">
                 <a :href="productUrl" class="btn btn-sm btn-white" title="">
                     <i class="fa fa-link"></i> Details
                 </a>
-                <a :href="editUrl" class="btn btn-sm btn-white" title=""><i class="material-icons">mode_edit</i></a>
-                <a :href="stockUrl" class="btn btn-sm btn-white"><i class="material-icons">local_mall</i></a>
+                <template v-if="!admin">
+                    <a :href="editUrl" class="btn btn-sm btn-white" title=""><i class="material-icons">mode_edit</i></a>
+                    <a :href="stockUrl" class="btn btn-sm btn-white"><i class="material-icons">local_mall</i></a>
+                </template>
             </div>
         </td>
     </tr>
@@ -41,6 +43,10 @@
             product: {
                 type: Object,
                 required: true
+            },
+            admin: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {

@@ -40,9 +40,9 @@
                     <th></th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Quantity</th>
-                    <th class="text-center">Brand</th>
-                    <th class="text-center">Category</th>
-                    <th class="text-center">Subcategory</th>
+                    <th class="text-center" v-if="!admin">Brand</th>
+                    <th class="text-center" v-if="!admin">Category</th>
+                    <th class="text-center" v-if="!admin">Subcategory</th>
                     <th class="text-center">Price</th>
                     <th class="text-right"></th>
                 </tr>
@@ -63,7 +63,7 @@
                     </tr>
                 </template>
                 <template v-else-if="showProducts && loaded">
-                    <tr is="inventory-row" v-for="(product, indx) in products" :key="indx" :product="product"></tr>
+                    <tr is="inventory-row" v-for="(product, indx) in products" :key="indx" :product="product" :admin="admin"></tr>
                 </template>
                 </tbody>
             </table>
@@ -98,6 +98,10 @@
             shop: {
                 type: String,
                 required: true
+            },
+            admin: {
+                type: Boolean,
+                default: false
             }
         },
         methods: {

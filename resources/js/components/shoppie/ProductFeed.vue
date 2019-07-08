@@ -1,80 +1,49 @@
 <template>
     <div>
-        <div class="card card-small border">
-            <div class="card-header border-bottom">
-                <h5 class="m-0"><i class="material-icons">local_mall</i> Suggestions</h5>
-            </div>
-            <div class="card-body p-0">
-                <div align="center" class="p-4" v-if="!loaded">
-                    <div class="loader"></div>
-                    <p class="m-0">Loading suggestions...</p>
-                </div>
-                <div align="center" class="p-4" v-if="!showProducts && loaded">
-                    <h4 class="m-0"><i class="material-icons">error</i></h4>
-                    <p class="m-0">No suggestions available</p>
-                </div>
-                <template v-if="showProducts && loaded">
-                    <feed-product v-for="(product, indx) in products" :product="product" :key="indx"></feed-product>
-                </template>
-            </div>
+        <ul class="nav nav-tabs border-bottom-0">
+            <li class="nav-item mr-1">
+                <a class="nav-link border-radius" href="javascript:void(0)" :class="{active: latest}"
+                   @click="activateTab('latest')"><i class="material-icons">update</i> Latest</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link border-radius" href="javascript:void(0)" :class="{active: popular}"
+                   @click="activateTab('popular')"><i class="material-icons">trending_up</i> Popular</a>
+            </li>
+            <li class="nav-item ml-1">
+                <a class="nav-link border-radius" href="javascript:void(0)" :class="{active: recommended}"
+                   @click="activateTab('recommended')"><i class="material-icons">verified_user</i> Recommended</a>
+            </li>
+        </ul>
+        <div class="py-1">
+            <product-feed-tab :showing="tab"></product-feed-tab>
         </div>
-        <template v-if="loadingMore">
-            <div align="center" class="p-4"><div class="loader"></div></div>
-        </template>
-        <a href="javascript:void(0)" v-if="!loadingMore && loaded" @click="loadMore" class="btn-view btn-load-more border" :class="{disabled: loaderDisabled}"></a>
     </div>
 </template>
 
 <script>
-    import FeedProduct from "./products/FeedProduct";
+    import ProductFeedTab from "./ProductFeedTab";
     export default {
         name: "ProductFeed",
-        components: {FeedProduct},
-        mounted() {
-            this.initialCount();
-            this.fetchProducts();
-        },
+        components: {ProductFeedTab},
         data() {
             return {
-                products: [],
-                loaded: false,
-                loadingMore: false,
-                page: 1,
-                count: 0,
-                paginatorInfo: null
+                tab: 'latest'
             }
         },
         computed: {
-            showProducts() {
-                return this.products.length > 0;
+            latest() {
+                return this.tab === 'latest';
             },
-            loaderDisabled() {
-                if (this.paginatorInfo) {
-                    return !this.paginatorInfo.hasMorePages;
-                }
-
-                return true;
+            popular() {
+                return this.tab === 'popular';
+            },
+            recommended() {
+                return this.tab === 'recommended';
             }
         },
         methods: {
-            fetchProducts() {
-                axios.post(graphql.api, {
-                    query: graphql.myProductFeed,
-                    variables: {count: this.count, page: this.page}
-                }).then(this.loadProducts).catch(function (error) {});
-            },
-            loadProducts(response) {
-                this.loaded = true;
-                this.products = response.data.data.me.products.data;
-                this.paginatorInfo = response.data.data.me.products.paginatorInfo;
-            },
-            initialCount() {
-                this.count = graphql.rowCount;
-            },
-            loadMore() {
-                this.loadingMore = true;
-                this.count += graphql.rowCount;
-                this.fetchProducts();
+            activateTab(tab) {
+                this.tab = tab;
             }
         }
     }

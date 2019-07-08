@@ -42,9 +42,28 @@
                 <div class="price-add-to-cart m-0 pt-3">
                     <span class="price w-100">
                         <span class="electro-price">
-                            <ins><span class="amount">{{ product.currencyCode }} {{ product.discountedPrice }}</span></ins>
-                            <del v-if="product.discount"><span class="amount">{{ product.currencyCode }} {{ product.price }}</span></del>
-                            <span class="amount"></span>
+                            <div class="products-grid p-0">
+                                <div class="product m-0">
+                                    <div class="d-flex mt-2">
+                                        <ul class="price list-inline no-margin my-auto">
+                                            <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice }}</li>
+                                            <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price }}</li>
+                                        </ul>
+                                        <div class="hover-overlay d-flex align-items-center justify-content-center ml-auto" style="border-radius: 0 !important;" v-if="auth">
+                                            <div class="CTA d-flex align-items-center justify-content-center">
+                                                <a class="border-radius" href="javascript:void(0)" @click="cartAction"
+                                                   :class="{disabled: cartStatusLoading || soldOut, 'border-primary text-primary': inCart}">
+                                                    <i class="fa fa-shopping-cart" :class="{'text-primary': inCart}"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" @click="favouritesAction"
+                                                   :class="{disabled: favoriteStatusLoading, 'border-primary text-primary': isFavorite}" class="border-radius ml-1">
+                                                    <i class="fa fa-heart" :class="{'text-primary': isFavorite}"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </span>
                     </span>
                 </div>
@@ -57,9 +76,15 @@
     export default {
         name: "DirectoryProduct",
         mounted() {
+            this.loadProduct();
         },
         data() {
-            return {}
+            return {
+                inCart: false,
+                isFavorite: false,
+                cartStatusLoading: false,
+                favoriteStatusLoading: false
+            }
         },
         props: {
             product: {
@@ -74,12 +99,87 @@
             productUrl() {
                 return '/products/' + this.product.code;
             },
+            soldOut() {
+                return this.product.quantity === 0;
+            },
             carouselId() {
                 return 'main-slide-' + this.product.id;
+            },
+            auth() {
+                return Auth;
             }
         },
         methods: {
-
+            loadProduct() {
+                if (this.auth) {
+                    let requests = [this.isInCart(), this.isInFavorites()];
+                    axios.all(requests).then(axios.spread(this.loadStatus));
+                }
+            },
+            loadStatus(cartStatus, favoritesStatus) {
+                this.cartStatus(cartStatus);
+                this.favoritesStatus(favoritesStatus);
+            },
+            cartStatus(response) {
+                this.cartStatusLoading = false;
+                this.inCart = response.data.data.inCart;
+            },
+            cartStatusWithEvents(response) {
+                this.cartStatus(response);
+                if (this.inCart) {
+                    Bus.$emit('cart-size', {type: 'increase', count: 1});
+                    DToast("success", "Product added to cart");
+                }else {
+                    Bus.$emit('cart-size', {type: 'decrease', count: 1});
+                    DToast("success", "Product removed from cart");
+                }
+            },
+            favoritesStatus(response) {
+                this.favoriteStatusLoading = false;
+                this.isFavorite = response.data.data.isFavorite;
+            },
+            isInCart() {
+                this.cartStatusLoading = true;
+                return axios.post(graphql.api, {
+                    query: graphql.inCart,
+                    variables: {id: this.product.id}
+                });
+            },
+            isInFavorites() {
+                this.favoriteStatusLoading = true;
+                return axios.post(graphql.api, {
+                    query: graphql.isFavorite,
+                    variables: {id: this.product.id}
+                });
+            },
+            cartAction() {
+                this.cartStatusLoading = true;
+                if (this.inCart) {
+                    axios.post(graphql.api, {
+                        query: graphql.removeFromCart,
+                        variables: {id: this.product.id}
+                    }).then(this.cartStatusWithEvents).catch(function (error) {});
+                } else {
+                    axios.post(graphql.api, {
+                        query: graphql.addToCart,
+                        variables: {id: this.product.id, quantity: 1}
+                    }).then(this.cartStatusWithEvents).catch(function (error) {});
+                }
+            },
+            favouritesAction() {
+                this.favoriteStatusLoading = true;
+                if (this.isFavorite) {
+                    axios.post(graphql.api, {
+                        query: graphql.removeFromFavorites,
+                        variables: {id: this.product.id}
+                    }).then(this.favoritesStatus).catch(function (error) {});
+                } else {
+                    axios.post(graphql.api, {
+                        query: graphql.addToFavorites,
+                        variables: {id: this.product.id}
+                    }).then(this.favoritesStatus).catch(function (error) {});
+                }
+            }
         }
     }
 </script>

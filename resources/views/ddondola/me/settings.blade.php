@@ -10,7 +10,5 @@
     </div>
 @endsection
 @section('main')
-    <div class="container py-2">
-        <account-settings></account-settings>
-    </div>
+    <account-settings></account-settings>
 @endsection

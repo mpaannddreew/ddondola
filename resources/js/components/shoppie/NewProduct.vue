@@ -365,7 +365,7 @@
                     var category = Collect(this.categories).first(function (value, key) {
                         return value.id === data;
                     });
-                    this.subCategories = category.categories.data;
+                    this.subCategories = category.categories;
                 }
             },
             subCategoryId(data) {

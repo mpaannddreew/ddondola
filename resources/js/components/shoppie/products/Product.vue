@@ -66,11 +66,6 @@
             product: {
                 type: Object,
                 required: true
-            },
-            auth: {
-                type: Boolean,
-                required: false,
-                default: true
             }
         },
         computed: {
@@ -85,6 +80,9 @@
             },
             carouselId() {
                 return 'main-slide-' + this.product.id;
+            },
+            auth() {
+                return Auth;
             }
         },
         methods: {

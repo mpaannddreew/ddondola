@@ -50,13 +50,13 @@
                             </div>
                             <div align="center" v-if="!showShops && loaded">
                                 <h4 class="m-0"><i class="material-icons">error</i></h4>
-                                <p class="m-0">You have not created any shops yet!</p>
+                                <p class="m-0">{{ noShopMessage }}</p>
                             </div>
                         </td>
                     </tr>
                 </template>
                 <template v-else-if="showShops && loaded">
-                    <tr is="user-shop" v-for="(shop, indx) in shops" :key="indx" :shop="shop"></tr>
+                    <tr is="user-shop" v-for="(shop, indx) in shops" :key="indx" :shop="shop" :admin="admin"></tr>
                 </template>
                 </tbody>
             </table>
@@ -85,6 +85,38 @@
         computed: {
             showShops() {
                 return this.shops.length > 0;
+            },
+            query() {
+                if (this.user) {
+                    return graphql.userShops;
+                }
+
+                return graphql.myShops
+            },
+            variables() {
+                var variables = {count: graphql.rowCount, page: this.page};
+                if (this.user) {
+                    variables["user"] = this.user;
+                }
+
+                return variables;
+            },
+            noShopMessage() {
+                if (this.user) {
+                    return 'User has not created any shops yet!';
+                }
+
+                return 'You have not created any shops yet!';
+            }
+        },
+        props: {
+            user: {
+                type: String,
+                required: false
+            },
+            admin: {
+                type: Boolean,
+                default: false
             }
         },
         methods: {
@@ -92,18 +124,30 @@
                 this.loaded = false;
                 this.shops = [];
                 axios.post(graphql.api, {
-                    query: graphql.myShops,
-                    variables: {count: graphql.rowCount, page: this.page}
+                    query: this.query,
+                    variables: this.variables
                 }).then(this.loadShops).catch(function (error) {});
             },
             loadShops(shops) {
                 this.loaded = true;
-                this.shops = shops.data.data.me.shops.data;
-                this.paginatorInfo = shops.data.data.me.shops.paginatorInfo;
+                if (this.user) {
+                    this.shops = shops.data.data.user.shops.data;
+                    this.paginatorInfo = shops.data.data.user.shops.paginatorInfo;
+                }else {
+                    this.shops = shops.data.data.me.shops.data;
+                    this.paginatorInfo = shops.data.data.me.shops.paginatorInfo;
+                }
             },
             loadPage(page) {
                 this.page = page;
                 this.fetchShops();
+            }
+        },
+        watch: {
+            user(data) {
+                if (data) {
+                    this.loadPage(1);
+                }
             }
         }
     }

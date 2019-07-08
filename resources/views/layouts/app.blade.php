@@ -9,6 +9,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="auth-state" @guest content="0" @else content="1" @endguest>
     <title>@section('title'){{ config('app.name', 'Ddondola') }} - @show</title>
 
     <!-- Stylesheets

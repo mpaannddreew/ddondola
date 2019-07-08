@@ -25,7 +25,6 @@ type Country {
 
 type UserProfile {
     phone_number: String
-    email: String
     description: String
     address: String
 }
@@ -52,7 +51,7 @@ type User implements Muddondozi {
     last_name: String!
     email: String!
     cart: Cart @hasOne
-    profile: UserProfile!
+    profile: UserProfile! @method(name: "resolveProfile")
     settings: UserSettings!
     active: Boolean!
     avatar: Image! @method(name: "avatar")

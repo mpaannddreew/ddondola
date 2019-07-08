@@ -10,12 +10,20 @@ class UsersTableSeeder extends Seeder
     protected $countries;
 
     /**
+     * @var \Shoppie\Repository\ShopCategoryRepository
+     */
+    protected $categories;
+
+    /**
      * UsersTableSeeder constructor.
      * @param \Ddondola\Repositories\CountryRepository $countries
+     * @param \Shoppie\Repository\ShopCategoryRepository $categories
      */
-    public function __construct(\Ddondola\Repositories\CountryRepository $countries)
+    public function __construct(\Ddondola\Repositories\CountryRepository $countries,
+                                \Shoppie\Repository\ShopCategoryRepository $categories)
     {
         $this->countries = $countries;
+        $this->categories = $categories;
     }
 
     /**
@@ -58,7 +66,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         foreach ($shop_categories as $category) {
-            \Shoppie\Facades\Shoppie::newShopCategory($category);
+            $this->categories->create($category);
         }
 
     }

@@ -1,17 +1,15 @@
 <template>
-    <div>
-        <template v-if="!loaded">
-            <div align="center" class="p-4">
+    <div class="contacts h-100">
+        <div class="center-xy" v-if="!loaded || !hasContacts && loaded">
+            <div align="center" v-if="!loaded">
                 <div class="loader"></div>
                 <p>loading conversations...</p>
             </div>
-        </template>
-        <template v-else-if="!hasContacts && loaded">
-            <div align="center" class="p-4">
+            <div align="center" v-else-if="!hasContacts && loaded">
                 <h4 class="m-0"><i class="material-icons">error</i></h4>
-                <p class="m-0">No contacts.</p>
+                <p class="m-0">No conversations.</p>
             </div>
-        </template>
+        </div>
         <ul class="contact-list" v-else-if="hasContacts && loaded">
             <li is="contact" v-for="(contact, indx) in contacts" :key="indx" :home-url="homeUrl" :contact="contact"></li>
         </ul>
