@@ -1,0 +1,11 @@
+{
+    "name": "ddondola/bank",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mpande Andrew",
+            "email": "andrewmvp007@gmail.com"
+        }
+    ],
+    "require": {}
+}

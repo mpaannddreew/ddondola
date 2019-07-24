@@ -15,15 +15,23 @@ class UsersTableSeeder extends Seeder
     protected $categories;
 
     /**
+     * @var \Ddondola\Repositories\UserRepository
+     */
+    protected $users;
+
+    /**
      * UsersTableSeeder constructor.
      * @param \Ddondola\Repositories\CountryRepository $countries
      * @param \Shoppie\Repository\ShopCategoryRepository $categories
+     * @param \Ddondola\Repositories\UserRepository $users
      */
     public function __construct(\Ddondola\Repositories\CountryRepository $countries,
-                                \Shoppie\Repository\ShopCategoryRepository $categories)
+                                \Shoppie\Repository\ShopCategoryRepository $categories,
+                                \Ddondola\Repositories\UserRepository $users)
     {
         $this->countries = $countries;
         $this->categories = $categories;
+        $this->users = $users;
     }
 
     /**
@@ -33,7 +41,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        \Bank\Facades\Bank::adminAccount();
         $this->countries->addCountries();
         $country = $this->countries->code('ug');
 
@@ -53,6 +60,27 @@ class UsersTableSeeder extends Seeder
                 'email' => 'faridah@ddondola.com',
                 'email_verified_at' => \Carbon\Carbon::now(),
                 'password' => bcrypt('secret')
+            ],
+            [
+                'first_name' => 'Hajara',
+                'last_name' => 'Naluwalo',
+                'email' => 'hajara@ddondola.com',
+                'email_verified_at' => \Carbon\Carbon::now(),
+                'password' => bcrypt('secret')
+            ],
+            [
+                'first_name' => 'Joze',
+                'last_name' => 'Ddiba',
+                'email' => 'joze@ddondola.com',
+                'email_verified_at' => \Carbon\Carbon::now(),
+                'password' => bcrypt('secret')
+            ],
+            [
+                'first_name' => 'Mikel',
+                'last_name' => 'Terzz',
+                'email' => 'mikel@ddondola.com',
+                'email_verified_at' => \Carbon\Carbon::now(),
+                'password' => bcrypt('secret')
             ]
         ];
 
@@ -69,5 +97,39 @@ class UsersTableSeeder extends Seeder
             $this->categories->create($category);
         }
 
+        $shops = [
+            [
+                'name' => 'Apex Beauty Parlour',
+                'profile' => [
+                    'email' => 'info@apex.com',
+                    'phone_number' => '0700000000',
+                    'description' => 'This is a beauty shop',
+                    'address' => 'Kiira, Bulindo'
+                ]
+            ],
+            [
+                'name' => 'Electro',
+                'profile' => [
+                    'email' => 'info@electro.com',
+                    'phone_number' => '0700000001',
+                    'description' => 'This is an electronics shop',
+                    'address' => 'Kiira, Mulawa'
+                ]
+            ],
+            [
+                'name' => 'Duplex Door Mechanics',
+                'profile' => [
+                    'email' => 'info@duplex.com',
+                    'phone_number' => '0700000002',
+                    'description' => 'This is a mechanics shop',
+                    'address' => 'Kiira, Nsasa'
+                ]
+            ]
+        ];
+        $category = $this->categories->id(1);
+        $user = $this->users->id(1);
+        foreach ($shops as $shop) {
+            $user->newShop($category, $shop);
+        }
     }
 }

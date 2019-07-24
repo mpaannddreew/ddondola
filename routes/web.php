@@ -11,16 +11,18 @@
 |
 */
 
-//use FannyPack\LaracombeeMultiDB\MultiDBFacade;
+use Illuminate\Support\Facades\Auth;
 
-//use Illuminate\Support\Facades\Auth;
-
-//Route::get('test', function () {
-//    Auth::user()->cart->checkOut();
-//    $recommendations = MultiDBFacade::db('shop-mine')->recommendTo(\Illuminate\Support\Facades\Auth::user(), 10)->wait();
-//    return response()->json(['success' => $recommendations['recomms']]);
-//    return response()->json(app(\Shoppie\Repository\ShopRepository::class)->id(1)->orderIds());
+//Route::get('test', function (\Illuminate\Http\Request $request) {
+//    return response()->json($request->user()->cart->getDenominations());
 //});
+
+Route::middleware(['web'])->group(function (){
+    Route::get('/', function (\Illuminate\Http\Request $request){
+        return view('welcome');
+    })->name('welcome');
+    Route::view('contact', 'contact')->name('contact');
+});
 
 Auth::routes(['verify' => true]);
 

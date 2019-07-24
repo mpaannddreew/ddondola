@@ -1,14 +1,11 @@
 <template>
     <div>
         <div class="card card-small lo-stats border">
-            <div class="card-header border-bottom" v-if="!admin">
-                <h5 class="m-0"><i class="material-icons">people_outline</i> Following</h5>
-            </div>
             <table class="table mb-0">
                 <tbody>
                 <template v-if="!loaded || (!hasUsers && loaded)">
                     <tr>
-                        <td style="border-top: none !important;">
+                        <td style="border-top: none !important;" class="p-3">
                             <div align="center" v-if="!loaded">
                                 <div class="loader"></div>
                                 <p class="m-0">Loading following...</p>

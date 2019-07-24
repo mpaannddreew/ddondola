@@ -50,12 +50,6 @@
                     @if(!Auth::user()->is($user))
                         <user-actions :user="{{ $user }}" my-messenger-url="{{ route("my.messenger") }}"></user-actions>
                     @endif
-                @else
-                    <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" aria-label="Table row actions">
-                        <a href="{{ route('login') }}" class="btn btn-white text-uppercase">
-                            <i class="material-icons">lock_open</i> Login To connect!
-                        </a>
-                    </div>
                 @endauth
             </div>
         </div>

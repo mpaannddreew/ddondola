@@ -77,4 +77,8 @@ class UserRepository
 
         return false;
     }
+
+    public function builder() {
+        return User::select();
+    }
 }

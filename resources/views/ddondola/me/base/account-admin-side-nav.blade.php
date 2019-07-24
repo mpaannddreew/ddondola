@@ -57,7 +57,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link @yield('orders-active')" href="{{ route('my.orders') }}">
-                <i class="material-icons">description</i>
+                <i class="material-icons">assignment</i>
                 <span>Orders</span>
             </a>
         </li>

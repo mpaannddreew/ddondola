@@ -10,7 +10,7 @@ namespace Ddondola\Traits;
 
 
 use Messenger\Traits\Converser;
-use Teller\Traits\Transactor;
+use Bank\Traits\Transactor;
 
 trait Muddondozi
 {

@@ -51,7 +51,7 @@ class AccountQuery
      */
     public function paginatedUsers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $builder = User::select();
+        $builder = app(UserRepository::class)->builder();
         if ($context->user()) {
             $myCountry = collect($args)->get('myCountry', true);
             if ($myCountry) {
@@ -120,14 +120,15 @@ class AccountQuery
      */
     public function searchUsers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
+        $value = "%" . collect($args)->get("name") . "%";
         $users = $this->status(User::select());
         if ($context->user()) {
             $users = $users->whereHas('country', function ($q) use ($context) {
                 $q->where('id', $context->user()->country->id);
             });
         }
-        return $users->where("first_name", "like", "%" . collect($args)->get("name") . "%")
-            ->orWhere("last_name", "like", "%" . collect($args)->get("name") . "%")
+        return $users->where("first_name", "like", $value)
+            ->orWhere("last_name", "like", $value)
             ->where("active", "=", 1)->get();
     }
 

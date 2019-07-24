@@ -1,6 +1,6 @@
 <ul class="nav flex-column home">
     <li class="nav-item @yield('home-active')">
-        <a class="nav-link" href="{{ route('home') }}"><i class="material-icons">home</i> Home</a>
+        <a class="nav-link" href="{{ route('home') }}"><i class="material-icons">public</i> Home</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('my.dashboard') }}"><i class="material-icons">dashboard</i> Dashboard</a>

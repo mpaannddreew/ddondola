@@ -9,7 +9,7 @@
                 @yield('auth-title')
             </figure>
             @yield('auth')
-            <div class="copy">© 2018 {{ config('app.name', 'Ddondola') }}</div>
+            <div class="copy">© 2019 {{ config('app.name', 'Ddondola') }}</div>
         </aside>
     </div>
 @endsection

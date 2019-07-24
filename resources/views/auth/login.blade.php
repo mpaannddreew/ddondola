@@ -6,7 +6,7 @@
         @csrf
 
         <div class="form-group">
-            <label for="my-email">{{ __('E-Mail Address') }}</label>
+            <label for="my-email">{{ __('E-Mail') }}</label>
             <div class="input-group">
                 <div class="input-group input-group-seamless">
                     <span class="input-group-prepend">

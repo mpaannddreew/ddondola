@@ -23,7 +23,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-small dropdown-menu-right">
                     @is_staff(Auth::user())
-                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i class="material-icons">apps</i> Administration</a>
+                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i class="material-icons">apps</i> Control Panel</a>
                     <div class="dropdown-divider"></div>
                     @endis_staff
                     <a class="dropdown-item" href="{{ route('my.profile') }}"><i class="material-icons">account_circle</i> Profile</a>
@@ -31,7 +31,7 @@
                     <a class="dropdown-item" href="{{ route('my.settings') }}"><i class="material-icons">settings</i> Settings</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="material-icons text-danger">&#xE879;</i> Logout
+                        <i class="material-icons text-danger">clear</i> Logout
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -41,14 +41,14 @@
             </li>
         @else
             <li class="nav-item border-right dropdown notifications border-radius">
-                <a class="nav-link nav-link-icon text-center" href="{{ route('login') }}">
+                <a class="nav-link nav-link-icon text-center" href="{{ route('login') }}" title="Login">
                     <div class="nav-link-icon__wrapper">
                         <i class="material-icons">lock_open</i>
                     </div>
                 </a>
             </li>
             <li class="nav-item border-right dropdown notifications border-radius">
-                <a class="nav-link nav-link-icon text-center" href="{{ route('register') }}">
+                <a class="nav-link nav-link-icon text-center" href="{{ route('register') }}" title="Register">
                     <div class="nav-link-icon__wrapper">
                         <i class="material-icons">person_add</i>
                     </div>

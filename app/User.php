@@ -3,7 +3,6 @@
 namespace Ddondola;
 
 use Activity\Traits\Reviewer;
-use Bank\Traits\Holder;
 use Ddondola\Traits\Muddondozi;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
@@ -21,10 +20,8 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, Seller, Buyer, HasApiTokens, CanLike, CanFollow, Holder,
+    use Notifiable, Seller, Buyer, HasApiTokens, CanLike, CanFollow,
         CanBeFollowed, CanFavorite, Reviewer, Muddondozi, HasMediaTrait;
-
-    public static $laracombee = ['first_name' => 'string', 'last_name' => 'string', 'email' => 'string'];
 
     /**
      * The attributes that are mass assignable.

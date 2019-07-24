@@ -167,8 +167,6 @@ return [
         Messenger\MessengerServiceProvider::class,
         Activity\ActivityServiceProvider::class,
         Bank\BankServiceProvider::class,
-        Teller\TellerServiceProvider::class,
-        Website\WebsiteServiceProvider::class,
     ],
 
     /*
@@ -218,7 +216,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Bank' => \Bank\Facades\Bank::class,
-        'Payment' => \Teller\Facades\Payment::class,
         'Messenger' => \Messenger\Facades\Messenger::class,
     ],
 

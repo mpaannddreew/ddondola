@@ -1,0 +1,30 @@
+type Conversation {
+    id: ID!
+    initiator: Muddondozi!
+    participant: Muddondozi!
+    messages: [Message!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@messages")
+    latestMessage: Message @method(name: "LatestMessage")
+    settings: String
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Message {
+    id: ID!
+    conversation: Conversation @belongsTo
+    sender: Muddondozi!
+    message: String
+    settings: String
+    read_at: DateTime
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+extend type Query {
+    conversation(initiator: String participant: String!): Conversation @field(resolver: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@conversation")
+}
+
+extend type Mutation {
+    startConversation(initiator: String participant: String!): Conversation! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@createConversation")
+    sendMessage(initiator: String participant: String! message: String): Message! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@sendMessage")
+}

@@ -1,15 +1,12 @@
 <template>
     <div>
         <div class="card card-small mb-1 border" style="border-bottom: none !important;">
-            <div class="card-header border-bottom">
-                <h5 class="m-0"><i class="material-icons">notifications_active</i> Notifications</h5>
-            </div>
             <div class="card-body p-0" :class="{'border-bottom': !hasNotifications}">
-                <div align="center" v-if="!loaded" class="p-4">
+                <div align="center" v-if="!loaded" class="p-3">
                     <div class="loader"></div>
                     <p class="m-0">Loading notifications...</p>
                 </div>
-                <div align="center" v-if="!hasNotifications && loaded" class="p-4">
+                <div align="center" v-if="!hasNotifications && loaded" class="p-3">
                     <h4 class="m-0"><i class="material-icons">error</i></h4>
                     <p class="m-0">You have not received any notifications yet!</p>
                 </div>

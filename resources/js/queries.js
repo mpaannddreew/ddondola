@@ -519,8 +519,8 @@ window.graphql = {
             }
           }
         }`,
-    featuredProducts: `query featuredProducts {
-          products: featuredProducts {
+    featuredProducts: `query featuredProducts($count: Int) {
+          products: featuredProducts(count: $count) {
             name
             code
             reviewCount
@@ -530,8 +530,8 @@ window.graphql = {
             }
           }
         }`,
-    featuredShops: `query featuredShops {
-          shops:featuredShops {
+    featuredShops: `query featuredShops($count: Int) {
+          shops:featuredShops(count: $count) {
             code
             name
             reviewCount

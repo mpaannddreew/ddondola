@@ -46,11 +46,6 @@
                                                 <i class="material-icons">credit_card</i> Payments
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0)" class="nav-link" :class="{active: activeTab('wallet')}" @click="showTab('wallet')">
-                                                <i class="material-icons">account_balance_wallet</i> Wallet
-                                            </a>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -68,7 +63,6 @@
                         <following :user="selectedUser" :admin="true" :auth="false"></following>
                     </div>
                     <div v-if="activeTab('payments')">payments</div>
-                    <div v-if="activeTab('wallet')">wallet</div>
                 </div>
             </div>
         </div>
