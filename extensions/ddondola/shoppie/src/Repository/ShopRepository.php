@@ -9,7 +9,7 @@
 namespace Shoppie\Repository;
 
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Shoppie\Shop;
 use Shoppie\ShopCategory as Category;
@@ -91,7 +91,15 @@ class ShopRepository
         return $user->is($shop->owner);
     }
 
+    /**
+     * @return Builder
+     */
     public function builder() {
         return Shop::select();
+    }
+
+    public function featured($limit) {
+        // todo featured shops
+        return $this->builder()->inRandomOrder()->take($limit)->get();
     }
 }

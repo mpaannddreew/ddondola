@@ -24,7 +24,7 @@ class Product extends Model
         'settings' => 'array'
     ];
 
-    protected $appends = ['product_brand', 'product_category', 'product_sub_category', 'averageRating'];
+    protected $appends = ['product_brand', 'product_category', 'product_sub_category', 'averageRating', 'reviewCount'];
 
     public function getProductBrandAttribute() {
         return $this->brand->name;
@@ -36,10 +36,6 @@ class Product extends Model
 
     public function getProductSubCategoryAttribute() {
         return $this->subCategory->name;
-    }
-
-    public function getAverageRatingAttribute() {
-        return $this->averageRating();
     }
 
     /**

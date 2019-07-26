@@ -30,14 +30,6 @@ class Shop extends Model
         return $this->category->name;
     }
 
-    public function getAverageRatingyAttribute() {
-        return $this->averageRating();
-    }
-
-    public function getReviewCountAttribute() {
-        return $this->reviewCount();
-    }
-
     public function products() {
         return $this->hasManyThrough(Product::class, ProductBrand::class, 'shop_id', 'brand_id');
     }
@@ -63,6 +55,8 @@ class Shop extends Model
     }
 
     /**
+     * Brands defined for this shop
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function brands() {
@@ -97,6 +91,8 @@ class Shop extends Model
     }
 
     /**
+     * Sub categories defined for this shop
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function subcategories() {

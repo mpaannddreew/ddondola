@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Auth;
 //});
 
 Route::middleware(['web'])->group(function (){
-    Route::get('/', function (\Illuminate\Http\Request $request){
-        return view('welcome');
+    Route::get('/', function (\Shoppie\Repository\ProductRepository $products,
+                              \Shoppie\Repository\ShopRepository $shops){
+        return view('welcome', ['products' => $products->featured(6), 'shops' => $shops->featured(6)]);
     })->name('welcome');
     Route::view('contact', 'contact')->name('contact');
+    Route::view('privacy-policy', 'privacy-policy')->name('policy');
+    Route::view('terms-and-conditions', 'terms-and-conditions')->name('terms');
 });
 
 Auth::routes(['verify' => true]);

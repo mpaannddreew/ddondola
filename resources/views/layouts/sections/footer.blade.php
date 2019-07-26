@@ -38,6 +38,10 @@
                 <div class="widget">
                     <div class="widget-title"><h4>Navigate</h4></div>
                     <ul class="list-style">
+                        @guest
+                            <li><a href="{{ route('login') }}" title="Products">Login</a></li>
+                            <li><a href="{{ route('register') }}" title="Products">Register</a></li>
+                        @endguest
                         <li><a href="{{ route('products') }}" title="Products">Products</a></li>
                         <li><a href="{{ route('shops') }}" title="Shops">Shops</a></li>
                         <li><a href="{{ route('users.index') }}" title="People">People</a></li>
@@ -49,8 +53,8 @@
                     <div class="widget-title"><h4>useful links</h4></div>
                     <ul class="list-style">
                         <li><a href="{{ route('contact') }}" title="Contact Us">Contact Us</a></li>
-                        <li><a href="javascript:void(0)" title="Privacy Policy">Privacy Policy</a></li>
-                        <li><a href="javascript:void(0)" title="Terms &amp; Conditions">Terms &amp; Conditions</a></li>
+                        <li><a href="{{ route('policy') }}" title="Privacy Policy">Privacy Policy</a></li>
+                        <li><a href="{{ route('terms') }}" title="Terms &amp; Conditions">Terms &amp; Conditions</a></li>
                     </ul>
                 </div>
             </div>

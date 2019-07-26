@@ -9,6 +9,7 @@
 namespace Shoppie\Repository;
 
 
+use Illuminate\Database\Eloquent\Builder;
 use Shoppie\Product;
 use Shoppie\ProductSubCategory as Category;
 use Shoppie\ProductBrand as Brand;
@@ -115,6 +116,9 @@ class ProductRepository
         return false;
     }
 
+    /**
+     * @return Builder
+     */
     public function builder() {
         return Product::select();
     }
@@ -125,5 +129,10 @@ class ProductRepository
 
     public function fromIds(array $ids) {
         return Product::whereIn('id', $ids);
+    }
+
+    public function featured($limit) {
+        // todo featured products
+        return $this->builder()->inRandomOrder()->take($limit)->get();
     }
 }

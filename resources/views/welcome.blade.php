@@ -38,7 +38,7 @@
 
                 <div class="col-md-12">
                     <h3 class="headline centered margin-top-75">
-                        Popular Products
+                        Featured Products
                         <span>Browse the most desirable products</span>
                     </h3>
                 </div>
@@ -50,72 +50,11 @@
         <!-- Categories Carousel -->
         <div class="fullwidth-carousel-container margin-top-25">
             <div class="fullwidth-slick-carousel category-carousel">
-
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="javascript:void(0)" class="category-box" data-background-image="{{ asset('images/product/9.jpg') }}">
-                            <div class="category-box-content">
-                                <h3>Hotels</h3>
-                                <span>64 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="javascript:void(0)" class="category-box" data-background-image="{{ asset('images/product/9.jpg') }}">
-                            <div class="category-box-content">
-                                <h3>Events</h3>
-                                <span>67 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="javascript:void(0)" class="category-box" data-background-image="{{ asset('images/product/9.jpg') }}">
-                            <div class="category-box-content">
-                                <h3>Fitness</h3>
-                                <span>27 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="javascript:void(0)" class="category-box" data-background-image="{{ asset('images/product/9.jpg') }}">
-                            <div class="category-box-content">
-                                <h3>Nightlife</h3>
-                                <span>22 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="javascript:void(0)" class="category-box" data-background-image="{{ asset('images/product/9.jpg') }}">
-                            <div class="category-box-content">
-                                <h3>Eat & Drink</h3>
-                                <span>130 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
-
+                @foreach($products as $product)
+                    <!-- Item -->
+                    <fw-carousel-item :product="{{ $product }}"></fw-carousel-item>
+                    <!-- Item / End -->
+                @endforeach
             </div>
         </div>
         <!-- Categories Carousel / End -->
@@ -127,7 +66,7 @@
 
                 <div class="col-md-12">
                     <h3 class="headline centered margin-bottom-45">
-                        Most Visited Shops
+                        Featured Shops
                         <span>Discover & connect with top-rated local businesses</span>
                     </h3>
                 </div>
@@ -135,138 +74,11 @@
                 <div class="col-md-12">
                     <div class="simple-slick-carousel dots-nav">
 
+                    @foreach($shops as $shop)
                         <!-- Listing Item -->
-                        <div class="carousel-item">
-                            <a href="javascript:void(0)" class="listing-item-container">
-                                <div class="listing-item">
-                                    <img src="{{ asset('images/product/9.jpg') }}" alt="">
-
-                                    <div class="listing-badge now-open">Now Open</div>
-
-                                    <div class="listing-item-content">
-                                        <span class="tag">Eat & Drink</span>
-                                        <h3>Tom's Restaurant <i class="verified-icon"></i></h3>
-                                        <span>964 School Street, New York</span>
-                                    </div>
-                                    <span class="like-icon"></span>
-                                </div>
-                                <div class="star-rating" data-rating="3.5">
-                                    <div class="rating-counter">(12 reviews)</div>
-                                </div>
-                            </a>
-                        </div>
+                        <carousel-item :shop="{{ $shop }}"></carousel-item>
                         <!-- Listing Item / End -->
-
-                        <!-- Listing Item -->
-                        <div class="carousel-item">
-                            <a href="javascript:void(0)" class="listing-item-container">
-                                <div class="listing-item">
-                                    <img src="{{ asset('images/product/9.jpg') }}" alt="">
-                                    <div class="listing-item-details">
-                                        <ul>
-                                            <li>Friday, August 10</li>
-                                        </ul>
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <span class="tag">Events</span>
-                                        <h3>Sticky Band</h3>
-                                        <span>Bishop Avenue, New York</span>
-                                    </div>
-                                    <span class="like-icon"></span>
-                                </div>
-                                <div class="star-rating" data-rating="5.0">
-                                    <div class="rating-counter">(23 reviews)</div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Listing Item / End -->
-
-                        <!-- Listing Item -->
-                        <div class="carousel-item">
-                            <a href="javascript:void(0)" class="listing-item-container">
-                                <div class="listing-item">
-                                    <img src="{{ asset('images/product/9.jpg') }}" alt="">
-                                    <div class="listing-item-details">
-                                        <ul>
-                                            <li>Starting from $59 per night</li>
-                                        </ul>
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <span class="tag">Hotels</span>
-                                        <h3>Hotel Govendor</h3>
-                                        <span>778 Country Street, New York</span>
-                                    </div>
-                                    <span class="like-icon"></span>
-                                </div>
-                                <div class="star-rating" data-rating="2.0">
-                                    <div class="rating-counter">(17 reviews)</div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Listing Item / End -->
-
-                        <!-- Listing Item -->
-                        <div class="carousel-item">
-                            <a href="javascript:void(0)" class="listing-item-container">
-                                <div class="listing-item">
-                                    <img src="{{ asset('images/product/9.jpg') }}" alt="">
-
-                                    <div class="listing-badge now-open">Now Open</div>
-
-                                    <div class="listing-item-content">
-                                        <span class="tag">Eat & Drink</span>
-                                        <h3>Burger House <i class="verified-icon"></i></h3>
-                                        <span>2726 Shinn Street, New York</span>
-                                    </div>
-                                    <span class="like-icon"></span>
-                                </div>
-                                <div class="star-rating" data-rating="5.0">
-                                    <div class="rating-counter">(31 reviews)</div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Listing Item / End -->
-
-                        <!-- Listing Item -->
-                        <div class="carousel-item">
-                            <a href="javascript:void(0)" class="listing-item-container">
-                                <div class="listing-item">
-                                    <img src="{{ asset('images/product/9.jpg') }}" alt="">
-                                    <div class="listing-item-content">
-                                        <span class="tag">Other</span>
-                                        <h3>Airport</h3>
-                                        <span>1512 Duncan Avenue, New York</span>
-                                    </div>
-                                    <span class="like-icon"></span>
-                                </div>
-                                <div class="star-rating" data-rating="3.5">
-                                    <div class="rating-counter">(46 reviews)</div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Listing Item / End -->
-
-                        <!-- Listing Item -->
-                        <div class="carousel-item">
-                            <a href="javascript:void(0)" class="listing-item-container">
-                                <div class="listing-item">
-                                    <img src="{{ asset('images/product/9.jpg') }}" alt="">
-
-                                    <div class="listing-badge now-closed">Now Closed</div>
-
-                                    <div class="listing-item-content">
-                                        <span class="tag">Eat & Drink</span>
-                                        <h3>Think Coffee</h3>
-                                        <span>215 Terry Lane, New York</span>
-                                    </div>
-                                    <span class="like-icon"></span>
-                                </div>
-                                <div class="star-rating" data-rating="4.5">
-                                    <div class="rating-counter">(15 reviews)</div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Listing Item / End -->
+                    @endforeach
                     </div>
 
                 </div>
@@ -282,7 +94,7 @@
                 <div class="col-md-12">
                     <h3 class="headline centered headline-extra-spacing" align="center">
                         What Our Users Say
-                        <span class="margin-top-25">We collect reviews from our users so you can get an honest opinion of what an experience with our website are really like!</span>
+                        <span class="margin-top-25">We collect reviews from our users so you can get an honest opinion of what an experience with our service is really like!</span>
                     </h3>
                 </div>
             </div>
@@ -336,28 +148,28 @@
             <div class="col-md-12">
                 <h3 class="headline centered margin-bottom-45">
                     Get Associated With Us
-                    <span>Expolore top-rated shops, activities and more</span>
+                    <span>Create your own shop and start selling online from the comfort of your living room</span>
                 </h3>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4 text-center mb-5 mb-md-0">
                     <div class="lis-features-box lis-brd-light border rounded px-4 py-5 bg-white">
                         <div  class="h1"><i class="fa fa-address-card-o h1"></i></div>
-                        <h5>Add Your Listing</h5>
+                        <h5>Create Your Shop</h5>
                         Maecs tempus, tellus eget rhoncus, sem condimentum quam semper libero.
                     </div>
                 </div>
                 <div class="col-12 col-md-4 text-center mb-5 mb-md-0">
                     <div class="lis-features-box lis-brd-light border rounded px-4 py-5 bg-white">
                         <div  class="h1"><i class="fa fa-bullhorn h1"></i></div>
-                        <h5>Advertise & Promote</h5>
+                        <h5>Advertise &amp; Promote</h5>
                         Maecs tempus, tellus eget rhoncus, sem condimentum quam semper libero.
                     </div>
                 </div>
                 <div class="col-12 col-md-4 text-center">
                     <div class="lis-features-box lis-brd-light border rounded px-4 py-5 bg-white">
                         <div  class="h1"><i class="fa fa-handshake-o h1"></i></div>
-                        <h5>Partner With Us</h5>
+                        <h5>Close Deals</h5>
                         Maecs tempus, tellus eget rhoncus, sem condimentum quam semper libero.
                     </div>
                 </div>

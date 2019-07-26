@@ -443,8 +443,7 @@ class ShoppieQuery
      */
     public function featuredShops($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->status(app(ShopRepository::class)->builder())
-            ->inRandomOrder()->get()->take(collect($args)->get('count', 2));
+        return $this->status(app(ShopRepository::class)->featured(collect($args)->get('count', 2)));
     }
 
     /**
@@ -459,8 +458,7 @@ class ShoppieQuery
      */
     public function featuredProducts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->status(app(ProductRepository::class)->builder())
-            ->inRandomOrder()->get()->take(collect($args)->get('count', 2));
+        return $this->status(app(ProductRepository::class)->featured(collect($args)->get('count', 2)));
     }
 
     /**

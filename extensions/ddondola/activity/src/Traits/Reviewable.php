@@ -29,7 +29,7 @@ trait Reviewable
     }
 
     public function reviewCount() {
-        return $this->reviews->count();
+        return $this->reviews()->count();
     }
 
     public function addReview(Model $reviewer, array $review) {
