@@ -88,10 +88,14 @@
             },
             listen() {
                 Bus.$on('category-ids', this.showFromCategory);
+                Bus.$on('directory-filter', this.filterProducts);
             },
             showFromCategory(ids) {
                 this.categoryIds = ids;
                 this.loadPage(1);
+            },
+            filterProducts(filter) {
+
             }
         },
         watch: {

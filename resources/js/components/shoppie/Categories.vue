@@ -8,7 +8,7 @@
                             <i class="fa fa-search"></i>
                         </div>
                     </div>
-                    <input class="form-control" type="text" placeholder="Filter Categories" aria-label="Search">
+                    <input class="form-control" type="text" :placeholder="placeholder" aria-label="Search" v-model="query">
                 </div>
             </div>
             <div class="card-body h-100">
@@ -47,7 +47,8 @@
                 page: 1,
                 loaded: false,
                 paginatorInfo: null,
-                categoryIds: []
+                categoryIds: [],
+                query: ''
             }
         },
         props: {
@@ -77,11 +78,17 @@
         computed: {
             showCategories() {
                 return this.categories.length > 0;
+            },
+            placeholder() {
+                return `Filter ${_.upperFirst(this.directory)}`;
             }
         },
         watch: {
             categoryIds(data) {
                 Bus.$emit('category-ids', data);
+            },
+            query(data) {
+                Bus.$emit('directory-filter', data);
             }
         }
     }

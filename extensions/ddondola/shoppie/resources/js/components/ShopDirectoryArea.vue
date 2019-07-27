@@ -87,10 +87,14 @@
             },
             listen() {
                 Bus.$on('category-ids', this.showFromCategory);
+                Bus.$on('directory-filter', this.filterShops);
             },
             showFromCategory(ids) {
                 this.categoryIds = ids;
                 this.loadPage(1);
+            },
+            filterShops(filter) {
+
             }
         },
         computed: {
