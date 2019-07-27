@@ -7,7 +7,6 @@
         @include('layouts.sections.admin.navbar')
         @include('layouts.sections.ddondola.banner')
         @include('layouts.sections.ddondola.header-navbar')
-        <alert></alert>
         <div class="main-content-container container-fluid px-4" style="padding: 0 !important; overflow: hidden;">
             @yield('main')
         </div>

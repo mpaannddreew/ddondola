@@ -49,6 +49,10 @@ class ShopRepository
         return $shopOwner->shops()->create(array_merge($shopData, ['category_id' => $category->id]));
     }
 
+    public function update(Shop $shop, $attributes) {
+        $shop->update($attributes);
+    }
+
     /**
      * Deactivate shop
      *

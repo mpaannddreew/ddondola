@@ -5,10 +5,11 @@
     <div class="page-header row no-gutters py-4">
         <div class="col">
             <span class="text-uppercase page-subtitle"><i class="fa fa-shopping-bag"></i> Shop</span>
-            <h3 class="page-title">Settings</h3>
+            <h3 class="page-title">Update</h3>
         </div>
     </div>
 @endsection
-@section('main')
-    <shop-settings></shop-settings>
+@section('header-navbar-class', 'border-bottom')
+@section('tabs')
+    @include('shoppie::shop.admin.sections.tabs')
 @endsection

@@ -101,11 +101,42 @@ class ShoppieController extends Controller
         return view('shoppie::shop.basic.reviews', ['shop' => $shop]);
     }
 
-    public function shopSettings(Request $request, Shop $shop) {
+    public function shopEdit(Request $request, Shop $shop) {
         if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.settings', ['shop' => $shop]);
+            return view('shoppie::shop.admin.shop-info',
+                ['shop' => $shop, 'categories' => $this->categories->builder()->get()]);
 
         abort(404);
+    }
+
+    /**
+     * @param Request $request
+     * @param Shop $shop
+     * @return mixed
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function shopUpdate(Request $request, Shop $shop) {
+        $this->validate($request, [
+            'category' => 'required|numeric',
+            'name' => 'required|string',
+            'phone_number' => 'required|numeric',
+            'email' => 'required|email',
+            'description' => 'required',
+            'address' => 'required'
+        ]);
+
+        $attributes = [
+            'name' => $request->input('name'),
+            'profile' => $request->only(['phone_number', 'email', 'description', 'address'])
+        ];
+
+        $category = $this->categories->id($request->input('category'));
+        if (!$shop->category->is($category)) {
+            $attributes['category_id'] = $request->input('category');
+        }
+
+        $this->shops->update($shop, $attributes);
+        return redirect()->route('my.shop.edit', ['shop' => $shop])->with('success', 'Shop updated successfully');
     }
 
     public function shopDashboard(Request $request, Shop $shop) {

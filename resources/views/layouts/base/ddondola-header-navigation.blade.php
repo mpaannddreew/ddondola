@@ -4,7 +4,6 @@
         @include('layouts.sections.ddondola.navbar')
         @yield('custom-design')
         @include('layouts.sections.ddondola.header-navbar')
-        <alert></alert>
         <div class="main-content-container @section('container') container @show">
             @yield('main')
         </div>
