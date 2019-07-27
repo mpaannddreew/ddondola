@@ -24,19 +24,7 @@ class Product extends Model
         'settings' => 'array'
     ];
 
-    protected $appends = ['product_brand', 'product_category', 'product_sub_category', 'averageRating', 'reviewCount'];
-
-    public function getProductBrandAttribute() {
-        return $this->brand->name;
-    }
-
-    public function getProductCategoryAttribute() {
-        return $this->category()->name;
-    }
-
-    public function getProductSubCategoryAttribute() {
-        return $this->subCategory->name;
-    }
+    protected $appends = ['averageRating', 'reviewCount'];
 
     /**
      * Shop this product belongs to
@@ -134,7 +122,7 @@ class Product extends Model
      */
     public function quantity() {
         return $this->stock->sum(function (Stock $stock) {
-            return $stock->isOut() ? -(int)$stock->quantity : (int)$stock->quantity;
+            return $stock->isOut() ? - (int)$stock->quantity : (int)$stock->quantity;
         }) - $this->stockOut();
     }
 
@@ -290,21 +278,6 @@ class Product extends Model
 
     public function settings($item) {
         return collect($this->settings)->get($item, '');
-    }
-
-    public function forEdit() {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'categoryId' => strtolower($this->category()->id),
-            'subCategoryId' => strtolower($this->subcategory->id),
-            'brandId' => strtolower($this->brand->id),
-            'price' => $this->price,
-            'description' => $this->description,
-            'status' => $this->active,
-            'settings' => $this->settings,
-            'shopId' => strtolower($this->brand->shop->id)
-        ];
     }
 
     /**

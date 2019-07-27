@@ -1,27 +1,13 @@
 @extends('shoppie::shop.product.basic.base')
+@section('title')@parent Home @endsection
+@section('meta')
+    <meta property="og:type" content="product"/>
+    <meta property="og:title" content="{{ $product->name }}"/>
+    <meta property="og:description" content="{{ $product->description }}"/>
+    <meta property="og:image" content="{{ $product->sampleImage()['url'] }}"/>
+    <meta property="og:url" content="{{ route('product', ['product' => $product]) }}" />
+@endsection
 @section('home-active', 'active')
 @section('product')
-    <div class="card card-small mb-4 pt-3 border">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item p-4">
-                <strong class="text-muted d-block mb-2">Description</strong>
-                <span>{{ $product->description }}</span>
-            </li>
-            <li class="list-group-item py-4 px-2">
-                <strong class="text-muted d-block mb-2 px-3">Arributes</strong>
-                <span>
-                    <table class="table table-bordered m-0">
-                        <tbody>
-                        @foreach($product->settings('attributes') as $attribute)
-                            <tr>
-                                <td>{{ $attribute["name"] }}</td>
-                                <td>{{ $attribute["value"] }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </span>
-            </li>
-        </ul>
-    </div>
+    @include('shoppie::shop.product.sections.details')
 @endsection

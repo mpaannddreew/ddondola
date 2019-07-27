@@ -1,19 +1,12 @@
 @extends('layouts.base.ddondola-no-container')
-@section('title')@parent {{ $product->name }} @endsection
-@section('meta')
-    <meta property="og:type" content="product"/>
-    <meta property="og:title" content="{{ $product->name }}"/>
-    <meta property="og:description" content="{{ $product->description }}"/>
-    <meta property="og:image" content="{{ $product->sampleImage()['url'] }}"/>
-    <meta property="og:url" content="{{ route('product', ['product' => $product]) }}" />
-@endsection
+@section('title'){{ $product->name }} - @endsection
 @section('body-class') class="h-100" @endsection
 @section('custom-design')
-    @include('shoppie::shop.product.sections.product', ['product' => $product])
+    @include('shoppie::shop.product.sections.product')
 @endsection
 @section('header-navbar-class', 'border-top border-bottom')
 @section('tabs')
-    @include('shoppie::shop.product.sections.tabs', ['product' => $product])
+    @include('shoppie::shop.product.sections.tabs')
 @endsection
 @section('main')
     <div class="container py-2">

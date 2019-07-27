@@ -38,12 +38,37 @@ class ShoppieController extends Controller
         return view('shoppie::shops');
     }
 
-    public function createShop() {
-        return view('shoppie::me.shops.new-shop');
-    }
-
     public function myShops() {
         return view('shoppie::me.shops.index');
+    }
+
+    public function createShop() {
+        return view('shoppie::me.shops.new-shop', ['categories' => $this->categories->builder()->get()]);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function saveShop(Request $request) {
+        $this->validate($request, [
+            'category' => 'required|numeric',
+            'name' => 'required|string',
+            'phone_number' => 'required|numeric',
+            'email' => 'required|email',
+            'description' => 'required',
+            'address' => 'required'
+        ]);
+
+        $request->user()->newShop(
+            $this->categories->id($request->input('category')), [
+            'name' => $request->input('name'),
+            'profile' => $request->only(['phone_number', 'email', 'description', 'address']),
+            'active' => 1
+        ]);
+
+        return redirect()->route('my.shops');
     }
 
     public function shopProducts(Request $request, Shop $shop) {

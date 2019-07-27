@@ -21,9 +21,11 @@
                 </div>
             </div>
             <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;" v-if="loaded && conversation">
-                <div class="card-header border-bottom px-2" style="padding-top: 0.25em;padding-bottom: 0.25em;">
-                    <h5 class="m-0">{{ converser.name }}</h5>
-                    <p class="text-light m-0" style="font-size: small !important;">Last seen today at 7:50 AM</p>
+                <div class="card-header border-bottom px-2" style="padding-top: 0.6em; padding-bottom: 0.6em;">
+                    <a href="javascript:void(0)" @click="back" class="btn btn-pill btn-outline-primary active">
+                        <i class="fa fa-chevron-left"></i> Back
+                    </a>
+                    <strong>{{ converser.name }}</strong>
                 </div>
                 <div class="card-body d-flex flex-column" id="chat-body">
                     <template v-if="!messagesLoaded">
@@ -90,6 +92,9 @@
             }
         },
         computed: {
+            home() {
+                return this.initiator ? `/shops/${this.initiator}/messenger` : '/me/messenger'
+            },
             conversationVariables() {
                 var variables = {participant: this.participant};
                 if (this.initiator) {
@@ -139,6 +144,9 @@
             }
         },
         methods: {
+            back() {
+                this.$router.push(this.home);
+            },
             fetchConversation() {
                 this.loaded = false;
                 this.conversation = null;

@@ -5,7 +5,7 @@
     <div class="container py-2">
         <div class="row">
             <div class="col-md-8 offset-2">
-                <edit-product :product="{{ json_encode($product->forEdit()) }}"></edit-product>
+                <edit-product :product="{{ $product }}"></edit-product>
             </div>
         </div>
     </div>

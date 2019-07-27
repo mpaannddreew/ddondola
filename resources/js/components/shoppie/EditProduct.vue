@@ -8,7 +8,7 @@
                 </div>
                 <div align="center" v-if="loaded && !requirementsLoaded">
                     <h4 class="m-0"><i class="material-icons">error</i></h4>
-                    <p class="mb-3">Your cart is empty!</p>
+                    <p class="mb-3">An error occurred!</p>
                     <a href="javascript:void(0)" class="btn btn-success btn-pill" @click="loadShopCategoriesAndBrands"><i class="fa fa-refresh"></i> Reload</a>
                 </div>
             </div>
@@ -129,12 +129,18 @@
                 price: ''
             }
         },
+        props: {
+            product: {
+                type: Object,
+                required: true
+            }
+        },
         methods: {
             loadProduct() {
                 this.name = this.product.name;
-                this.categoryId = this.product.categoryId;
-                this.subCategoryId = this.product.subCategoryId;
-                this.brandId = this.product.brandId;
+                this.categoryId = this.product.sub_category.category.id;
+                this.subCategoryId = this.product.sub_category.id;
+                this.brandId = this.product.brand_id;
                 this.description = this.product.description;
                 this.status = this.product.active ? 1:0;
                 this.attributes = Collect(this.product.settings).get('attributes', [{name: '', value: ''}]);
@@ -144,7 +150,7 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopCategoriesAndBrands,
-                    variables: {id: this.product.shopId, count: 50, page: 1}
+                    variables: {id: this.product.sub_category.category.shop.id, count: 50, page: 1}
                 }).then(this.loadData).catch(function (error) {});
             },
             loadData(response) {
@@ -257,10 +263,10 @@
             categoryId(data) {
                 if (data) {
                     this.clearError('category');
-                    var category = Collect(this.categories).first(function (value, key) {
+                    var category = _.first(this.categories, function (value) {
                         return value.id === data;
                     });
-                    this.subCategories = category.categories.data;
+                    this.subCategories = category.categories;
                 }
             },
             subCategoryId(data) {
@@ -296,12 +302,6 @@
             },
             hasBrands() {
                 return this.brands.length > 0;
-            }
-        },
-        props: {
-            product: {
-                type: Object,
-                required: true
             }
         }
     }

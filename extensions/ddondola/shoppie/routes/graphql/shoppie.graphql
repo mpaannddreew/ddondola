@@ -208,15 +208,6 @@ type ProductOffer {
     updated_at: DateTime!
 }
 
-input NewShop {
-    categoryId: String!
-    name: String!
-    email: String!
-    phone_number: String!
-    description: String!
-    address: String!
-}
-
 input ShopResource {
     name: String!
     description: String
@@ -294,7 +285,6 @@ extend type Query {
 }
 
 extend type Mutation {
-    createShop(shop: NewShop!): Shop! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createShop")
     createBrand(shop: String! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createBrand")
     editBrand(brandId: ID! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editBrand")
     createCategory(shop: String! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")

@@ -12,6 +12,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
             Route::prefix('shops')->group(function () {
                 Route::get('/', 'ShoppieController@myShops')->name('my.shops');
                 Route::get('create', 'ShoppieController@createShop')->name('create.shop');
+                Route::post('save', 'ShoppieController@saveShop')->name('save.shop');
             });
         });
         Route::middleware(['admin.staff'])->prefix('admin')->group(function (){

@@ -23,13 +23,6 @@ window.graphql = {
             }
           }
         }`,
-    createShop: `mutation createShop ($shop: NewShop!) {
-          shop:createShop(shop: $shop) {
-            id
-            code
-            name
-          }
-        }`,
     shopByCode: `query shop($shop: String!){
           shop:shopByCode(shop: $shop) {
             id
