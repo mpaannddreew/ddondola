@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="auth">
         <a href="javascript:void(0)" @click="favouritesAction" :class="{disabled: favoriteStatusLoading}" class="btn btn-pill btn-outline-primary active">
             <i class="fa fa-heart"></i> {{ favText }}
         </a>
@@ -46,12 +46,17 @@
                 }
 
                 return 'Add To Wishlist';
+            },
+            auth() {
+                return Auth;
             }
         },
         methods: {
             loadProduct() {
-                let requests = [this.isInCart(), this.isInFavorites()];
-                axios.all(requests).then(axios.spread(this.loadStatus));
+                if (Auth) {
+                    let requests = [this.isInCart(), this.isInFavorites()];
+                    axios.all(requests).then(axios.spread(this.loadStatus));
+                }
             },
             loadStatus(cartStatus, favoritesStatus) {
                 this.cartStatus(cartStatus);

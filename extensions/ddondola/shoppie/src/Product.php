@@ -323,7 +323,7 @@ class Product extends Model
         return $this->shop()->currencyCode();
     }
 
-    private function sampleImage() {
+    public function sampleImage() {
         return [
             'url' => asset("images/product/9.jpg")
         ];

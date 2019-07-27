@@ -154,6 +154,21 @@ class ShoppieController extends Controller
         return view('shoppie::shop.product.basic.index', ['product' => $product]);
     }
 
+    public function productReviews(Request $request, Product $product) {
+        if (Auth::check()) {
+            if ($request->user()->ownsProduct($product))
+                return view('shoppie::shop.product.admin.reviews', ['product' => $product]);
+
+            if (!$product->shop()->owner->country->is($request->user()->country))
+                abort(404);
+        }
+
+        if (!$product->active)
+            abort(404);
+
+        return view('shoppie::shop.product.basic.reviews', ['product' => $product]);
+    }
+
     public function productDashboard(Request $request, Product $product) {
         if ($request->user()->ownsProduct($product))
             return view('shoppie::shop.product.admin.dashboard', ['product' => $product]);

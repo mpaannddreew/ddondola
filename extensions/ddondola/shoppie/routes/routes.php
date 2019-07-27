@@ -42,6 +42,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
     Route::prefix('products')->group(function () {
         Route::get('/', 'ShoppieController@products')->name('products');
         Route::get('{product}', 'ShoppieController@product')->name('product');
+        Route::get('{product}/reviews', 'ShoppieController@productReviews')->name('product.reviews');
         Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('{product}/dashboard', 'ShoppieController@productDashboard')->name('product.dashboard');
             Route::get('{product}/stock', 'ShoppieController@productStock')->name('product.stock');

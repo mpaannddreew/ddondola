@@ -129,11 +129,6 @@
             reviewableType: {
                 type: String,
                 required: true
-            },
-            auth: {
-                type: Boolean,
-                required: false,
-                default: true
             }
         },
         computed: {
@@ -150,6 +145,9 @@
                 if (this.isReviewed)
                     return {id: this.review.id, review: {rating: this.review.rating, body: this.review.body}};
                 return {};
+            },
+            auth() {
+                return Auth;
             }
         },
         methods: {

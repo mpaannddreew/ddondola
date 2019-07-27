@@ -4,7 +4,7 @@
             <about-shop :shop="{{ $shop }}"></about-shop>
         </div>
         <div class="col-md-6 px-1">
-            <reviews :reviewable="{{ $shop }}" reviewable-type="shop" @guest :auth="false" @endguest></reviews>
+            <reviews :reviewable="{{ $shop }}" reviewable-type="shop"></reviews>
         </div>
         <div class="col-md-3 px-1">
             <rating-meter :reviewable="{{ $shop }}"></rating-meter>
