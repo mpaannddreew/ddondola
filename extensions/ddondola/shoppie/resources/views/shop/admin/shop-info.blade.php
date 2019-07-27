@@ -1,4 +1,5 @@
 @extends('shoppie::shop.admin.base.edit')
+@section('title')@parent Shop Information @endsection
 @section('info-active', 'active')
 @section('main')
     <div class="container py-2">

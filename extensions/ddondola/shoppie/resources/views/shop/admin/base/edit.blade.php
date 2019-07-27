@@ -1,5 +1,4 @@
 @extends('shoppie::shop.admin.base.admin')
-@section('title')@parent Settings @endsection
 @section('settings-active', 'active')
 @section('page-header')
     <div class="page-header row no-gutters py-4">
@@ -11,5 +10,9 @@
 @endsection
 @section('header-navbar-class', 'border-bottom')
 @section('tabs')
-    @include('shoppie::shop.admin.sections.tabs')
+    <li class="nav-item">
+        <a href="{{ route('my.shop.edit', ['shop' => $shop]) }}" class="nav-link @yield('info-active')">
+            <i class="material-icons">mode_edit</i> Shop Info
+        </a>
+    </li>
 @endsection

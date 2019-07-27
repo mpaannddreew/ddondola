@@ -44,6 +44,10 @@ class UserRepository
         return User::create($data)->createCart();
     }
 
+    public function update(User $user, $attributes) {
+        $user->update($attributes);
+    }
+
     /**
      * Follow a user
      *

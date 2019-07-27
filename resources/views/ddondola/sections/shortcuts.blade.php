@@ -6,6 +6,9 @@
         <a class="nav-link" href="{{ route('my.dashboard') }}"><i class="material-icons">dashboard</i> Dashboard</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('my.profile') }}"><i class="material-icons">account_circle</i> Profile</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('my.orders') }}"><i class="material-icons">assignment</i> Orders</a>
     </li>
     <li class="nav-item @yield('people-active')">
@@ -13,9 +16,6 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('my.wishlist') }}"><i class="material-icons">favorite</i> Wishlist</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('my.settings') }}"><i class="material-icons">settings</i> Settings</a>
     </li>
     <li class="nav-item @yield('feedback-active')">
         <a class="nav-link" href="#"><i class="material-icons">headset_mic</i> Send Feedback</a>

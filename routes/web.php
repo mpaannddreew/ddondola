@@ -33,7 +33,10 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::prefix('me')->group(function (){
         Route::get('/', 'HomeController@profile')->name('my.profile');
-        Route::get('/settings', 'HomeController@Settings')->name('my.settings');
+        Route::get('/edit', 'HomeController@profileEdit')->name('my.profile.edit');
+        Route::post('/update', 'HomeController@profileUpdate')->name('my.profile.update');
+        Route::get('/change-password', 'HomeController@showChangePassword')->name('show.change.password');
+        Route::post('/change-password', 'HomeController@updatePassword')->name('update.password');
         Route::get('/dashboard', 'HomeController@dashboard')->name('my.dashboard');
         Route::get('/messenger/{participant?}', 'HomeController@messenger')->name('my.messenger');
         Route::get('/notifications', 'HomeController@notifications')->name('my.notifications');

@@ -20,9 +20,9 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @yield('settings-active')" href="{{ route('my.settings') }}">
-                <i class="material-icons">settings</i>
-                <span>Settings</span>
+            <a class="nav-link @yield('edit-active')" href="{{ route('my.profile.edit') }}">
+                <i class="material-icons">mode_edit</i>
+                <span>Update</span>
             </a>
         </li>
         <li class="nav-item">
