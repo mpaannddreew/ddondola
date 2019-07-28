@@ -13808,13 +13808,13 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     shopUrl: function shopUrl() {
       if (this.admin) {
-        return '/admin/shops/' + this.shop.code;
+        return "/admin/shops/".concat(this.shop.code);
       }
 
-      return '/shops/' + this.shop.code;
+      return "/shops/".concat(this.shop.code);
     },
-    settingsUrl: function settingsUrl() {
-      return '/shops/' + this.shop.code + '/settings';
+    editUrl: function editUrl() {
+      return "".concat(this.shopUrl, "/edit");
     }
   }
 });
@@ -79461,7 +79461,7 @@ var render = function() {
                   _c(
                     "a",
                     {
-                      staticClass: "btn btn-pill btn-outline-primary active",
+                      staticClass: "btn btn-pill btn-outline-success active",
                       attrs: { href: "javascript:void(0)" },
                       on: { click: _vm.back }
                     },
@@ -91798,11 +91798,11 @@ var render = function() {
                 "a",
                 {
                   staticClass: "btn btn-sm btn-white",
-                  attrs: { href: _vm.settingsUrl }
+                  attrs: { href: _vm.editUrl }
                 },
                 [
                   _c("i", { staticClass: "material-icons" }, [
-                    _vm._v("settings")
+                    _vm._v("mode_edit")
                   ])
                 ]
               )

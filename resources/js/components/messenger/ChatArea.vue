@@ -22,7 +22,7 @@
             </div>
             <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;" v-if="loaded && conversation">
                 <div class="card-header border-bottom px-2" style="padding-top: 0.6em; padding-bottom: 0.6em;">
-                    <a href="javascript:void(0)" @click="back" class="btn btn-pill btn-outline-primary active">
+                    <a href="javascript:void(0)" @click="back" class="btn btn-pill btn-outline-success active">
                         <i class="fa fa-chevron-left"></i> Back
                     </a>
                     <strong>{{ converser.name }}</strong>

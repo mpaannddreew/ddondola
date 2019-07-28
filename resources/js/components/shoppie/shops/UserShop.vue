@@ -19,7 +19,7 @@
         <td>
             <div class="btn-group d-table ml-auto" role="group">
                 <a :href="shopUrl" class="btn btn-sm btn-white" title=""><i class="fa fa-link"></i> Open</a>
-                <a :href="settingsUrl" class="btn btn-sm btn-white" v-if="!directory && !admin"><i class="material-icons">settings</i></a>
+                <a :href="editUrl" class="btn btn-sm btn-white" v-if="!directory && !admin"><i class="material-icons">mode_edit</i></a>
             </div>
         </td>
     </tr>
@@ -48,13 +48,13 @@
         computed: {
             shopUrl() {
                 if (this.admin) {
-                    return '/admin/shops/' + this.shop.code;
+                    return `/admin/shops/${this.shop.code}`;
                 }
 
-                return '/shops/' + this.shop.code;
+                return `/shops/${this.shop.code}`;
             },
-            settingsUrl() {
-                return '/shops/' + this.shop.code + '/settings';
+            editUrl() {
+                return `${this.shopUrl}/edit`;
             }
         }
     }

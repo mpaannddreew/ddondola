@@ -15,42 +15,42 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="first_name">First Name</label>
-                                    <input type="text" class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}" id="first_name" value="{{ $user->first_name }}">
+                                    <input name="first_name" type="text" class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}" id="first_name" value="{{ $user->first_name }}">
                                     @if ($errors->has('first_name'))
                                         <div class="invalid-feedback">{{ $errors->first('first_name') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="last_name">Last Name</label>
-                                    <input type="text" class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}" id="last_name" value="{{ $user->last_name }}">
+                                    <input name="last_name" type="text" class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}" id="last_name" value="{{ $user->last_name }}">
                                     @if ($errors->has('last_name'))
                                         <div class="invalid-feedback">{{ $errors->first('last_name') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" value="{{ $user->email }}">
+                                    <input name="email" type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" value="{{ $user->email }}">
                                     @if ($errors->has('email'))
                                         <div class="invalid-feedback">{{ $errors->first('email') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="phone_number">Phone Number</label>
-                                    <input type="text" class="form-control {{ $errors->has('phone_number') ? ' is-invalid' : '' }}" id="phone_number" value="{{ $user->profile('phone_number') }}">
+                                    <input name="phone_number" type="text" class="form-control {{ $errors->has('phone_number') ? ' is-invalid' : '' }}" id="phone_number" value="{{ $user->profile('phone_number') }}">
                                     @if ($errors->has('phone_number'))
                                         <div class="invalid-feedback">{{ $errors->first('phone_number') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="about">About</label>
-                                    <textarea class="form-control {{ $errors->has('about') ? ' is-invalid' : '' }}" id="about">{{ $user->profile('about') }}</textarea>
+                                    <textarea name="about" class="form-control {{ $errors->has('about') ? ' is-invalid' : '' }}" id="about">{{ $user->profile('about') }}</textarea>
                                     @if ($errors->has('about'))
                                         <div class="invalid-feedback">{{ $errors->first('about') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="address">Address</label>
-                                    <textarea class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address">{{ $user->profile('address') }}</textarea>
+                                    <textarea name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address">{{ $user->profile('address') }}</textarea>
                                     @if ($errors->has('address'))
                                         <div class="invalid-feedback">{{ $errors->first('address') }}</div>
                                     @endif
