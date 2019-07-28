@@ -293,8 +293,6 @@ extend type Mutation {
     editShopCategory(categoryId: ID! category: ShopResource!): ShopCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editShopCategory")
     createSubCategory(categoryId: ID! subcategory: ShopResource!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createSubCategory")
     editSubCategory(categoryId: ID! subcategory: ShopResource!): ProductSubCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editSubCategory")
-    createProduct(product: NewProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProduct")
-    editProduct(productId: ID! product: EditProduct!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editProduct")
     updateStock(productId: ID! stock: NewStock!): Stock! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateStock")
     likeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@likeShop")
     addToCart(id: ID! quantity: Int!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@addToCart")

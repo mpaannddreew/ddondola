@@ -40,7 +40,6 @@
         name: "ShopProductCategories",
         mounted() {
             this.fetchCategories();
-            this.listen();
         },
         data() {
             return {
@@ -72,15 +71,6 @@
                 this.loaded = true;
                 this.categories = response.data.data.shop.categories.data;
                 this.paginatorInfo = response.data.data.shop.categories.paginatorInfo;
-            },
-            listen() {
-                Bus.$on("filter", this.filterCategories);
-            },
-            filterCategories(filter) {
-
-            },
-            handleIdEvent(data) {
-                console.log(JSON.stringify(data));
             }
         },
         computed: {

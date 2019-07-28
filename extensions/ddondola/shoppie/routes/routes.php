@@ -33,6 +33,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
                 Route::get('sub-categories', 'ShoppieController@shopSubCategories')->name('my.shop.sub-categories');
                 Route::get('brands', 'ShoppieController@shopBrands')->name('my.shop.brands');
                 Route::get('new-product', 'ShoppieController@newProduct')->name('my.shop.inventory.new-product');
+                Route::post('new-product', 'ShoppieController@saveProduct')->name('my.shop.inventory.save-product');
             });
             Route::get('{shop}/messenger/{user?}', 'ShoppieController@shopMessenger')->name('my.shop.messenger');
             Route::get('{shop}/orders/{order?}', 'ShoppieController@shopOrders')->name('my.shop.orders');
@@ -49,6 +50,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
             Route::get('{product}/dashboard', 'ShoppieController@productDashboard')->name('product.dashboard');
             Route::get('{product}/stock', 'ShoppieController@productStock')->name('product.stock');
             Route::get('{product}/edit', 'ShoppieController@productEdit')->name('product.edit');
+            Route::post('{product}/update', 'ShoppieController@productUpdate')->name('product.update');
             Route::get('{product}/edit/offers', 'ShoppieController@productEditOffers')->name('product.edit.offers');
             Route::get('{product}/gallery', 'ShoppieController@productGallery')->name('product.gallery');
         });

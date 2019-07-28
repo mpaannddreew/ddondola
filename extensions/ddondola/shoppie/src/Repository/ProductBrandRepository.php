@@ -15,6 +15,10 @@ use Shoppie\Shop;
 
 class ProductBrandRepository
 {
+    public function all() {
+        return Brand::all();
+    }
+
     /**
      * Existing category from id
      *

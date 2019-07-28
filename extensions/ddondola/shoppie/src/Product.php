@@ -288,7 +288,7 @@ class Product extends Model
      * @param $productData
      * @return \Illuminate\Database\Eloquent\Model|Product
      */
-    public function editProduct(ProductSubCategory $category = null, ProductBrand $brand = null, $productData) {
+    public function editProduct(ProductSubCategory $category = null, ProductBrand $brand = null, array $productData) {
         return app(ProductRepository::class)->update($this, $category, $brand, $productData);
     }
 

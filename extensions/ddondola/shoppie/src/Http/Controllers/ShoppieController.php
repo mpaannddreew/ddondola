@@ -12,7 +12,10 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Shoppie\Order;
 use Shoppie\Product;
+use Shoppie\Repository\ProductBrandRepository;
+use Shoppie\Repository\ProductCategoryRepository;
 use Shoppie\Repository\ProductRepository;
+use Shoppie\Repository\ProductSubCategoryRepository;
 use Shoppie\Repository\ShopCategoryRepository;
 use Shoppie\Repository\ShopRepository;
 use Shoppie\Shop;
@@ -27,11 +30,22 @@ class ShoppieController extends Controller
 
     protected $products;
 
-    public function __construct(ShopCategoryRepository $categories, ShopRepository $shops, ProductRepository $products)
+    protected $productCategories;
+
+    protected $brands;
+
+    protected $subcategories;
+
+    public function __construct(ShopCategoryRepository $categories, ShopRepository $shops, ProductRepository $products,
+                                ProductCategoryRepository $productCategories, ProductBrandRepository $brands,
+                                ProductSubCategoryRepository $subcategories)
     {
         $this->categories = $categories;
         $this->shops = $shops;
         $this->products = $products;
+        $this->productCategories = $productCategories;
+        $this->brands = $brands;
+        $this->subcategories = $subcategories;
     }
 
     public function shops() {
@@ -43,7 +57,7 @@ class ShoppieController extends Controller
     }
 
     public function createShop() {
-        return view('shoppie::me.shops.new-shop', ['categories' => $this->categories->builder()->get()]);
+        return view('shoppie::me.shops.new-shop', ['categories' => $this->categories->all()]);
     }
 
     /**
@@ -104,7 +118,7 @@ class ShoppieController extends Controller
     public function shopEdit(Request $request, Shop $shop) {
         if ($request->user()->manages($shop))
             return view('shoppie::shop.admin.shop-info',
-                ['shop' => $shop, 'categories' => $this->categories->builder()->get()]);
+                ['shop' => $shop, 'categories' => $this->categories->all()]);
 
         abort(404);
     }
@@ -246,6 +260,32 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    /**
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function productUpdate(Request $request, Product $product) {
+        $this->validate($request, [
+            'brand' => 'required|numeric',
+            'category' => 'required|numeric',
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'attributes' => 'required|string'
+        ]);
+
+        $brand = $this->brands->id($request->input('brand'));
+        $category = $this->subcategories->id($request->input('category'));
+
+        $product->editProduct($category, $brand,
+            array_merge($request->only(['name', 'price', 'description']),
+                ['settings' => ['attributes' => json_decode($request->input('attributes'))]])
+        );
+
+        return redirect()->route('product.edit', ['product' => $product]);
+    }
+
     public function productEditOffers(Request $request, Product $product) {
         if ($request->user()->ownsProduct($product))
             return view('shoppie::shop.product.admin.edit-offers', ['product' => $product]);
@@ -286,5 +326,41 @@ class ShoppieController extends Controller
             return view('shoppie::shop.admin.inventory.new-product', ['shop' => $shop]);
 
         abort(404);
+    }
+
+    /**
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function saveProduct(Request $request, Shop $shop) {
+        $this->validate($request, [
+            'brand' => 'required|numeric',
+            'category' => 'required|numeric',
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'minimum_stock' => 'required|numeric|min:5',
+            'attributes' => 'required|string',
+            'quantity' => 'required|numeric|min:5',
+            'description' => 'required|string',
+            'note' => 'required|string'
+        ]);
+
+        $brand = $this->brands->id($request->input('brand'));
+        $category = $this->subcategories->id($request->input('category'));
+        $product = $this->products->create($category, $brand,
+            array_merge(
+                $request->only(['name', 'price', 'description']),
+                ['settings' => ['minimum_stock' => $request->input('minimum_stock'), 'attributes' => json_decode($request->input('attributes'))]]
+            )
+        );
+
+        $stock = collect($request->only(['quantity', 'note']));
+
+        $product->addStock($stock->get('quantity'), $stock->get('note'), $request->user());
+
+        // todo upload images
+        return redirect()->route('my.shop.inventory', ['shop' => $shop]);
     }
 }

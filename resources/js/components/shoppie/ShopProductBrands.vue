@@ -26,7 +26,6 @@
         name: "ShopProductBrands",
         mounted() {
             this.fetchBrands();
-            this.listen();
         },
         data() {
             return {
@@ -58,12 +57,6 @@
                 this.loaded = true;
                 this.brands = response.data.data.shop.brands.data;
                 this.paginatorInfo = response.data.data.shop.brands.paginatorInfo;
-            },
-            listen() {
-                Bus.$on("filter", this.filterBrands);
-            },
-            filterBrands(filter) {
-
             }
         },
         computed: {

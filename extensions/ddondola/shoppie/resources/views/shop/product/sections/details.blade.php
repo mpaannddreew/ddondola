@@ -4,20 +4,20 @@
             <strong class="text-muted d-block mb-2">Description</strong>
             <span>{{ $product->description }}</span>
         </li>
-        <li class="list-group-item py-4 px-2">
-            <strong class="text-muted d-block mb-2 px-3">Attributes</strong>
+        <li class="list-group-item pt-4 pb-0 px-0">
+            <strong class="text-muted d-block mb-2 px-4">Attributes</strong>
             <span>
-                    <table class="table table-bordered m-0">
-                        <tbody>
-                        @foreach($product->settings('attributes') as $attribute)
-                            <tr>
-                                <td>{{ $attribute["name"] }}</td>
-                                <td>{{ $attribute["value"] }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </span>
+                <table class="table table-striped m-0">
+                    <tbody>
+                    @foreach($product->settings('attributes') as $attribute)
+                        <tr>
+                            <th class="text-muted px-4">{{ $attribute["name"] }}</th>
+                            <td>{{ $attribute["value"] }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </span>
         </li>
     </ul>
 </div>

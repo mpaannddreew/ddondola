@@ -116,6 +116,7 @@
             listen() {
                 Bus.$on("sub-category-ids", this.showFromSubcategory);
                 Bus.$on("brand-ids", this.showFromBrands);
+                Bus.$on("filter-products", this.filterProducts);
             },
             showFromSubcategory(ids) {
                 this.subCategoryIds = ids;
@@ -126,6 +127,9 @@
                 this.brandIds = ids;
                 this.subCategoryIds = [];
                 this.loadPage(1);
+            },
+            filterProducts(filter) {
+
             }
         },
         watch: {

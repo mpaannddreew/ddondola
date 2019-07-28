@@ -14,6 +14,10 @@ use Shoppie\ShopCategory as Category;
 
 class ShopCategoryRepository
 {
+    public function all() {
+        return Category::all();
+    }
+
     /**
      * Existing category from id
      *

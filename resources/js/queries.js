@@ -469,20 +469,6 @@ window.graphql = {
             }
           }
         }`,
-    createProduct: `mutation createProduct($product: NewProduct!){
-          createProduct(product: $product) {
-            id
-            code
-            name
-          }
-        }`,
-    editProduct: `mutation editProduct($productId: ID! $product: EditProduct!){
-          editProduct(productId: $productId product: $product) {
-            id
-            code
-            name
-          }
-        }`,
     relatedProducts: `query relatedProducts($id: ID!) {
           product(id: $id) {
             products:relatedProducts {

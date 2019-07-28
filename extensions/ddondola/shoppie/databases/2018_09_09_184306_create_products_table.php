@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('price');
             $table->text('description')->nullable();
             $table->text('settings')->nullable();
-            $table->boolean('active')->default(0);
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

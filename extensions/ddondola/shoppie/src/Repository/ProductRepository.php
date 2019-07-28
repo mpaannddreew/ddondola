@@ -58,7 +58,7 @@ class ProductRepository
      * @param $productData
      * @return Product
      */
-    public function update(Product $product, Category $category = null, Brand $brand = null, $productData) {
+    public function update(Product $product, Category $category = null, Brand $brand = null, array $productData) {
         if ($category)
             if (!$product->subcategory->is($category))
                 $product->subcategory_id = $category->id;
@@ -68,9 +68,11 @@ class ProductRepository
                 $product->brand_id = $brand->id;
 
         foreach ($productData as $key => $value) {
-            if ($key == 'attributes' || $key == 'minimum_stock') {
+            if ($key == 'settings') {
                 $settings = $product->settings;
-                $settings[$key] = $value;
+                foreach ($value as $k => $v) {
+                    $settings[$k] = $v;
+                }
                 $product->settings = $settings;
             } else {
                 $product->{$key} = $value;

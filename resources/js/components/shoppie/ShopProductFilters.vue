@@ -59,7 +59,7 @@
         },
         computed: {
             placeholder() {
-                return this.categoriesActive ? "Filter Categories": "Filter Brands";
+                return "Filter Products";
             }
         },
         methods: {
@@ -75,7 +75,7 @@
                 this.filter = '';
             },
             filter(data) {
-                Bus.$emit("filter", data);
+                Bus.$emit("filter-products", data);
             }
         }
     }

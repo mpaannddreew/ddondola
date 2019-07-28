@@ -14,7 +14,6 @@ use Shoppie\Repository\ProductRepository;
 use Shoppie\Repository\ProductSubCategoryRepository;
 use Shoppie\Repository\ShopCategoryRepository;
 use Shoppie\Repository\ShopRepository;
-use Shoppie\Shop;
 use Shoppie\ShopCategory;
 
 class ShoppieMutator
@@ -189,79 +188,6 @@ class ShoppieMutator
         $category = app(ProductSubCategoryRepository::class)->id($args['categoryId']);
         if ($context->user()->can('update', $category)) {
             return app(ProductSubCategoryRepository::class)->update($category, $args['subcategory']);
-        }
-
-        throw new AuthorizationException;
-    }
-
-    /**
-     * Return a value for the field.
-     *
-     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
-     * @param array $args The arguments that were passed into the field.
-     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
-     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
-     *
-     * @return ProductSubCategory
-     * @throws \Exception
-     */
-    public function createProduct($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
-    {
-        $args = $args['product'];
-        $brand = app(ProductBrandRepository::class)->id($args['brandId']);
-        $subCategory = app(ProductSubCategoryRepository::class)->id($args['categoryId']);
-        if ($context->user()->can('update', $brand) &&
-            $context->user()->can('update', $subCategory)) {
-
-            $product = app(ProductRepository::class)->create($subCategory, $brand,
-                array_merge(collect($args)->only(['name', 'price', 'description', 'active'])->all(),
-                    ['settings' => collect($args)->only(['minimum_stock', 'attributes'])])
-            );
-
-            $stock = collect($args['stock']);
-
-            $product->addStock($stock->get('quantity'), $stock->get('note'), $context->user());
-
-            // todo upload images
-            return $product;
-        }
-
-        throw new AuthorizationException;
-    }
-
-
-    /**
-     * Return a value for the field.
-     *
-     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
-     * @param array $args The arguments that were passed into the field.
-     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
-     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
-     *
-     * @return ProductSubCategory
-     * @throws \Exception
-     */
-    public function editProduct($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
-    {
-        $product = app(ProductRepository::class)->id($args['productId']);
-        if ($context->user()->can('update', $product)) {
-            $brand = null;
-            $subCategory = null;
-
-            $args = collect($args['product']);
-            if ($args->has('brandId')) {
-                $brand = app(ProductBrandRepository::class)->id($args->get('brandId'));
-            }
-
-            if ($args->has('categoryId')) {
-                $subCategory = app(ProductSubCategoryRepository::class)->id($args->get('categoryId'));
-            }
-
-            $product = $product->editProduct($subCategory, $brand,
-                collect($args)->only(['name', 'price', 'description', 'active', 'minimum_stock', 'attributes'])->all()
-            );
-
-            return $product;
         }
 
         throw new AuthorizationException;
