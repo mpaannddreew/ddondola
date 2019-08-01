@@ -51,6 +51,12 @@ class ShopCategoryRepository
         ]);
     }
 
+    public function update(Category $category, array $attributes) {
+        $category->update($attributes);
+
+        return $category;
+    }
+
     public function builder() {
         return Category::select();
     }

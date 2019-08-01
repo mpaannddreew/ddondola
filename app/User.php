@@ -51,6 +51,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_superuser' => 'bool'
     ];
 
+    public function admin() {
+        return $this->is_staff && $this->is_superuser;
+    }
+
     public function country() {
         return $this->belongsTo(Country::class, 'country_id');
     }

@@ -167,6 +167,7 @@
             watchConversation() {
                 Echo.private(`conversation.${parseInt(this.conversation.id)}`)
                     .listen('.new.message', (e) => {
+                        console.log(e);
                         this.messages.push(e);
                     });
             },

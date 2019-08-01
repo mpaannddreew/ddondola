@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/slick/slick.min.js": "/slick/slick.min.js",
     "/slick/slick.css": "/slick/slick.css",
-    "/slick/slick-theme.css": "/slick/slick-theme.css"
+    "/slick/slick-theme.css": "/slick/slick-theme.css",
+    "/css/cropme.css": "/css/cropme.css",
+    "/js/cropme.js": "/js/cropme.js"
 }

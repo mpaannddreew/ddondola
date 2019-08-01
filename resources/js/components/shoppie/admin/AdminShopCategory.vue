@@ -10,14 +10,18 @@
         </template>
         <template v-else>
             <td v-if="editEnabled">
-                <div class="form-group">
+                <div class="form-group m-0">
                     <input class="form-control form-control-sm" type="text" placeholder="Name" v-model="name" :id="'name_' + category.id">
                     <div class="invalid-feedback" :id="'name_' + category.id + '_feedback'"></div>
                 </div>
             </td>
             <td v-else>{{ category.name }}</td>
             <td class="lo-stats__items text-center">{{ category.shopCount }}</td>
-            <td v-if="editEnabled"><textarea placeholder="Description" v-model="description" class="form-control"></textarea></td>
+            <td v-if="editEnabled">
+                <div class="form-group m-0">
+                    <textarea placeholder="Description" v-model="description" class="form-control"></textarea>
+                </div>
+            </td>
             <td v-else>{{ category.description }}</td>
             <td>
                 <div class="btn-group d-table ml-auto" role="group">

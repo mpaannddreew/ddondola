@@ -4712,6 +4712,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Echo.private("conversation.".concat(parseInt(this.conversation.id))).listen('.new.message', function (e) {
+        console.log(e);
+
         _this.messages.push(e);
       });
     },
@@ -10526,6 +10528,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -86338,7 +86344,7 @@ var render = function() {
         : [
             _vm.editEnabled
               ? _c("td", [
-                  _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "form-group m-0" }, [
                     _c("input", {
                       directives: [
                         {
@@ -86379,27 +86385,29 @@ var render = function() {
             _vm._v(" "),
             _vm.editEnabled
               ? _c("td", [
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.description,
-                        expression: "description"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { placeholder: "Description" },
-                    domProps: { value: _vm.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  _c("div", { staticClass: "form-group m-0" }, [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.description,
+                          expression: "description"
                         }
-                        _vm.description = $event.target.value
+                      ],
+                      staticClass: "form-control",
+                      attrs: { placeholder: "Description" },
+                      domProps: { value: _vm.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.description = $event.target.value
+                        }
                       }
-                    }
-                  })
+                    })
+                  ])
                 ])
               : _c("td", [_vm._v(_vm._s(_vm.category.description))]),
             _vm._v(" "),

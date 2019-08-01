@@ -42,7 +42,7 @@ class MessageRepository
             'message' => $message
         ]);
 
-//        broadcast(new NewMessage($chat));
+        broadcast(new NewMessage($chat));
         return $chat;
     }
 }

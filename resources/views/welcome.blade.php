@@ -38,7 +38,7 @@
 
                 <div class="col-md-12">
                     <h3 class="headline centered margin-top-75">
-                        Featured Products
+                        <strong class="headline-with-separator">Featured Products</strong>
                         <span>Browse the most desirable products</span>
                     </h3>
                 </div>
@@ -66,7 +66,7 @@
 
                 <div class="col-md-12">
                     <h3 class="headline centered margin-bottom-45">
-                        Featured Shops
+                        <strong class="headline-with-separator">Featured Shops</strong>
                         <span>Discover & connect with top-rated local businesses</span>
                     </h3>
                 </div>
@@ -93,7 +93,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="headline centered headline-extra-spacing" align="center">
-                        What Our Users Say
+                        <strong class="headline-with-separator">What Our Users Say</strong>
                         <span class="margin-top-25">We collect reviews from our users so you can get an honest opinion of what an experience with our service is really like!</span>
                     </h3>
                 </div>
@@ -147,7 +147,7 @@
         <div class="container">
             <div class="col-md-12">
                 <h3 class="headline centered margin-bottom-45">
-                    Get Associated With Us
+                    <strong class="headline-with-separator">Get Associated With Us</strong>
                     <span>Create your own shop and start selling online from the comfort of your living room</span>
                 </h3>
             </div>

@@ -16,5 +16,7 @@ mix.js('resources/js/app.js', 'public/js');
 
 // chosen js resources
 mix.copy('node_modules/slick-carousel/slick/slick.min.js', 'public/slick');
-mix.copy('node_modules//slick-carousel/slick/slick.css', 'public/slick');
-mix.copy('node_modules//slick-carousel/slick/slick-theme.css', 'public/slick');
+mix.copy('node_modules/slick-carousel/slick/slick.css', 'public/slick');
+mix.copy('node_modules/slick-carousel/slick/slick-theme.css', 'public/slick');
+mix.copy('node_modules/cropme/dist/cropme.css', 'public/css');
+mix.copy('node_modules/cropme/dist/cropme.js', 'public/js');

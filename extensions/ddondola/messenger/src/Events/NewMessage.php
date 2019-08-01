@@ -64,15 +64,13 @@ class NewMessage implements ShouldBroadcast, ShouldQueue
 
     private function sender()
     {
-        $sender = [
+        return [
             'id' => $this->message->sender->id,
             'name' => $this->senderName(),
             'type' => $this->message->sender->type(),
             'code' => $this->message->sender->code,
             'avatar' => $this->message->sender->avatar(),
         ];
-
-        return $sender;
     }
 
     private function senderName()

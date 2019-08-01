@@ -3,13 +3,12 @@
     <link rel="stylesheet" href="{{ asset('slick/slick.css') }}"/>
     <link rel="stylesheet" href="{{ asset('slick/slick-theme.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/ui.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/croppie.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/changes.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/shoppie.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/messenger.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/product.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/cropme.css') }}"/>
     <script async defer src="{{ asset('js/buttons.js') }}"></script>
 @endsection
 
@@ -27,7 +26,7 @@
     <script src="{{ asset('js/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script src="{{ asset('js/jquery.sticky.js') }}"></script>
-    <script src="{{ asset('js/croppie.js') }}"></script>
+    <script src="{{ asset('js/cropme.js') }}"></script>
     <script>
         $(function () {
             $(".input-daterange").datepicker({}).val();

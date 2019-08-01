@@ -10,6 +10,13 @@ class ShopCategoryPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user, $ability)
+    {
+        if ($user->admin()) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view the shop.
      *
