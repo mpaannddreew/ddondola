@@ -20,36 +20,52 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;" v-if="loaded && conversation">
-                <div class="card-header border-bottom px-2" style="padding-top: 0.6em; padding-bottom: 0.6em;">
-                    <a href="javascript:void(0)" @click="back" class="btn btn-pill btn-outline-success active">
-                        <i class="fa fa-chevron-left"></i> Back
-                    </a>
-                    <strong>{{ converser.name }}</strong>
-                </div>
-                <div class="card-body d-flex flex-column" id="chat-body">
-                    <template v-if="!messagesLoaded">
-                        <div align="center" class="p-4">
-                            <div class="loader"></div>
-                            <p>Loading messages...</p>
+            <div class="conversation" v-if="loaded && conversation">
+                <div class="chat-messages">
+                    <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;">
+                        <div class="card-header border-bottom px-2" style="padding-top: 0.6em; padding-bottom: 0.6em;">
+                            <a href="javascript:void(0)" @click="back" class="btn btn-pill btn-outline-success active">
+                                <i class="fa fa-chevron-left"></i> Back
+                            </a>
+                            <strong>{{ converser.name }}</strong>
                         </div>
-                    </template>
-                    <template v-else-if="!hasMessages && messagesLoaded">
-                        <div align="center" class="p-4">
-                            <h4 class="m-0"><i class="material-icons">chat</i></h4>
-                            <p class="mb-0">Empty conversation.</p>
+                        <div class="card-body d-flex flex-column" id="chat-body">
+                            <template v-if="!messagesLoaded">
+                                <div align="center" class="p-4">
+                                    <div class="loader"></div>
+                                    <p>Loading messages...</p>
+                                </div>
+                            </template>
+                            <template v-else-if="!hasMessages && messagesLoaded">
+                                <div align="center" class="p-4">
+                                    <h4 class="m-0"><i class="material-icons">chat</i></h4>
+                                    <p class="mb-0">Empty conversation.</p>
+                                </div>
+                            </template>
+                            <div class="chats" v-else-if="hasMessages && messagesLoaded" id="chats">
+                                <chat-group v-for="(group, indx) in groupedMessages" :key="indx" :group="group" :initiator="initiator" :participant="participant"></chat-group>
+                            </div>
                         </div>
-                    </template>
-                    <div class="chats" v-else-if="hasMessages && messagesLoaded" id="chats">
-                        <chat-group v-for="(group, indx) in groupedMessages" :key="indx" :group="group" :initiator="initiator" :participant="participant"></chat-group>
+                        <div class="card-footer border-top p-0">
+                            <div class="typing-msg border-0 py-4">
+                                <form>
+                                    <textarea placeholder="Type a message here" class="pr-5" v-model="text"></textarea>
+                                    <button type="button" @click="sendMessage" :class="{disabled: !hasText || sending}"><i class="fa fa-send"></i></button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer border-top p-0">
-                    <div class="typing-msg border-0 py-4">
-                        <form>
-                            <textarea placeholder="Type a message here" class="pr-5" v-model="text"></textarea>
-                            <button type="button" @click="sendMessage" :class="{disabled: !hasText || sending}"><i class="fa fa-send"></i></button>
-                        </form>
+                <div class="chat-profile close-chat-profile h-100 border-left bg-white" style="overflow-x: hidden; overflow-y: auto;">
+                    <div class="card card-small mb-4 pt-3">
+                        <div class="card-header text-center">
+                            <div class="mb-3 mx-auto">
+                                <img class="rounded-circle" :src="converser.avatar.url" alt="User Avatar" width="110">
+                            </div>
+                            <h4 class="mb-0">{{ converser.name }}</h4>
+                            <span class="text-muted d-block mb-2">Project Manager</span>
+                            <a :href="url" class="mb-2 btn btn-sm btn-pill btn-outline-primary mx-auto" v-html="urlText"></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,6 +148,11 @@
 
                 return null;
             },
+            converserType() {
+                if (this.converser)
+                    return _.lowerCase(this.converser.type);
+                return null;
+            },
             hasText() {
                 return this.text.length > 0;
             },
@@ -141,6 +162,15 @@
                 }), function(message){
                     return Moment(message.created_at).format("MMMM Do YYYY");
                 });
+            },
+            url() {
+                if (this.converser)
+                    return `/${this.converserType === 'shop' ? 'shops':'people'}/${this.converser.code}`;
+
+                return null;
+            },
+            urlText() {
+                return `<i class="material-icons">${this.converserType === 'shop' ? 'shop_two':'account_circle'}</i> ${this.converserType === 'shop' ? 'Shop':'Profile'}`
             }
         },
         methods: {
@@ -237,5 +267,31 @@
 </script>
 
 <style scoped>
+    .chat-messages {
+        padding: 0;
+        position: relative;
+        width: calc(100% - 300px);
+        float: left;
+    }
 
+    .close-chat-profile {
+    }
+
+    .chat-profile {
+        padding: 0;
+        position: relative;
+        width: 300px;
+        float: left;
+        height: calc(99.9vh - 3.75rem - 1px) !important;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .chat-messages {
+            width: 100% !important;
+        }
+
+        .close-chat-profile {
+            margin-right: -300px;
+        }
+    }
 </style>

@@ -3441,6 +3441,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ddondola/PictureManager.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ddondola/PictureManager.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "PictureManager"
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ddondola/Search.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ddondola/Search.vue?vue&type=script&lang=js& ***!
@@ -4599,6 +4618,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ChatArea",
@@ -4676,6 +4711,10 @@ __webpack_require__.r(__webpack_exports__);
 
       return null;
     },
+    converserType: function converserType() {
+      if (this.converser) return _.lowerCase(this.converser.type);
+      return null;
+    },
     hasText: function hasText() {
       return this.text.length > 0;
     },
@@ -4685,6 +4724,13 @@ __webpack_require__.r(__webpack_exports__);
       }), function (message) {
         return Moment(message.created_at).format("MMMM Do YYYY");
       });
+    },
+    url: function url() {
+      if (this.converser) return "/".concat(this.converserType === 'shop' ? 'shops' : 'people', "/").concat(this.converser.code);
+      return null;
+    },
+    urlText: function urlText() {
+      return "<i class=\"material-icons\">".concat(this.converserType === 'shop' ? 'shop_two' : 'account_circle', "</i> ").concat(this.converserType === 'shop' ? 'Shop' : 'Profile');
     }
   },
   methods: {
@@ -19764,6 +19810,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\ndiv.loader[data-v-618f2a86] {\n    width: 15px;\n    height: 15px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.chat-messages[data-v-8a7e7ea8] {\n    padding: 0;\n    position: relative;\n    width: calc(100% - 300px);\n    float: left;\n}\n.close-chat-profile[data-v-8a7e7ea8] {\n}\n.chat-profile[data-v-8a7e7ea8] {\n    padding: 0;\n    position: relative;\n    width: 300px;\n    float: left;\n    height: calc(99.9vh - 3.75rem - 1px) !important;\n}\n@media only screen and (max-width: 768px) {\n.chat-messages[data-v-8a7e7ea8] {\n        width: 100% !important;\n}\n.close-chat-profile[data-v-8a7e7ea8] {\n        margin-right: -300px;\n}\n}\n", ""]);
 
 // exports
 
@@ -69973,6 +70038,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messenger/ChatList.vue?vue&type=style&index=0&id=6e45303d&scoped=true&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/messenger/ChatList.vue?vue&type=style&index=0&id=6e45303d&scoped=true&lang=css& ***!
@@ -77628,6 +77723,30 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ddondola/PictureManager.vue?vue&type=template&id=3c4866e4&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ddondola/PictureManager.vue?vue&type=template&id=3c4866e4&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ddondola/Search.vue?vue&type=template&id=c0e89786&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ddondola/Search.vue?vue&type=template&id=c0e89786&scoped=true& ***!
@@ -78737,111 +78856,156 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.loaded && _vm.conversation
-        ? _c(
-            "div",
-            {
-              staticClass: "card card-small h-100 main",
-              staticStyle: { "border-radius": "0", "box-shadow": "none" }
-            },
-            [
+        ? _c("div", { staticClass: "conversation" }, [
+            _c("div", { staticClass: "chat-messages" }, [
               _c(
                 "div",
                 {
-                  staticClass: "card-header border-bottom px-2",
-                  staticStyle: {
-                    "padding-top": "0.6em",
-                    "padding-bottom": "0.6em"
-                  }
+                  staticClass: "card card-small h-100 main",
+                  staticStyle: { "border-radius": "0", "box-shadow": "none" }
                 },
                 [
                   _c(
-                    "a",
+                    "div",
                     {
-                      staticClass: "btn btn-pill btn-outline-success active",
-                      attrs: { href: "javascript:void(0)" },
-                      on: { click: _vm.back }
+                      staticClass: "card-header border-bottom px-2",
+                      staticStyle: {
+                        "padding-top": "0.6em",
+                        "padding-bottom": "0.6em"
+                      }
                     },
                     [
-                      _c("i", { staticClass: "fa fa-chevron-left" }),
-                      _vm._v(" Back\n                ")
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "btn btn-pill btn-outline-success active",
+                          attrs: { href: "javascript:void(0)" },
+                          on: { click: _vm.back }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-chevron-left" }),
+                          _vm._v(" Back\n                        ")
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("strong", [_vm._v(_vm._s(_vm.converser.name))])
                     ]
                   ),
                   _vm._v(" "),
-                  _c("strong", [_vm._v(_vm._s(_vm.converser.name))])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "card-body d-flex flex-column",
-                  attrs: { id: "chat-body" }
-                },
-                [
-                  !_vm.messagesLoaded
-                    ? [_vm._m(1)]
-                    : !_vm.hasMessages && _vm.messagesLoaded
-                    ? [_vm._m(2)]
-                    : _vm.hasMessages && _vm.messagesLoaded
-                    ? _c(
-                        "div",
-                        { staticClass: "chats", attrs: { id: "chats" } },
-                        _vm._l(_vm.groupedMessages, function(group, indx) {
-                          return _c("chat-group", {
-                            key: indx,
-                            attrs: {
-                              group: group,
-                              initiator: _vm.initiator,
-                              participant: _vm.participant
+                  _c(
+                    "div",
+                    {
+                      staticClass: "card-body d-flex flex-column",
+                      attrs: { id: "chat-body" }
+                    },
+                    [
+                      !_vm.messagesLoaded
+                        ? [_vm._m(1)]
+                        : !_vm.hasMessages && _vm.messagesLoaded
+                        ? [_vm._m(2)]
+                        : _vm.hasMessages && _vm.messagesLoaded
+                        ? _c(
+                            "div",
+                            { staticClass: "chats", attrs: { id: "chats" } },
+                            _vm._l(_vm.groupedMessages, function(group, indx) {
+                              return _c("chat-group", {
+                                key: indx,
+                                attrs: {
+                                  group: group,
+                                  initiator: _vm.initiator,
+                                  participant: _vm.participant
+                                }
+                              })
+                            }),
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-footer border-top p-0" }, [
+                    _c("div", { staticClass: "typing-msg border-0 py-4" }, [
+                      _c("form", [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.text,
+                              expression: "text"
                             }
-                          })
-                        }),
-                        1
-                      )
-                    : _vm._e()
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-footer border-top p-0" }, [
-                _c("div", { staticClass: "typing-msg border-0 py-4" }, [
-                  _c("form", [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.text,
-                          expression: "text"
-                        }
-                      ],
-                      staticClass: "pr-5",
-                      attrs: { placeholder: "Type a message here" },
-                      domProps: { value: _vm.text },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                          ],
+                          staticClass: "pr-5",
+                          attrs: { placeholder: "Type a message here" },
+                          domProps: { value: _vm.text },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.text = $event.target.value
+                            }
                           }
-                          _vm.text = $event.target.value
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            class: { disabled: !_vm.hasText || _vm.sending },
+                            attrs: { type: "button" },
+                            on: { click: _vm.sendMessage }
+                          },
+                          [_c("i", { staticClass: "fa fa-send" })]
+                        )
+                      ])
+                    ])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "chat-profile close-chat-profile h-100 border-left bg-white",
+                staticStyle: { "overflow-x": "hidden", "overflow-y": "auto" }
+              },
+              [
+                _c("div", { staticClass: "card card-small mb-4 pt-3" }, [
+                  _c("div", { staticClass: "card-header text-center" }, [
+                    _c("div", { staticClass: "mb-3 mx-auto" }, [
+                      _c("img", {
+                        staticClass: "rounded-circle",
+                        attrs: {
+                          src: _vm.converser.avatar.url,
+                          alt: "User Avatar",
+                          width: "110"
                         }
-                      }
-                    }),
+                      })
+                    ]),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        class: { disabled: !_vm.hasText || _vm.sending },
-                        attrs: { type: "button" },
-                        on: { click: _vm.sendMessage }
-                      },
-                      [_c("i", { staticClass: "fa fa-send" })]
-                    )
+                    _c("h4", { staticClass: "mb-0" }, [
+                      _vm._v(_vm._s(_vm.converser.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-muted d-block mb-2" }, [
+                      _vm._v("Project Manager")
+                    ]),
+                    _vm._v(" "),
+                    _c("a", {
+                      staticClass:
+                        "mb-2 btn btn-sm btn-pill btn-outline-primary mx-auto",
+                      attrs: { href: _vm.url },
+                      domProps: { innerHTML: _vm._s(_vm.urlText) }
+                    })
                   ])
                 ])
-              ])
-            ]
-          )
+              ]
+            )
+          ])
         : _vm._e()
     ])
   ])
@@ -104630,6 +104794,7 @@ var map = {
 	"./components/ddondola/Notifications.vue": "./resources/js/components/ddondola/Notifications.vue",
 	"./components/ddondola/Pagination.vue": "./resources/js/components/ddondola/Pagination.vue",
 	"./components/ddondola/People.vue": "./resources/js/components/ddondola/People.vue",
+	"./components/ddondola/PictureManager.vue": "./resources/js/components/ddondola/PictureManager.vue",
 	"./components/ddondola/Search.vue": "./resources/js/components/ddondola/Search.vue",
 	"./components/ddondola/UserActions.vue": "./resources/js/components/ddondola/UserActions.vue",
 	"./components/ddondola/VisibleItems.vue": "./resources/js/components/ddondola/VisibleItems.vue",
@@ -106057,6 +106222,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ddondola/PictureManager.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/ddondola/PictureManager.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PictureManager_vue_vue_type_template_id_3c4866e4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PictureManager.vue?vue&type=template&id=3c4866e4&scoped=true& */ "./resources/js/components/ddondola/PictureManager.vue?vue&type=template&id=3c4866e4&scoped=true&");
+/* harmony import */ var _PictureManager_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PictureManager.vue?vue&type=script&lang=js& */ "./resources/js/components/ddondola/PictureManager.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PictureManager_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PictureManager_vue_vue_type_template_id_3c4866e4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PictureManager_vue_vue_type_template_id_3c4866e4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3c4866e4",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ddondola/PictureManager.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ddondola/PictureManager.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/ddondola/PictureManager.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PictureManager_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PictureManager.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ddondola/PictureManager.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PictureManager_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ddondola/PictureManager.vue?vue&type=template&id=3c4866e4&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/ddondola/PictureManager.vue?vue&type=template&id=3c4866e4&scoped=true& ***!
+  \********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PictureManager_vue_vue_type_template_id_3c4866e4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PictureManager.vue?vue&type=template&id=3c4866e4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ddondola/PictureManager.vue?vue&type=template&id=3c4866e4&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PictureManager_vue_vue_type_template_id_3c4866e4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PictureManager_vue_vue_type_template_id_3c4866e4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ddondola/Search.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/ddondola/Search.vue ***!
@@ -106881,7 +107115,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ChatArea_vue_vue_type_template_id_8a7e7ea8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChatArea.vue?vue&type=template&id=8a7e7ea8&scoped=true& */ "./resources/js/components/messenger/ChatArea.vue?vue&type=template&id=8a7e7ea8&scoped=true&");
 /* harmony import */ var _ChatArea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChatArea.vue?vue&type=script&lang=js& */ "./resources/js/components/messenger/ChatArea.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ChatArea_vue_vue_type_style_index_0_id_8a7e7ea8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css& */ "./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -106889,7 +107125,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _ChatArea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ChatArea_vue_vue_type_template_id_8a7e7ea8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ChatArea_vue_vue_type_template_id_8a7e7ea8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -106918,6 +107154,22 @@ component.options.__file = "resources/js/components/messenger/ChatArea.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatArea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ChatArea.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messenger/ChatArea.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatArea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatArea_vue_vue_type_style_index_0_id_8a7e7ea8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/messenger/ChatArea.vue?vue&type=style&index=0&id=8a7e7ea8&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatArea_vue_vue_type_style_index_0_id_8a7e7ea8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatArea_vue_vue_type_style_index_0_id_8a7e7ea8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatArea_vue_vue_type_style_index_0_id_8a7e7ea8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatArea_vue_vue_type_style_index_0_id_8a7e7ea8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatArea_vue_vue_type_style_index_0_id_8a7e7ea8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -112245,7 +112497,7 @@ window.graphql = {
   shopConversations: "query shopConversations($id: ID! $count: Int! $page: Int!) {\n          shop(id: $id) {\n            conversations(count: $count page: $page) {\n              data {\n                id\n                initiator {\n                  id\n                  name\n                  type\n                  code\n                  avatar {\n                    url\n                  }\n                }\n                participant {\n                  id\n                  name\n                  type\n                  code\n                  avatar {\n                    url\n                  }\n                }\n                latestMessage {\n                  message\n                  created_at\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
   shopContacts: "query shopContacts($id: ID! $count: Int! $page: Int!){\n          shop(id: $id) {\n            contacts(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar{\n                  url\n                }\n                coverPicture {\n                  url\n                }\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
   myContacts: "query myContacts($count: Int! $page: Int!){\n          me {\n            contacts(count: $count page: $page) {\n              data {\n                id\n                code\n                name\n                avatar{\n                  url\n                }\n                coverPicture {\n                  url\n                }\n                followerCount\n                followingCount\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
-  conversation: "query conversation($initiator: String $participant: String!) {\n          conversation(initiator: $initiator participant: $participant) {\n            id\n            initiator {\n              id\n              name\n              type\n              code\n              avatar {\n                url\n              }\n            }\n            participant {\n              id\n              name\n              type\n              code\n              avatar {\n                url\n              }\n            }\n          }\n        }",
+  conversation: "query conversation($initiator: String $participant: String!) {\n          conversation(initiator: $initiator participant: $participant) {\n            id\n            initiator {\n              id\n              name\n              type\n              code\n              avatar {\n                url\n              }\n              coverPicture {\n                url\n              }\n            }\n            participant {\n              id\n              name\n              type\n              code\n              avatar {\n                url\n              }\n              coverPicture {\n                url\n              }\n            }\n          }\n        }",
   conversationMessages: "query conversationMessages($initiator: String $participant: String! $count: Int! $page: Int!) {\n          conversation(initiator: $initiator participant: $participant) {\n            messages(count: $count page: $page) {\n              data {\n                id\n                message\n                sender {\n                  id\n                  name\n                  type\n                  code\n                  avatar {\n                    url\n                  }\n                }\n                created_at\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",
   startConversation: "mutation startConversation($initiator: String $participant: String!) {\n          conversation:startConversation(initiator: $initiator participant: $participant) {\n            id\n            initiator {\n              id\n              name\n              type\n              code\n              avatar {\n                url\n              }\n            }\n            participant {\n              id\n              name\n              type\n              code\n              avatar {\n                url\n              }\n            }\n          }\n        }",
   myOrders: "query myOrders($page: Int! $count: Int!) {\n          me {\n            orders(page: $page count: $count) {\n              data {\n                id\n                code\n                sum\n                productCount\n                currencyCode\n                created_at\n                firstProduct {\n                  images {\n                    url\n                  }\n                }\n              }\n              paginatorInfo {\n                count\n                currentPage\n                firstItem\n                hasMorePages\n                lastItem\n                lastPage\n                perPage\n                total\n              }\n            }\n          }\n        }",

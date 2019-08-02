@@ -1375,6 +1375,9 @@ window.graphql = {
               avatar {
                 url
               }
+              coverPicture {
+                url
+              }
             }
             participant {
               id
@@ -1382,6 +1385,9 @@ window.graphql = {
               type
               code
               avatar {
+                url
+              }
+              coverPicture {
                 url
               }
             }
