@@ -9,7 +9,7 @@
                 <div class="col-12 col-md-12 mb-4 mb-lg-0">
                     <a href="javascript:void(0)" class="text-white">
                         <div class="media d-block d-sm-flex text-sm-left text-center">
-                            <img style="width: 100px; height: 100px;" src="{{ $user->avatar()['url'] }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 mb-4 mb-md-0" alt="" />
+                            <img style="width: 100px; height: 100px; border-radius: 5px !important;" src="{{ $user->avatar()['url'] }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 mb-4 mb-md-0" alt="{{ $user->name() }}"/>
                             <div class="media-body align-self-center">
                                 <h5 class="text-white lis-font-weight-500 lis-line-height-1">{{ $user->name() }}</h5>
                                 <p class="mb-0">{{ $user->viewFollower() }}</p>

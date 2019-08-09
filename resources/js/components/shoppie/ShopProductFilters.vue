@@ -18,18 +18,22 @@
                             <div class="col">
                                 <ul class="nav nav-tabs nav-justified border-0 flex-column flex-lg-row">
                                     <li class="nav-item">
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: infoActive}" @click="showInfo"><i class="material-icons">info</i> Shop Info</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="javascript:void(0)" class="nav-link" :class="{active: categoriesActive}" @click="showCategories"><i class="material-icons">folder_open</i> Categories</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:void(0)" class="nav-link" :class="{active: !categoriesActive}" @click="showBrands"><i class="material-icons">check_box</i> Brands</a>
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: brandsActive}" @click="showBrands"><i class="material-icons">check_box</i> Brands</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <shop-product-categories :shop="shop" :admin="admin" v-if="categoriesActive"></shop-product-categories>
-                <shop-product-brands :shop="shop" :admin="admin" v-else></shop-product-brands>
+                <shop-information :shop="shop" v-if="infoActive"></shop-information>
+                <shop-product-categories :shop="shop.code" :admin="admin" v-if="categoriesActive"></shop-product-categories>
+                <shop-product-brands :shop="shop.code" :admin="admin" v-if="brandsActive"></shop-product-brands>
             </div>
         </div>
     </div>
@@ -38,12 +42,15 @@
 <script>
     import ShopProductCategories from "./ShopProductCategories";
     import ShopProductBrands from "./ShopProductBrands";
+    import ShopInformation from "./ShopInformation";
     export default {
         name: "ShopProductFilters",
-        components: {ShopProductBrands, ShopProductCategories},
+        components: {ShopInformation, ShopProductBrands, ShopProductCategories},
         data() {
             return {
-                categoriesActive: true,
+                infoActive: true,
+                categoriesActive: false,
+                brandsActive: false,
                 filter: ''
             }
         },
@@ -53,7 +60,7 @@
                 default: false
             },
             shop: {
-                type: String,
+                type: Object,
                 required: true
             }
         },
@@ -63,11 +70,20 @@
             }
         },
         methods: {
+            showInfo() {
+                this.infoActive = true;
+                this.categoriesActive = false;
+                this.brandsActive = false;
+            },
             showCategories() {
+                this.infoActive = false;
                 this.categoriesActive = true;
+                this.brandsActive = false;
             },
             showBrands() {
+                this.infoActive = false;
                 this.categoriesActive = false;
+                this.brandsActive = true;
             }
         },
         watch: {

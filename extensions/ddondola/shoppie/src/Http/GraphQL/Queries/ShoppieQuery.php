@@ -223,7 +223,7 @@ class ShoppieQuery
      */
     public function recommendedProducts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($rootValue->recommendations());
+        return $this->orderBy($this->status($rootValue->recommendations()));
     }
 
     /**

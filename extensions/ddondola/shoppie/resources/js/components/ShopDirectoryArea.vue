@@ -5,11 +5,15 @@
                 <header class="d-flex justify-content-between align-items-start" style="margin: .6rem !important;">
                     <visible-items :paginator-info="paginatorInfo" v-if="showShops && paginatorInfo"></visible-items>
                     <span class="visible-items" v-else-if="!showShops"></span>
-                    <div class="btn-group">
-                        <select class="form-control form-control-sm custom-select custom-select-sm" tabindex="-98" v-model="ordering">
+                    <div class="d-flex">
+                        <select class="form-control form-control-sm custom-select custom-select-sm mr-2" tabindex="-98" v-model="ordering">
+                            <option value=""></option>
                             <option value="asc">Ascending</option>
                             <option value="desc">Descending</option>
                         </select>
+                        <a :href="newShopUrl" class="btn btn-sm btn-success ml-auto">
+                            <i class="material-icons">add</i> New Shop
+                        </a>
                     </div>
                 </header>
             </div>
@@ -100,6 +104,9 @@
         computed: {
             showShops() {
                 return this.shops.length > 0;
+            },
+            newShopUrl() {
+                return '/me/shops/create';
             }
         },
         watch: {

@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware(['web'])->group(function (){
     Route::get('/', function (\Shoppie\Repository\ProductRepository $products,
                               \Shoppie\Repository\ShopRepository $shops){
-        return view('welcome', ['products' => $products->featured(6), 'shops' => $shops->featured(6)]);
-    })->name('welcome');
+        return Auth::check() ? view('ddondola.home'): view('welcome', ['products' => $products->featured(6), 'shops' => $shops->featured(6)]);
+    })->name('home');
     Route::view('contact', 'contact')->name('contact');
     Route::view('privacy-policy', 'privacy-policy')->name('policy');
     Route::view('terms-and-conditions', 'terms-and-conditions')->name('terms');
@@ -30,7 +30,7 @@ Route::middleware(['web'])->group(function (){
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function (){
-    Route::get('/home', 'HomeController@index')->name('home');
+//    Route::get('/home', 'HomeController@index')->name('home');
     Route::prefix('me')->group(function (){
         Route::get('/', 'HomeController@profile')->name('my.profile');
         Route::get('/edit', 'HomeController@profileEdit')->name('my.profile.edit');

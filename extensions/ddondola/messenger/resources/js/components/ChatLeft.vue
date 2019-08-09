@@ -1,8 +1,8 @@
 <template>
     <div class="chat chat-left">
         <div class="chat-avatar">
-            <a href="javascript:void(0)" class="avatar">
-                <img alt="John Doe" :src="chat.sender.avatar.url" class="img-fluid rounded-circle">
+            <a :href="url" class="avatar">
+                <img :alt="sender.name" :src="sender.avatar.url" class="img-fluid rounded-circle">
             </a>
         </div>
         <div class="chat-body">
@@ -30,7 +30,15 @@
             }
         },
         computed: {
-
+            sender() {
+                return this.chat.sender;
+            },
+            type() {
+                return _.lowerCase(this.sender.type);
+            },
+            url() {
+                return `/${this.type === 'shop' ? 'shops':'people'}/${this.sender.code}`;
+            },
         },
         filters: {
             time(date) {

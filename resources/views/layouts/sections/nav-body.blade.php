@@ -1,14 +1,3 @@
-@auth
-<ul class="navbar-nav flex-row ml-auto">
-    <li class="nav-item border-right dropdown notifications border-radius">
-        <a class="nav-link nav-link-icon text-center" href="{{ route('home') }}">
-            <div class="nav-link-icon__wrapper">
-                <i class="material-icons">public</i>
-            </div>
-        </a>
-    </li>
-</ul>
-@endauth
 <search></search>
 <ul class="navbar-nav border-left flex-row border-right ml-auto">
     @section('nav-items')

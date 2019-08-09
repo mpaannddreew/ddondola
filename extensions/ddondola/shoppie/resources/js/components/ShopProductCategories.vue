@@ -92,5 +92,7 @@
 </script>
 
 <style scoped>
-
+    .h-100 {
+        height: calc(99.9vh - 13.7rem - 1px) !important;
+    }
 </style>

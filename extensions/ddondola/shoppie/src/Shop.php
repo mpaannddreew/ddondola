@@ -10,9 +10,10 @@ use Overtrue\LaravelFollow\Traits\CanBeLiked;
 use Shoppie\Repository\ShopRepository;
 use Shoppie\Traits\Identifier;
 use Laravolt\Avatar\Facade as Avatar;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Shop extends Model
+class Shop extends Model implements HasMedia
 {
     use CanBeLiked, Identifier, Reviewable, Muddondozi, HasMediaTrait, Holder;
 
@@ -24,10 +25,14 @@ class Shop extends Model
         'active' => 'bool'
     ];
 
-    protected $appends = ['shop_category', 'averageRating', 'reviewCount'];
+    protected $appends = ['averageRating', 'reviewCount', 'avatar', 'coverPicture'];
 
-    public function getShopCategoryAttribute() {
-        return $this->category->name;
+    public function getAvatarAttribute() {
+        return $this->avatar();
+    }
+
+    public function getCoverPictureAttribute() {
+        return $this->coverPicture();
     }
 
     public function products() {
@@ -142,7 +147,7 @@ class Shop extends Model
 
     public function avatar() {
         return [
-            'url' => Avatar::create($this->name)->toBase64()
+            'url' => (string)Avatar::create($this->name)->toBase64()
         ];
     }
 

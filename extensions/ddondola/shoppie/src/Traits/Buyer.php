@@ -10,12 +10,10 @@ namespace Shoppie\Traits;
 
 
 use Shoppie\Cart;
-use Shoppie\Facades\Shoppie;
 use Shoppie\Order;
 use Shoppie\Product;
 use Shoppie\Repository\CartRepository;
 use Shoppie\Repository\ProductRepository;
-use Shoppie\Shop;
 
 trait Buyer
 {

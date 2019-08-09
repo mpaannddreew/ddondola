@@ -10,6 +10,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Intervention\Image\Facades\Image;
 use Shoppie\Order;
 use Shoppie\Product;
 use Shoppie\Repository\ProductBrandRepository;
@@ -352,7 +354,8 @@ class ShoppieController extends Controller
         $product = $this->products->create($category, $brand,
             array_merge(
                 $request->only(['name', 'price', 'description']),
-                ['settings' => ['minimum_stock' => $request->input('minimum_stock'), 'attributes' => json_decode($request->input('attributes'))]]
+                ['settings' => ['minimum_stock' => $request->input('minimum_stock'),
+                    'attributes' => json_decode($request->input('attributes'))]]
             )
         );
 
@@ -360,7 +363,12 @@ class ShoppieController extends Controller
 
         $product->addStock($stock->get('quantity'), $stock->get('note'), $request->user());
 
-        // todo upload images
+        collect($request->input('images'))->each(function ($data) use ($product) {
+            // todo add media files from base64 data
+//            $image = Image::make(base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data)));
+//            $product->addMedia($image)->toMediaCollection('products');
+        });
+
         return redirect()->route('my.shop.inventory', ['shop' => $shop]);
     }
 }

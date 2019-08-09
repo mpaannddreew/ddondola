@@ -10,7 +10,6 @@ namespace Messenger\Repositories;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 use Messenger\Conversation;
 use Messenger\Events\NewMessage;
 use Messenger\Message;
@@ -42,7 +41,7 @@ class MessageRepository
             'message' => $message
         ]);
 
-        broadcast(new NewMessage($chat));
+//        broadcast(new NewMessage($chat));
         return $chat;
     }
 }

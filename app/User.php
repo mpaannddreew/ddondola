@@ -16,9 +16,10 @@ use Overtrue\LaravelFollow\Traits\CanLike;
 use Shoppie\Shop;
 use Shoppie\Traits\Buyer;
 use Shoppie\Traits\Seller;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
     use Notifiable, Seller, Buyer, HasApiTokens, CanLike, CanFollow,
         CanBeFollowed, CanFavorite, Reviewer, Muddondozi, HasMediaTrait;
@@ -83,7 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function avatar() {
         return [
-            'url' => Avatar::create($this->name())->toBase64()
+            'url' => (string)Avatar::create($this->name())->toBase64()
         ];
     }
 

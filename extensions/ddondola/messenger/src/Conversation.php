@@ -38,6 +38,15 @@ class Conversation extends Model
     }
 
     /**
+     * Number of unread messages in this conversation
+     *
+     * @return int
+     */
+    public function unReadCount() {
+        return $this->messages()->whereNull('read_at')->count();
+    }
+
+    /**
      * Latest message
      *
      * @return Model|null|object|static|Message

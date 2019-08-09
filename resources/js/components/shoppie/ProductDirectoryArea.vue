@@ -7,6 +7,7 @@
                     <span class="visible-items" v-else></span>
                     <div class="btn-group">
                         <select class="form-control form-control-sm custom-select custom-select-sm" tabindex="-98" v-model="ordering">
+                            <option value=""></option>
                             <option value="latest">Latest</option>
                             <option value="oldest">Oldest</option>
                             <option value="lowest-price">Lowest Price</option>

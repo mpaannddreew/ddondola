@@ -113,12 +113,12 @@
                 Bus.$emit('show-own-repository');
             },
             search() {
-                var $search = $('#contact_search');
+                var search = $('#contact_search');
                 if (_.lowerCase(this.ownerType.toString()) === 'user') {
-                    return $search.typeahead(this.searchOptions(), this.shopsData(), this.usersData());
+                    return search.typeahead(this.searchOptions(), this.shopsData(), this.usersData());
                 }
 
-                return $search.typeahead(this.searchOptions(), this.users());
+                return search.typeahead(this.searchOptions(), this.usersData());
             },
             initSearch() {
                 this.search().on('typeahead:asyncrequest', this.showSpinner)

@@ -4,9 +4,14 @@ window.Popper = require('popper.js').default;
 window.Moment = require('moment');
 window.Collect = require('collect.js');
 window.Bloodhound = require('bloodhound-js');
-window.QueryString = require('query-string');
 window.Swal = require('sweetalert2');
-window.Croppie = require('croppie');
+window.FilePond = require('filepond');
+window.VueFilePond = require('vue-filepond').default;
+window.FilePondPluginImagePreview = require('filepond-plugin-image-preview');
+window.FilePondPluginFileValidateType  = require('filepond-plugin-file-validate-type');
+window.FilePondPluginImageCrop  = require('filepond-plugin-image-crop');
+window.FilePondPluginImageTransform  = require('filepond-plugin-image-transform');
+window.FilePondPluginImageEdit  = require('filepond-plugin-image-edit');
 
 window.DToast = function(type, title) {
     const Toast = Swal.mixin({
@@ -24,18 +29,6 @@ window.DToast = function(type, title) {
 
 let auth = document.head.querySelector('meta[name="auth-state"]');
 window.Auth = parseInt(auth.content) === 1;
-
-/**
- * We'll loading jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
-// try {
-//     window.$ = window.jQuery = require('jquery');
-//
-//     require('bootstrap');
-// } catch (e) {}
 
 /**
  * We'll loading the axios HTTP library which allows us to easily issue requests

@@ -28,30 +28,43 @@ class Messenger
      */
     protected $messages;
 
+    protected $users;
+
+    protected $shops;
+
     /**
      * Messenger constructor.
      * @param ConversationRepository $conversations
      * @param MessageRepository $messages
+     * @param UserRepository $users
+     * @param ShopRepository $shops
      */
-    public function __construct(ConversationRepository $conversations, MessageRepository $messages)
+    public function __construct(ConversationRepository $conversations, MessageRepository $messages,
+                                UserRepository $users, ShopRepository $shops)
     {
         $this->conversations = $conversations;
         $this->messages = $messages;
+        $this->users = $users;
+        $this->shops = $shops;
     }
 
     /**
-     * @param null $participant
+     * Resolve conversation participant
+     *
+     * @param $participant
      * @return Model
      */
     public function resolveParticipant($participant) {
-        $converser = app(UserRepository::class)->code($participant);
+        $converser = $this->users->code($participant);
         if (!$converser)
-            $converser = app(ShopRepository::class)->code($participant);
+            $converser = $this->shops->code($participant);
 
         return $converser;
     }
 
     /**
+     * Check if two entities have a conversation together
+     *
      * @param Model $initiator
      * @param Model $participant
      * @return bool
@@ -61,6 +74,8 @@ class Messenger
     }
 
     /**
+     * Resolve conversation between two entities
+     *
      * @param Model $initiator
      * @param Model $participant
      * @return Conversation
@@ -70,6 +85,8 @@ class Messenger
     }
 
     /**
+     * Create a new message
+     *
      * @param Model $sender
      * @param Model $receiver
      * @param null $message

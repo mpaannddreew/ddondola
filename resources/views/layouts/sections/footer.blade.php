@@ -6,7 +6,9 @@
                 <div class="widget">
                     <div class="foot-logo">
                         <div class="logo">
-                            <a href="index.html" title=""><img src="images/logo.png" alt=""></a>
+                            <a href="{{ route('home') }}" title="Home">
+                                <img class="img-fluid" src="{{ asset('images/logo/logo_color.png') }}" alt="{{ config('app.name', 'Ddondola') }}" style="width: 40px;">
+                            </a>
                         </div>
                         <p>
                             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt consectetur, adipisci velit.

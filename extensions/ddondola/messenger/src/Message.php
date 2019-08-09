@@ -3,9 +3,10 @@
 namespace Messenger;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Message extends Model
+class Message extends Model implements HasMedia
 {
     use HasMediaTrait;
 

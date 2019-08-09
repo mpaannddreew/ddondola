@@ -1,7 +1,7 @@
 <template>
     <div class="directory">
         <shop-product-filters :shop="shop" :admin="admin"></shop-product-filters>
-        <shop-product-area :shop="shop" :admin="admin"></shop-product-area>
+        <shop-product-area :shop="shop.code" :admin="admin"></shop-product-area>
     </div>
 </template>
 
@@ -20,7 +20,7 @@
                 default: false
             },
             shop: {
-                type: String,
+                type: Object,
                 required: true
             }
         }

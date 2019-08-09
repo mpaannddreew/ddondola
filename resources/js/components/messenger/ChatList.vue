@@ -15,7 +15,12 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-2 d-flex mb-2 mb-sm-0 p-0" v-if="conversationsActive">
-                        <a href="javascript:void(0)" class="btn btn-sm btn-success ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" @click="showPlatformRepository"><i class="material-icons">add</i></a>
+                        <button class="btn btn-sm btn-link ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0 dropdown-toggle p-0 text-muted" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons" style="font-weight: normal; font-size: large;">more_vert</i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-small" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(207px, 36px, 0px);">
+                            <a class="dropdown-item" href="javascript:void(0)" @click="showPlatformRepository"><i class="material-icons">add</i> New Conversation</a>
+                        </div>
                     </div>
                 </div>
             </div>

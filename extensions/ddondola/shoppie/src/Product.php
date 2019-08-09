@@ -10,10 +10,11 @@ use Shoppie\Repository\ProductOfferRepository;
 use Shoppie\Repository\ProductRepository;
 use Shoppie\Repository\StockRepository;
 use Shoppie\Traits\Identifier;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
     use CanBeFavorited, Identifier, Reviewable, HasMediaTrait;
 

@@ -1,26 +1,23 @@
 <template>
     <div class="directory-area">
         <div class="card card-small main">
-            <div class="card-header p-0 border-bottom bg-light">
-                <div class="row">
-                    <div class="col-md-11 pr-0">
-                        <header class="d-flex justify-content-between align-items-start ml-2" style="margin-top: .6rem !important; margin-bottom: .6rem !important;">
-                            <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
-                            <span class="visible-items" v-else></span>
-                            <div class="d-flex">
-                                <select class="form-control form-control-sm custom-select custom-select-sm mr-2" tabindex="-98" v-model="ordering">
-                                    <option value="latest">Latest</option>
-                                    <option value="oldest">Oldest</option>
-                                    <option value="lowest-price">Lowest Price</option>
-                                    <option value="highest-price">Highest Price</option>
-                                </select>
-                                <a :href="newProductUrl" class="btn btn-sm btn-success ml-auto" v-if="admin">
-                                    <i class="material-icons">add</i> New Product
-                                </a>
-                            </div>
-                        </header>
+            <div class="card-header py-0 border-bottom bg-light">
+                <header class="d-flex justify-content-between align-items-start ml-2" style="margin-top: .6rem !important; margin-bottom: .6rem !important;">
+                    <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
+                    <span class="visible-items" v-else></span>
+                    <div class="d-flex">
+                        <select class="form-control form-control-sm custom-select custom-select-sm mr-2" tabindex="-98" v-model="ordering">
+                            <option value=""></option>
+                            <option value="latest">Latest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="lowest-price">Lowest Price</option>
+                            <option value="highest-price">Highest Price</option>
+                        </select>
+                        <a :href="newProductUrl" class="btn btn-sm btn-success ml-auto" v-if="admin">
+                            <i class="material-icons">add</i> New Product
+                        </a>
                     </div>
-                </div>
+                </header>
             </div>
             <div class="card-body h-100" :class="{'bg-white': showProducts && loaded}">
                 <div class="center-xy" v-if="!loaded || (!showProducts && loaded)">

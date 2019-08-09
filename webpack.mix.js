@@ -18,5 +18,6 @@ mix.js('resources/js/app.js', 'public/js');
 mix.copy('node_modules/slick-carousel/slick/slick.min.js', 'public/slick');
 mix.copy('node_modules/slick-carousel/slick/slick.css', 'public/slick');
 mix.copy('node_modules/slick-carousel/slick/slick-theme.css', 'public/slick');
-mix.copy('node_modules/cropme/dist/cropme.css', 'public/css');
-mix.copy('node_modules/cropme/dist/cropme.js', 'public/js');
+mix.copy('node_modules/filepond/dist/filepond.min.css', 'public/css');
+mix.copy('node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css', 'public/css');
+mix.copy('node_modules/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css', 'public/css');
