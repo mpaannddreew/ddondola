@@ -870,7 +870,11 @@ footer .logo {
 
 /* underline color for "Browse" button */
 .filepond--label-action {
-    text-decoration-color: #aaa;
+    text-decoration: none;
+    background-color: #fff;
+    padding: 7px 18px;
+    border-radius: 50px;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, .2);
 }
 
 /* the background color of the filepond drop area */
@@ -900,7 +904,7 @@ footer .logo {
 
 /* the background color of the black action buttons */
 .filepond--file-action-button {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #ce1d76;
 }
 
 /* the icon color of the black action buttons */
@@ -931,6 +935,6 @@ footer .logo {
 
 /* bordered drop area */
 .filepond--panel-root {
-    background-color: transparent;
-    border: 2px solid #2c3340;
+    background-color: #f8f8f8;
+    border: 1px solid #e1e5eb;
 }

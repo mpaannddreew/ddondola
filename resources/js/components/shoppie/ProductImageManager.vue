@@ -13,20 +13,21 @@
                     :server="server"
                     name="images"
                     ref="pond"
-                    class-name="my-pond"
-                    label-idle='Drag & Drop your pictures or <span class="filepond--label-action">Browse</span>'
+                    label-idle='Drag & Drop your pictures or <span class="filepond--label-action border">Browse</span>'
                     allow-multiple="true"
                     accepted-file-types="image/jpeg, image/png"
-                    :allow-image-crop="true"
+                    allow-image-crop="true"
                     image-resize-target-width="800"
                     image-crop-aspect-ratio="1:1"
-                    :allow-image-transform="true"
-                    :allow-image-edit="true"
+                    allow-image-transform="true"
+                    allow-image-edit="true"
                     max-files="6"
                     v-bind:files="myFiles"
                     instant-upload="false"
-                    v-on:init="handleFilePondInit"/>
+                    v-on:processfile="handleFileProcess"
+            />
         </div>
+        <a href="javascript:void(0)" class="btn btn-primary" @click="process">Process</a>
     </div>
 </template>
 
@@ -48,7 +49,7 @@
             server() {
                 return {
                     process: {
-                        url: './process',
+                        url: '/process',
                         method: 'POST',
                         withCredentials: false,
                         headers: this.headers,
@@ -60,9 +61,14 @@
             }
         },
         methods: {
-            handleFilePondInit: function() {
-                // example of instance method call on pond reference
-                this.$refs.pond.getFiles();
+            process() {
+                _.each(this.$refs.pond.getFiles(), this.processFile)
+            },
+            processFile(file) {
+                this.$refs.pond.processFile(file.id).then(this.handleFileProcess);
+            },
+            handleFileProcess(file) {
+                this.$refs.pond.removeFile(file.id);
             }
         }
     }
