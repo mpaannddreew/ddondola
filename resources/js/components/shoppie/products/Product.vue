@@ -2,15 +2,11 @@
     <div class="card product is-gray border">
         <div :id="carouselId" class="main-slide carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="/images/product/9.jpg" alt="First slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="/images/product/9.jpg" alt="Second slide">
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="/images/product/9.jpg" alt="Third slide">
-                </div>
+                <template v-for="(image, indx) in product.images">
+                    <div class="carousel-item" :class="{active: indx === 0}">
+                        <img class="d-block w-100" :src="image.url" :alt="product.name">
+                    </div>
+                </template>
             </div>
             <a class="carousel-control-prev" :href="'#' + carouselId" role="button" data-slide="prev">
                 <span class="carousel-control" aria-hidden="true"><i class="fa fa-chevron-left" data-ripple-color="#F0F0F0"></i></span>
@@ -23,7 +19,7 @@
         </div>
         <div class="p-4 title">
             <mini-rating-meter :reviewable="product"></mini-rating-meter>
-            <a :href="productUrl">
+            <a :href="productUrl" :title="product.name">
                 <h3 class="h6 no-margin-bottom m-0 text-ellipsis">{{ product.name }}</h3>
             </a>
             <div class="d-flex mt-2">
@@ -33,11 +29,11 @@
                 </ul>
                 <div class="hover-overlay d-flex align-items-center justify-content-center ml-auto" style="border-radius: 0 !important;" v-if="auth">
                     <div class="CTA d-flex align-items-center justify-content-center">
-                        <a class="border-radius" href="javascript:void(0)" @click="cartAction"
+                        <a class="border-radius" href="javascript:void(0)" @click="cartAction" title="Cart"
                            :class="{disabled: cartStatusLoading || soldOut, 'border-primary text-primary': inCart}">
                             <i class="fa fa-shopping-cart" :class="{'text-primary': inCart}"></i>
                         </a>
-                        <a href="javascript:void(0)" @click="favouritesAction"
+                        <a href="javascript:void(0)" @click="favouritesAction" title="Favourite"
                            :class="{disabled: favoriteStatusLoading, 'border-primary text-primary': isFavorite}" class="border-radius ml-1">
                             <i class="fa fa-heart" :class="{'text-primary': isFavorite}"></i>
                         </a>

@@ -14,15 +14,11 @@
                     <div class="product-thumbnail">
                         <div :id="carouselId" class="main-slide carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img class="d-block w-100" src="/images/product/9.jpg" alt="First slide">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="/images/product/9.jpg" alt="Second slide">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="/images/product/9.jpg" alt="Third slide">
-                                </div>
+                                <template v-for="(image, indx) in product.images">
+                                    <div class="carousel-item" :class="{active: indx === 0}">
+                                        <img class="d-block w-100" :src="image.url" :alt="product.name">
+                                    </div>
+                                </template>
                             </div>
                             <a class="carousel-control-prev" :href="'#' + carouselId" role="button" data-slide="prev">
                                 <span class="carousel-control" aria-hidden="true">

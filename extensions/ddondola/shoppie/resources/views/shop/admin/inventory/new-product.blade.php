@@ -126,7 +126,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <product-image-manager></product-image-manager>
                             <div class="form-wizard-buttons text-md-right">
                                 <button type="submit" class="btn btn-lg btn-pill btn-outline-primary">
                                     <i class="material-icons">check</i> Save

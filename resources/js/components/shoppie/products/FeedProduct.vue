@@ -3,11 +3,11 @@
         <div class="user-post p-4">
             <div class="friend-info">
                 <figure>
-                    <img alt="" :src="product.shop.avatar.url" class="img-fluid rounded-circle">
+                    <img :alt="product.shop.name" :src="product.shop.avatar.url" class="img-fluid rounded-circle">
                 </figure>
                 <div class="friend-name">
                     <ins>
-                        <a :href="shopUrl" class="name">{{ product.shop.name }}</a>
+                        <a :href="shopUrl" class="name" :title="product.shop.name">{{ product.shop.name }}</a>
                     </ins>
                     <span class="time text-lowercase">{{ product.created_at|time }}</span>
                 </div>
@@ -18,10 +18,11 @@
                 <div class="strip grid m-0">
                     <figure>
                         <a href="javascript:void(0)" class="wish_bt" @click="favouritesAction"
-                           :class="{'bg-warning': isFavorite, disabled: favoriteStatusLoading}">
+                           :class="{'bg-warning': isFavorite, disabled: favoriteStatusLoading}" title="Favourite">
                             <i class="material-icons">favorite_border</i>
                         </a>
-                        <a :href="productUrl"><img :src="product.images[0].url" class="img-fluid" alt="">
+                        <a :href="productUrl" :title="product.name">
+                            <img :src="product.images[0].url" class="img-fluid" :alt="product.name">
                             <div class="read_more"><span>Details</span></div>
                         </a>
                         <small>{{ product.brand.name }}</small>
@@ -37,7 +38,7 @@
                 </figcaption>
                 <div class="bottom-wrap">
                     <a href="javascript:void(0)" class="btn btn-sm btn-pill btn-outline-primary float-right"
-                       @click="cartAction" :class="{active: inCart, disabled: cartStatusLoading}">
+                       @click="cartAction" :class="{active: inCart, disabled: cartStatusLoading}" title="Cart">
                         <i class="material-icons">add_shopping_cart</i> {{ cartText}}
                     </a>
                     <div class="price-wrap h5">

@@ -12,6 +12,7 @@ use Shoppie\Repository\StockRepository;
 use Shoppie\Traits\Identifier;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
 
 class Product extends Model implements HasMedia
@@ -25,7 +26,7 @@ class Product extends Model implements HasMedia
         'settings' => 'array'
     ];
 
-    protected $appends = ['averageRating', 'reviewCount'];
+    protected $appends = ['averageRating', 'reviewCount', 'firstImageUrl'];
 
     /**
      * Shop this product belongs to
@@ -174,7 +175,7 @@ class Product extends Model implements HasMedia
      * @return bool
      */
     public function active() {
-        return $this->hasStock();
+        return $this->hasStock() && $this->active && $this->hasMedia('products');
     }
 
     /**
@@ -195,28 +196,6 @@ class Product extends Model implements HasMedia
 
     public function orderCount() {
         return $this->orders->count();
-    }
-
-    public function isPublished() {
-        return $this->active;
-    }
-
-    /**
-     * Publish product
-     *
-     * @return bool
-     */
-    public function publish() {
-        return app(ProductRepository::class)->publish($this);
-    }
-
-    /**
-     * Un publish product
-     *
-     * @return bool
-     */
-    public function unPublish() {
-        return app(ProductRepository::class)->unPublish($this);
     }
 
     /**
@@ -297,13 +276,36 @@ class Product extends Model implements HasMedia
         return $this->shop()->currencyCode();
     }
 
-    public function sampleImage() {
-        return [
-            'url' => asset("images/product/9.jpg")
-        ];
+    /**
+     * First product image url
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
+    public function firstImageUrl() {
+        if(!$this->hasMedia('products'))
+            return media_placeholder();
+
+        return media_url($this->getFirstMedia('products'));
     }
 
+    public function getFirstImageUrlAttribute()
+    {
+        return $this->firstImageUrl();
+    }
+
+    /**
+     * Product images
+     *
+     * @return array
+     */
     public function productImages() {
-        return [$this->sampleImage(), $this->sampleImage(), $this->sampleImage()];
+        if(!$this->hasMedia('products'))
+            return [
+                ['url' => media_placeholder()]
+            ];
+
+        return $this->getMedia('products')->map(function (Media $media) {
+            return ['url' => media_url($media)];
+        })->all();
     }
 }

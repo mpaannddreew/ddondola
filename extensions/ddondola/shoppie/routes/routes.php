@@ -53,6 +53,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
             Route::post('{product}/update', 'ShoppieController@productUpdate')->name('product.update');
             Route::get('{product}/edit/offers', 'ShoppieController@productEditOffers')->name('product.edit.offers');
             Route::get('{product}/gallery', 'ShoppieController@productGallery')->name('product.gallery');
+            Route::post('{product}/gallery', 'ShoppieController@updateProductGallery')->name('product.gallery');
         });
     });
 });

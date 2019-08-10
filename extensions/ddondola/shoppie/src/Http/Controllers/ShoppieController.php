@@ -10,8 +10,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Intervention\Image\Facades\Image;
 use Shoppie\Order;
 use Shoppie\Product;
 use Shoppie\Repository\ProductBrandRepository;
@@ -220,7 +218,7 @@ class ShoppieController extends Controller
                 abort(404);
         }
 
-        if (!$product->active)
+        if (!$product->active())
             abort(404);
 
         return view('shoppie::shop.product.basic.index', ['product' => $product]);
@@ -235,7 +233,7 @@ class ShoppieController extends Controller
                 abort(404);
         }
 
-        if (!$product->active)
+        if (!$product->active())
             abort(404);
 
         return view('shoppie::shop.product.basic.reviews', ['product' => $product]);
@@ -302,6 +300,12 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    public function updateProductGallery(Request $request, Product $product) {
+        $media = $product->addMediaFromRequest('images')->toMediaCollection('products');
+
+        return response()->json($media->id);
+    }
+
     public function shopCategories(Request $request, Shop $shop) {
         if ($request->user()->manages($shop))
             return view('shoppie::shop.admin.inventory.categories', ['shop' => $shop]);
@@ -358,17 +362,9 @@ class ShoppieController extends Controller
                     'attributes' => json_decode($request->input('attributes'))]]
             )
         );
-
         $stock = collect($request->only(['quantity', 'note']));
-
         $product->addStock($stock->get('quantity'), $stock->get('note'), $request->user());
 
-        collect($request->input('images'))->each(function ($data) use ($product) {
-            // todo add media files from base64 data
-//            $image = Image::make(base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data)));
-//            $product->addMedia($image)->toMediaCollection('products');
-        });
-
-        return redirect()->route('my.shop.inventory', ['shop' => $shop]);
+        return redirect()->route('product.gallery', ['product' => $product]);
     }
 }

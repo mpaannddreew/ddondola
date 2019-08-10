@@ -85,40 +85,6 @@ class ProductRepository
     }
 
     /**
-     * Publish product
-     *
-     * @param Product $product
-     * @return bool
-     */
-    public function publish(Product $product) {
-        if (!$product->isPublished()) {
-            $product->active = 1;
-            $product->save();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Un publish product
-     *
-     * @param Product $product
-     * @return bool
-     */
-    public function unPublish(Product $product) {
-        if ($product->isPublished()) {
-            $product->active = 0;
-            $product->save();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * @return Builder
      */
     public function builder() {

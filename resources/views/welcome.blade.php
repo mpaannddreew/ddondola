@@ -1,9 +1,5 @@
 @extends('base')
 @section('title')@parent Welcome @endsection
-@section('stylesheets')
-    @parent
-    <link rel="stylesheet" href="{{ asset('website/welcome.css') }}" />
-@endsection
 @section('custom-design')
     <!-- Banner
     ================================================== -->

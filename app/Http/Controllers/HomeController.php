@@ -20,12 +20,26 @@ class HomeController extends Controller
      * @param UserRepository $users
      */
     public function __construct(UserRepository $users) {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['index']);
         $this->users = $users;
     }
 
-    public function index() {
-        return view('ddondola.home');
+    /**
+     * @param Request $request
+     * @param \Shoppie\Repository\ProductRepository $products
+     * @param ShopRepository $shops
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request, \Shoppie\Repository\ProductRepository $products,
+                          \Shoppie\Repository\ShopRepository $shops) {
+        if (Auth::check()) {
+            if ($request->user()->hasVerifiedEmail()) {
+                return view('ddondola.home');
+            }
+
+            return redirect()->route('verification.notice');
+        }
+        return view('welcome', ['products' => $products->featured(6), 'shops' => $shops->featured(6)]);
     }
 
     public function dashboard() {

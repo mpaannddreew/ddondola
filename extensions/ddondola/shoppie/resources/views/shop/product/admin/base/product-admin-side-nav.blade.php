@@ -25,12 +25,6 @@
                 <span>Update</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link @yield('gallery-active')" href="{{ route('product.gallery', ['product' => $product]) }}">
-                <i class="material-icons">collections</i>
-                <span>Gallery</span>
-            </a>
-        </li>
     </ul>
     <h6 class="main-sidebar__nav-title">Inventory</h6>
     <ul class="nav nav--no-borders flex-column">
