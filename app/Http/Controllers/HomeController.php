@@ -84,14 +84,14 @@ class HomeController extends Controller
             'last_name' => 'required|string|max:255',
         ];
 
-        if ($request->input('email') != $request->user()->email)
+        if ($request->has('email') && $request->input('email') != $request->user()->email)
             $rules['email'] = 'required|string|email|max:255|unique:users';
 
         $this->validate($request, $rules);
 
         $data = array_merge($request->only(['first_name', 'last_name']), ['profile' => $request->only(['phone_number', 'address', 'about'])]);
 
-        if ($request->input('email') != $request->user()->email)
+        if ($request->has('email') && $request->input('email') != $request->user()->email)
             $data['email'] = $request->input('email');
 
         $this->users->update($request->user(), $data);

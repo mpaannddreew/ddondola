@@ -5,8 +5,8 @@
             <!-- Item -->
             @foreach($product->productImages() as $image)
                 <product-carousel-image :image="{{ json_encode($image) }}" ></product-carousel-image>
-        @endforeach
-        <!-- Item / End -->
+            @endforeach
+            <!-- Item / End -->
         </div>
     </div>
     <!-- Categories Carousel / End -->

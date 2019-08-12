@@ -41,11 +41,11 @@ class ProductRepository
      *
      * @param Category $category
      * @param Brand $brand
-     * @param $productData
+     * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model|Product
      */
-    public function create(Category $category, Brand $brand, $productData) {
-        $product = $category->products()->create(array_merge($productData, ['brand_id' => $brand->id]));
+    public function create(Category $category, Brand $brand, array $attributes) {
+        $product = $category->products()->create(array_merge($attributes, ['brand_id' => $brand->id]));
         return $product;
     }
 
@@ -55,31 +55,32 @@ class ProductRepository
      * @param Product $product
      * @param Category|null $category
      * @param Brand|null $brand
-     * @param $productData
+     * @param array $attributes
      * @return Product
      */
-    public function update(Product $product, Category $category = null, Brand $brand = null, array $productData) {
+    public function update(Product $product, Category $category = null, Brand $brand = null, array $attributes) {
+        $data = [];
         if ($category)
             if (!$product->subcategory->is($category))
-                $product->subcategory_id = $category->id;
+                $data['subcategory_id'] = $category->id;
 
         if ($brand)
             if (!$product->brand->is($brand))
-                $product->brand_id = $brand->id;
+                $data['brand_id'] = $brand->id;
 
-        foreach ($productData as $key => $value) {
+        foreach ($attributes as $key => $value) {
             if ($key == 'settings') {
                 $settings = $product->settings;
                 foreach ($value as $k => $v) {
                     $settings[$k] = $v;
                 }
-                $product->settings = $settings;
+                $data['settings'] = $settings;
             } else {
-                $product->{$key} = $value;
+                $data[$key] = $value;
             }
         }
 
-        $product->save();
+        $product->update($data);
 
         return $product;
     }
@@ -96,11 +97,11 @@ class ProductRepository
     }
 
     public function fromIds(array $ids) {
-        return Product::whereIn('id', $ids);
+        return $this->builder()->whereIn('id', $ids);
     }
 
     public function featured($limit) {
         // todo featured products
-        return $this->builder()->inRandomOrder()->take($limit)->get();
+        return $this->builder()->has('media')->inRandomOrder()->take($limit)->get();
     }
 }

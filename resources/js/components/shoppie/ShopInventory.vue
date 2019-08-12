@@ -19,10 +19,9 @@
                         <div class="btn-group btn-group-sm ml-lg-auto" role="group" aria-label="Table row actions">
                             <div class="btn-group">
                                 <select class="form-control form-control-sm custom-select custom-select-sm" tabindex="-98" v-model="ordering">
+                                    <option value=""></option>
                                     <option value="newest">Latest</option>
                                     <option value="oldest">Oldest</option>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
                                     <option value="lowest-price">Lowest price</option>
                                     <option value="highest-price">Highest price</option>
                                 </select>
@@ -110,7 +109,11 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopProducts,
-                    variables: {shop: this.shop, filters: {ordering: this.ordering}, count: graphql.rowCount, page: this.page}
+                    variables: {
+                        shop: this.shop,
+                        filters: {ordering: this.ordering},
+                        inventory: true, count: graphql.rowCount, page: this.page
+                    }
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {

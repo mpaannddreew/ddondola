@@ -11,7 +11,7 @@
         </td>
         <td class="lo-stats__status">
             <div class="d-table mx-auto">
-                <span class="badge badge-pill" :class="{'badge-success': hasStock, 'badge-danger': !hasStock}">{{ availability }}</span>
+                <span class="badge badge-pill" :class="statusClass">{{ status|ucf }}</span>
             </div>
         </td>
         <td class="lo-stats__items text-center">{{ product.quantity }}</td>
@@ -26,7 +26,6 @@
                 </a>
                 <template v-if="!admin">
                     <a :href="editUrl" class="btn btn-sm btn-white" title=""><i class="material-icons">mode_edit</i></a>
-                    <a :href="stockUrl" class="btn btn-sm btn-white"><i class="material-icons">local_mall</i></a>
                 </template>
             </div>
         </td>
@@ -53,21 +52,23 @@
             productUrl() {
                 return '/products/' + this.product.code
             },
-            stockUrl() {
-                return this.productUrl + "/stock"
-            },
             editUrl() {
                 return this.productUrl + "/edit"
             },
-            hasStock() {
-                return this.product.quantity > 0;
+            status() {
+                return this.product.status;
             },
-            availability() {
-                if (this.hasStock) {
-                    return 'In stock';
+            statusClass() {
+                return {
+                    'badge-success': this.status === 'active',
+                    'badge-danger': this.status === 'disabled',
+                    'badge-warning': this.status === 'draft' || this.status === 'depleted'
                 }
-
-                return 'Out of stock';
+            }
+        },
+        filters: {
+            ucf(data) {
+                return _.upperFirst(data);
             }
         }
     }

@@ -20,6 +20,9 @@ class ProductBrand extends Model
     }
 
     public function productCount() {
-        return $this->products()->where('active', "=", 1)->count();
+        return $this->products()
+            ->where('active', "=", 1)
+            ->whereHas('media')
+            ->count();
     }
 }

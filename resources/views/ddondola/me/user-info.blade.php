@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="email">Email</label>
-                                    <input name="email" type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" value="{{ $user->email }}">
+                                    <input disabled name="email" type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" value="{{ $user->email }}">
                                     @if ($errors->has('email'))
                                         <div class="invalid-feedback">{{ $errors->first('email') }}</div>
                                     @endif

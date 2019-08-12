@@ -104,6 +104,8 @@ class ShopRepository
 
     public function featured($limit) {
         // todo featured shops
-        return $this->builder()->inRandomOrder()->take($limit)->get();
+        return $this->builder()
+            ->where('active', '=', 1)
+            ->inRandomOrder()->take($limit)->get();
     }
 }

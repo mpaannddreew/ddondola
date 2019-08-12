@@ -48,7 +48,6 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
         Route::get('{product}/reviews', 'ShoppieController@productReviews')->name('product.reviews');
         Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('{product}/dashboard', 'ShoppieController@productDashboard')->name('product.dashboard');
-            Route::get('{product}/stock', 'ShoppieController@productStock')->name('product.stock');
             Route::get('{product}/edit', 'ShoppieController@productEdit')->name('product.edit');
             Route::post('{product}/update', 'ShoppieController@productUpdate')->name('product.update');
             Route::get('{product}/edit/offers', 'ShoppieController@productEditOffers')->name('product.edit.offers');

@@ -204,14 +204,15 @@ window.graphql = {
             }
           }
         }`,
-    shopProducts: `query shopProducts($shop: String! $filters: ProductFilter $count: Int! $page: Int!) {
+    shopProducts: `query shopProducts($shop: String! $filters: ProductFilter $inventory: Boolean $count: Int! $page: Int!) {
           shop:shopByCode(shop: $shop) {
-            products(filters: $filters count: $count page: $page) {
+            products(filters: $filters inventory: $inventory count: $count page: $page) {
               data {
                 id
                 name
                 code
                 active
+                status
                 quantity
                 price
                 discount
@@ -518,42 +519,6 @@ window.graphql = {
             avatar {
               url
             }
-          }
-        }`,
-    productStock: `query productStock($id: ID! $type: String! $count: Int! $page: Int!){
-          product(id: $id) {
-            stock(type: $type count: $count page: $page) {
-              data {
-                quantity
-                type
-                note
-                user {
-                  name
-                }
-                created_at
-              }
-              paginatorInfo {
-                count
-                currentPage
-                firstItem
-                hasMorePages
-                lastItem
-                lastPage
-                perPage
-                total
-              }
-            }
-          }
-        }`,
-    updateStock: `mutation updateStock($productId: ID! $stock: NewStock!) {
-          stock:updateStock(productId: $productId stock: $stock) {
-            quantity
-            type
-            note
-            user {
-              name
-            }
-            created_at
           }
         }`,
     iLikeShop: `query iLikeShop($id: ID!) {

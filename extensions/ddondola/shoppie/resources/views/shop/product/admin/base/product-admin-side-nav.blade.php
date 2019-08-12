@@ -26,13 +26,4 @@
             </a>
         </li>
     </ul>
-    <h6 class="main-sidebar__nav-title">Inventory</h6>
-    <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item">
-            <a class="nav-link @yield('stock-active')" href="{{ route('product.stock', ['product' => $product]) }}">
-                <i class="material-icons">local_mall</i>
-                <span>Stock</span>
-            </a>
-        </li>
-    </ul>
 @endsection

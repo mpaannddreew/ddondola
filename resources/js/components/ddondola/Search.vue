@@ -83,26 +83,8 @@
                     },
                     limit: this.limit,
                     templates: {
-                        header: '<div class="card border-bottom">\n' +
-                        '            <article class="card-group-item">\n' +
-                        '                <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Products</h6></header>\n' +
-                        '            </article> <!-- card-group-item.// -->\n' +
-                        '        </div>',
-                        suggestion: function(data) {
-                            return '<div>\n' +
-                                '      <a href="/products/' + data.code + '">' +
-                                '        <div class="row py-2 px-4 border-bottom">\n' +
-                                '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' +
-                                '                <img class="rounded" src="' + data.images[0].url + '">\n' +
-                                '            </div>\n' +
-                                '            <div class="col pl-3">\n' +
-                                '                <h6 class="m-0">' + data.name + '</h6>\n' +
-                                '                <span class="text-light">' + data.reviewCount + ' Review(s) | UGX ' + data.discountedPrice + '</span>\n' +
-                                '            </div>\n' +
-                                '        </div>\n' +
-                                '      </a>' +
-                                '    </div>';
-                        }
+                        header: this.header('Products'),
+                        suggestion: this.productsSuggestion
                     }
                 }
             },
@@ -115,25 +97,8 @@
                     },
                     limit: this.limit,
                     templates: {
-                        header: '<div class="card border-bottom">\n' +
-                        '           <article class="card-group-item">\n' +
-                        '              <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">Shops</h6></header>\n' +
-                        '           </article> <!-- card-group-item.// -->\n' +
-                        '       </div>',
-                        suggestion: function(data) {
-                            return '<div>\n' +
-                                '      <a href="/shops/' + data.code + '">' +
-                                '        <div class="row py-2 px-4 border-bottom">\n' +
-                                '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' +
-                                '                <img class="rounded" src="' + data.avatar.url + '">\n' +
-                                '            </div>\n' +
-                                '            <div class="col pl-3">\n' +
-                                '                <h6 class="m-0">' + data.name + '</h6>\n' +
-                                '                <span class="text-light">' + data.category.name + ' | ' + data.reviewCount + ' Review(s) | ' + data.likes + ' Like(s)</span>\n' +
-                                '            </div>\n' +
-                                '        </div>\n' +
-                                '    </div>';
-                        }
+                        header: this.header('Shops'),
+                        suggestion: this.shopsSuggestion
                     }
                 }
             },
@@ -146,26 +111,8 @@
                     },
                     limit: this.limit,
                     templates: {
-                        header: '<div class="card border-bottom">\n' +
-                        '            <article class="card-group-item">\n' +
-                        '                <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">People</h6></header>\n' +
-                        '            </article> <!-- card-group-item.// -->\n' +
-                        '        </div>',
-                        suggestion: function(data) {
-                            return '<div>\n' +
-                                '     <a href="/people/' + data.code + '">' +
-                                '        <div class="row py-2 px-4 border-bottom">\n' +
-                                '            <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">\n' +
-                                '                <img class="rounded" src=" ' + data.avatar.url + ' ">\n' +
-                                '            </div>\n' +
-                                '            <div class="col pl-3">\n' +
-                                '                <h6 class="m-0">' + data.name + '</h6>\n' +
-                                '                <span class="text-light">' + data.followerCount + ' Follower(s) | ' + data.followingCount + ' Following</span>\n' +
-                                '            </div>\n' +
-                                '        </div>\n' +
-                                '    </a>' +
-                                '  </div>';
-                        }
+                        header: this.header('People'),
+                        suggestion: this.peopleSuggestion
                     }
                 }
             },
@@ -237,6 +184,39 @@
                         transform: this.transform
                     },
                 });
+            },
+            header(title) {
+                return `<div class="card border-bottom">
+                           <article class="card-group-item">
+                                <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">${title}</h6></header>
+                           </article><!-- card-group-item.// -->
+                       </div>`;
+            },
+            suggestion(url, image, name, note) {
+                return `<div>
+                          <a href="${url}">
+                            <div class="row py-2 px-4 border-bottom">
+                                <div class="user-teams__image col-2 col-sm-1 col-lg-2 p-0 my-auto">
+                                    <img class="rounded" src="${image}">
+                                </div>
+                                <div class="col pl-3">
+                                    <h6 class="m-0">${name}</h6>
+                                    <span class="text-light">${note}</span>
+                                </div>
+                            </div>
+                        </div>`;
+            },
+            peopleSuggestion(data) {
+                return this.suggestion(`/people/${data.code}`, data.avatar.url, data.name,
+                    `${data.followerCount} Follower(s) | ${data.followingCount} Following`);
+            },
+            shopsSuggestion(data) {
+                return this.suggestion(`/shops/${data.code}`, data.avatar.url, data.name,
+                    `${data.category.name} | ${data.reviewCount} Review(s) | ${data.likes} Like(s)`);
+            },
+            productsSuggestion(data) {
+                return this.suggestion(`/products/${data.code}`, data.images[0].url, data.name,
+                    `${data.reviewCount} Review(s) | UGX ${data.discountedPrice}`);
             }
         }
     }

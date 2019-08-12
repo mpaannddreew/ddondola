@@ -99,7 +99,7 @@ class ShoppieQuery
      */
     public function products($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $builder =app(ProductRepository::class)->builder();
+        $builder = app(ProductRepository::class)->builder()->has('media');
         if ($context->user()) {
             $myCountry = collect($args)->get('myCountry', true);
             if ($myCountry) {
@@ -137,7 +137,10 @@ class ShoppieQuery
      */
     public function paginatedProducts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->withFilters($rootValue->products(), $args);
+        $inventory = collect($args)->get('inventory', false);
+        $builder = $rootValue->products();
+        $builder = $inventory ? $builder: $builder->has('media');
+        return $this->withFilters($builder, $args);
     }
 
     /**
@@ -223,7 +226,7 @@ class ShoppieQuery
      */
     public function recommendedProducts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($this->status($rootValue->recommendations()));
+        return $this->orderBy($this->status($rootValue->recommendations()->has('media')));
     }
 
     /**
@@ -298,25 +301,6 @@ class ShoppieQuery
      *
      * @return mixed
      */
-    public function paginatedStock($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
-    {
-        $builder = $rootValue->stock();
-        if ($args['type'] != 'all')
-            $builder = $builder->where('type', '=', $args['type']);
-
-        return $this->orderBy($builder);
-    }
-
-    /**
-     * Return a value for the field.
-     *
-     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
-     * @param array $args The arguments that were passed into the field.
-     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
-     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
-     *
-     * @return mixed
-     */
     public function iLikeShop($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         return $context->user()->hasLiked(app(ShopRepository::class)->id($args["id"]));
@@ -366,7 +350,7 @@ class ShoppieQuery
     {
         $value = "%" . collect($args)->get("name") . "%";
         // todo search including localization
-        return $this->status(app(ProductRepository::class)->builder())
+        return $this->status(app(ProductRepository::class)->builder()->has('media'))
             ->where("name", "like", $value)
             ->orWhereHas('subcategory', function($q) use($value) {
                 $q->where('name', 'like', $value)
@@ -443,7 +427,7 @@ class ShoppieQuery
      */
     public function featuredShops($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->status(app(ShopRepository::class)->featured(collect($args)->get('count', 2)));
+        return app(ShopRepository::class)->featured(collect($args)->get('count', 2));
     }
 
     /**
@@ -458,7 +442,7 @@ class ShoppieQuery
      */
     public function featuredProducts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->status(app(ProductRepository::class)->featured(collect($args)->get('count', 2)));
+        return app(ProductRepository::class)->featured(collect($args)->get('count', 2));
     }
 
     /**

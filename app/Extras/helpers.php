@@ -40,6 +40,11 @@ if (!function_exists('has_media')) {
 
 if (!function_exists('media_placeholder')) {
 
+    /**
+     * Placeholder url location
+     *
+     * @return string
+     */
     function media_placeholder()
     {
         return asset('images/product/placeholder.jpg');

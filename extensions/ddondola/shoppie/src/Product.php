@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelFollow\Traits\CanBeFavorited;
 use Shoppie\Repository\ProductOfferRepository;
 use Shoppie\Repository\ProductRepository;
-use Shoppie\Repository\StockRepository;
 use Shoppie\Traits\Identifier;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -19,7 +18,7 @@ class Product extends Model implements HasMedia
 {
     use CanBeFavorited, Identifier, Reviewable, HasMediaTrait;
 
-    protected $fillable = ['name', 'code', 'brand_id', 'subcategory_id', 'description', 'price', 'active', 'settings'];
+    protected $fillable = ['name', 'code', 'brand_id', 'subcategory_id', 'description', 'price', 'active', 'settings', 'quantity'];
 
     protected $casts = [
         'active' => 'bool',
@@ -76,15 +75,6 @@ class Product extends Model implements HasMedia
     }
 
     /**
-     * Get stock for this product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function stock() {
-        return $this->hasMany(Stock::class, 'product_id');
-    }
-
-    /**
      * Offer about this product
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -94,70 +84,12 @@ class Product extends Model implements HasMedia
     }
 
     /**
-     * Add stock to product
-     *
-     * @param $quantity
-     * @param Model $by
-     * @param null $note
-     * @return Stock
-     */
-    public function addStock($quantity, $note = null, Model $by) {
-        return app(StockRepository::class)->add($this, $quantity, $note, $by);
-    }
-
-    /**
-     * Reduce stock of product
-     *
-     * @param $quantity
-     * @param Model|null $by
-     * @param null $note
-     * @return Stock|null
-     */
-    public function subStock($quantity, $note = null, Model $by = null) {
-        return app(StockRepository::class)->sub($this, $quantity, $note, $by);
-    }
-
-    /**
      * Product quantity
      *
      * @return int
      */
     public function quantity() {
-        return $this->stock->sum(function (Stock $stock) {
-            return $stock->isOut() ? - (int)$stock->quantity : (int)$stock->quantity;
-        }) - $this->stockOut();
-    }
-
-    /**
-     * Stock amount in carts
-     *
-     * @return int
-     */
-    public function stockInCarts() {
-        return $this->carts->sum(function (Cart $cart) {
-            return $cart->cartPivot->quantity;
-        });
-    }
-
-    /**
-     * Stock amount in orders
-     *
-     * @return int
-     */
-    public function stockInOrders() {
-        return $this->orders->sum(function (Order $order) {
-            // todo factor in cancelled orders
-            return $order->orderPivot->quantity;
-        });
-    }
-
-    /**
-     * Sum stock in both carts and orders
-     *
-     * @return int
-     */
-    public function stockOut() {
-        return $this->stockInCarts() + $this->stockInOrders();
+        return (int)$this->quantity;
     }
 
     /**
@@ -176,6 +108,24 @@ class Product extends Model implements HasMedia
      */
     public function active() {
         return $this->hasStock() && $this->active && $this->hasMedia('products');
+    }
+
+    /**
+     * Status label
+     *
+     * @return string
+     */
+    public function status() {
+        if (!$this->hasMedia('products'))
+            return 'draft';
+
+        if (!$this->quantity())
+            return 'depleted';
+
+        if (!$this->active)
+            return 'disabled';
+
+        return 'active';
     }
 
     /**
@@ -265,11 +215,11 @@ class Product extends Model implements HasMedia
      *
      * @param ProductSubCategory $category
      * @param ProductBrand $brand
-     * @param $productData
+     * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model|Product
      */
-    public function editProduct(ProductSubCategory $category = null, ProductBrand $brand = null, array $productData) {
-        return app(ProductRepository::class)->update($this, $category, $brand, $productData);
+    public function editProduct(ProductSubCategory $category = null, ProductBrand $brand = null, array $attributes) {
+        return app(ProductRepository::class)->update($this, $category, $brand, $attributes);
     }
 
     public function currencyCode() {

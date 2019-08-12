@@ -246,13 +246,6 @@ class ShoppieController extends Controller
         abort(404);
     }
 
-    public function productStock(Request $request, Product $product) {
-        if ($request->user()->ownsProduct($product))
-            return view('shoppie::shop.product.admin.stock', ['product' => $product]);
-
-        abort(404);
-    }
-
     public function productEdit(Request $request, Product $product) {
         if ($request->user()->ownsProduct($product))
             return view('shoppie::shop.product.admin.edit-product', ['product' => $product]);
@@ -272,6 +265,7 @@ class ShoppieController extends Controller
             'category' => 'required|numeric',
             'name' => 'required|string',
             'price' => 'required|numeric',
+            'quantity' => 'required|numeric|min:5',
             'attributes' => 'required|string'
         ]);
 
@@ -279,7 +273,7 @@ class ShoppieController extends Controller
         $category = $this->subcategories->id($request->input('category'));
 
         $product->editProduct($category, $brand,
-            array_merge($request->only(['name', 'price', 'description']),
+            array_merge($request->only(['name', 'price', 'description', 'quantity']),
                 ['settings' => ['attributes' => json_decode($request->input('attributes'))]])
         );
 
@@ -346,24 +340,19 @@ class ShoppieController extends Controller
             'category' => 'required|numeric',
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'minimum_stock' => 'required|numeric|min:5',
             'attributes' => 'required|string',
             'quantity' => 'required|numeric|min:5',
             'description' => 'required|string',
-            'note' => 'required|string'
         ]);
 
         $brand = $this->brands->id($request->input('brand'));
         $category = $this->subcategories->id($request->input('category'));
         $product = $this->products->create($category, $brand,
             array_merge(
-                $request->only(['name', 'price', 'description']),
-                ['settings' => ['minimum_stock' => $request->input('minimum_stock'),
-                    'attributes' => json_decode($request->input('attributes'))]]
+                $request->only(['name', 'price', 'description', 'quantity']),
+                ['settings' => ['attributes' => json_decode($request->input('attributes'))]]
             )
         );
-        $stock = collect($request->only(['quantity', 'note']));
-        $product->addStock($stock->get('quantity'), $stock->get('note'), $request->user());
 
         return redirect()->route('product.gallery', ['product' => $product]);
     }

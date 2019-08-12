@@ -2,7 +2,7 @@
     <li class="product">
         <div class="product-outer" style="height: 363px;">
             <div class="product-inner">
-                <span class="loop-product-categories">
+                <span class="loop-product-categories" style="display: unset !important;">
                     <a href="javascript:void(0)" rel="tag">{{ product.category.name }}</a>
                 </span>
                 <a :href="productUrl">

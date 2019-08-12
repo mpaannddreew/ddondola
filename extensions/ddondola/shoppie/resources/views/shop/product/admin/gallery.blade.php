@@ -1,7 +1,11 @@
 @extends('shoppie::shop.product.admin.base.edit')
-@section('stylesheets')
-    @parent
-    <link rel="stylesheet" href="{{ asset('website/welcome.css') }}" />
+@section('page-header')
+    <div class="page-header row no-gutters py-4">
+        <div class="col">
+            <span class="text-uppercase page-subtitle"><i class="material-icons">local_mall</i>  Product</span>
+            <h3 class="page-title">Gallery</h3>
+        </div>
+    </div>
 @endsection
 @section('gallery-active', 'active')
 @section('main')

@@ -1,27 +1,38 @@
 <template>
-    <file-pond
-            :server="server"
-            name="images"
-            ref="pond"
-            label-idle='Drag & Drop your pictures or <span class="filepond--label-action border">Browse</span>'
-            allow-multiple="true"
-            accepted-file-types="image/jpeg, image/png"
-            allow-image-crop="true"
-            image-resize-target-width="800"
-            image-crop-aspect-ratio="1:1"
-            allow-image-transform="true"
-            allow-image-edit="true"
-            max-files="6"
-            v-bind:files="myFiles"
-            instant-upload="false"
-    />
+    <div>
+        <file-pond
+                class="mb-2"
+                :server="server"
+                name="images"
+                ref="pond"
+                label-idle='Drag & Drop your pictures or <span class="filepond--label-action border">Browse</span>'
+                allow-multiple="true"
+                accepted-file-types="image/jpeg, image/png"
+                allow-image-crop="true"
+                image-resize-target-width="800"
+                image-crop-aspect-ratio="1:1"
+                allow-image-transform="true"
+                allow-image-edit="true"
+                max-files="6"
+                v-bind:files="myFiles"
+                instant-upload="false"
+                v-on:processfile="fileUploaded"
+                v-on:processfiles="filesUploaded"
+                :file-rename-function="rename"
+        />
+        <div class="text-center">
+            <button type="submit" class="btn btn-lg btn-pill btn-outline-primary" @click="process">
+                <i class="material-icons">check_circle</i> Upload
+            </button>
+        </div>
+    </div>
 </template>
 
 <script>
 
     // Create FilePond component
     const FilePond = VueFilePond( FilePondPluginFileValidateType, FilePondPluginImagePreview,
-        FilePondPluginImageCrop, FilePondPluginImageTransform, FilePondPluginImageEdit);
+        FilePondPluginImageCrop, FilePondPluginImageTransform, FilePondPluginImageEdit, FilePondPluginFileRename);
 
     export default {
         name: "ProductImageManager",
@@ -65,10 +76,20 @@
                 _.each(this.$refs.pond.getFiles(), this.processFile)
             },
             processFile(file) {
-                this.$refs.pond.processFile(file.id).then(this.handleFileProcess);
+                this.$refs.pond.processFile(file.id).then(this.removeFile);
             },
-            handleFileProcess(file) {
+            removeFile(file) {
                 this.$refs.pond.removeFile(file.id);
+            },
+            rename(file) {
+                return `${Uuid()}${file.extension}`;
+            },
+            fileUploaded(error, file) {
+                if (error === null)
+                    this.removeFile(file)
+            },
+            filesUploaded() {
+                window.location = this.url;
             }
         }
     }

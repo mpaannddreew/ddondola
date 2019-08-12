@@ -27,7 +27,7 @@
                     </div>
                     <div align="center" v-if="!showProducts && loaded">
                         <h4 class="m-0"><i class="material-icons">error</i></h4>
-                        <p class="m-0">There are no products in the directory yet!</p>
+                        <p class="m-0">There are no products in this shop yet!</p>
                     </div>
                 </div>
                 <div class="px-2" v-else-if="showProducts && loaded">

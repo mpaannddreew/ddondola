@@ -5,6 +5,7 @@ window.Moment = require('moment');
 window.Collect = require('collect.js');
 window.Bloodhound = require('bloodhound-js');
 window.Swal = require('sweetalert2');
+window.Uuid = require('uuid/v4');
 window.FilePond = require('filepond');
 window.VueFilePond = require('vue-filepond').default;
 window.FilePondPluginImagePreview = require('filepond-plugin-image-preview');
@@ -12,6 +13,7 @@ window.FilePondPluginFileValidateType  = require('filepond-plugin-file-validate-
 window.FilePondPluginImageCrop  = require('filepond-plugin-image-crop');
 window.FilePondPluginImageTransform  = require('filepond-plugin-image-transform');
 window.FilePondPluginImageEdit  = require('filepond-plugin-image-edit');
+window.FilePondPluginFileRename  = require('filepond-plugin-file-rename');
 
 window.DToast = function(type, title) {
     const Toast = Swal.mixin({

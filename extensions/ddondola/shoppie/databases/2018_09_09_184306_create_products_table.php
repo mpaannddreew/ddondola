@@ -20,9 +20,10 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('subcategory_id');
             $table->string('name');
             $table->string('price');
+            $table->string('quantity');
             $table->text('description')->nullable();
             $table->text('settings')->nullable();
-            $table->boolean('active')->default(0);
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }

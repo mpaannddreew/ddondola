@@ -134,5 +134,6 @@
     .user-details__avatar {
         box-shadow: none !important;
         border: medium solid #ffffff;
+        border-radius: 5px;
     }
 </style>

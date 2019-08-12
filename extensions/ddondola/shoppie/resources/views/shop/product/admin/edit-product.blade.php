@@ -1,5 +1,13 @@
 @extends('shoppie::shop.product.admin.base.edit')
 @section('edit-product-active', 'active')
+@section('page-header')
+    <div class="page-header row no-gutters py-4">
+        <div class="col">
+            <span class="text-uppercase page-subtitle"><i class="material-icons">local_mall</i>  Product</span>
+            <h3 class="page-title">Update</h3>
+        </div>
+    </div>
+@endsection
 @section('main')
     <div class="container py-2">
         <div class="row">
@@ -57,6 +65,13 @@
                                         <input type="text" class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}" id="price" name="price" placeholder="{{ $product->currencyCode() }}" value="{{ $product->price }}">
                                         @if ($errors->has('price'))
                                             <div class="invalid-feedback">{{ $errors->first('price') }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="quantity">Quantity</label>
+                                        <input type="text" class="form-control {{ $errors->has('quantity') ? ' is-invalid' : '' }}" id="quantity" name="quantity" value="{{ $product->quantity }}">
+                                        @if ($errors->has('quantity'))
+                                            <div class="invalid-feedback">{{ $errors->first('quantity') }}</div>
                                         @endif
                                     </div>
                                     <div class="form-group col-md-12">
