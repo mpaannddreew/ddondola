@@ -71,14 +71,14 @@ class ShoppieController extends Controller
             'name' => 'required|string',
             'phone_number' => 'required|numeric',
             'email' => 'required|email',
-            'description' => 'required',
+            'about' => 'required',
             'address' => 'required'
         ]);
 
         $request->user()->newShop(
             $this->categories->id($request->input('category')), [
             'name' => $request->input('name'),
-            'profile' => $request->only(['phone_number', 'email', 'description', 'address']),
+            'profile' => $request->only(['phone_number', 'email', 'about', 'address']),
             'active' => 1
         ]);
 
@@ -135,13 +135,13 @@ class ShoppieController extends Controller
             'name' => 'required|string',
             'phone_number' => 'required|numeric',
             'email' => 'required|email',
-            'description' => 'required',
+            'about' => 'required',
             'address' => 'required'
         ]);
 
         $attributes = [
             'name' => $request->input('name'),
-            'profile' => $request->only(['phone_number', 'email', 'description', 'address'])
+            'profile' => $request->only(['phone_number', 'email', 'about', 'address'])
         ];
 
         $category = $this->categories->id($request->input('category'));

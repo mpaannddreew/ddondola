@@ -38,32 +38,6 @@
             });
 
             $(".sticky").sticky({topSpacing: 60, zIndex: 1015});
-
-            $('.fullwidth-slick-carousel').slick({
-                centerMode: true,
-                centerPadding: '20%',
-                slidesToShow: 3,
-                dots: true,
-                arrows: false,
-                responsive: [{breakpoint: 1920, settings: {centerPadding: '15%', slidesToShow: 3}}, {
-                    breakpoint: 1441,
-                    settings: {centerPadding: '10%', slidesToShow: 3}
-                }, {breakpoint: 1025, settings: {centerPadding: '10px', slidesToShow: 2,}}, {
-                    breakpoint: 767,
-                    settings: {centerPadding: '10px', slidesToShow: 1}
-                }]
-            });
-            $(window).on('load resize', function (e) {
-                var carouselListItems = $(".fullwidth-slick-carousel .fw-carousel-item").length;
-                if (carouselListItems < 4) {
-                    $('.fullwidth-slick-carousel .slick-slide').css({'pointer-events': 'all', 'opacity': '1',});
-                }
-            });
-
-            $('.category-box').each(function () {
-                $(this).append('<div class="category-box-background"></div>');
-                $(this).children('.category-box-background').css({'background-image': 'url(' + $(this).attr('data-background-image') + ')'});
-            });
         });
     </script>
 @endsection

@@ -6,7 +6,7 @@
         <a href="{{ route('my.cart') }}" class="nav-link @yield('index-active')"><i class="material-icons">shopping_cart</i> Cart</a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('my.cart.checkout') }}" class="nav-link @yield('checkout-active')"><i class="material-icons">check</i> Checkout</a>
+        <a href="{{ route('my.cart.checkout') }}" class="nav-link @yield('checkout-active')"><i class="material-icons">check_circle</i> Checkout</a>
     </li>
 @endsection
 

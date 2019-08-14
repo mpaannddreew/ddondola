@@ -57,16 +57,8 @@
                     </div>
                 </div>
                 <div class="chat-profile close-chat-profile h-100 border-left bg-white" style="overflow-x: hidden; overflow-y: auto;">
-                    <div class="card card-small mb-4 pt-3">
-                        <div class="card-header text-center">
-                            <div class="mb-3 mx-auto">
-                                <img class="rounded-circle" :src="converser.avatar.url" alt="User Avatar" width="110">
-                            </div>
-                            <h4 class="mb-0">{{ converser.name }}</h4>
-                            <span class="text-muted d-block mb-2">Project Manager</span>
-                            <a :href="url" class="mb-2 btn btn-sm btn-pill btn-outline-primary mx-auto" v-html="urlText"></a>
-                        </div>
-                    </div>
+                    <shop-information :shop="converser" :directory="false" v-if="shopConverser"></shop-information>
+                    <user-information :user="converser" v-else></user-information>
                 </div>
             </div>
         </div>
@@ -163,14 +155,8 @@
                     return Moment(message.created_at).format("MMMM Do YYYY");
                 });
             },
-            url() {
-                if (this.converser)
-                    return `/${this.converserType === 'shop' ? 'shops':'people'}/${this.converser.code}`;
-
-                return null;
-            },
-            urlText() {
-                return `<i class="material-icons">${this.converserType === 'shop' ? 'shop_two':'account_circle'}</i> ${this.converserType === 'shop' ? 'Shop':'Profile'}`
+            shopConverser() {
+                return this.converserType === 'shop';
             }
         },
         methods: {
@@ -270,7 +256,7 @@
     .chat-messages {
         padding: 0;
         position: relative;
-        width: calc(100% - 300px);
+        width: calc(100% - 350px);
         float: left;
     }
 
@@ -280,7 +266,7 @@
     .chat-profile {
         padding: 0;
         position: relative;
-        width: 300px;
+        width: 350px;
         float: left;
         height: calc(99.9vh - 3.75rem - 1px) !important;
     }
@@ -291,7 +277,7 @@
         }
 
         .close-chat-profile {
-            margin-right: -300px;
+            margin-right: -350px;
         }
     }
 </style>

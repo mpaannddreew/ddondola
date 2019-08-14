@@ -103,7 +103,7 @@ class UsersTableSeeder extends Seeder
                 'profile' => [
                     'email' => 'info@apex.com',
                     'phone_number' => '0700000000',
-                    'description' => 'This is a beauty shop',
+                    'about' => 'This is a beauty shop',
                     'address' => 'Kiira, Bulindo'
                 ]
             ],
@@ -112,16 +112,16 @@ class UsersTableSeeder extends Seeder
                 'profile' => [
                     'email' => 'info@electro.com',
                     'phone_number' => '0700000001',
-                    'description' => 'This is an electronics shop',
+                    'about' => 'This is an electronics shop',
                     'address' => 'Kiira, Mulawa'
                 ]
             ],
             [
-                'name' => 'Duplex Door Mechanics',
+                'name' => 'Duplex Mechanics',
                 'profile' => [
                     'email' => 'info@duplex.com',
                     'phone_number' => '0700000002',
-                    'description' => 'This is a mechanics shop',
+                    'about' => 'This is a mechanics shop',
                     'address' => 'Kiira, Nsasa'
                 ]
             ]

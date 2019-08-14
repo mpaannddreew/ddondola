@@ -86,6 +86,7 @@
         },
         methods: {
             fetchCartProducts() {
+                this.loaded = false;
                 axios.post(graphql.api, {query: graphql.myCartProducts})
                     .then(this.loadCartProducts).catch(function (error) {});
             },

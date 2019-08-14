@@ -92,7 +92,7 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopProducts,
-                    variables: {shop: this.shop, filters: this.filters, count: graphql.columnCount, page: this.page}
+                    variables: {shop: this.shop, filters: this.filters, inventory: false, count: graphql.columnCount, page: this.page}
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {

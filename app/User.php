@@ -159,8 +159,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function resolveProfile() {
         return [
             'phone_number' => $this->profile('phone_number'),
-            'description' => $this->profile('description'),
-            'address' => $this->profile('address')
+            'about' => $this->profile('about'),
+            'address' => $this->profile('address'),
+            'email' => $this->email
         ];
     }
 

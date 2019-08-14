@@ -22,7 +22,7 @@
         },
         computed: {
             about() {
-                return Collect(this.shop.profile).get('description', '');
+                return Collect(this.shop.profile).get('about', '');
             }
         }
     }

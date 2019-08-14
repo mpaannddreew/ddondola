@@ -567,7 +567,7 @@ window.graphql = {
             followingCount
             profile {
                 phone_number
-                description
+                about
                 address
             }
           }
@@ -1040,7 +1040,7 @@ window.graphql = {
                     name
                     code
                     profile {
-                      description
+                      description:about
                     }
                     category {
                       name
@@ -1111,7 +1111,7 @@ window.graphql = {
                     name
                     code
                     profile {
-                      description
+                      description:about
                     }
                     category {
                       name
@@ -1335,6 +1335,13 @@ window.graphql = {
             initiator {
               id
               name
+              ... on User {
+                  email
+              }
+              ... on Shop {
+                  reviewCount
+                  averageRating
+              }
               type
               code
               avatar {
@@ -1342,11 +1349,24 @@ window.graphql = {
               }
               coverPicture {
                 url
+              }
+              profile {
+                phone_number
+                about
+                address
+                email
               }
             }
             participant {
               id
               name
+              ... on User {
+                  email
+              }
+              ... on Shop {
+                  reviewCount
+                  averageRating
+              }
               type
               code
               avatar {
@@ -1354,6 +1374,12 @@ window.graphql = {
               }
               coverPicture {
                 url
+              }
+              profile {
+                phone_number
+                about
+                address
+                email
               }
             }
           }
@@ -1394,19 +1420,51 @@ window.graphql = {
             initiator {
               id
               name
+              ... on User {
+                  email
+              }
+              ... on Shop {
+                  reviewCount
+                  averageRating
+              }
               type
               code
               avatar {
                 url
               }
+              coverPicture {
+                url
+              }
+              profile {
+                phone_number
+                about
+                address
+                email
+              }
             }
             participant {
               id
               name
+              ... on User {
+                  email
+              }
+              ... on Shop {
+                  reviewCount
+                  averageRating
+              }
               type
               code
               avatar {
                 url
+              }
+              coverPicture {
+                url
+              }
+              profile {
+                phone_number
+                about
+                address
+                email
               }
             }
           }

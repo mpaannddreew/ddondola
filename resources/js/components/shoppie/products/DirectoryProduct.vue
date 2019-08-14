@@ -13,7 +13,7 @@
                     </div>
                     <div class="product-thumbnail">
                         <div :id="carouselId" class="main-slide carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
+                            <div class="carousel-inner rounded">
                                 <template v-for="(image, indx) in product.images">
                                     <div class="carousel-item" :class="{active: indx === 0}">
                                         <img class="d-block w-100" :src="image.url" :alt="product.name">

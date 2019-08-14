@@ -12,6 +12,7 @@ interface Muddondozi @interface(resolver: "Ddondola\\Http\\GraphQL\\Interfaces\\
     messages: [Message!]
     conversations: [Conversation!]
     contacts: [User!]
+    profile: Profile!
 }
 
 type Country {
@@ -23,10 +24,11 @@ type Country {
     updated_at: DateTime!
 }
 
-type UserProfile {
+type Profile {
     phone_number: String
-    description: String
+    about: String
     address: String
+    email: String
 }
 
 type UserSettings {
@@ -51,7 +53,7 @@ type User implements Muddondozi {
     last_name: String!
     email: String!
     cart: Cart @hasOne
-    profile: UserProfile! @method(name: "resolveProfile")
+    profile: Profile! @method(name: "resolveProfile")
     settings: UserSettings!
     active: Boolean!
     avatar: Image! @method(name: "avatar")

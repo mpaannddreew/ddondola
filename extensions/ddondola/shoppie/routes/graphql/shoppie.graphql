@@ -1,10 +1,3 @@
-type ShopProfile {
-    phone_number: String!
-    email: String!
-    description: String
-    address: String
-}
-
 type ShopSettings {
     discount: String
 }
@@ -27,7 +20,7 @@ type Shop implements Muddondozi {
     name: String!
     category: ShopCategory! @belongsTo
     owner: User! @belongsTo
-    profile: ShopProfile!
+    profile: Profile!
     settings: ShopSettings!
     active: Boolean! @method(name: "active")
     likes: Int! @method(name: "likeCount")

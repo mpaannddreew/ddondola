@@ -15,19 +15,7 @@
         </div>
         <div class="post-meta bg-light p-0">
             <figure class="card card-product m-0" style="box-shadow: none !important;">
-                <div class="strip grid m-0">
-                    <figure>
-                        <a href="javascript:void(0)" class="wish_bt" @click="favouritesAction"
-                           :class="{'bg-warning': isFavorite, disabled: favoriteStatusLoading}" title="Favourite">
-                            <i class="material-icons">favorite_border</i>
-                        </a>
-                        <a :href="productUrl" :title="product.name">
-                            <img :src="product.images[0].url" class="img-fluid" :alt="product.name">
-                            <div class="read_more"><span>Details</span></div>
-                        </a>
-                        <small>{{ product.brand.name }}</small>
-                    </figure>
-                </div>
+                <image-carousel :images="product.images" :slides-to-show="1" class="bg-light"></image-carousel>
                 <figcaption class="info-wrap">
                     <mini-rating-meter :reviewable="product"></mini-rating-meter>
                     <small>{{ product.averageRating }} average based on {{ product.reviewCount }} {{ text }}</small>
@@ -52,8 +40,10 @@
 </template>
 
 <script>
+    import ImageCarousel from "./ImageCarousel";
     export default {
         name: "FeedProduct",
+        components: {ImageCarousel},
         mounted() {
             this.loadProduct();
         },

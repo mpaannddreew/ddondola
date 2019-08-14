@@ -14,7 +14,7 @@
                     <h5>
                         <a class="btn btn-link" href="javascript:void(0)">
                             <span><i class="material-icons">more_vert</i></span>
-                            <i class="material-icons">description</i> Order Overview
+                            <i class="material-icons">description</i> Overview
                         </a>
                     </h5>
                 </div>
@@ -45,7 +45,7 @@
                                         </tr>
                                     </template>
                                     <tr class="row-6">
-                                        <td class="text-left text-uppercase" colspan="4">Order Total</td>
+                                        <td class="text-left text-uppercase" colspan="4">Cart Total</td>
                                         <td class="product-subtotal text-muted">{{ currencyCode }} {{ cartSubtotal }}</td>
                                     </tr>
                                     </tbody>
@@ -53,8 +53,12 @@
                                     <tr>
                                         <td colspan="5" class="py-3 px-4">
                                             <div class="d-flex">
-                                                <a class="btn btn-lg btn-pill btn-outline-primary" href="javascript:void(0)"><i class="fa fa-chevron-left"></i> Back To Cart</a>
-                                                <button class="btn btn-lg btn-pill btn-outline-primary ml-auto" type="button"><i class="material-icons">payment</i> Make Payment</button>
+                                                <a class="btn btn-lg btn-pill btn-outline-primary text-uppercase" href="/me/cart">
+                                                    <i class="fa fa-chevron-left"></i> Back To Cart
+                                                </a>
+                                                <a class="btn btn-lg btn-pill btn-outline-primary ml-auto text-uppercase" href="javascript:void(0)">
+                                                    <i class="material-icons">payment</i> Make Payment
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -92,6 +96,7 @@
         },
         methods: {
             fetchCartProducts() {
+                this.loaded = false;
                 axios.post(graphql.api, {query: graphql.myCartProducts})
                     .then(this.loadCartProducts).catch(function (error) {});
             },
