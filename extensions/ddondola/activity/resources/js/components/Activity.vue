@@ -30,7 +30,7 @@
             </div>
             <div class="post-meta m-0 bg-light p-2 px-4">
                 <div class="detail shop">
-                    <span class="reviewable">{{ reviewableName }}</span>
+                    <a class="btn-link" :href="reviewableUrl"><span class="reviewable">{{ reviewableName }}</span></a>
                     <p class="text-ellipsis text-muted mb-3">{{ reviewable.shop.profile.description }}</p>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="card-body w-60">
                     <h5 class="card-title">
-                        <a class="text-muted" :href="reviewableUrl">{{ reviewable.product.name }}</a>
+                        <a class="btn-link" :href="reviewableUrl">{{ reviewable.product.name }}</a>
                     </h5>
                     <p class="card-text mb-3 text-ellipsis">{{ reviewable.product.description }}</p>
                     <span class="text-muted">
@@ -145,7 +145,7 @@
         width: 100%;
     }
 
-    .post-meta .detail > span.reviewable {
+    .post-meta .detail > a span.reviewable {
 
         font-size: 20px;
         font-weight: 400;

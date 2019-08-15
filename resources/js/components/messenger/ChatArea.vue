@@ -24,10 +24,9 @@
                 <div class="chat-messages">
                     <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;">
                         <div class="card-header border-bottom px-2" style="padding-top: 0.6em; padding-bottom: 0.6em;">
-                            <a href="javascript:void(0)" @click="back" class="btn btn-pill btn-outline-success active">
-                                <i class="fa fa-chevron-left"></i> Back
+                            <a href="javascript:void(0)" @click="back" class="btn btn-link">
+                                <i class="fa fa-remove mr-2"></i><strong>{{ converser.name }}</strong>
                             </a>
-                            <strong>{{ converser.name }}</strong>
                         </div>
                         <div class="card-body d-flex flex-column" id="chat-body">
                             <template v-if="!messagesLoaded">

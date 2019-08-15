@@ -1337,6 +1337,8 @@ window.graphql = {
               name
               ... on User {
                   email
+                  followerCount
+                  followingCount
               }
               ... on Shop {
                   reviewCount
@@ -1362,6 +1364,8 @@ window.graphql = {
               name
               ... on User {
                   email
+                  followerCount
+                  followingCount
               }
               ... on Shop {
                   reviewCount
@@ -1422,6 +1426,8 @@ window.graphql = {
               name
               ... on User {
                   email
+                  followerCount
+                  followingCount
               }
               ... on Shop {
                   reviewCount
@@ -1447,6 +1453,8 @@ window.graphql = {
               name
               ... on User {
                   email
+                  followerCount
+                  followingCount
               }
               ... on Shop {
                   reviewCount

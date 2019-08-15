@@ -14,6 +14,9 @@
                     {{ user.name }}
                 </a>
             </h4>
+            <p class="text-center text-light m-0 mb-2">
+                <small class="text-muted">{{ user.followerCount }} Follower(s) | {{ user.followingCount }} Following</small>
+            </p>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item p-4" v-for="(p, i) in user.profile" v-if="p.length">
