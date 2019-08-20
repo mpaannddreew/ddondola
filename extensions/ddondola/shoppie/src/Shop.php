@@ -119,26 +119,6 @@ class Shop extends Model implements HasMedia
     }
 
     /**
-     * Deactivates shop
-     *
-     * @return boolean
-     */
-    public function deactivate()
-    {
-        return app(ShopRepository::class)->deactivateShop($this);
-    }
-
-    /**
-     * Deactivates shop
-     *
-     * @return boolean
-     */
-    public function activate()
-    {
-        return app(ShopRepository::class)->activateShop($this);
-    }
-
-    /**
      * @return int
      */
     public function likeCount() {
@@ -151,21 +131,9 @@ class Shop extends Model implements HasMedia
         ];
     }
 
-    public function avatars() {
-        return [
-            $this->avatar(), $this->avatar(), $this->avatar(), $this->avatar()
-        ];
-    }
-
     public function coverPicture() {
         return [
             'url' => asset('/images/hero_in_shop_detail.jpg')
-        ];
-    }
-
-    public function coverPictures() {
-        return [
-            $this->coverPicture(), $this->coverPicture(), $this->coverPicture(), $this->coverPicture()
         ];
     }
 

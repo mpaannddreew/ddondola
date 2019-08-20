@@ -5,32 +5,6 @@
     <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
         @csrf
         <div class="form-group">
-            <label for="category">{{ __('Country') }}</label>
-            <div class="input-group">
-                <div class="input-group input-group-seamless">
-                    <span class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">flag</i>
-                      </span>
-                    </span>
-                    <select name="id" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('id') ? ' is-invalid' : '' }}" tabindex="-1" aria-hidden="true">
-                        <option></option>
-                        @foreach($countries as $country)
-                            <option value="{{ $country->id }}" {{ old('id') == $country->id ? 'selected': '' }}>
-                                {{ $country->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            @if ($errors->has('id'))
-                <span class="invalid-feedback" role="alert" style="display: block;">
-                    <strong>{{ $errors->first('id') }}</strong>
-                </span>
-            @endif
-        </div>
-        <div class="form-group">
             <label for="first_name">{{ __('First name') }}</label>
             <div class="input-group">
                 <div class="input-group input-group-seamless">

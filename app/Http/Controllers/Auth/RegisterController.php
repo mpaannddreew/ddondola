@@ -53,12 +53,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'id' => [
-                'required', 'numeric',
-                Rule::exists('countries')->where(function ($query) use ($data) {
-                    $query->where('id', $data["id"])->where('active', 1);
-                }),
-            ],
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -79,21 +73,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return $this->countries->id($data["id"])->users()->create([
+        return $this->countries->default()->users()->create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-    }
-
-    /**
-     * Show the application registration form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showRegistrationForm()
-    {
-        return view('auth.register', ['countries' => $this->countries->active()]);
     }
 }

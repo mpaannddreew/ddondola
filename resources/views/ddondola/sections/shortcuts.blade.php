@@ -25,5 +25,5 @@
     </li>
 </ul>
 <div class="text-center py-2">
-    <a class="btn btn-success w-100" href="{{ route('create.shop') }}"><i class="material-icons">add</i> New Shop</a>
+    <a class="btn btn-success w-100" href="{{ route('create.shop') }}">Create your own shop</a>
 </div>

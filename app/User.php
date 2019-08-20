@@ -42,7 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'password', 'remember_token',
     ];
 
-    protected $appends = ['name'];
+    protected $appends = ['name', 'avatar', 'coverPicture', 'followerCount', 'followingCount'];
 
     protected $casts = [
         'settings' => 'array',
@@ -74,6 +74,26 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->name();
     }
 
+    public function getCoverPictureAttribute()
+    {
+        return $this->coverPicture();
+    }
+
+    public function getAvatarAttribute()
+    {
+        return $this->avatar();
+    }
+
+    public function getFollowerCountAttribute()
+    {
+        return $this->followerCount();
+    }
+
+    public function getFollowingCountAttribute()
+    {
+        return $this->followingCount();
+    }
+
     public function followingCount() {
         return $this->followings->count();
     }
@@ -88,21 +108,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         ];
     }
 
-    public function avatars() {
-        return [
-            $this->avatar(), $this->avatar(), $this->avatar(), $this->avatar()
-        ];
-    }
-
     public function coverPicture() {
         return [
             'url' => asset('images/banner1.jpg')
-        ];
-    }
-
-    public function coverPictures() {
-        return [
-            $this->coverPicture(), $this->coverPicture(), $this->coverPicture(), $this->coverPicture()
         ];
     }
 

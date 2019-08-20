@@ -1,6 +1,6 @@
 <template>
     <div :class="{'h-100-directory': directory, 'h-100': !directory}" style="overflow-x: hidden; overflow-y: auto;">
-        <div class="card card-small user-details">
+        <div class="card card-small user-details" :class="{border: withBorder}">
             <div class="card-header p-0" style="border-radius: 0 !important;">
                 <div class="user-details__bg">
                     <img :src="shop.coverPicture.url" alt="User Details Background Image">
@@ -44,6 +44,10 @@
             directory: {
                 type: Boolean,
                 default: true
+            },
+            withBorder: {
+                type: Boolean,
+                default: false
             }
         },
         filters: {

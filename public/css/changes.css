@@ -513,6 +513,10 @@ ul.nav.home li:hover a, ul.nav.home li.active a{
     overflow: hidden;
 }
 
+.directory.home {
+    height: calc(99.9vh - 3.75rem - 1px) !important;
+}
+
 .directory-list {
     padding: 0;
     position: relative;
@@ -523,6 +527,10 @@ ul.nav.home li:hover a, ul.nav.home li.active a{
     margin-left: 0;
 }
 
+.directory.home .directory-list {
+    width: 450px !important;
+}
+
 .directory-area {
     padding: 0;
     position: relative;
@@ -530,9 +538,17 @@ ul.nav.home li:hover a, ul.nav.home li.active a{
     float: left;
 }
 
+.directory.home .directory-area {
+    width: calc(100% - 450px); !important;
+}
+
 .directory .card.main {
     border-radius: 0 !important;
     height: calc(99.9vh - 7.1rem - 1px) !important;
+}
+
+.directory.home  .card.main {
+    height: calc(99.9vh - 3.75rem - 1px) !important;
 }
 
 .directory .card.main > .card-header {

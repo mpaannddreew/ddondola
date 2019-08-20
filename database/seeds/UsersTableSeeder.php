@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $this->countries->addCountries();
-        $country = $this->countries->code('ug');
+        $country = $this->countries->default();
 
         $users = [
             [

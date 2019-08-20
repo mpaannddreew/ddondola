@@ -1,5 +1,5 @@
 <template>
-    <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" v-if="auth">
+    <div class="btn-group d-table ml-auto" role="group" v-if="auth">
         <a href="javascript:void(0)" @click="favouritesAction" :class="{disabled: favoriteStatusLoading}" class="btn btn-pill btn-outline-primary active">
             <i class="fa fa-heart"></i> {{ favText }}
         </a>

@@ -39,6 +39,8 @@ class HomeController extends Controller
 
             return redirect()->route('verification.notice');
         }
+
+        return redirect()->route('login');
         return view('welcome', ['products' => $products->featured(6), 'shops' => $shops->featured(6)]);
     }
 

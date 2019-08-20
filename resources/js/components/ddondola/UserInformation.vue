@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-small user-details">
+    <div class="card card-small user-details" :class="{ border: withBorder }">
         <div class="card-header p-0" style="border-radius: 0 !important;">
             <div class="user-details__bg">
                 <img :src="user.coverPicture.url" alt="User Details Background Image">
@@ -36,6 +36,10 @@
             user: {
                 type: Object,
                 required: true
+            },
+            withBorder: {
+                type: Boolean,
+                default: false
             }
         },
         filters: {

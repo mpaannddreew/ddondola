@@ -6,7 +6,7 @@
         </div>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-12 mb-4 mb-lg-0">
+                <div class="col-12 col-md-6 mb-4 mb-lg-0">
                     <a href="javascript:void(0)" class="text-white">
                         <div class="media d-block d-sm-flex text-sm-left text-center">
                             <img style="width: 100px; height: 100px; border-radius: 5px !important;" src="{{ $user->avatar()['url'] }}" class="img-fluid d-sm-flex mr-0 mr-sm-4 border border-white lis-border-width-4 mb-4 mb-md-0" alt="{{ $user->name() }}"/>
@@ -16,6 +16,21 @@
                             </div>
                         </div>
                     </a>
+                </div>
+                <div class="col-12 col-md-6 align-self-center">
+                    <ul class="list-unstyled mb-0 lis-line-height-2 text-md-right text-center">
+                        @if($user->profile("phone_number"))
+                        <li><i class="fa fa-phone pr-2"></i> {{ $user->profile("phone_number") }}</li>
+                        @endif
+                        <li>
+                            <a href="javascript:void(0)" class="text-white"><i class="fa fa-envelope pr-2"></i> {{ $user->email }}</a>
+                        </li>
+                        @if($user->profile("address"))
+                            <li>
+                                <a href="javascript:void(0)" class="text-white"><i class="fa fa-map-o pr-2"></i> {{ $user->profile("address") }}</a>
+                            </li>
+                        @endif
+                    </ul>
                 </div>
             </div>
         </div>
@@ -49,6 +64,10 @@
                 @auth
                     @if(!Auth::user()->is($user))
                         <user-actions :user="{{ $user }}" my-messenger-url="{{ route("my.messenger") }}"></user-actions>
+                    @else
+                        <a href="{{ route('create.shop') }}" class="btn btn-sm btn-success ml-auto">
+                            <i class="material-icons">add</i> New Shop
+                        </a>
                     @endif
                 @endauth
             </div>

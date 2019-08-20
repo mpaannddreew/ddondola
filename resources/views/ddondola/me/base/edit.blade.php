@@ -21,3 +21,15 @@
         </a>
     </li>
 @endsection
+@section('main')
+    <div class="container py-2">
+        <div class="row">
+            <div class="col-md-4 px-1">
+                <user-information :user="{{ $user }}" :with-border="true"></user-information>
+            </div>
+            <div class="col-md-8 px-1">
+                @yield('edit')
+            </div>
+        </div>
+    </div>
+@endsection

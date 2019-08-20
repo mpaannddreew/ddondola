@@ -219,4 +219,9 @@ return [
         'Messenger' => \Messenger\Facades\Messenger::class,
     ],
 
+    'countries' => [
+        'default' => 'ug',
+        'supported' => ['ug']
+    ]
+
 ];

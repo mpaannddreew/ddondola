@@ -13,11 +13,6 @@
 
 use Illuminate\Support\Facades\Auth;
 
-//Route::get('test', function (\Illuminate\Http\Request $request, \Shoppie\Repository\ProductRepository $products) {
-////    return response()->json($request->user()->cart->getDenominations());
-//    return response()->json($products->id(1)->productImages());
-//});
-
 Route::middleware(['web'])->group(function (){
     Route::get('/', 'HomeController@index')->name('home');
     Route::view('contact', 'contact')->name('contact');

@@ -13,7 +13,15 @@ use Ddondola\Country;
 
 class CountryRepository
 {
-    protected $supported = ['ug'];
+    /**
+     * Get default country
+     *
+     * @return Country
+     */
+    public function default()
+    {
+        return $this->code(config('app.countries.default'));
+    }
 
     /**
      * Get Country by id
@@ -67,7 +75,7 @@ class CountryRepository
      * add new countries
      */
     public function addCountries() {
-        collect(countries())->only($this->supported)->each(function ($value, $key){
+        collect(countries())->only(config('app.countries.supported'))->each(function ($value, $key){
             if(!$this->code($key)) {
                 $this->create(["code" => $key, "name" => $value["name"]]);
             }

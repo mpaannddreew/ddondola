@@ -1011,7 +1011,8 @@ strong.headline-with-separator::after {
     border-radius: 4px;
     transform: translate3d(0, 0, 0);
     transition: transform .3s;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, .08);
 }
 
 section.fullwidth .listing-item-container, .fs-content .listing-item-container {

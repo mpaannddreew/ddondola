@@ -39,14 +39,14 @@ class ShopRepository
     /**
      * Create a new shop
      *
-     * @param Model $shopOwner
+     * @param Model $seller
      * @param Category $category
      * @param $shopData
      * @return Shop
      */
-    public function create(Model $shopOwner, Category $category, $shopData)
+    public function create(Model $seller, Category $category, $shopData)
     {
-        return $shopOwner->shops()->create(array_merge($shopData, ['category_id' => $category->id]));
+        return $seller->shops()->create(array_merge($shopData, ['category_id' => $category->id]));
     }
 
     public function update(Shop $shop, $attributes) {
@@ -54,45 +54,15 @@ class ShopRepository
     }
 
     /**
-     * Deactivate shop
-     *
-     * @param Shop $shop
-     * @return bool
-     */
-    public function deactivateShop(Shop $shop) {
-        if($shop->active) {
-            $shop->active = 0;
-            $shop->save();
-        }
-
-        return true;
-    }
-
-    /**
-     * Activate shop
-     *
-     * @param Shop $shop
-     * @return bool
-     */
-    public function activateShop(Shop $shop) {
-        if(!$shop->active) {
-            $shop->active = 1;
-            $shop->save();
-        }
-
-        return true;
-    }
-
-    /**
      * Check if user manages shop
      *
-     * @param Model $user
+     * @param Model $seller
      * @param Shop $shop
      * @return bool
      */
-    public function manages(Model $user, Shop $shop)
+    public function manages(Model $seller, Shop $shop)
     {
-        return $user->is($shop->owner);
+        return $seller->is($shop->owner);
     }
 
     /**
