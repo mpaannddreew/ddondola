@@ -21,7 +21,6 @@ class CreateOrderProductTable extends Migration
             $table->string('price');
             $table->boolean('receipt_confirmed')->default(false);
             $table->boolean('delivery_confirmed')->default(false);
-            // todo add associated escrow record
             $table->timestamps();
         });
     }

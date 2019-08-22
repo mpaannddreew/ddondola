@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->uuid('code');
             $table->unsignedInteger('user_id');
+            $table->boolean('paid_for')->default(0);
             $table->timestamps();
         });
     }

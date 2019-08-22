@@ -160,6 +160,7 @@ type Order {
     code: String!
     sum: Int! @method(name: "sum")
     by: User! @belongsTo
+    paidFor: Boolean! @rename(attribute: "paid_for")
     products(shop: String): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@orderProducts")
     productCount: Int! @method(name: "productCount")
     currencyCode: String! @method(name: "currencyCode")

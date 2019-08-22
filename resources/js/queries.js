@@ -1484,6 +1484,7 @@ window.graphql = {
                 id
                 code
                 sum
+                paidFor
                 productCount
                 currencyCode
                 created_at
@@ -1513,6 +1514,7 @@ window.graphql = {
                 id
                 code
                 sum
+                paidFor
                 productCount
                 currencyCode
                 created_at
@@ -1545,10 +1547,13 @@ window.graphql = {
         }`,
     orderProducts: `query orderProducts($order: String! $shop: String $page: Int! $count: Int!) {
           order(order: $order) {
+            paidFor
             sum
             currencyCode
             by {
               code
+              first_name
+              last_name
               name
               email
               avatar {

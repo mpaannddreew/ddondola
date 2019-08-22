@@ -3,11 +3,11 @@
         <div class="card card-small border">
             <div class="card-body p-0">
                 <template v-if="!loaded || (!hasActivities && loaded)">
-                    <div align="center" class="p-4" v-if="!loaded">
+                    <div align="center" class="p-3" v-if="!loaded">
                         <div class="loader"></div>
                         <p class="m-0">Loading {{ loadingActivity }}...</p>
                     </div>
-                    <div align="center" class="p-4" v-if="!hasActivities && loaded">
+                    <div align="center" class="p-3" v-if="!hasActivities && loaded">
                         <h4 class="m-0"><i class="material-icons">error</i></h4>
                         <p class="m-0">{{ noActivityMessage }}</p>
                     </div>
@@ -68,7 +68,7 @@
             },
             noActivityMessage() {
                 if (this.admin)
-                    return 'It looks like you have no activity. Follow other people, make shop or product reviews to start building your activity pool.';
+                    return 'It looks like you have no activity. Follow other people or make reviews to start building your activity pool.';
 
                 return 'This user has no activity yet.';
             },

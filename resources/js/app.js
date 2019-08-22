@@ -38,8 +38,8 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
 import ChatArea from './components/messenger/ChatArea';
 import ChatAreaEmpty from './components/messenger/ChatAreaEmpty';
-import ShopDirectoryArea from './components/shoppie/ShopDirectoryArea';
-import ProductDirectoryArea from './components/shoppie/ProductDirectoryArea';
+import Cart from './components/shoppie/cart/Cart';
+import Checkout from './components/shoppie/cart/Checkout';
 import OrderDetailsEmpty from './components/shoppie/orders/OrderDetailsEmpty';
 import OrderDetails from './components/shoppie/orders/OrderDetails';
 import UserDetailsEmpty from './components/ddondola/admin/UserAdminEmpty';
@@ -50,6 +50,8 @@ import ShopAdmin from './components/shoppie/admin/ShopAdmin';
 const router = new VueRouter({
     mode: 'history',
     routes: [
+        {path: '/me/cart', component: Cart},
+        {path: '/me/cart/checkout', component: Checkout},
         {path: '/me/messenger', component: ChatAreaEmpty},
         {path: '/me/messenger/:participant', component: ChatArea, props: true},
         {path: '/me/orders', component: OrderDetailsEmpty},
@@ -69,3 +71,7 @@ const app = new Vue({
     el: '#app',
     router
 });
+
+// function formatNumber(num) {
+//     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+// }

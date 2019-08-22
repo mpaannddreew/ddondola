@@ -28,6 +28,13 @@ trait Buyer
     }
 
     /**
+     * @return Order
+     */
+    public function checkOut() {
+        return $this->cart->checkOut();
+    }
+
+    /**
      * Create new cart
      *
      * @return Cart

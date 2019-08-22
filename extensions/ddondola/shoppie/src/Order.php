@@ -9,7 +9,11 @@ class Order extends Model
 {
     use Identifier;
 
-    protected $fillable = ['code'];
+    protected $fillable = ['code', 'paid_for'];
+
+    protected $casts = [
+        'paid_for' => 'bool'
+    ];
 
     /**
      * Buyer that made this order

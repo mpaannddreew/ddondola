@@ -43,6 +43,18 @@
                                             @endif
                                         </div>
                                         <div class="form-group col-md-6">
+                                            <label for="brand">Brand</label>
+                                            <select required id="brand" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('brand') ? ' is-invalid' : '' }}" name="brand">
+                                                <option></option>
+                                                @foreach($shop->brands as $brand)
+                                                    <option value="{{ $brand->id }}" @if($brand->is($brand->brand)) selected @endif>{{ $brand->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('brand'))
+                                                <div class="invalid-feedback">{{ $errors->first('brand') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="form-group col-md-6">
                                             <label for="category">Category</label>
                                             <select required id="category" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('category') ? ' is-invalid' : '' }}" name="category">
                                                 <option></option>
@@ -55,18 +67,6 @@
                                             </select>
                                             @if ($errors->has('category'))
                                                 <div class="invalid-feedback">{{ $errors->first('category') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="brand">Brand</label>
-                                            <select required id="brand" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('brand') ? ' is-invalid' : '' }}" name="brand">
-                                                <option></option>
-                                                @foreach($shop->brands as $brand)
-                                                    <option value="{{ $brand->id }}" @if($brand->is($brand->brand)) selected @endif>{{ $brand->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @if ($errors->has('brand'))
-                                                <div class="invalid-feedback">{{ $errors->first('brand') }}</div>
                                             @endif
                                         </div>
                                         <div class="form-group col-md-12">

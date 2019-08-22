@@ -1,5 +1,5 @@
 <template>
-    <div class="btn-group d-table ml-auto" role="group" aria-label="Table row actions">
+    <div class="btn-group d-table mx-auto" role="group" aria-label="Table row actions">
         <a href="javascript:void(0)" @click="performAction" class="btn btn-pill btn-outline-primary active" :class="{ disabled: loading }">
             <i class="material-icons">person_add</i> {{ text }}
         </a>

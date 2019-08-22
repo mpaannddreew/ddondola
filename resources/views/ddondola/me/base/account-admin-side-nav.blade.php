@@ -20,12 +20,6 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @yield('edit-active')" href="{{ route('my.profile.edit') }}">
-                <i class="material-icons">mode_edit</i>
-                <span>Update</span>
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link @yield('shops-active')" href="{{ route('my.shops') }}">
                 <i class="material-icons">shop_two</i>
                 <span>Shops</span>

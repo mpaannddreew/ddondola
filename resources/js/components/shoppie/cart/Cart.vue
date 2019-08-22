@@ -14,47 +14,40 @@
         </div>
         <template v-else-if="hasProducts && loaded">
             <section class="cart-section card border">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="cart-table table-responsive">
-                            <table class="table table-bordered text-center">
-                                <thead>
-                                <tr class="row-1" style="border-bottom: 0;">
-                                    <th class="row-title"><p>Item</p></th>
-                                    <th class="row-title"><p>Product Name</p></th>
-                                    <th class="row-title"><p>Price</p></th>
-                                    <th class="row-title"><p>Quantity</p></th>
-                                    <th class="row-title"><p>Subtotal</p></th>
-                                    <th class="row-title"><p></p></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <template v-for="(product, indx) in products">
-                                    <tr is="cart-entry" :key="indx" :product="product" v-on:deleted="removedFromCart" v-on:cart-updated="fetchCartProducts"></tr>
-                                </template>
-                                <tr class="row-6">
-                                    <td class="text-left border-bottom-0 text-uppercase" colspan="4">Cart Total</td>
-                                    <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum }}</td>
-                                    <td></td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="12" class="py-3 px-4">
-                                        <div class="d-flex">
-                                            <a href="/products" class="btn btn-lg btn-pill btn-outline-primary text-uppercase">
-                                                <i class="fa fa-chevron-left"></i> Continue Shopping
-                                            </a>
-                                            <a href="/me/cart/checkout" class="btn btn-lg btn-pill btn-outline-primary text-uppercase ml-auto">
-                                                Proceed to checkout <i class="fa fa-chevron-right"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
+                <div class="cart-table table-responsive">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr class="row-1" style="border-bottom: 0;">
+                            <th class="row-title"><p>Item</p></th>
+                            <th class="row-title"><p>Product Name</p></th>
+                            <th class="row-title"><p>Price</p></th>
+                            <th class="row-title"><p>Quantity</p></th>
+                            <th class="row-title"><p>Subtotal</p></th>
+                            <th class="row-title"><p></p></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <template v-for="(product, indx) in products">
+                            <tr is="cart-entry" :key="indx" :product="product" v-on:deleted="removedFromCart" v-on:cart-updated="fetchCartProducts"></tr>
+                        </template>
+                        <tr class="row-6">
+                            <td class="text-left border-bottom-0 text-uppercase" colspan="4">Cart Total</td>
+                            <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum }}</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6" class="py-3 px-4">
+                                <div class="d-flex">
+                                    <a href="javascript:void(0)" @click="toCheckout" class="btn btn-lg btn-pill btn-outline-primary text-uppercase ml-auto">
+                                        <i class="fa fa-check-circle-o"></i> Checkout
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </section>
         </template>
@@ -81,10 +74,20 @@
                 return this.products.length > 0;
             },
             currencyCode() {
-                return this.products[0].currencyCode;
+                if (this.hasProducts) {
+                    return this.products[0].currencyCode;
+                }
+
+                return null;
+            },
+            checkoutRoute() {
+                return '/me/cart/checkout';
             }
         },
         methods: {
+            toCheckout() {
+                this.$router.push(this.checkoutRoute);
+            },
             fetchCartProducts() {
                 this.loaded = false;
                 axios.post(graphql.api, {query: graphql.myCartProducts})

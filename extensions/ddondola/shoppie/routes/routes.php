@@ -5,7 +5,10 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
         Route::prefix('me')->group(function () {
             Route::prefix('cart')->group(function () {
                 Route::get('/', 'ShoppieController@myCart')->name('my.cart');
-                Route::get('checkout', 'ShoppieController@myCartCheckout')->name('my.cart.checkout')->middleware(['cart.checkout']);
+                Route::middleware(['cart.checkout'])->group(function () {
+                    Route::get('checkout', 'ShoppieController@myCart')->name('my.cart.checkout');
+                    Route::post('checkout', 'ShoppieController@myCartCheckout')->name('my.cart.checkout');
+                });
             });
             Route::get('wishlist', 'ShoppieController@myWishlist')->name('my.wishlist');
             Route::get('orders/{order?}', 'ShoppieController@myOrders')->name('my.orders');

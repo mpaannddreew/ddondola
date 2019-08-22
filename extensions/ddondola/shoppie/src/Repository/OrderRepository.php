@@ -45,7 +45,7 @@ class OrderRepository
     public function create(Cart $cart) {
         $order = $cart->user->orders()->create([]);
         $cart->products->each(function (Product $product) use ($order){
-            $order->products()->attach($product->id, [
+            $order->products()->attach($product, [
                 'price' => $product->cartPivot->price,
                 'quantity' => $product->cartPivot->quantity
             ]);

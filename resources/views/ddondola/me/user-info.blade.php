@@ -1,7 +1,7 @@
-@extends('ddondola.me.base.edit')
+@extends('ddondola.me.base.profile-admin')
+@section('edit-active', 'active')
 @section('title')@parent Profile Information @endsection
-@section('info-active', 'active')
-@section('edit')
+@section('profile')
     <form method="post" action="{{ route('my.profile.update') }}">
         @csrf
         <div class="card border border-radius mb-2">

@@ -45,7 +45,7 @@
                 }
             },
             placeholder() {
-                return 'Search products, shops and people';
+                return 'Find products, shops and people';
             }
         },
         methods: {

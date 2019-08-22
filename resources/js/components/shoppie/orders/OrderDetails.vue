@@ -30,6 +30,9 @@
                                     <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop">
                                         <i class="material-icons">description</i> Invoice
                                     </a>
+                                    <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop && !loadedOrder.paidFor">
+                                        <i class="material-icons">credit_card</i> Make Payment
+                                    </a>
                                     <a class="btn btn-white btn-sm" :href="messengerUrl" v-if="shop">
                                         <i class="material-icons">chat</i> Message Buyer
                                     </a>
@@ -46,13 +49,15 @@
                                 </div>
                             </div>
                             <!-- Order status -->
-                            <div class="order-block" v-if="!shop">
+                            <div class="order-block">
                                 <div class="order-icon">
-                                    <i class="material-icons">info_outline</i>
+                                    <i class="material-icons">credit_card</i>
                                 </div>
                                 <div class="_status">
-                                    <div>Status</div>
-                                    <div><span class="badge badge-info">Shipping</span></div>
+                                    <div>Payment</div>
+                                    <div>
+                                        <span class="badge" :class="{'badge-warning': !loadedOrder.paidFor, 'badge-success': loadedOrder.paidFor}">{{ status }}</span>
+                                    </div>
                                 </div>
                             </div>
                             <!-- Order date -->
@@ -91,25 +96,7 @@
                                         </thead>
                                         <tbody>
                                         <template v-for="(product, indx) in products">
-                                            <tr class="cart-item" v-for="(product, indx) in products" :key="indx">
-                                                <td class="row-img lo-stats__image" :class="{'border-bottom-0': shop}">
-                                                    <img class="border rounded" :src="product.images[0].url" alt="product-img">
-                                                </td>
-                                                <td class="product-name" :class="{'border-bottom-0': shop}"><a :href="'/products/' + product.code">{{ product.name }}</a></td>
-                                                <td class="product-price" :class="{'border-bottom-0': shop}">{{ product.currencyCode }} {{ product.pivot.price }}</td>
-                                                <td class="product-quantity" :class="{'border-bottom-0': shop}">{{ product.pivot.quantity }}</td>
-                                                <td class="product-subtotal" :class="{'border-bottom-0': shop}">{{ product.currencyCode }} {{ product.pivot.sum }}</td>
-                                                <td class="row-close close-2">
-                                                    <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group">
-                                                        <a href="javascript:void(0)" class="btn btn-white text-success">
-                                                            <i class="material-icons">check</i>
-                                                        </a>
-                                                        <a href="javascript:void(0)" class="btn btn-white text-danger">
-                                                            <i class="material-icons">clear</i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            <tr is="order-row" :key="indx" :order-paid-for="loadedOrder.paidFor" :product="product"></tr>
                                         </template>
                                         <tr class="row-6" v-if="!shop">
                                             <td class="text-left border-bottom-0 text-uppercase" colspan="4">Order Total</td>
@@ -130,8 +117,10 @@
 </template>
 
 <script>
+    import OrderRow from "./OrderRow";
     export default {
         name: "OrderDetails",
+        components: {OrderRow},
         mounted(){
             this.fetchOrderProducts();
         },
@@ -158,6 +147,9 @@
             }
         },
         computed: {
+            status() {
+                return this.loadedOrder.paidFor ? 'Cleared': 'Pending';
+            },
             hasProducts() {
                 return this.products.length > 0;
             },
@@ -189,6 +181,9 @@
                 }
 
                 return null;
+            },
+            ravePublicKey() {
+                return RavePublicKey;
             }
         },
         methods: {
@@ -216,6 +211,36 @@
             },
             transitionBack() {
                 this.$router.push(this.ordersRoute);
+            },
+            pay() {
+                var x = getpaidSetup({
+                    PBFPubKey: this.ravePublicKey,
+                    customer_firstname: this.buyer.first_name,
+                    customer_lastname: this.buyer.last_name,
+                    customer_email: this.buyer.email,
+                    amount: 2000,
+                    currency: "UGX",
+                    txref: "rave-123456",
+                    meta: [{
+                        metaname: "order",
+                        metavalue: this.order
+                    }],
+                    onclose: function() {},
+                    callback: function(response) {
+                        var txref = response.tx.txRef;
+                        console.log("This is the response returned after a charge", response);
+                        if (
+                            response.tx.chargeResponseCode == "00" ||
+                            response.tx.chargeResponseCode == "0"
+                        ) {
+                            // redirect to a success page
+                        } else {
+                            // redirect to a failure page.
+                        }
+
+                        x.close(); // use this to close the modal immediately after payment.
+                    }
+                });
             }
         },
         watch: {
@@ -223,13 +248,14 @@
         },
         filters: {
             time(date) {
+                let time = Moment(date).format("h:mm a");
                 if (Moment().isSame(Moment(date), 'd'))
-                    return Moment(date).format("h:mm a");
+                    return `Today at ${time}`;
 
                 if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
-                    return 'Yesterday';
+                    return `Yesterday at ${time}`;
 
-                return Moment(date).format("MM/DD/YYYY");
+                return `${Moment(date).format("dddd, MMMM Do YYYY")} at ${time}`;
             }
         }
     }

@@ -41,13 +41,14 @@
         },
         filters: {
             time(date) {
+                let time = Moment(date).format("h:mm a");
                 if (Moment().isSame(Moment(date), 'd'))
-                    return Moment(date).format("h:mm a");
+                    return `Today at ${time}`;
 
                 if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
-                    return 'Yesterday';
+                    return `Yesterday at ${time}`;
 
-                return Moment(date).format("MM/DD/YYYY");
+                return `${Moment(date).format("dddd, MMMM Do YYYY")} at ${time}`;
             }
         }
     }

@@ -79,3 +79,5 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     encrypted: true
 });
+
+window.RavePublicKey = process.env.MIX_RAVE_PUBLIC_KEY;

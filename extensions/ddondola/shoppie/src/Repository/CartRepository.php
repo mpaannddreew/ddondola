@@ -64,7 +64,7 @@ class CartRepository
             return true;
         }else {
             if ($product->quantity() >= (int)$quantity) {
-                $cart->products()->attach($product->id, [
+                $cart->products()->attach($product, [
                     'quantity' => $quantity,
                     'price' => $product->discountedPrice()
                 ]);
@@ -83,7 +83,7 @@ class CartRepository
      */
     public function removeProduct(Cart $cart, Product $product) {
         if ($cart->hasProduct($product)) {
-            $cart->products()->detach([$product->id]);
+            $cart->products()->detach($product);
         }
 
         return false;

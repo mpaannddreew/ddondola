@@ -189,8 +189,9 @@ class ShoppieController extends Controller
         return view('shoppie::me.cart.index');
     }
 
-    public function myCartCheckout() {
-        return view('shoppie::me.cart.checkout');
+    public function myCartCheckout(Request $request) {
+        $order = $request->user()->checkout();
+        return redirect()->route('my.orders', ['order' => $order]);
     }
 
     public function myWishlist() {
@@ -206,6 +207,7 @@ class ShoppieController extends Controller
     }
 
     public function products() {
+        abort(404);
         return view('shoppie::products');
     }
 
