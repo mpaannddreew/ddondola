@@ -31,7 +31,7 @@ class BankServiceProvider extends ServiceProvider
         ], 'bank.components');
 
         $this->publishes([
-            __DIR__.'/../routes/graphql/activity.graphql' => base_path('routes/graphql/bank.graphql'),
+            __DIR__.'/../graphql/activity.graphql' => base_path('graphql/bank.graphql'),
         ], 'bank.graphql');
 
         $this->commands([
