@@ -70,7 +70,7 @@
                                 <div align="center" v-if="categoriesLoaded && !requirementsLoaded">
                                     <h4 class="m-0"><i class="material-icons">error</i></h4>
                                     <p class="mb-3">You have not added any categories yet!</p>
-                                    <a :href="inventoryUrl + '/categories'" class="btn btn-success btn-pill"><i class="fa fa-plus"></i> Add Categories</a>
+                                    <a :href="`${inventoryUrl}/categories`" class="btn btn-success btn-pill"><i class="fa fa-plus"></i> Add Categories</a>
                                 </div>
                             </div>
                         </div>
@@ -195,13 +195,13 @@
                 }
             },
             clearError(id) {
-                $('#' + id).removeClass('is-invalid');
-                $('#' + id + "_feedback").hide();
+                $(`#${id}`).removeClass('is-invalid');
+                $(`#${id}_feedback`).hide();
                 this.error = false;
             },
             showError(id, message) {
-                $('#' + id).addClass('is-invalid');
-                $('#' + id + "_feedback").text(message).show();
+                $(`#${id}`).addClass('is-invalid');
+                $(`#${id}_feedback`).text(message).show();
                 this.error = true;
                 this.loading = false;
             },

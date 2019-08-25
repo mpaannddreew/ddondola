@@ -23,7 +23,7 @@
         components: {Contact},
         mounted() {
             this.listen();
-            this.fetchContacts();
+            this.loadMore(false);
         },
         data() {
             return {
@@ -90,8 +90,8 @@
                     this.paginatorInfo = response.data.data.me.contacts.paginatorInfo;
                 }
             },
-            loadMore() {
-                this.loadingMore = true;
+            loadMore(indicator=true) {
+                this.loadingMore = indicator;
                 this.count += graphql.rowCount;
                 this.fetchContacts();
             }

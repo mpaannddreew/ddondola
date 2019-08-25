@@ -11,10 +11,10 @@
         <div class="card-body p-4 border border-top-0">
             <div class="form-row" v-for="(attribute, indx) in attributes" :key="indx">
                 <div class="form-group col-md-5">
-                    <input type="text" class="form-control" placeholder="Name" v-model="attribute.name" :id="indx + '_name'" required>
+                    <input type="text" class="form-control" placeholder="Name" v-model="attribute.name" :id="`${indx}_name`" required>
                 </div>
                 <div class="form-group col-md-5">
-                    <input type="text" class="form-control" placeholder="Value" v-model="attribute.value" :id="indx + '_value'" required>
+                    <input type="text" class="form-control" placeholder="Value" v-model="attribute.value" :id="`${indx}_value`" required>
                 </div>
                 <div class="form-group col-md-2 p-0">
                     <button type="button" class="btn btn-sm btn-success" @click="addRow">
@@ -58,12 +58,12 @@
         },
         methods: {
             clearError(id) {
-                $('#' + id).removeClass('is-invalid');
-                $('#' + id + "_feedback").hide();
+                $(`#${id}`).removeClass('is-invalid');
+                $(`#${id}_feedback`).hide();
             },
             showError(id, message) {
-                $('#' + id).addClass('is-invalid');
-                $('#' + id + "_feedback").text(message).show();
+                $(`#${id}`).addClass('is-invalid');
+                $(`#${id}_feedback`).text(message).show();
             },
             addRow() {
                 if (this.numberOfAttributes < 10) {
@@ -82,8 +82,8 @@
             attributes: {
                 handler(data) {
                     for(var i = 0; i < this.numberOfAttributes; i++) {
-                        this.clearError(i + '_name');
-                        this.clearError(i + '_value');
+                        this.clearError(`${i}_name`);
+                        this.clearError(`${i}_value`);
                     }
                 },
                 deep: true

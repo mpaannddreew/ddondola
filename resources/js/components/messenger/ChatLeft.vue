@@ -34,16 +34,11 @@
                 return this.chat.sender;
             },
             type() {
-                return _.lowerCase(this.sender.type);
+                return this.lowerCase(this.sender.type);
             },
             url() {
                 return `/${this.type === 'shop' ? 'shops':'people'}/${this.sender.code}`;
             },
-        },
-        filters: {
-            time(date) {
-                return Moment(date).format("h:mm a");
-            }
         }
     }
 </script>

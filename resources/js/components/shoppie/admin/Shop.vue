@@ -43,7 +43,7 @@
         },
         computed: {
             route() {
-                return "/admin/shops/" + this.shop.code;
+                return `/admin/shops/${this.shop.code}`;
             }
         }
     }

@@ -216,7 +216,7 @@
             },
             productsSuggestion(data) {
                 return this.suggestion(`/products/${data.code}`, data.images[0].url, data.name,
-                    `${data.reviewCount} Review(s) | UGX ${data.discountedPrice}`);
+                    `${data.reviewCount} Review(s) | ${data.currencyCode} ${this.commas(data.discountedPrice)}`);
             }
         }
     }

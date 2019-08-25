@@ -21,7 +21,7 @@
             </template>
             <template v-if="loaded && hasFeatured">
                 <div :class="classObject" v-for="(product, indx) in products">
-                    <a :href="directoryUrl + '/' + product.code" class="grid_item small">
+                    <a :href="`${directoryUrl}/${product.code}`" class="grid_item small">
                         <figure>
                             <img :src="product.images[0].url" alt="">
                             <div class="info">

@@ -20,7 +20,7 @@ class MessengerServiceProvider extends ServiceProvider
         ], 'messenger.components');
 
         $this->publishes([
-            __DIR__.'/../routes/graphql/messenger.graphql' => base_path('routes/graphql/messenger.graphql'),
+            __DIR__ . '/../graphql/messenger.graphql' => base_path('graphql/messenger.graphql'),
         ], 'messenger.graphql');
 
         $this->publishes([

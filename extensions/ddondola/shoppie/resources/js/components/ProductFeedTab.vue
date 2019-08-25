@@ -59,7 +59,7 @@
                 return true;
             },
             title() {
-                return _.upperFirst(this.showing) + ' Products'
+                return this.ucFirst(this.showing) + ' Products'
             }
         },
         methods: {

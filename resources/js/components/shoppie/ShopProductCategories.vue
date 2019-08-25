@@ -13,18 +13,18 @@
         <div id="accordion" v-if="loaded && showCategories">
             <div class="panel list-group">
                 <template v-for="(category, indx) in categories">
-                    <a :href="'#category-' + category.id" data-parent="#accordion" data-toggle="collapse" class="list-group-item">
+                    <a :href="`#category-${category.id}`" data-parent="#accordion" data-toggle="collapse" class="list-group-item">
                         <div class="d-flex">
                             <span class="category-name text-ellipsis">{{ category.name }} ({{ category.productCount }})</span>
                             <i class="material-icons ml-auto text-right view-report">add</i>
                         </div>
                     </a>
-                    <div class="collapse" :id="'category-' + category.id">
+                    <div class="collapse" :id="`category-${category.id}`">
                         <ul class="list-group">
                             <li class="list-group-item px-4" v-for="(subCategory, _indx) in category.categories" :key="_indx">
                                 <div class="custom-control custom-checkbox mb-1">
-                                    <input type="checkbox" class="custom-control-input" :name="'category-' + category.id + '-' + _indx" :id="'category-' + category.id + '-' + _indx" v-model="subCategoryIds" :value="subCategory.id">
-                                    <label class="custom-control-label" :for="'category-' + category.id + '-' + _indx">{{ subCategory.name }} ({{ subCategory.productCount }})</label>
+                                    <input type="checkbox" class="custom-control-input" :name="`category-${category.id}-${_indx}`" :id="`category-${category.id}-${_indx}`" v-model="subCategoryIds" :value="subCategory.id">
+                                    <label class="custom-control-label" :for="`category-${category.id}-${_indx}`">{{ subCategory.name }} ({{ subCategory.productCount }})</label>
                                 </div>
                             </li>
                         </ul>

@@ -141,7 +141,7 @@
             },
             converserType() {
                 if (this.converser)
-                    return _.lowerCase(this.converser.type);
+                    return this.lowerCase(this.converser.type);
                 return null;
             },
             hasText() {

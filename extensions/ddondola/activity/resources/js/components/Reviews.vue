@@ -145,9 +145,6 @@
                 if (this.isReviewed)
                     return {id: this.review.id, review: {rating: this.review.rating, body: this.review.body}};
                 return {};
-            },
-            auth() {
-                return Auth;
             }
         },
         methods: {
@@ -257,13 +254,13 @@
                 }
             },
             clearError(id) {
-                $('#' + id).removeClass('is-invalid');
-                $('#' + id + "_feedback").hide();
+                $(`#${id}`).removeClass('is-invalid');
+                $(`#${id}_feedback`).hide();
                 this.error = false;
             },
             showError(id, message) {
-                $('#' + id).addClass('is-invalid');
-                $('#' + id + "_feedback").text(message).show();
+                $(`#${id}`).addClass('is-invalid');
+                $(`#${id}_feedback`).text(message).show();
                 this.error = true;
                 this.loading = false;
             }

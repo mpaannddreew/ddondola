@@ -5,7 +5,7 @@
                 <template v-if="!loaded || (!hasActivities && loaded)">
                     <div align="center" class="p-3" v-if="!loaded">
                         <div class="loader"></div>
-                        <p class="m-0">Loading {{ loadingActivity }}...</p>
+                        <p class="m-0">Loading ...</p>
                     </div>
                     <div align="center" class="p-3" v-if="!hasActivities && loaded">
                         <h4 class="m-0"><i class="material-icons">error</i></h4>
@@ -31,7 +31,7 @@
         components: {Activity},
         mounted() {
             this.initialCount();
-            this.fetchActivities();
+            this.loadMore(false);
         },
         data() {
             return {
@@ -62,9 +62,6 @@
                 }
 
                 return true;
-            },
-            loadingActivity() {
-                return _.lowerCase(this.title);
             },
             noActivityMessage() {
                 if (this.admin)
@@ -109,8 +106,8 @@
                     this.paginatorInfo = response.data.data.user.activity.paginatorInfo;
                 }
             },
-            loadMore() {
-                this.loadingMore = true;
+            loadMore(indicator=true) {
+                this.loadingMore = indicator;
                 this.count += graphql.rowCount;
                 this.fetchActivities();
             }

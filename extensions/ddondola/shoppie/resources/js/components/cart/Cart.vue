@@ -32,7 +32,7 @@
                         </template>
                         <tr class="row-6">
                             <td class="text-left border-bottom-0 text-uppercase" colspan="4">Cart Total</td>
-                            <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum }}</td>
+                            <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum|commas }}</td>
                             <td></td>
                         </tr>
                         </tbody>

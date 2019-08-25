@@ -2,7 +2,7 @@
     <div class="card card-small user-details" :class="{ border: withBorder }">
         <div class="card-header p-0" style="border-radius: 0 !important;">
             <div class="user-details__bg">
-                <img :src="user.coverPicture.url" alt="User Details Background Image">
+                <img :src="user.coverPicture.url" :alt="user.name">
             </div>
         </div>
         <div class="card-body p-0 border-0">
@@ -15,7 +15,12 @@
                 </a>
             </h4>
             <p class="text-center text-light m-0 mb-2">
-                <small class="text-muted">{{ user.followerCount }} Follower(s) | {{ user.followingCount }} Following</small>
+                <small class="text-muted" v-if="!withBorder">
+                    {{ user.followerCount }} Follower(s) | {{ user.followingCount }} Following
+                </small>
+                <small class="text-muted" v-else>
+                    {{ user.email }}
+                </small>
                 <slot></slot>
             </p>
         </div>
@@ -41,14 +46,6 @@
             withBorder: {
                 type: Boolean,
                 default: false
-            }
-        },
-        filters: {
-            ucFirst(data) {
-                return _.upperFirst(data);
-            },
-            camel(data) {
-                return _.startCase(data);
             }
         },
         computed: {

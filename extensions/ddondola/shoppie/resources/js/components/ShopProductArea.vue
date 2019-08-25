@@ -73,7 +73,7 @@
         },
         computed: {
             newProductUrl() {
-                return '/shops/' + this.shop + '/inventory/new-product';
+                return `/shops/${this.shop}/inventory/new-product`;
             },
             showProducts() {
                 return this.products.length > 0;

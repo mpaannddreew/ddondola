@@ -7,10 +7,10 @@
                 </figure>
                 <div class="friend-name">
                     <ins>
-                        <a :href="'/people/' + review.reviewer.code" class="name ">{{ review.reviewer.name }}</a>
+                        <a :href="`/people/${review.reviewer.code}`" class="name ">{{ review.reviewer.name }}</a>
                     </ins>
                     <span>
-                        <span class="text-warning" v-html="starHtml"></span> – <span class="time">{{ date }}</span>
+                        <span class="text-warning" v-html="starHtml"></span> – <span class="time">{{ review.created_at|fromNow|lowerCase }}</span>
                     </span>
                 </div>
                 <div class="description mt-2">
@@ -33,9 +33,6 @@
             }
         },
         computed: {
-            date() {
-                return (Moment(this.review.created_at).fromNow()).toLowerCase();
-            },
             starHtml() {
                 var stars = "";
                 var difference = 5 - this.review.rating;

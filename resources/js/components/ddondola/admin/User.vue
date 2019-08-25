@@ -3,7 +3,7 @@
         <div class="contact-cont">
             <a href="javascript:void(0)" @click="transitionTo">
                 <div class="pull-left user-img m-r-10">
-                    <a href="javascript:void(0)" title="Faridah Nankinzi">
+                    <a href="javascript:void(0)" :title="user.name">
                         <img :src="user.avatar.url" alt="" class="w-40 rounded-circle">
                         <span class="status online"></span>
                     </a>
@@ -44,7 +44,7 @@
         },
         computed: {
             route() {
-                return '/admin/users/' + this.user.code;
+                return `/admin/users/${this.user.code}`;
             }
         }
     }

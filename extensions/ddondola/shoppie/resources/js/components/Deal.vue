@@ -6,12 +6,12 @@
         <div class="deals_content">
             <div class="text-center">
                 <span class="text-muted d-block">{{ deal.subcategory.name }}</span>
-                <a :href="'/products/' + deal.code"><h4 class="mb-2 text-ellipsis">{{ deal.name }}</h4></a>
+                <a :href="`/products/${deal.code}`"><h4 class="mb-2 text-ellipsis">{{ deal.name }}</h4></a>
             </div>
             <div class="text-center">
                 <ul class="price list-inline no-margin">
-                    <li class="list-inline-item deals_item_price_a text-primary">{{ deal.currencyCode }} {{ deal.discountedPrice }}</li>
-                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;">{{ deal.currencyCode }} {{ deal.price }}</li>
+                    <li class="list-inline-item deals_item_price_a text-primary">{{ deal.currencyCode }} {{ deal.discountedPrice|commas }}</li>
+                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;">{{ deal.currencyCode }} {{ deal.price|commas }}</li>
                 </ul>
             </div>
             <div class="available">

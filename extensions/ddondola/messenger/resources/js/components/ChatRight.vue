@@ -26,11 +26,6 @@
         },
         computed: {
 
-        },
-        filters: {
-            time(date) {
-                return Moment(date).format("h:mm a");
-            }
         }
     }
 </script>

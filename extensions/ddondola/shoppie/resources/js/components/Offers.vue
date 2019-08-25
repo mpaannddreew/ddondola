@@ -49,8 +49,8 @@
                 <template v-else-if="hasOffers && loaded">
                     <tr v-for="(offer, indx) in offers" :key="indx">
                         <td class="text-center">{{ offer.discount }}%</td>
-                        <td>{{ humanize(offer.start_date) }}</td>
-                        <td>{{ humanize(offer.end_date) }}</td>
+                        <td>{{ offer.start_date|humanise }}</td>
+                        <td>{{ offer.end_date|humanise }}</td>
                         <td>{{ offer.cancelled }}</td>
                         <td>{{ offer.active }}</td>
                         <td>
@@ -229,9 +229,6 @@
                         this.error = false;
                     }
                 });
-            },
-            humanize(datetime) {
-                return Moment(datetime).format("dddd, MMMM Do YYYY");
             }
         },
         watch: {

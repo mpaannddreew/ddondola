@@ -11,14 +11,14 @@
         </td>
         <td class="lo-stats__status">
             <div class="d-table mx-auto">
-                <span class="badge badge-pill" :class="statusClass">{{ status|ucf }}</span>
+                <span class="badge badge-pill" :class="statusClass">{{ status|ucFirst }}</span>
             </div>
         </td>
         <td class="lo-stats__items text-center">{{ product.quantity }}</td>
         <td class="lo-stats__items text-center" v-if="!admin">{{ product.brand.name }}</td>
         <td class="lo-stats__items text-center" v-if="!admin">{{ product.category.name }}</td>
         <td class="lo-stats__items text-center" v-if="!admin">{{ product.subcategory.name }}</td>
-        <td class="lo-stats__items text-center">{{ product.currencyCode }} {{ product.discountedPrice }}</td>
+        <td class="lo-stats__items text-center">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</td>
         <td>
             <div class="btn-group d-table ml-auto" role="group">
                 <a :href="productUrl" class="btn btn-sm btn-white" title="">
@@ -50,10 +50,10 @@
         },
         computed: {
             productUrl() {
-                return '/products/' + this.product.code
+                return `/products/${this.product.code}`
             },
             editUrl() {
-                return this.productUrl + "/edit"
+                return `/${this.productUrl}/edit`
             },
             status() {
                 return this.product.status;
@@ -64,11 +64,6 @@
                     'badge-danger': this.status === 'disabled',
                     'badge-warning': this.status === 'draft' || this.status === 'depleted'
                 }
-            }
-        },
-        filters: {
-            ucf(data) {
-                return _.upperFirst(data);
             }
         }
     }

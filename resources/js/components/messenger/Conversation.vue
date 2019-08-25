@@ -14,7 +14,7 @@
                 </div>
             </a>
             <div class="contact-action">
-                <span class="posted_time">{{ lastMessage.created_at|time }}</span>
+                <span class="posted_time">{{ lastMessage.created_at|dayOrTime }}</span>
             </div>
         </div>
     </li>
@@ -67,7 +67,7 @@
         },
         methods: {
             isOwner(id, type) {
-                return this.ownerId.toString() === id.toString() && _.lowerCase(this.ownerType) === _.lowerCase(type);
+                return this.ownerId.toString() === id.toString() && this.lowerCase(this.ownerType) === this.lowerCase(type);
             },
             transitionTo() {
                 this.$router.push(this.route)
@@ -78,17 +78,6 @@
             },
             setLastMessage(message) {
                 this.lastMessage = message;
-            }
-        },
-        filters: {
-            time(date) {
-                if (Moment().isSame(Moment(date), 'd'))
-                    return Moment(date).format("h:mm a");
-
-                if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
-                    return 'Yesterday';
-
-                return Moment(date).format("MM/DD/YY");
             }
         }
     }

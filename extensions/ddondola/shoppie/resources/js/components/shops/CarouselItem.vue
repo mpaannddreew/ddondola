@@ -28,7 +28,7 @@
         },
         computed: {
             href() {
-                return '/shops/' + this.shop.code;
+                return `/shops/${this.shop.code}`;
             }
         }
     }

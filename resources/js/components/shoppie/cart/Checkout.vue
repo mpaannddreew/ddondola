@@ -28,14 +28,14 @@
                                     <img class="border rounded" :src="product.images[0].url" alt="cart-img">
                                 </td>
                                 <td class="product-name"><a :href="'/products/' + product.code">{{ product.name }}</a></td>
-                                <td class="product-price"><p>{{ product.currencyCode }} {{ product.pivot.price }}</p></td>
+                                <td class="product-price"><p>{{ product.currencyCode }} {{ product.pivot.price|commas }}</p></td>
                                 <td class="product-quantity">{{ product.pivot.quantity }}</td>
-                                <td class="product-total"><p>{{ product.currencyCode }} {{ product.pivot.sum }}</p></td>
+                                <td class="product-total"><p>{{ product.currencyCode }} {{ product.pivot.sum|commas }}</p></td>
                             </tr>
                         </template>
                         <tr class="row-6">
                             <td class="text-left text-uppercase" colspan="4">Cart Total</td>
-                            <td class="product-subtotal text-muted">{{ currencyCode }} {{ cartSubtotal }}</td>
+                            <td class="product-subtotal text-muted">{{ currencyCode }} {{ cartSubtotal|commas }}</td>
                         </tr>
                         </tbody>
                         <tfoot>
@@ -111,7 +111,7 @@
                 this.cartSubtotal = response.data.data.me.cart.sum;
             },
             setCsrf() {
-                this.token = Token.content;
+                this.token = this.csrf;
             }
         }
     }

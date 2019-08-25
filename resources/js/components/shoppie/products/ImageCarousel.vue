@@ -42,7 +42,7 @@
 
             $('.category-box').each(function () {
                 $(this).append('<div class="category-box-background"></div>');
-                $(this).children('.category-box-background').css({'background-image': 'url(' + $(this).attr('data-background-image') + ')'});
+                $(this).children('.category-box-background').css({'background-image': `url(${$(this).attr('data-background-image')})`});
             });
         },
         props: {

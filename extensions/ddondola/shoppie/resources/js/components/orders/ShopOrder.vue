@@ -1,7 +1,7 @@
 <template>
     <a href="javascript:void(0)" @click="transitionTo" class="list-group-item list-group-item-action warning">
         <span class="text-uppercase" style="display: block">{{ order.code }}</span>
-        <small class="text-muted"><i class="material-icons">date_range</i> {{ order.created_at|time }}</small>
+        <small class="text-muted"><i class="material-icons">date_range</i> {{ order.created_at|timeSpecific }}</small>
     </a>
 </template>
 
@@ -25,30 +25,18 @@
                 return this.order.by.avatar.url;
             },
             shopUrl() {
-                return '/shops/' + this.$route.params.shop;
+                return `/shops/${this.$route.params.shop}`;
             },
             route() {
-                return this.shopUrl + '/orders/' + this.order.code;
+                return `${this.shopUrl}/orders/${this.order.code}`;
             },
             messengerUrl() {
-                return this.shopUrl + '/messenger/' + this.order.by.code;
+                return `${this.shopUrl}/messenger/${this.order.by.code}`;
             }
         },
         methods: {
             transitionTo() {
                 this.$router.push(this.route);
-            }
-        },
-        filters: {
-            time(date) {
-                let time = Moment(date).format("h:mm a");
-                if (Moment().isSame(Moment(date), 'd'))
-                    return `Today at ${time}`;
-
-                if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
-                    return `Yesterday at ${time}`;
-
-                return `${Moment(date).format("dddd, MMMM Do YYYY")} at ${time}`;
             }
         }
     }

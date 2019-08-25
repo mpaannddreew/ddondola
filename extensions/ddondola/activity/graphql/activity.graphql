@@ -1,0 +1,41 @@
+type Review {
+    id: ID!
+    rating: Int!
+    body: String!
+    reviewer: User! @belongsTo
+    reviewable: Reviewable! @method(name: "reviewableTranslator")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Reviewable {
+    id: ID!
+    type: String!
+    shop: Shop
+    product: Product
+}
+
+input Reviewee {
+    id: ID!
+    type: String!
+}
+
+input ReviewData {
+    rating: Int
+    body: String
+}
+
+type Reviewed {
+    isReviewed: Boolean!
+    review: Review
+}
+
+extend type Query {
+    review(id: ID! @eq): Review! @find(model: "Activity\\Review")
+    isReviewed(entity: Reviewee!): Reviewed! @field(resolver: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@isReviewed")
+}
+
+extend type Mutation {
+    addReview(entity: Reviewee! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@addReview")
+    editReview(id: ID! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@editReview")
+}

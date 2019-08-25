@@ -25,8 +25,8 @@
                 <ul class="list-group" v-if="loaded && showCategories">
                     <li class="list-group-item" v-for="(category, indx) in categories" :key="indx">
                         <div class="custom-control custom-checkbox mb-1">
-                            <input type="checkbox" class="custom-control-input" :id="'category-' + indx" v-model="categoryIds" :value="category.id">
-                            <label class="custom-control-label" :for="'category-' + indx">{{ category.name }}</label>
+                            <input type="checkbox" class="custom-control-input" :id="`category-${indx}`" v-model="categoryIds" :value="category.id">
+                            <label class="custom-control-label" :for="`category-${indx}`">{{ category.name }}</label>
                         </div>
                     </li>
                 </ul>
@@ -80,7 +80,7 @@
                 return this.categories.length > 0;
             },
             placeholder() {
-                return `Filter ${_.upperFirst(this.directory)}`;
+                return `Filter ${this.ucFirst(this.directory)}`;
             }
         },
         watch: {

@@ -23,7 +23,7 @@
         components: {Conversation},
         mounted() {
             this.listen();
-            this.fetchConversations();
+            this.loadMore(false);
         },
         data() {
             return {
@@ -90,8 +90,8 @@
                     this.paginatorInfo = response.data.data.me.conversations.paginatorInfo;
                 }
             },
-            loadMore() {
-                this.loadingMore = true;
+            loadMore(indicator=true) {
+                this.loadingMore = indicator;
                 this.count += graphql.rowCount;
                 this.fetchConversations();
             }

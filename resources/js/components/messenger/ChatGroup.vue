@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="chat-line">
-            <span class="chat-date">{{ date }}</span>
+            <span class="chat-date">{{ date|day }}</span>
         </div>
         <template v-for="(chat, indx) in group">
             <chat-right :chat="chat" v-if="mine(chat)" :key="indx + '_right'"></chat-right>
@@ -37,18 +37,12 @@
         },
         computed: {
             date() {
-                if (Moment().isSame(Moment(this.group[0].created_at), 'd'))
-                    return 'Today';
-
-                if (Moment().subtract(1, 'days').isSame(Moment(this.group[0].created_at), 'd'))
-                    return 'Yesterday';
-
-                return Moment(this.group[0].created_at).format("MMMM Do, YYYY");
+                return this.group[0].created_at;
             },
         },
         methods: {
             mine(chat) {
-                return _.lowerCase(this.participant) !== _.lowerCase(chat.sender.code);
+                return this.lowerCase(this.participant) !== this.lowerCase(chat.sender.code);
             }
         }
     }

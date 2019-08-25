@@ -30,7 +30,7 @@ class ActivityServiceProvider extends ServiceProvider
         ], 'activity.components');
 
         $this->publishes([
-            __DIR__.'/../routes/graphql/activity.graphql' => base_path('routes/graphql/activity.graphql'),
+            __DIR__ . '/../graphql/activity.graphql' => base_path('graphql/activity.graphql'),
         ], 'activity.graphql');
         
         $this->registerObservers();

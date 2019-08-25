@@ -11,8 +11,8 @@
         <template v-else>
             <td v-if="editEnabled">
                 <div class="form-group">
-                    <input class="form-control form-control-sm" type="text" placeholder="Name" v-model="name" :id="'name_' + category.id">
-                    <div class="invalid-feedback" :id="'name_' + category.id + '_feedback'"></div>
+                    <input class="form-control form-control-sm" type="text" placeholder="Name" v-model="name" :id="`name_${category.id}`">
+                    <div class="invalid-feedback" :id="`name_${category.id}_feedback`"></div>
                 </div>
             </td>
             <td v-else>{{ category.name }}</td>
@@ -83,20 +83,20 @@
             },
             validate() {
                 if (!this.name.length > 0)
-                    this.showError('name_' + this.category.id, "Category name is required");
+                    this.showError(`name_${this.category.id}`, "Category name is required");
 
                 if (!this.error) {
                     this.saveChanges();
                 }
             },
             clearError(id) {
-                $('#' + id).removeClass('is-invalid');
-                $('#' + id + "_feedback").hide();
+                $(`#${id}`).removeClass('is-invalid');
+                $(`#${id}_feedback`).hide();
                 this.error = false;
             },
             showError(id, message) {
-                $('#' + id).addClass('is-invalid');
-                $('#' + id + "_feedback").text(message).show();
+                $(`#${id}`).addClass('is-invalid');
+                $(`#${id}_feedback`).text(message).show();
                 this.error = true;
                 this.loading = false;
             },
@@ -117,7 +117,7 @@
         watch: {
             name: function (data) {
                 if (data.length > 0) {
-                    this.clearError("name_" + this.category.id);
+                    this.clearError(`name_${this.category.id}`);
                 }
             }
         }

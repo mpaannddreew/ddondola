@@ -14,7 +14,7 @@
                 <img class="border rounded" :src="product.images[0].url" alt="cart-img">
             </td>
             <td class="product-name" data-title="Product"><a :href="productUrl">{{ product.name }}</a></td>
-            <td class="product-price" data-title="Price"><p>{{ product.currencyCode }} {{ product.pivot.price }}</p></td>
+            <td class="product-price" data-title="Price"><p>{{ product.currencyCode }} {{ product.pivot.price|commas }}</p></td>
             <td class="product-quantity" data-title="Quantity" v-if="editing">
                 <div class="quantity_filter">
                     <button type="button" class="minus btn btn-sm btn-pill btn-outline-primary border-bottom-right-radius-0 border-top-right-radius-0" @click="minus">-</button>
@@ -23,7 +23,7 @@
                 </div>
             </td>
             <td class="product-quantity" v-else>{{ product.pivot.quantity }}</td>
-            <td class="product-total" data-title="Subprice"><p>{{ product.currencyCode }} {{ subtotal }}</p></td>
+            <td class="product-total" data-title="Subprice"><p>{{ product.currencyCode }} {{ subtotal|commas }}</p></td>
             <td class="row-close close-2" data-title="product-remove">
                 <template v-if="deleting">
                     <div align="center"><div class="loader"></div></div>
@@ -111,11 +111,12 @@
                 }
             },
             editCart() {
-                this.editing = true;
                 this.quantity = this.product.pivot.quantity;
+                this.editing = true;
                 Bus.$emit('editing', this.product.id);
             },
             cancelUpdate() {
+                this.quantity = this.product.pivot.quantity;
                 this.editing = false;
             },
             updateInCart() {

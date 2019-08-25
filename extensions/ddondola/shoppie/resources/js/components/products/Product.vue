@@ -1,22 +1,6 @@
 <template>
     <div class="card product is-gray border">
-        <div :id="carouselId" class="main-slide carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <template v-for="(image, indx) in product.images">
-                    <div class="carousel-item" :class="{active: indx === 0}">
-                        <img class="d-block w-100" :src="image.url" :alt="product.name">
-                    </div>
-                </template>
-            </div>
-            <a class="carousel-control-prev" :href="'#' + carouselId" role="button" data-slide="prev">
-                <span class="carousel-control" aria-hidden="true"><i class="fa fa-chevron-left" data-ripple-color="#F0F0F0"></i></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" :href="'#' + carouselId" role="button" data-slide="next">
-                <span class="carousel-control" aria-hidden="true"><i class="fa fa-chevron-right" data-ripple-color="#F0F0F0"></i></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
+        <main-slide :product="product"></main-slide>
         <div class="p-4 title">
             <mini-rating-meter :reviewable="product"></mini-rating-meter>
             <a :href="productUrl" :title="product.name">
@@ -24,8 +8,8 @@
             </a>
             <div class="d-flex mt-2">
                 <ul class="price list-inline no-margin my-auto">
-                    <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice }}</li>
-                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price }}</li>
+                    <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</li>
+                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price|commas }}</li>
                 </ul>
                 <div class="hover-overlay d-flex align-items-center justify-content-center ml-auto" style="border-radius: 0 !important;" v-if="auth">
                     <div class="CTA d-flex align-items-center justify-content-center">
@@ -45,8 +29,10 @@
 </template>
 
 <script>
+    import MainSlide from "./MainSlide";
     export default {
         name: "ShopProduct",
+        components: {MainSlide},
         mounted() {
             this.loadProduct();
         },
@@ -66,19 +52,13 @@
         },
         computed: {
             productUrl() {
-                return "/products/" + this.product.code;
+                return `/products/${this.product.code}`;
             },
             imageUrl() {
                 return this.product.images[0].url;
             },
             soldOut() {
                 return this.product.quantity === 0;
-            },
-            carouselId() {
-                return 'main-slide-' + this.product.id;
-            },
-            auth() {
-                return Auth;
             }
         },
         methods: {

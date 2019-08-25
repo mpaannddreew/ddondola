@@ -21,13 +21,13 @@
                     <div class="p-5">
                         <div class="row mb-2">
                             <div class="col-12 col-sm-6 text-center text-sm-left mb-4 mb-sm-0">
-                                <a class="btn btn-white btn-sm text-danger" href="javascript:void(0)" @click="transitionBack">
+                                <a class="btn btn-white btn-sm text-danger" href="javascript:void(0)" @click="close">
                                     <i class="material-icons">clear</i>
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6 d-flex align-items-center">
                                 <div class="ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">
-                                    <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop">
+                                    <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop" @click="showInvoice">
                                         <i class="material-icons">description</i> Invoice
                                     </a>
                                     <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop && !loadedOrder.paidFor">
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="date">
                                     <div>Date</div>
-                                    <div class="is-date">{{ loadedOrder.created_at|time }}</div>
+                                    <div class="is-date">{{ loadedOrder.created_at|timeSpecific }}</div>
                                 </div>
                             </div>
                             <!-- Order total -->
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="total">
                                     <div>Order total</div>
-                                    <div class="is-price">{{ currencyCode }} {{ sum }}</div>
+                                    <div class="is-price">{{ currencyCode }} {{ sum|commas }}</div>
                                 </div>
                             </div>
                             <!-- Order details -->
@@ -100,7 +100,12 @@
                                         </template>
                                         <tr class="row-6" v-if="!shop">
                                             <td class="text-left border-bottom-0 text-uppercase" colspan="4">Order Total</td>
-                                            <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum }}</td>
+                                            <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum|commas }}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr v-else>
+                                            <td class="text-left border-bottom-0 text-uppercase" colspan="4"></td>
+                                            <td class="product-subtotal border-0 text-muted"></td>
                                             <td></td>
                                         </tr>
                                         </tbody>
@@ -163,14 +168,17 @@
             },
             ordersRoute() {
                 if (this.shop) {
-                    return '/shops/' + this.shop + '/orders';
+                    return `/shops/${this.shop}/orders`;
                 }
 
                 return '/me/orders';
             },
+            invoiceRoute() {
+                return `${this.ordersRoute}/${this.order}/invoice`
+            },
             messengerUrl() {
                 if (this.loaded) {
-                    return '/shops/' + this.shop + '/messenger/' + this.buyer.code;
+                    return `/shops/${this.shop}/messenger/${this.buyer.code}`;
                 }
 
                 return null;
@@ -209,8 +217,11 @@
                 this.page = page;
                 this.fetchOrderProducts();
             },
-            transitionBack() {
+            close() {
                 this.$router.push(this.ordersRoute);
+            },
+            showInvoice() {
+                this.$router.push(this.invoiceRoute);
             },
             pay() {
                 var x = getpaidSetup({

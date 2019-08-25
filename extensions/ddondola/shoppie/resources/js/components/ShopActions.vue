@@ -60,7 +60,7 @@
         },
         computed: {
             messageUrl() {
-                return this.myMessengerUrl + "/" + this.shop.code
+                return `${this.myMessengerUrl}/${this.shop.code}`;
             },
             text() {
                 return this.like ? 'Unlike': 'Like';

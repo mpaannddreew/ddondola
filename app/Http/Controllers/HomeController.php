@@ -68,6 +68,7 @@ class HomeController extends Controller
     }
 
     public function profile(Request $request) {
+//        return response()->json($request->user());
         return view('ddondola.me.profile', ['user' => $request->user()]);
     }
 

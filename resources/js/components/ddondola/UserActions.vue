@@ -60,7 +60,7 @@
         },
         computed: {
             messageUrl() {
-                return this.myMessengerUrl + "/" + this.user.code
+                return `${this.myMessengerUrl}/${this.user.code}`;
             },
             text() {
                 return this.follow ? 'Unfollow': 'Follow';

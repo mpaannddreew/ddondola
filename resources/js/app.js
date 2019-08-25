@@ -8,6 +8,7 @@
 require('./bootstrap');
 
 require('./queries');
+
 window.Routes = [];
 window.Vue = require('vue');
 window.Bus = new Vue();
@@ -17,6 +18,8 @@ Vue.use(VueRouter);
 import VueContentPlaceholders from 'vue-content-placeholders';
 Vue.use(VueContentPlaceholders);
 
+import Helper from './helpers';
+Vue.use(Helper, {auth: Auth, csrf: Token.content});
 
 /**
  * The following block of code may be used to automatically register your
@@ -42,6 +45,7 @@ import Cart from './components/shoppie/cart/Cart';
 import Checkout from './components/shoppie/cart/Checkout';
 import OrderDetailsEmpty from './components/shoppie/orders/OrderDetailsEmpty';
 import OrderDetails from './components/shoppie/orders/OrderDetails';
+import Invoice from './components/shoppie/orders/Invoice';
 import UserDetailsEmpty from './components/ddondola/admin/UserAdminEmpty';
 import UsersDetails from './components/ddondola/admin/UserAdmin';
 import ShopAdminEmpty from './components/shoppie/admin/ShopAdminEmpty';
@@ -56,6 +60,7 @@ const router = new VueRouter({
         {path: '/me/messenger/:participant', component: ChatArea, props: true},
         {path: '/me/orders', component: OrderDetailsEmpty},
         {path: '/me/orders/:order', component: OrderDetails, props: true},
+        {path: '/me/orders/:order/invoice', component: Invoice, props: true},
         {path: '/shops/:initiator/messenger', component: ChatAreaEmpty, props: true},
         {path: '/shops/:initiator/messenger/:participant', component: ChatArea, props: true},
         {path: '/shops/:shop/orders', component: OrderDetailsEmpty, props: true},
@@ -71,7 +76,3 @@ const app = new Vue({
     el: '#app',
     router
 });
-
-// function formatNumber(num) {
-//     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-// }

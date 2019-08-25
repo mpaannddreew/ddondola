@@ -101,7 +101,7 @@
                 this.fetchUsers();
             },
             isMe(id) {
-                if (Auth && !this.admin)
+                if (this.auth && !this.admin)
                     return parseInt(this.me.id) === parseInt(id);
 
                 return false;

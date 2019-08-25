@@ -13,12 +13,12 @@
                 <div class="card card-small user-details border-right border-left">
                     <div class="card-header p-0" style="border-radius: 0 !important;">
                         <div class="user-details__bg">
-                            <img :src="selectedUser.coverPicture.url" alt="User Details Background Image">
+                            <img :src="selectedUser.coverPicture.url" :alt="selectedUser.name">
                         </div>
                     </div>
                     <div class="card-body p-0">
                         <div class="user-details__avatar mx-auto">
-                            <img :src="selectedUser.avatar.url" alt="User Avatar">
+                            <img :src="selectedUser.avatar.url" :alt="selectedUser.name">
                         </div>
                         <h4 class="text-center m-0 mt-2">{{ selectedUser.name }}</h4>
                         <p class="text-center text-light m-0 mb-2">{{ selectedUser.email }}</p>

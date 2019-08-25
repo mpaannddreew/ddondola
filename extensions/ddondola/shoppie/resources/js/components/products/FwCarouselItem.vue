@@ -22,7 +22,7 @@
         },
         computed: {
             href() {
-                return '/products/' + this.product.code;
+                return `/products/${this.product.code}`;
             }
         }
     }

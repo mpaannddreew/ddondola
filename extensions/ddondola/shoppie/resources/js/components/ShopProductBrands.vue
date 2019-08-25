@@ -13,7 +13,7 @@
         <ul class="list-group" v-if="loaded && showBrands">
             <li class="list-group-item" v-for="(brand, indx) in brands" :key="indx">
                 <div class="custom-control custom-checkbox mb-1">
-                    <input type="checkbox" class="custom-control-input" :id="'brand-' + indx" v-model="brandIds" :value="brand.id">
+                    <input type="checkbox" class="custom-control-input" :id="`brand-${indx}`" v-model="brandIds" :value="brand.id">
                     <label class="custom-control-label" :for="'brand-' + indx">{{ brand.name }} ({{ brand.productCount }})</label>
                 </div>
             </li>

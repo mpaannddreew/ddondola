@@ -12,6 +12,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
             });
             Route::get('wishlist', 'ShoppieController@myWishlist')->name('my.wishlist');
             Route::get('orders/{order?}', 'ShoppieController@myOrders')->name('my.orders');
+            Route::get('orders/{order}/invoice', 'ShoppieController@myOrders')->name('my.order.invoice');
             Route::prefix('shops')->group(function () {
                 Route::get('/', 'ShoppieController@myShops')->name('my.shops');
                 Route::get('create', 'ShoppieController@createShop')->name('create.shop');

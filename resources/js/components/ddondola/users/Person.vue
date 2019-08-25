@@ -77,7 +77,7 @@
                 this.loading = false;
             },
             showProfile() {
-                this.$router.push("/admin/users/" + this.user.code);
+                this.$router.push(`/admin/users/${this.user.code}`);
             }
         },
         computed: {
@@ -85,19 +85,19 @@
                 return Auth;
             },
             userUrl() {
-                return "/people/" + this.user.code
+                return `/people/${this.user.code}`;
             },
             text() {
                 return this.follow ? 'Unfollow': 'Follow';
             },
             name() {
-                return this.isMe ? this.user.name + " (Me)": this.user.name;
+                return this.isMe ? `${this.user.name} (Me)`: this.user.name;
             },
             followers() {
-                return this.user.followerCount + (this.user.followerCount === 1 ? " Follower": " Followers");
+                return `${this.user.followerCount}${(this.user.followerCount === 1 ? " Follower": " Followers")}`;
             },
             following() {
-                return this.user.followingCount + (this.user.followingCount === 1 ? " Following": " Following");
+                return `${this.user.followingCount}${(this.user.followingCount === 1 ? " Following": " Following")}`;
             },
             isFirst() {
                 return this.indx === 0;

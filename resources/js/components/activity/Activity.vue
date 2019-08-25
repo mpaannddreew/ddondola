@@ -11,7 +11,7 @@
                         <i class="material-icons">chevron_right</i>
                         <a :href="reviewableUrl" class="name">{{ reviewableName }}</a>
                     </ins>
-                    <span class="time">{{ activity.created_at|time }}</span>
+                    <span class="time">{{ activity.created_at|fromNow }}</span>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                 return this.activity.reviewable;
             },
             reviewableType() {
-                return _.lowerCase(this.reviewable.type);
+                return this.lowerCase(this.reviewable.type);
             },
             reviewerProfile() {
                 return "/people/" + this.reviewer.code;
@@ -121,11 +121,6 @@
                 }
 
                 return stars;
-            }
-        },
-        filters: {
-            time(date) {
-                return _.lowerCase(Moment(date).fromNow());
             }
         },
         methods: {

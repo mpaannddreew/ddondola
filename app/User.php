@@ -42,7 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'password', 'remember_token',
     ];
 
-    protected $appends = ['name', 'avatar', 'coverPicture', 'followerCount', 'followingCount'];
+    protected $appends = ['name', 'avatar', 'coverPicture', /*'followerCount', 'followingCount'*/];
 
     protected $casts = [
         'settings' => 'array',

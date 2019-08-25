@@ -9,7 +9,7 @@
                     <ins>
                         <a :href="shopUrl" class="name" :title="product.shop.name">{{ product.shop.name }}</a>
                     </ins>
-                    <span class="time text-lowercase">{{ product.created_at|time }}</span>
+                    <span class="time text-lowercase">{{ product.created_at|fromNow|lowerCase }}</span>
                 </div>
             </div>
         </div>
@@ -30,8 +30,8 @@
                         <i class="material-icons">add_shopping_cart</i> {{ cartText}}
                     </a>
                     <div class="price-wrap h5">
-                        <span class="price-new">{{ product.currencyCode }} {{ product.discountedPrice }}</span>
-                        <del class="price-old" v-if="product.discount">{{ product.currencyCode }} {{ product.price }}</del>
+                        <span class="price-new">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</span>
+                        <del class="price-old" v-if="product.discount">{{ product.currencyCode }} {{ product.price|commas }}</del>
                     </div>
                 </div>
             </figure>
@@ -66,10 +66,10 @@
                 return this.product.reviewCount === 1 ? 'rating': 'ratings';
             },
             shopUrl() {
-                return '/shops/' + this.product.shop.code;
+                return `/shops/${this.product.shop.code}`;
             },
             productUrl() {
-                return '/products/' + this.product.code;
+                return `/products/${this.product.code}`;
             },
             cartText() {
                 if (this.inCart) {
@@ -147,11 +147,6 @@
                         variables: {id: this.product.id}
                     }).then(this.favoritesStatus).catch(function (error) {});
                 }
-            }
-        },
-        filters: {
-            time(date) {
-                return _.lowerCase(Moment(date).fromNow());
             }
         }
     }

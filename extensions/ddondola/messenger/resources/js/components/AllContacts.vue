@@ -114,7 +114,7 @@
             },
             search() {
                 var search = $('#contact_search');
-                if (_.lowerCase(this.ownerType.toString()) === 'user') {
+                if (this.lowerCase(this.ownerType.toString()) === 'user') {
                     return search.typeahead(this.searchOptions(), this.shopsData(), this.usersData());
                 }
 
@@ -144,7 +144,7 @@
                 return [];
             },
             rejectSelf(data, type) {
-                if (_.lowerCase(this.ownerType.toString()) === type.toString()) {
+                if (this.lowerCase(this.ownerType.toString()) === type.toString()) {
                     return Collect(data).reject(this.reject).all();
                 }
 

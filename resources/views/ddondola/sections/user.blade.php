@@ -1,6 +1,7 @@
 <div class="container py-2">
     <div class="row">
-        <div class="col-md-10 offset-1">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
             <div class="row">
                 <div class="col-md-4 px-1">
                     <user-information :user="{{ $user }}" :with-border="true" >
@@ -9,7 +10,7 @@
                                 @if(!Auth::user()->is($user))
                                     <user-actions :user="{{ $user }}" my-messenger-url="{{ route("my.messenger") }}"></user-actions>
                                 @else
-                                    <a href="{{ route('create.shop') }}" class="btn btn-sm btn-success ml-auto">
+                                    <a href="{{ route('create.shop') }}" class="btn btn-sm btn-success ml-auto btn-pill">
                                         <i class="material-icons">add</i> New Shop
                                     </a>
                                 @endif
@@ -51,5 +52,6 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-1"></div>
     </div>
 </div>

@@ -48,7 +48,7 @@ class ShoppieServiceProvider extends ServiceProvider
         ], 'shoppie.components');
 
         $this->publishes([
-            __DIR__.'/../routes/graphql/shoppie.graphql' => base_path('routes/graphql/shoppie.graphql'),
+            __DIR__ . '/../graphql/shoppie.graphql' => base_path('graphql/shoppie.graphql'),
         ], 'shoppie.graphql');
 
         $this->registerObservers();

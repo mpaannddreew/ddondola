@@ -8,10 +8,10 @@
             <strong class="text-muted d-block mb-2"><i class="material-icons">monetization_on</i> Price</strong>
             <span>
                 <var class="price h3 text-warning">
-                    <span class="currency">{{ $product->currencyCode() }}</span> <span class="num">{{ $product->discountedPrice() }}</span>
+                    <span class="currency">{{ $product->currencyCode() }}</span> <span class="num">{{ number_format($product->discountedPrice()) }}</span>
                     @if($product->discount())
                         <span style="text-decoration: line-through">
-                            <span class="currency text-muted">{{ $product->currencyCode() }}</span> <span class="num text-muted">{{ $product->price }}</span>
+                            <span class="currency text-muted">{{ $product->currencyCode() }}</span> <span class="num text-muted">{{ number_format($product->price) }}</span>
                         </span>
                     @endif
                 </var>
