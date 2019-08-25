@@ -10,36 +10,18 @@ namespace Bank\Repositories;
 
 
 use Bank\Account;
-use Illuminate\Database\Eloquent\Model;
 
 class AccountRepository
 {
-    /**
-     * Create a new account
-     *
-     * @param Model $holder
-     * @return Account
-     */
-    public function create(Model $holder) {
-        // todo remote account creation via rave
-        if (is_null($holder->account)) {
-            return $holder->account()->save(new Account([]));
-        }
-
-        return $holder->account;
+    public function find($id) {
+        return Account::find($id);
     }
 
-    /**
-     * Get admin account
-     *
-     * @return Account
-     */
-    public function adminAccount() {
-        $admin = Account::whereNull("holder_type")->whereNull("holder_id")->where('admin', true)->first();
-        if (!$admin) {
-            return Account::create(['admin' => true]);
-        }
+    public function create(array $attributes) {
+        return Account::create($attributes);
+    }
 
-        return $admin;
+    public function firstWhere($column, $value) {
+        return Account::where($column, $value)->first();
     }
 }

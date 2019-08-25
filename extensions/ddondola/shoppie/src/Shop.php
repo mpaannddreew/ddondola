@@ -3,11 +3,9 @@
 namespace Shoppie;
 
 use Activity\Traits\Reviewable;
-use Bank\Traits\Holder;
 use Ddondola\Traits\Muddondozi;
 use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelFollow\Traits\CanBeLiked;
-use Shoppie\Repository\ShopRepository;
 use Shoppie\Traits\Identifier;
 use Laravolt\Avatar\Facade as Avatar;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -15,7 +13,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Shop extends Model implements HasMedia
 {
-    use CanBeLiked, Identifier, Reviewable, Muddondozi, HasMediaTrait, Holder;
+    use CanBeLiked, Identifier, Reviewable, Muddondozi, HasMediaTrait;
 
     protected $fillable = ['name', 'code', 'category_id', 'profile', 'settings', 'active'];
 
@@ -157,28 +155,5 @@ class Shop extends Model implements HasMedia
 
     public function contactIds() {
         return $this->likers->pluck('id');
-    }
-
-    /**
-     * Defines account details
-     *
-     * $details = [
-     *      'account_bank',
-     *      'account_number',
-     *      'business_name',
-     *      'business_email,
-     *      'business_contact',
-     *      'business_contact_mobile',
-     *      'business_mobile',
-     *      'meta' => [],
-     *      'split_type',
-     *      'split_value'
-     * ]
-     *
-     * @return array
-     */
-    public function accountDetails()
-    {
-        return [];
     }
 }

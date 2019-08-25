@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    protected $casts = ['data' => 'array'];
+    protected $fillable = ['admin', 'escrow'];
+
+    protected $casts = [
+        'admin' => 'bool',
+        'escrow' => 'bool'
+    ];
 
     /**
      * Get account holder
@@ -18,13 +23,27 @@ class Account extends Model
         return $this->morphTo();
     }
 
-    /**
-     * Get account data value
-     *
-     * @param $value
-     * @return mixed
-     */
-    public function data($value) {
-        return collect($this->data)->get($value, '');
+    public function transactions() {
+        return $this->hasMany(Transaction::class, 'account_id');
+    }
+
+    public function debits() {
+        return $this->transactions()->where('debit', 1)->get();
+    }
+
+    public function credits() {
+        return $this->transactions()->where('credit', 1)->get();
+    }
+
+    public function debit($amount, $note = null) {
+        return app(Ledger::class)->debit($this, $amount, $note);
+    }
+
+    public function credit($amount, $note = null) {
+        return app(Ledger::class)->credit($this, $amount, $note);
+    }
+
+    public function balance() {
+        return app(Ledger::class)->balance($this);
     }
 }

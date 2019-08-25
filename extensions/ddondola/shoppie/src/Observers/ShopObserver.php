@@ -14,7 +14,7 @@ class ShopObserver
      */
     public function created(Shop $shop)
     {
-        //
+        $shop->setUp();
     }
 
     /**

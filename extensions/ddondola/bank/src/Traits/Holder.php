@@ -10,7 +10,7 @@ namespace Bank\Traits;
 
 
 use Bank\Account;
-use Bank\Facades\Bank;
+use Bank\Bank;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait Holder
@@ -25,31 +25,11 @@ trait Holder
     }
 
     /**
-     * Defines account details
-     *
-     * $details = [
-     *      'account_bank',
-     *      'account_number',
-     *      'business_name',
-     *      'business_email,
-     *      'business_contact',
-     *      'business_contact_mobile',
-     *      'business_mobile',
-     *      'meta' => [],
-     *      'split_type',
-     *      'split_value'
-     * ]
-     *
-     * @return array
-     */
-    abstract public function accountDetails();
-
-    /**
      * Create new account
      *
      * @return Account
      */
     public function createAccount() {
-        return Bank::createAccount($this);
+        return app(Bank::class)->createAccount($this);
     }
 }

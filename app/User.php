@@ -184,4 +184,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
             return $shop->productIds();
         })->all();
     }
+
+    public function setUp()
+    {
+        $this->createAccount();
+        $this->createCart();
+    }
 }

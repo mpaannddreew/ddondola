@@ -15,8 +15,9 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->morphs('holder');
-            $table->text('data');
+            $table->nullableMorphs('holder');
+            $table->boolean('admin')->nullable();
+            $table->boolean('escrow')->nullable();
             $table->timestamps();
         });
     }

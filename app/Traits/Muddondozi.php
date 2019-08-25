@@ -9,12 +9,12 @@
 namespace Ddondola\Traits;
 
 
+use Bank\Traits\Holder;
 use Messenger\Traits\Converser;
-use Bank\Traits\Transactor;
 
 trait Muddondozi
 {
-    use Converser, Transactor;
+    use Converser, Holder;
 
     /**
      * Type of actor
@@ -24,5 +24,9 @@ trait Muddondozi
     public function type() {
         $path = explode('\\', __CLASS__);
         return array_pop($path);
+    }
+
+    public function setUp() {
+        $this->createAccount();
     }
 }

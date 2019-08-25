@@ -10,7 +10,6 @@ namespace Bank;
 
 
 use Bank\Repositories\AccountRepository;
-use Bank\Repositories\EscrowRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class Bank
@@ -32,10 +31,42 @@ class Bank
     /**
      * Create a new account
      *
-     * @param Model $accountHolder
+     * @param Model $holder
      * @return Account
      */
-    public function createAccount(Model $accountHolder) {
-        return $this->accounts->create($accountHolder);
+    public function createAccount(Model $holder) {
+        if (is_null($holder->account)) {
+            return $this->accounts->create(['holder_type' => get_class($holder), 'holder_id' => $holder->id]);
+        }
+
+        return $holder->account;
+    }
+
+    /**
+     * Get admin account
+     *
+     * @return Account
+     */
+    public function adminAccount() {
+        $admin = $this->accounts->firstWhere('admin', true);
+        if (!$admin) {
+            return $this->accounts->create(['admin' => true]);
+        }
+
+        return $admin;
+    }
+
+    /**
+     * Get admin account
+     *
+     * @return Account
+     */
+    public function escrowAccount() {
+        $escrow = $this->accounts->firstWhere('escrow', true);
+        if (!$escrow) {
+            return $this->accounts->create(['escrow' => true]);
+        }
+
+        return $escrow;
     }
 }

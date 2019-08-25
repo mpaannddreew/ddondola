@@ -9,6 +9,7 @@
 namespace Bank;
 
 
+use Bank\Commands\BankAccount;
 use Illuminate\Support\ServiceProvider;
 
 class BankServiceProvider extends ServiceProvider
@@ -32,6 +33,10 @@ class BankServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../routes/graphql/activity.graphql' => base_path('routes/graphql/bank.graphql'),
         ], 'bank.graphql');
+
+        $this->commands([
+            BankAccount::class,
+        ]);
     }
 
     /**
