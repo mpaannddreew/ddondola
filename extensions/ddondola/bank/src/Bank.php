@@ -20,12 +20,19 @@ class Bank
     protected $accounts;
 
     /**
+     * @var Ledger
+     */
+    protected $ledger;
+
+    /**
      * Bank constructor.
      * @param AccountRepository $accounts
+     * @param Ledger $ledger
      */
-    public function __construct(AccountRepository $accounts)
+    public function __construct(AccountRepository $accounts, Ledger $ledger)
     {
         $this->accounts = $accounts;
+        $this->ledger = $ledger;
     }
 
     /**

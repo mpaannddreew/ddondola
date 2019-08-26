@@ -35,12 +35,16 @@ class Account extends Model
         return $this->transactions()->where('credit', 1)->get();
     }
 
-    public function debit($amount, $note = null) {
-        return app(Ledger::class)->debit($this, $amount, $note);
+    public function deposit($amount) {
+        return app(Ledger::class)->debit($this, $amount, "deposit");
     }
 
-    public function credit($amount, $note = null) {
-        return app(Ledger::class)->credit($this, $amount, $note);
+    public function withdraw($amount) {
+        return app(Ledger::class)->credit($this, $amount, "withdraw");
+    }
+
+    public function transfer(Account $account, $amount, $note = null) {
+        return app(Ledger::class)->transfer($this, $account, $amount, $note);
     }
 
     public function balance() {
