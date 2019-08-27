@@ -1,5 +1,6 @@
 @extends('ddondola.me.base.profile-admin')
 @section('title')@parent Change Password @endsection
+@section('following-settings', 'active')
 @section('profile')
     <form method="post" action="{{ route('update.password') }}">
         @csrf

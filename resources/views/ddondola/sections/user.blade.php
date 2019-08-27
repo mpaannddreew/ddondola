@@ -28,7 +28,7 @@
                                         <li class="nav-item"><a href="{{ route('my.followers') }}" class="nav-link @yield('followers-active')"><i class="material-icons">people</i> Followers</a></li>
                                         <li class="nav-item"><a href="{{ route('my.following') }}" class="nav-link @yield('following-active')"><i class="material-icons">people_outline</i> Following</a></li>
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link" data-toggle="dropdown"><i class="material-icons">settings</i> Settings</a>
+                                            <a class="nav-link @yield('following-settings')" data-toggle="dropdown"><i class="material-icons">settings</i> Settings</a>
                                             <div class="dropdown-menu dropdown-menu-small">
                                                 <a href="{{ route('my.profile.edit') }}" class="dropdown-item"><i class="material-icons">mode_edit</i> Edit Profile</a>
                                                 <a href="{{ route('show.change.password') }}" class="dropdown-item"><i class="material-icons">lock</i> Change Password</a>

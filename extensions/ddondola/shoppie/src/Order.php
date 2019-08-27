@@ -2,6 +2,7 @@
 
 namespace Shoppie;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Shoppie\Traits\Identifier;
 
@@ -36,10 +37,25 @@ class Order extends Model
             ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed']);
     }
 
+    /**
+     * Group order lines by shop
+     *
+     * @return Collection
+     */
+    public function groupByShop() {
+        return $this->products->groupBy(function (Product $product) {
+            return $product->brand->shop->code;
+        });
+    }
+
+    /**
+     * Check if shop holds products in this order
+     *
+     * @param Shop $shop
+     * @return bool
+     */
     public function isHandledBy(Shop $shop) {
-        return $this->products->reject(function (Product $product) use($shop) {
-            return !$product->shop()->is($shop);
-        })->count() > 0;
+        return $this->groupByShop()->keys()->contains($shop->code);
     }
 
     /**
@@ -52,15 +68,30 @@ class Order extends Model
             return $product->orderPivot->sum();
         });
     }
-    
+
+    /**
+     * Number of products in this order
+     *
+     * @return int
+     */
     public function productCount() {
-        return $this->products->count();
+        return $this->products()->count();
     }
 
+    /**
+     * Currency of this order
+     *
+     * @return string
+     */
     public function currencyCode() {
         return $this->by->country->currencyCode();
     }
 
+    /**
+     * First product in order
+     *
+     * @return Product
+     */
     public function firstProduct() {
         return $this->products()->first();
     }

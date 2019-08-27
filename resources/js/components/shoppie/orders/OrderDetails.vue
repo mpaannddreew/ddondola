@@ -96,9 +96,9 @@
                                         </thead>
                                         <tbody>
                                         <template v-for="(product, indx) in products">
-                                            <tr is="order-row" :key="indx" :order-paid-for="loadedOrder.paidFor" :product="product"></tr>
+                                            <tr is="order-row" :key="indx" :order-paid-for="loadedOrder.paidFor" :product="product" :shop="shop"></tr>
                                         </template>
-                                        <tr class="row-6" v-if="!shop">
+                                        <tr class="row-7" v-if="!shop">
                                             <td class="text-left border-bottom-0 text-uppercase" colspan="4">Order Total</td>
                                             <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum|commas }}</td>
                                             <td></td>

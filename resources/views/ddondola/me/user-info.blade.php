@@ -1,5 +1,6 @@
 @extends('ddondola.me.base.profile-admin')
 @section('edit-active', 'active')
+@section('following-settings', 'active')
 @section('title')@parent Profile Information @endsection
 @section('profile')
     <form method="post" action="{{ route('my.profile.update') }}">

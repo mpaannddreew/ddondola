@@ -9,7 +9,10 @@
 namespace Bank;
 
 
+use Bank\Jobs\CompleteEscrow;
+use Bank\Jobs\ReverseEscrow;
 use Bank\Repositories\AccountRepository;
+use Bank\Repositories\EscrowRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class Bank
@@ -25,14 +28,21 @@ class Bank
     protected $ledger;
 
     /**
+     * @var EscrowRepository
+     */
+    protected $escrows;
+
+    /**
      * Bank constructor.
      * @param AccountRepository $accounts
      * @param Ledger $ledger
+     * @param EscrowRepository $escrows
      */
-    public function __construct(AccountRepository $accounts, Ledger $ledger)
+    public function __construct(AccountRepository $accounts, Ledger $ledger, EscrowRepository $escrows)
     {
         $this->accounts = $accounts;
         $this->ledger = $ledger;
+        $this->escrows = $escrows;
     }
 
     /**
@@ -43,7 +53,7 @@ class Bank
      */
     public function createAccount(Model $holder) {
         if (is_null($holder->account)) {
-            return $this->accounts->create(['holder_type' => get_class($holder), 'holder_id' => $holder->id]);
+            return $holder->account()->create([]);
         }
 
         return $holder->account;
@@ -75,5 +85,22 @@ class Bank
         }
 
         return $escrow;
+    }
+
+    public function newEscrow(Account $source, Account $destination, $amount, array $meta) {
+        return $this->escrows->create([
+            'source_account_id' => $source->getKey(),
+            'destination_account_id' => $destination->getKey(),
+            'amount' => $amount,
+            'meta' => $meta
+        ]);
+    }
+
+    public function reverseEscrow(Escrow $escrow) {
+        ReverseEscrow::dispatch($escrow);
+    }
+
+    public function completeEscrow(Escrow $escrow) {
+        CompleteEscrow::dispatch($escrow);
     }
 }

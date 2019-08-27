@@ -54,19 +54,32 @@ import ShopAdmin from './components/shoppie/admin/ShopAdmin';
 const router = new VueRouter({
     mode: 'history',
     routes: [
+        // cart app
         {path: '/me/cart', component: Cart},
         {path: '/me/cart/checkout', component: Checkout},
+
+        // user messenger app
         {path: '/me/messenger', component: ChatAreaEmpty},
         {path: '/me/messenger/:participant', component: ChatArea, props: true},
+
+        // user orders app
         {path: '/me/orders', component: OrderDetailsEmpty},
         {path: '/me/orders/:order', component: OrderDetails, props: true},
         {path: '/me/orders/:order/invoice', component: Invoice, props: true},
+
+        // shop messenger app
         {path: '/shops/:initiator/messenger', component: ChatAreaEmpty, props: true},
         {path: '/shops/:initiator/messenger/:participant', component: ChatArea, props: true},
+
+        // shop orders app
         {path: '/shops/:shop/orders', component: OrderDetailsEmpty, props: true},
         {path: '/shops/:shop/orders/:order', component: OrderDetails, props: true},
+
+        // user admin app
         {path: '/admin/users', component: UserDetailsEmpty},
         {path: '/admin/users/:user', component: UsersDetails, props: true},
+
+        // shop admin app
         {path: '/admin/shops', component: ShopAdminEmpty},
         {path: '/admin/shops/:shop', component: ShopAdmin, props: true}
     ]

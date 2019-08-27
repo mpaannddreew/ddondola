@@ -52,7 +52,6 @@ trait Buyer
         return $this->hasMany(Order::class, 'user_id');
     }
 
-
     public function products() {
         return $this->favorites(Product::class);
     }

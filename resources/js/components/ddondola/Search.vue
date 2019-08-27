@@ -45,7 +45,7 @@
                 }
             },
             placeholder() {
-                return 'Find products, shops and people';
+                return 'Search products, shops, categories, brands or people';
             }
         },
         methods: {
@@ -144,7 +144,7 @@
                     remote: {
                         url: graphql.api,
                         prepare: function(query, settings) {
-                            settings.url = settings.url + "?" + $.param({query: graphql.searchProducts, variables: {name: query}});
+                            settings.url = `${settings.url}?${$.param({query: graphql.searchProducts, variables: {name: query}})}`;
                             settings.headers = SearchHeaders;
                             settings.type = "GET";
                             return settings;
@@ -160,7 +160,7 @@
                     remote: {
                         url: graphql.api,
                         prepare: function(query, settings) {
-                            settings.url = settings.url + "?" + $.param({query: graphql.searchShops, variables: {name: query}});
+                            settings.url = `${settings.url}?${$.param({query: graphql.searchShops, variables: {name: query}})}`;
                             settings.headers = SearchHeaders;
                             settings.type = "GET";
                             return settings;
@@ -176,7 +176,7 @@
                     remote: {
                         url: graphql.api,
                         prepare: function(query, settings) {
-                            settings.url = settings.url + "?" + $.param({query: graphql.searchUsers, variables: {name: query}});
+                            settings.url = `${settings.url}?${$.param({query: graphql.searchUsers, variables: {name: query}})}`;
                             settings.headers = SearchHeaders;
                             settings.type = "GET";
                             return settings;
@@ -189,7 +189,7 @@
                 return `<div class="card border-bottom">
                            <article class="card-group-item">
                                 <header class="card-header py-2" style="border-radius: 0;"><h6 class="title">${title}</h6></header>
-                           </article><!-- card-group-item.// -->
+                           </article>
                        </div>`;
             },
             suggestion(url, image, name, note) {

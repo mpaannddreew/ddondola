@@ -37,11 +37,11 @@ class Ledger
     }
 
     public function debit(Account $account, $amount, $note = null) {
-        return $this->transactions->create(['account_id' => $account->id, 'amount' => $amount, 'debit' => true, 'note' => $note]);
+        return $this->transactions->create(['account_id' => $account->getKey(), 'amount' => $amount, 'debit' => true, 'note' => $note]);
     }
 
     public function credit(Account $account, $amount, $note = null) {
-        return $this->transactions->create(['account_id' => $account->id, 'amount' => $amount, 'credit' => true, 'note' => $note]);
+        return $this->transactions->create(['account_id' => $account->getKey(), 'amount' => $amount, 'credit' => true, 'note' => $note]);
     }
 
     public function transfer(Account $source, Account $destination, $amount, $note = null) {

@@ -44,9 +44,7 @@ class Cart extends Model
      * @return bool
      */
     public function hasProduct(Product $product) {
-        return $this->products->reject(function (Product $item) use ($product){
-            return !$item->is($product);
-        })->count() > 0;
+        return $this->products->contains($product);
     }
 
     /**
@@ -119,7 +117,7 @@ class Cart extends Model
      * @return int
      */
     public function productCount() {
-        return $this->products->count();
+        return $this->products()->count();
     }
 
     /**
@@ -140,8 +138,8 @@ class Cart extends Model
      * @return int
      */
     protected function sumByShop($code) {
-        return $this->products->sum(function (Product $product) use($code) {
-            return $product->brand->shop->code == $code ? $product->cartPivot->sum(): 0;
+        return collect($this->groupByShop()->get($code))->sum(function (Product $product) use($code) {
+            return $product->cartPivot->sum();
         });
     }
 

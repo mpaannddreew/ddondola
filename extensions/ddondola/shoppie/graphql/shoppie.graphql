@@ -199,26 +199,6 @@ input NewAttribute {
     value: String!
 }
 
-input NewProduct {
-    categoryId: ID!
-    brandId: ID!
-    name: String!
-    price: String!
-    description: String
-    active: Boolean!
-    attributes: [NewAttribute!]!
-}
-
-input EditProduct {
-    categoryId: ID
-    brandId: ID
-    name: String
-    price: String
-    description: String
-    active: Boolean
-    attributes: [NewAttribute!]
-}
-
 input ProductFilter {
     ordering: String
     brandIds: String

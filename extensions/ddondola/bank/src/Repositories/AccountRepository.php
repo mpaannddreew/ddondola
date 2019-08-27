@@ -24,4 +24,10 @@ class AccountRepository
     public function firstWhere($column, $value) {
         return Account::where($column, $value)->first();
     }
+
+    public function update(Account $account, array $attributes) {
+        $account->update($attributes);
+
+        return $account;
+    }
 }
