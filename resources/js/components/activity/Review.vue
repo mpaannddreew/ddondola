@@ -7,7 +7,7 @@
                 </figure>
                 <div class="friend-name">
                     <ins>
-                        <a :href="'/people/' + review.reviewer.code" class="name ">{{ review.reviewer.name }}</a>
+                        <a :href="`/people/${review.reviewer.code}`" class="name ">{{ review.reviewer.name }}</a>
                     </ins>
                     <span>
                         <span class="text-warning" v-html="starHtml"></span> – <span class="time">{{ review.created_at|fromNow|lowerCase }}</span>

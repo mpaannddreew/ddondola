@@ -39,7 +39,7 @@
                         stars += '<li><i class="fa fa-star-o pr-1"></i></li>';
                     }
                 }
-                stars += '<li>' + this.reviewable.averageRating + '</li>';
+                stars += `<li>${this.reviewable.averageRating}</li>`;
                 return stars;
             }
         }

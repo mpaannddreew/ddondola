@@ -12,7 +12,6 @@
                     <li class="nav-item">
                         <a href="{{ route('product.reviews', ['product' => $product]) }}" class="nav-link @yield('reviews-active')"><i class="material-icons">rate_review</i> Reviews</a>
                     </li>
-
                 </ul>
             </div>
             <div class="col-12 col-sm-6 d-flex align-items-center">
@@ -23,10 +22,7 @@
 </div>
 <div class="container py-2">
     <div class="row">
-        <div class="col-md-3 px-1">
-            <rating-meter :reviewable="{{ $product }}"></rating-meter>
-        </div>
-        <div class="col-md-6 px-1">
+        <div class="col-md-9 px-1">
             @yield('product')
         </div>
         <div class="col-md-3 px-1">

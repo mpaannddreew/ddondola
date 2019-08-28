@@ -38,7 +38,7 @@
         <div class="post-meta m-0 bg-light p-0 pt-0" v-else>
             <div class="card card-small card-post card-post--aside card-post--1">
                 <div class="card-post__image border-top-left-radius-0 border-bottom-left-radius-0"
-                     :style="{backgroundImage: 'url(' + reviewable.product.images[0].url + ')'}">
+                     :style="{backgroundImage: `url(${reviewable.product.images[0].url})`}">
                     <!--<div class="card-post__author d-flex">-->
                         <!--<a :href="'/shops/' + reviewable.product.shop.code" class="card-post__author-avatar card-post__author-avatar&#45;&#45;small"-->
                            <!--:style="{backgroundImage: 'url(' + reviewable.product.shop.avatar.url + ')'}">-->
@@ -89,17 +89,17 @@
                 return this.lowerCase(this.reviewable.type);
             },
             reviewerProfile() {
-                return "/people/" + this.reviewer.code;
+                return `/people/${this.reviewer.code}`;
             },
             reviewableIsShop() {
                 return this.reviewableType === 'shop';
             },
             reviewableUrl() {
                 if(!this.reviewableIsShop) {
-                    return "/products/" + this.reviewable.product.code;
+                    return `/products/${this.reviewable.product.code}`;
                 }
 
-                return "/shops/" + this.reviewable.shop.code;
+                return `/shops/${this.reviewable.shop.code}`;
             },
             reviewableName() {
                 if(!this.reviewableIsShop) {
