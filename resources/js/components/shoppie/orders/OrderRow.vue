@@ -8,6 +8,7 @@
         <td class="product-quantity" :class="classDef">{{ product.pivot.quantity }}</td>
         <td class="product-subtotal">{{ product.currencyCode }} {{ product.pivot.sum|commas }}</td>
         <td class="row-close close-2">
+            <!-- todo show status message -->
             <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" v-if="showActions">
                 <a href="javascript:void(0)" class="btn btn-white text-success" @click="confirm">
                     <i class="material-icons">check</i>

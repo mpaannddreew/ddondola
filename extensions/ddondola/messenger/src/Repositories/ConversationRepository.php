@@ -33,7 +33,7 @@ class ConversationRepository
      */
     public function create(Model $initiator, Model $participant) {
         return $initiator->initiatedConversations()->create([
-            'participant_id' => $participant->id,
+            'participant_id' => $participant->getKey(),
             'participant_type' => get_class($participant)
         ]);
     }

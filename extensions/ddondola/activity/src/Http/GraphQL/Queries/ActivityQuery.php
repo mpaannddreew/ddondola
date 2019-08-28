@@ -4,7 +4,6 @@ namespace Activity\Http\GraphQL\Queries;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use Shoppie\Facades\Shoppie;
 use Shoppie\Repository\ProductRepository;
 use Shoppie\Repository\ShopRepository;
 
@@ -52,9 +51,8 @@ class ActivityQuery
      */
     public function isReviewed($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $type = collect($args["entity"])->get('type');
         $id = collect($args["entity"])->get('id');
-        if ($type == 'shop' ) {
+        if (collect($args["entity"])->get('type') == 'shop' ) {
             return $context->user()->hasReviewed(app(ShopRepository::class)->id($id));
         } else {
             return $context->user()->hasReviewed(app(ProductRepository::class)->id($id));

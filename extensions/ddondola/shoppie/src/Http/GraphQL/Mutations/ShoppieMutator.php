@@ -33,9 +33,7 @@ class ShoppieMutator
     {
         $shop = app(ShopRepository::class)->code($args['shop']);
         if ($context->user()->can('update', $shop)) {
-            $brand = collect($args['brand']);
-            return app(ProductBrandRepository::class)
-                ->create($shop, $brand->get('name'), $brand->get('description'));
+            return app(ProductBrandRepository::class)->create($shop, $args['brand']);
         }
 
         throw new AuthorizationException;
@@ -77,9 +75,7 @@ class ShoppieMutator
     {
         $shop = app(ShopRepository::class)->code($args['shop']);
         if ($context->user()->can('update', $shop)) {
-            $category = collect($args['category']);
-            return app(ProductCategoryRepository::class)
-                ->create($shop, $category->get('name'), $category->get('description'));
+            return app(ProductCategoryRepository::class)->create($shop, $args['category']);
         }
 
         throw new AuthorizationException;
@@ -99,9 +95,7 @@ class ShoppieMutator
     public function createShopCategory($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         if ($context->user()->can('create', ShopCategory::class)) {
-            $category = collect($args['category']);
-            return app(ShopCategoryRepository::class)
-                ->create($category->get('name'), $category->get('description'));
+            return app(ShopCategoryRepository::class)->create($args['category']);
         }
 
         throw new AuthorizationException;
@@ -164,9 +158,7 @@ class ShoppieMutator
     {
         $category = app(ProductCategoryRepository::class)->id($args['categoryId']);
         if ($context->user()->can('update', $category)) {
-            $subcategory = collect($args['subcategory']);
-            return app(ProductSubCategoryRepository::class)
-                ->create($category, $subcategory->get('name'), $subcategory->get('description'));
+            return app(ProductSubCategoryRepository::class)->create($category, $args['subcategory']);
         }
 
         throw new AuthorizationException;

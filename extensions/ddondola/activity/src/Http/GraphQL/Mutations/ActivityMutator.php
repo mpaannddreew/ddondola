@@ -23,12 +23,11 @@ class ActivityMutator
      */
     public function addReview($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $type = collect($args["entity"])->get('type');
         $id = collect($args["entity"])->get('id');
-        if ($type == 'shop' ) {
-            return app(ShopRepository::class)->id($id)->addReview($context->user(), $args["review"]);
+        if (collect($args["entity"])->get('type') == 'shop' ) {
+            return app(ShopRepository::class)->id($id)->review($context->user(), $args["review"]);
         } else {
-            return app(ProductRepository::class)->id($id)->addReview($context->user(), $args["review"]);
+            return app(ProductRepository::class)->id($id)->review($context->user(), $args["review"]);
         }
     }
 
@@ -47,11 +46,7 @@ class ActivityMutator
     {
         $review = app(ReviewRepository::class)->id($args["id"]);
         if ($context->user()->can('update', $review)) {
-            return app(ReviewRepository::class)->edit(
-                $review,
-                collect($args["review"])->get('rating'),
-                collect($args["review"])->get('body')
-            );
+            return app(ReviewRepository::class)->update($review, $args["review"]);
         }
 
         throw new AuthorizationException;

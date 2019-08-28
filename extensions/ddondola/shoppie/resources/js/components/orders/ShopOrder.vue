@@ -1,6 +1,6 @@
 <template>
     <a href="javascript:void(0)" @click="transitionTo" class="list-group-item list-group-item-action warning">
-        <span class="text-uppercase" style="display: block; font-weight: bold;">{{ order.code }}</span>
+        <span class="text-uppercase" style="display: block;">{{ order.code }}</span>
         <small class="text-muted" style="font-weight: bold;"><i class="material-icons">date_range</i> {{ order.created_at|timeSpecific }}</small>
     </a>
 </template>

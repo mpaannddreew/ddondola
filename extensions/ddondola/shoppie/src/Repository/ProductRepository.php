@@ -58,29 +58,8 @@ class ProductRepository
      * @param array $attributes
      * @return Product
      */
-    public function update(Product $product, Category $category = null, Brand $brand = null, array $attributes) {
-        $data = [];
-        if ($category)
-            if (!$product->subcategory->is($category))
-                $data['subcategory_id'] = $category->id;
-
-        if ($brand)
-            if (!$product->brand->is($brand))
-                $data['brand_id'] = $brand->id;
-
-        foreach ($attributes as $key => $value) {
-            if ($key == 'settings') {
-                $settings = $product->settings;
-                foreach ($value as $k => $v) {
-                    $settings[$k] = $v;
-                }
-                $data['settings'] = $settings;
-            } else {
-                $data[$key] = $value;
-            }
-        }
-
-        $product->update($data);
+    public function update(Product $product, Category $category, Brand $brand, array $attributes) {
+        $product->update(array_merge(['subcategory_id' => $category->getKey(), 'brand_id' => $brand->getKey()], $attributes));
 
         return $product;
     }
@@ -89,7 +68,7 @@ class ProductRepository
      * @return Builder
      */
     public function builder() {
-        return Product::select();
+        return Product::query();
     }
 
     public function all() {

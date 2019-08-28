@@ -30,7 +30,7 @@ class Review extends Model
 
     public function reviewableTranslator() {
         return array_merge([
-            'id' => $this->reviewable->id,
+            'id' => $this->reviewable->getKey(),
             'type' => $this->type(),
         ], $this->reviewee());
     }

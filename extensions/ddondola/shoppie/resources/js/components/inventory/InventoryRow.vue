@@ -53,7 +53,7 @@
                 return `/products/${this.product.code}`
             },
             editUrl() {
-                return `/${this.productUrl}/edit`
+                return `${this.productUrl}/edit`
             },
             status() {
                 return this.product.status;

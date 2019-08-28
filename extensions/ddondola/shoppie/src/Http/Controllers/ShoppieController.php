@@ -24,18 +24,45 @@ class ShoppieController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * @var ShopCategoryRepository
+     */
     protected $categories;
 
+    /**
+     * @var ShopRepository
+     */
     protected $shops;
 
+    /**
+     * @var ProductRepository
+     */
     protected $products;
 
+    /**
+     * @var ProductCategoryRepository
+     */
     protected $productCategories;
 
+    /**
+     * @var ProductBrandRepository
+     */
     protected $brands;
 
+    /**
+     * @var ProductSubCategoryRepository
+     */
     protected $subcategories;
 
+    /**
+     * ShoppieController constructor.
+     * @param ShopCategoryRepository $categories
+     * @param ShopRepository $shops
+     * @param ProductRepository $products
+     * @param ProductCategoryRepository $productCategories
+     * @param ProductBrandRepository $brands
+     * @param ProductSubCategoryRepository $subcategories
+     */
     public function __construct(ShopCategoryRepository $categories, ShopRepository $shops, ProductRepository $products,
                                 ProductCategoryRepository $productCategories, ProductBrandRepository $brands,
                                 ProductSubCategoryRepository $subcategories)
@@ -48,19 +75,36 @@ class ShoppieController extends Controller
         $this->subcategories = $subcategories;
     }
 
+    /**
+     * Shops view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shops() {
         return view('shoppie::shops');
     }
 
+    /**
+     * User shop view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myShops() {
         return view('shoppie::me.shops.index');
     }
 
+    /**
+     * Create shop form
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function createShop() {
         return view('shoppie::me.shops.new-shop', ['categories' => $this->categories->all()]);
     }
 
     /**
+     * Create new shop
+     *
      * @param Request $request
      * @return mixed
      * @throws \Illuminate\Validation\ValidationException
@@ -85,6 +129,13 @@ class ShoppieController extends Controller
         return redirect()->route('my.shops');
     }
 
+    /**
+     * Show shop products
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopProducts(Request $request, Shop $shop) {
         if (Auth::check()) {
             if ($request->user()->manages($shop))
@@ -100,6 +151,13 @@ class ShoppieController extends Controller
         return view('shoppie::shop.basic.products', ['shop' => $shop]);
     }
 
+    /**
+     * Shop reviews
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopReviews(Request $request, Shop $shop) {
         if (Auth::check()) {
             if ($request->user()->manages($shop))
@@ -115,6 +173,13 @@ class ShoppieController extends Controller
         return view('shoppie::shop.basic.reviews', ['shop' => $shop]);
     }
 
+    /**
+     * Edit shop form
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopEdit(Request $request, Shop $shop) {
         if ($request->user()->manages($shop))
             return view('shoppie::shop.admin.shop-info',
@@ -124,6 +189,8 @@ class ShoppieController extends Controller
     }
 
     /**
+     * Update shop
+     *
      * @param Request $request
      * @param Shop $shop
      * @return mixed
@@ -153,6 +220,13 @@ class ShoppieController extends Controller
         return redirect()->route('my.shop.edit', ['shop' => $shop])->with('success', 'Shop updated successfully');
     }
 
+    /**
+     * Shop dashboard
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopDashboard(Request $request, Shop $shop) {
         if ($request->user()->manages($shop))
             return view('shoppie::shop.admin.dashboard', ['shop' => $shop]);
@@ -160,6 +234,13 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    /**
+     * Shop inventory
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopInventory(Request $request, Shop $shop) {
         if ($request->user()->manages($shop))
             return view('shoppie::shop.admin.inventory.index', ['shop' => $shop]);
@@ -167,6 +248,14 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    /**
+     * Shop messenger view
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @param User|null $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopMessenger(Request $request, Shop $shop, User $user = null) {
         if ($request->user()->manages($shop))
             return view('shoppie::shop.admin.messenger', ['shop' => $shop]);
@@ -174,6 +263,14 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    /**
+     * Shop orders view
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @param Order|null $order
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopOrders(Request $request, Shop $shop, Order $order = null) {
         if ($order)
             if (!$order->isHandledBy($shop))
@@ -185,19 +282,42 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    /**
+     * Show user cart view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myCart() {
         return view('shoppie::me.cart.index');
     }
 
+    /**
+     * User cart checkout
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function myCartCheckout(Request $request) {
         $order = $request->user()->checkout();
         return redirect()->route('my.orders', ['order' => $order]);
     }
 
+    /**
+     * User wishlist
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myWishlist() {
         return view('shoppie::me.wishlist');
     }
 
+    /**
+     * User orders view
+     *
+     * @param Request $request
+     * @param Order|null $order
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myOrders(Request $request, Order $order = null) {
         if ($order)
             if (!$order->by->is($request->user()))
@@ -206,11 +326,23 @@ class ShoppieController extends Controller
         return view('shoppie::me.orders');
     }
 
+    /**
+     * Products view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function products() {
         abort(404);
         return view('shoppie::products');
     }
 
+    /**
+     * Show product details
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function product(Request $request, Product $product) {
         if (Auth::check()) {
             if ($request->user()->ownsProduct($product))
@@ -226,6 +358,13 @@ class ShoppieController extends Controller
         return view('shoppie::shop.product.basic.index', ['product' => $product]);
     }
 
+    /**
+     * Show product reviews
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function productReviews(Request $request, Product $product) {
         if (Auth::check()) {
             if ($request->user()->ownsProduct($product))
@@ -241,6 +380,13 @@ class ShoppieController extends Controller
         return view('shoppie::shop.product.basic.reviews', ['product' => $product]);
     }
 
+    /**
+     * Show product dashboard
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function productDashboard(Request $request, Product $product) {
         if ($request->user()->ownsProduct($product))
             return view('shoppie::shop.product.admin.dashboard', ['product' => $product]);
@@ -248,6 +394,13 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    /**
+     * Show edit product form
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function productEdit(Request $request, Product $product) {
         if ($request->user()->ownsProduct($product))
             return view('shoppie::shop.product.admin.edit-product', ['product' => $product]);
@@ -256,6 +409,8 @@ class ShoppieController extends Controller
     }
 
     /**
+     * Update product
+     *
      * @param Request $request
      * @param Product $product
      * @return \Illuminate\Http\RedirectResponse
@@ -282,6 +437,13 @@ class ShoppieController extends Controller
         return redirect()->route('product.edit', ['product' => $product]);
     }
 
+    /**
+     * Product offers
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function productEditOffers(Request $request, Product $product) {
         if ($request->user()->ownsProduct($product))
             return view('shoppie::shop.product.admin.edit-offers', ['product' => $product]);
@@ -289,6 +451,13 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    /**
+     * Product gallery
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function productGallery(Request $request, Product $product) {
         if ($request->user()->ownsProduct($product))
             return view('shoppie::shop.product.admin.gallery', ['product' => $product]);
@@ -296,6 +465,13 @@ class ShoppieController extends Controller
         abort(404);
     }
 
+    /**
+     * Update product gallery
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateProductGallery(Request $request, Product $product) {
         $media = $product->addMediaFromRequest('images')->toMediaCollection('products');
 

@@ -25,7 +25,7 @@ class Escrow extends EcryptableModel
         app(Bank::class)->reverseEscrow($this);
     }
 
-    public function completeEscrow() {
+    public function complete() {
         app(Bank::class)->reverseEscrow($this);
     }
 }

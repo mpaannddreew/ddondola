@@ -36,14 +36,11 @@ class ProductSubCategoryRepository
 
     /**
      * @param Category $category
-     * @param $name
-     * @param null $description
+     * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model|SubCategory
      */
-    public function create(Category $category, $name, $description = null) {
-        return $category->categories()->create([
-            'name' => $name, 'description' => $description
-        ]);
+    public function create(Category $category, array $attributes) {
+        return $category->categories()->create($attributes);
     }
 
     /**

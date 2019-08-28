@@ -2,7 +2,9 @@
 
 namespace Messenger;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Messenger\Observers\MessageObserver;
 
 class MessengerServiceProvider extends ServiceProvider
 {
@@ -27,7 +29,8 @@ class MessengerServiceProvider extends ServiceProvider
             __DIR__.'/../config/messenger.php' => config_path('messenger.php'),
         ], 'messenger.config');
 
-        Messenger::bindExplicitly();
+        $this->bindExplicitly();
+        $this->registerObservers();
 
         require __DIR__. '/../routes/channels.php';
     }
@@ -45,5 +48,14 @@ class MessengerServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['messenger'];
+    }
+
+    protected function registerObservers() {
+        Message::observe(MessageObserver::class);
+    }
+
+    private function bindExplicitly()
+    {
+        Route::model('conversation', Conversation::class);
     }
 }

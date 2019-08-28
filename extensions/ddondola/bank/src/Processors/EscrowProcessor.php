@@ -31,6 +31,7 @@ class EscrowProcessor
         }
 
         // todo reverse escrow
+        $this->escrows->update($escrow, ['reversed' => true]);
     }
 
     public function complete(Escrow $escrow) {
@@ -40,5 +41,6 @@ class EscrowProcessor
         }
 
         // todo complete escrow
+        $this->escrows->update($escrow, ['completed' => true]);
     }
 }

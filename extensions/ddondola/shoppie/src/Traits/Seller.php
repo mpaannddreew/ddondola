@@ -29,11 +29,11 @@ trait Seller
      * Create a new shop
      *
      * @param ShopCategory $category
-     * @param array $shopData
+     * @param array $attributes
      * @return Shop
      */
-    public function newShop(ShopCategory $category, array $shopData) {
-        return app(ShopRepository::class)->create($this, $category, $shopData);
+    public function newShop(ShopCategory $category, array $attributes) {
+        return app(ShopRepository::class)->create($this, $category, $attributes);
     }
 
     /**

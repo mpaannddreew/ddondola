@@ -25,31 +25,20 @@ class ReviewRepository
     /**
      * @param Model $reviewer
      * @param Model $reviewable
-     * @param array $review
+     * @param array $attributes
      * @return Review
      */
-    public function create(Model $reviewer, Model $reviewable, array $review) {
-        return $reviewable->reviews()->create(array_merge(['reviewer_id' => $reviewer->id], $review));
+    public function create(Model $reviewable, Model $reviewer, array $attributes) {
+        return $reviewable->reviews()->create(array_merge(['reviewer_id' => $reviewer->getKey()], $attributes));
     }
 
     /**
      * @param Review $review
-     * @param null $rating
-     * @param null $body
+     * @param array $attributes
      * @return Review
      */
-    public function edit(Review $review, $rating = null, $body = null) {
-        if ($rating) {
-            $review->rating = $rating;
-        }
-
-        if ($body) {
-            $review->body = $body;
-        }
-
-        if ($body || $rating) {
-            $review->save();
-        }
+    public function update(Review $review, array $attributes) {
+        $review->update($attributes);
 
         return $review;
     }

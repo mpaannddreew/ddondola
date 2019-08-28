@@ -39,7 +39,7 @@ trait Reviewer
      * @return Builder
      */
     public function communityActivity() {
-        return Review::whereIn('id', $this->communityReviewIds()->merge($this->reviewIds()));
+        return Review::query()->whereIn('id', $this->communityReviewIds()->merge($this->reviewIds()));
     }
 
     /**

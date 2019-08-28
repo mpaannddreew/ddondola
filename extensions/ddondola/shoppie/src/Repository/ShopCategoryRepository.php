@@ -41,23 +41,30 @@ class ShopCategoryRepository
     /**
      * New category
      *
-     * @param $name
-     * @param null $description
+     * @param array $attributes
      * @return Category
      */
-    public function create($name, $description = null) {
-        return Category::create([
-            'name' => $name, 'description' => $description
-        ]);
+    public function create(array $attributes) {
+        return Category::create($attributes);
     }
 
+    /**
+     * Update category
+     *
+     * @param Category $category
+     * @param array $attributes
+     * @return Category
+     */
     public function update(Category $category, array $attributes) {
         $category->update($attributes);
 
         return $category;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function builder() {
-        return Category::select();
+        return Category::query();
     }
 }

@@ -41,14 +41,11 @@ class ProductBrandRepository
 
     /**
      * @param Shop $shop
-     * @param $name
-     * @param null $description
+     * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model|Brand
      */
-    public function create(Shop $shop, $name, $description = null) {
-        return $shop->brands()->create([
-            'name' => $name, 'description' => $description
-        ]);
+    public function create(Shop $shop, array $attributes) {
+        return $shop->brands()->create($attributes);
     }
 
     /**

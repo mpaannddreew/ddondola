@@ -41,16 +41,18 @@ class ShopRepository
      *
      * @param Model $seller
      * @param Category $category
-     * @param $shopData
+     * @param array $attributes
      * @return Shop
      */
-    public function create(Model $seller, Category $category, $shopData)
+    public function create(Model $seller, Category $category, array $attributes)
     {
-        return $seller->shops()->create(array_merge($shopData, ['category_id' => $category->id]));
+        return $seller->shops()->create(array_merge($attributes, ['category_id' => $category->getKey()]));
     }
 
     public function update(Shop $shop, $attributes) {
         $shop->update($attributes);
+
+        return $shop;
     }
 
     /**
@@ -69,7 +71,7 @@ class ShopRepository
      * @return Builder
      */
     public function builder() {
-        return Shop::select();
+        return Shop::query();
     }
 
     public function featured($limit) {

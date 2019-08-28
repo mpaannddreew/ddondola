@@ -28,8 +28,14 @@ class Messenger
      */
     protected $messages;
 
+    /**
+     * @var UserRepository
+     */
     protected $users;
 
+    /**
+     * @var ShopRepository
+     */
     protected $shops;
 
     /**
@@ -92,14 +98,7 @@ class Messenger
      * @param null $message
      * @return Model|Message
      */
-    public function message(Model $sender, Model $receiver, $message = null) {
+    public function message(Model $sender, Model $receiver, $message) {
         return $this->messages->create($this->resolveConversation($sender, $receiver), $sender, $message);
-    }
-
-    /**
-     * Do model route binding
-     */
-    public static function bindExplicitly() {
-        Route::model('conversation', Conversation::class);
     }
 }

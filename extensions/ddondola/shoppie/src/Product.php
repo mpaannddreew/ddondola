@@ -218,7 +218,7 @@ class Product extends Model implements HasMedia
      * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model|Product
      */
-    public function editProduct(ProductSubCategory $category = null, ProductBrand $brand = null, array $attributes) {
+    public function editProduct(ProductSubCategory $category, ProductBrand $brand, array $attributes) {
         return app(ProductRepository::class)->update($this, $category, $brand, $attributes);
     }
 

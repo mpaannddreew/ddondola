@@ -11,7 +11,6 @@ namespace Messenger\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Messenger\Conversation;
-use Messenger\Events\NewMessage;
 use Messenger\Message;
 
 class MessageRepository
@@ -34,14 +33,13 @@ class MessageRepository
      * @param null $message
      * @return Model|Message
      */
-    public function create(Conversation $conversation, Model $sender, $message = null) {
+    public function create(Conversation $conversation, Model $sender, $message) {
         $chat = $conversation->messages()->create([
-            'sender_id' => $sender->id,
+            'sender_id' => $sender->getKey(),
             'sender_type' => get_class($sender),
             'message' => $message
         ]);
 
-//        broadcast(new NewMessage($chat));
         return $chat;
     }
 }
