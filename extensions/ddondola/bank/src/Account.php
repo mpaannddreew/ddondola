@@ -33,4 +33,8 @@ class Account extends Model
     public function incomingEscrows() {
         return $this->hasMany(Escrow::class, 'destination_account_id');
     }
+
+    public function payments() {
+        return $this->hasMany(Payment::class, 'account_id');
+    }
 }

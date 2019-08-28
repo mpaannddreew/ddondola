@@ -13,6 +13,7 @@ interface Muddondozi @interface(resolveType: "Ddondola\\Http\\GraphQL\\Interface
     conversations: [Conversation!]
     contacts: [User!]
     profile: Profile!
+    account: Account!
 }
 
 type Country {
@@ -54,6 +55,7 @@ type User implements Muddondozi {
     email: String!
     cart: Cart @hasOne
     profile: Profile! @method(name: "resolveProfile")
+    account: Account! @hasOne
     settings: UserSettings!
     active: Boolean!
     avatar: Image! @method(name: "avatar")
@@ -109,3 +111,4 @@ type Mutation {
 #import shoppie.graphql
 #import activity.graphql
 #import messenger.graphql
+#import bank.graphql

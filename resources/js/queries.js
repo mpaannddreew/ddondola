@@ -1580,6 +1580,7 @@ window.graphql = {
                   quantity
                   receipt_confirmed
                   delivery_confirmed
+                  cancelled
                 }
               }
               paginatorInfo {

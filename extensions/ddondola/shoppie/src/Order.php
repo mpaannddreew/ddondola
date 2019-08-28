@@ -34,7 +34,7 @@ class Order extends Model
         return $this->belongsToMany(Product::class, 'order_product',
             'order_id', 'product_id')->as('orderPivot')
             ->withTimestamps()->using(OrderProduct::class)
-            ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed']);
+            ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed', 'cancelled']);
     }
 
     /**

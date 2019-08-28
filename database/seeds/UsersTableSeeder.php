@@ -94,7 +94,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         foreach ($shop_categories as $category) {
-            $this->categories->create($category);
+            $this->categories->create(["name" => $category]);
         }
 
         $shops = [

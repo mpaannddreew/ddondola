@@ -1,0 +1,48 @@
+enum TransactionType {
+    DEBIT @enum(value: "debit")
+    CREDIT @enum(value: "credit")
+}
+
+
+type Account {
+    id: ID!
+    holder: Muddondozi!
+    balance: Int! @method(name: "balance")
+    outgoingEscrows: [Escrow!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@outgoingEscrows")
+    incomingEscrows: [Escrow!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@incomingEscrows")
+    payments: [Payment!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@payments")
+    transactions(type: TransactionType): [Transaction!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@transactions")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Escrow {
+    id: ID!
+    source: Account! @belongsTo
+    destination: Account! @belongsTo
+    amount: String!
+    completed: Boolean!
+    reversed: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Payment {
+    id: ID!
+    account: Account! @belongsTo
+    reference: String!
+    status: String
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Transaction {
+    id: ID!
+    account: Account! @belongsTo
+    amount: String!
+    debit: Boolean!
+    credit: Boolean!
+    note: String
+    created_at: DateTime!
+    updated_at: DateTime!
+}

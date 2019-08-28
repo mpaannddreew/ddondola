@@ -137,7 +137,7 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(Order::class, 'order_product',
             'product_id', 'order_id')->as('orderPivot')
             ->withTimestamps()->using(OrderProduct::class)
-            ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed']);
+            ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed', 'cancelled']);
     }
 
     public function orderIds() {

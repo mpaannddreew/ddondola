@@ -21,6 +21,7 @@ type Shop implements Muddondozi {
     category: ShopCategory! @belongsTo
     owner: User! @belongsTo
     profile: Profile!
+    account: Account! @hasOne
     settings: ShopSettings!
     active: Boolean! @method(name: "active")
     likes: Int! @method(name: "likeCount")
@@ -109,6 +110,7 @@ type OrderPivot {
     sum: Int! @method(name: "sum")
     receipt_confirmed: Boolean!
     delivery_confirmed: Boolean!
+    cancelled: Boolean!
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -144,7 +146,6 @@ type Product {
     created_at: DateTime!
     updated_at: DateTime!
 }
-
 
 type Cart {
     id: ID!

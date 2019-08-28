@@ -256,18 +256,6 @@
         },
         watch: {
             '$route': 'fetchOrderProducts'
-        },
-        filters: {
-            time(date) {
-                let time = Moment(date).format("h:mm a");
-                if (Moment().isSame(Moment(date), 'd'))
-                    return `Today at ${time}`;
-
-                if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
-                    return `Yesterday at ${time}`;
-
-                return `${Moment(date).format("dddd, MMMM Do YYYY")} at ${time}`;
-            }
         }
     }
 </script>

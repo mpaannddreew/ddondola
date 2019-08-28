@@ -45,7 +45,7 @@
                 return {'border-bottom-0': this.shop};
             },
             showActions() {
-                return this.shop ? !this.product.pivot.delivery_confirmed : !this.product.pivot.receipt_confirmed;
+                return (this.shop ? !this.product.pivot.delivery_confirmed : !this.product.pivot.receipt_confirmed) || !this.product.pivot.cancelled;
             },
             confirmed() {
                 return {
@@ -61,14 +61,14 @@
                     if (result.value) {
 
                     }
-                })
+                });
             },
             cancel() {
                 this.dialog("Cancel item").then((result) => {
                     if (result.value) {
 
                     }
-                })
+                });
             },
             dialog(title) {
                 return Swal.fire({
