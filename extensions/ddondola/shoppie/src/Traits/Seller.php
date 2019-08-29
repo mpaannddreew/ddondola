@@ -13,6 +13,7 @@ use Shoppie\Product;
 use Shoppie\Repository\ShopRepository;
 use Shoppie\Shop;
 use Shoppie\ShopCategory;
+use Shoppie\Shoppie;
 
 trait Seller
 {
@@ -43,7 +44,7 @@ trait Seller
      * @return bool
      */
     public function manages(Shop $shop) {
-        return app(ShopRepository::class)->manages($this, $shop);
+        return app(Shoppie::class)->manages($this, $shop);
     }
 
 

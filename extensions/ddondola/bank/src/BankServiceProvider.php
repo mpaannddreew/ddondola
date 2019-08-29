@@ -10,6 +10,7 @@ namespace Bank;
 
 
 use Bank\Commands\BankAccount;
+use Bank\Observers\EscrowObserver;
 use Illuminate\Support\ServiceProvider;
 
 class BankServiceProvider extends ServiceProvider
@@ -37,6 +38,8 @@ class BankServiceProvider extends ServiceProvider
         $this->commands([
             BankAccount::class,
         ]);
+
+        $this->registerObservers();
     }
 
     /**
@@ -52,5 +55,9 @@ class BankServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['bank'];
+    }
+
+    protected function registerObservers() {
+        Escrow::observe(EscrowObserver::class);
     }
 }

@@ -13,37 +13,87 @@ use Bank\Repositories\TransactionRepository;
 
 class Ledger
 {
+    /**
+     * @var TransactionRepository
+     */
     protected $transactions;
 
+    /**
+     * Ledger constructor.
+     * @param TransactionRepository $transactions
+     */
     public function __construct(TransactionRepository $transactions)
     {
         $this->transactions = $transactions;
     }
 
+    /**
+     * Debit sum of account
+     *
+     * @param Account $account
+     * @return int
+     */
     protected function debitSum(Account $account) {
         return $account->debits()->sum(function(Transaction $transaction) {
             return (int)$transaction->amount;
         });
     }
 
+    /**
+     * Credit sum of account
+     *
+     * @param Account $account
+     * @return int
+     */
     protected function creditSum(Account $account) {
         return $account->credits()->sum(function(Transaction $transaction) {
             return (int)$transaction->amount;
         });
     }
 
+    /**
+     * Balance of account
+     *
+     * @param Account $account
+     * @return int
+     */
     public function balance(Account $account) {
         return $this->debitSum($account) - $this->creditSum($account);
     }
 
+    /**
+     * Debit an account
+     *
+     * @param Account $account
+     * @param $amount
+     * @param null $note
+     * @return Transaction
+     */
     public function debit(Account $account, $amount, $note = null) {
         return $this->transactions->create(['account_id' => $account->getKey(), 'amount' => $amount, 'debit' => true, 'note' => $note]);
     }
 
+    /**
+     * Credit an account
+     *
+     * @param Account $account
+     * @param $amount
+     * @param null $note
+     * @return Transaction
+     */
     public function credit(Account $account, $amount, $note = null) {
         return $this->transactions->create(['account_id' => $account->getKey(), 'amount' => $amount, 'credit' => true, 'note' => $note]);
     }
 
+    /**
+     * TRansfer from one account to another
+     *
+     * @param Account $source
+     * @param Account $destination
+     * @param $amount
+     * @param null $note
+     * @return Transaction
+     */
     public function transfer(Account $source, Account $destination, $amount, $note = null) {
         // todo transfer implementation
     }

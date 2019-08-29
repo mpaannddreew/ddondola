@@ -98,14 +98,9 @@
                                         <template v-for="(product, indx) in products">
                                             <tr is="order-row" :key="indx" :order-paid-for="loadedOrder.paidFor" :product="product" :shop="shop"></tr>
                                         </template>
-                                        <tr class="row-7" v-if="!shop">
+                                        <tr class="row-7">
                                             <td class="text-left border-bottom-0 text-uppercase" colspan="4">Order Total</td>
                                             <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum|commas }}</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr v-else>
-                                            <td class="text-left border-bottom-0 text-uppercase" colspan="4"></td>
-                                            <td class="product-subtotal border-0 text-muted"></td>
                                             <td></td>
                                         </tr>
                                         </tbody>
@@ -206,10 +201,8 @@
                 this.loaded = true;
                 this.loadedOrder = response.data.data.order;
                 this.products = this.loadedOrder.products.data;
-                if (!this.shop) {
-                    this.sum = this.loadedOrder.sum;
-                    this.currencyCode = this.loadedOrder.currencyCode;
-                }
+                this.sum = this.loadedOrder.sum;
+                this.currencyCode = this.loadedOrder.currencyCode;
                 this.buyer = this.loadedOrder.by;
                 this.paginatorInfo = this.loadedOrder.products.paginatorInfo;
             },

@@ -22,7 +22,9 @@ class Product extends Model implements HasMedia
 
     protected $casts = [
         'active' => 'bool',
-        'settings' => 'array'
+        'settings' => 'array',
+        'price' => 'integer',
+        'quantity' => 'integer'
     ];
 
     protected $appends = ['averageRating', 'reviewCount', 'firstImageUrl'];
@@ -137,7 +139,7 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(Order::class, 'order_product',
             'product_id', 'order_id')->as('orderPivot')
             ->withTimestamps()->using(OrderProduct::class)
-            ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed', 'cancelled']);
+            ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed', 'cancelled', 'cancelled_by']);
     }
 
     public function orderIds() {
@@ -206,6 +208,12 @@ class Product extends Model implements HasMedia
         return (int)$this->price - ($this->price * ((int)$this->discount()/100));
     }
 
+    /**
+     * Get setting item
+     *
+     * @param $item
+     * @return mixed
+     */
     public function settings($item) {
         return collect($this->settings)->get($item, '');
     }

@@ -150,6 +150,7 @@ class Shop extends Model implements HasMedia
     }
 
     public function currencyCode() {
+        // todo think about letting owner choose own currency regardless of country
         return $this->owner->country->currencyCode();
     }
 

@@ -8,5 +8,6 @@
 
 return [
     'seller' => \Ddondola\User::class,
-    'buyer' => \Ddondola\User::class
+    'buyer' => \Ddondola\User::class,
+    'commission' => 5 // %
 ];

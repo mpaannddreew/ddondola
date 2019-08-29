@@ -159,7 +159,7 @@ type Cart {
 type Order {
     id: ID!
     code: String!
-    sum: Int! @method(name: "sum")
+    sum(shop: String): Int! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@orderSum")
     by: User! @belongsTo
     paidFor: Boolean! @rename(attribute: "paid_for")
     products(shop: String): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@orderProducts")

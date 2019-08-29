@@ -87,19 +87,20 @@ class Bank
         return $escrow;
     }
 
-    public function newEscrow(Account $source, Account $destination, $amount, array $meta) {
-        return $this->escrows->create([
-            'source_account_id' => $source->getKey(),
-            'destination_account_id' => $destination->getKey(),
-            'amount' => $amount,
-            'meta' => $meta
-        ]);
-    }
-
+    /**
+     * Start escrow reversing process
+     *
+     * @param Escrow $escrow
+     */
     public function reverseEscrow(Escrow $escrow) {
         ReverseEscrow::dispatch($escrow);
     }
 
+    /**
+     * Start escrow completion process
+     *
+     * @param Escrow $escrow
+     */
     public function completeEscrow(Escrow $escrow) {
         CompleteEscrow::dispatch($escrow);
     }

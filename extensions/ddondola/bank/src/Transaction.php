@@ -13,6 +13,11 @@ class Transaction extends EcryptableModel
         'credit' => 'bool'
     ];
 
+    /**
+     * Account on which this transaction happened
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function account() {
         return $this->belongsTo(Account::class, 'account_id');
     }

@@ -2,19 +2,19 @@
 
 namespace Shoppie;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Shoppie\Repository\CartRepository;
 
 class Cart extends Model
 {
+    protected $fillable = ['buyer_id'];
+
     /**
      * User that own this cart
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user() {
-        return $this->belongsTo(config('shoppie.buyer'), 'user_id');
+        return $this->belongsTo(config('shoppie.buyer'), 'buyer_id');
     }
 
     /**
@@ -82,7 +82,7 @@ class Cart extends Model
      * @return boolean
      */
     public function addProduct(Product $product, $quantity) {
-        return app(CartRepository::class)->addProduct($this, $product, $quantity);
+        return app(Shoppie::class)->addCartProduct($this, $product, $quantity);
     }
 
     /**
@@ -92,7 +92,7 @@ class Cart extends Model
      * @return boolean
      */
     public function removeProduct(Product $product) {
-        return app(CartRepository::class)->removeProduct($this, $product);
+        return app(Shoppie::class)->removeCartProduct($this, $product);
     }
 
     /**
@@ -101,7 +101,7 @@ class Cart extends Model
      * @return Order
      */
     public function checkOut() {
-        return app(CartRepository::class)->checkOut($this);
+        return app(Shoppie::class)->checkOut($this);
     }
 
     /**
@@ -118,55 +118,5 @@ class Cart extends Model
      */
     public function productCount() {
         return $this->products()->count();
-    }
-
-    /**
-     * Group cart products by their shops
-     *
-     * @return Collection
-     */
-    protected function groupByShop() {
-        return $this->products->groupBy(function (Product $product) {
-            return $product->brand->shop->code;
-        });
-    }
-
-    /**
-     * Determine sum products of a given shop in cart
-     *
-     * @param $code
-     * @return int
-     */
-    protected function sumByShop($code) {
-        return collect($this->groupByShop()->get($code))->sum(function (Product $product) use($code) {
-            return $product->cartPivot->sum();
-        });
-    }
-
-    /**
-     * Calculate percentage
-     *
-     * @param $amount
-     * @param $total_amount
-     * @return float|int
-     */
-    protected function getPercentage($amount, $total_amount) {
-        return ($amount/$total_amount) * 100;
-    }
-
-    /**
-     * Calculate denominations
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function getDenominations() {
-        return $this->groupByShop()->keys()->map(function($item) {
-            return [
-                'id' => $item,
-                'transaction_split_ratio' => round($this->getPercentage($this->sumByShop($item), $this->sum()), 0),
-                'transaction_charge_type' => 'percentage',
-                'transaction_charge' => '15'
-            ];
-        })->values();
     }
 }

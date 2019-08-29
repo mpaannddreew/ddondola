@@ -9,9 +9,8 @@
 namespace Shoppie\Repository;
 
 
-use Shoppie\Cart;
+use Illuminate\Database\Eloquent\Model;
 use Shoppie\Order;
-use Shoppie\Product;
 
 
 class OrderRepository
@@ -39,17 +38,11 @@ class OrderRepository
     /**
      * Create new order
      *
-     * @param Cart $cart
+     * @param Model $buyer
+     * @param array $attributes
      * @return Order
      */
-    public function create(Cart $cart) {
-        $order = $cart->user->orders()->create([]);
-        $cart->products->each(function (Product $product) use ($order){
-            $order->products()->attach($product, [
-                'price' => $product->cartPivot->price,
-                'quantity' => $product->cartPivot->quantity
-            ]);
-        });
-        return $order;
+    public function create(Model $buyer, array $attributes) {
+        return $buyer->orders()->create($attributes);
     }
 }

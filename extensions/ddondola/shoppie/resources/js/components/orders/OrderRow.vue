@@ -10,7 +10,7 @@
         <td class="row-close close-2">
             <!-- todo show status message -->
             <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" v-if="showActions">
-                <a href="javascript:void(0)" class="btn btn-white text-success" @click="confirm">
+                <a href="javascript:void(0)" class="btn btn-white text-success" @click="confirm" :class="{disabled: !orderPaidFor}">
                     <i class="material-icons">check</i>
                 </a>
                 <a href="javascript:void(0)" class="btn btn-white text-danger" @click="cancel">
@@ -57,11 +57,13 @@
         },
         methods: {
             confirm() {
-                this.dialog(`Confirm item ${this.shop ? 'delivery':'receipt'}`).then((result) => {
-                    if (result.value) {
+                if (this.orderPaidFor) {
+                    this.dialog(`Confirm item ${this.shop ? 'delivery':'receipt'}`).then((result) => {
+                        if (result.value) {
 
-                    }
-                });
+                        }
+                    });
+                }
             },
             cancel() {
                 this.dialog("Cancel item").then((result) => {

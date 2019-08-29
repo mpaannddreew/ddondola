@@ -22,7 +22,7 @@ class Order extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function by() {
-        return $this->belongsTo(config('shoppie.buyer'), 'user_id');
+        return $this->belongsTo(config('shoppie.buyer'), 'buyer_id');
     }
 
     /**
@@ -34,7 +34,7 @@ class Order extends Model
         return $this->belongsToMany(Product::class, 'order_product',
             'order_id', 'product_id')->as('orderPivot')
             ->withTimestamps()->using(OrderProduct::class)
-            ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed', 'cancelled']);
+            ->withPivot(['price', 'quantity', 'id', 'receipt_confirmed', 'delivery_confirmed', 'cancelled', 'cancelled_by']);
     }
 
     /**
@@ -65,6 +65,18 @@ class Order extends Model
      */
     public function sum() {
         return $this->products->sum(function (Product $product) {
+            return $product->orderPivot->sum();
+        });
+    }
+
+    /**
+     * Determine sum products of a given shop in cart
+     *
+     * @param $code
+     * @return int
+     */
+    public function sumByShop($code) {
+        return collect($this->groupByShop()->get($code))->sum(function (Product $product) use($code) {
             return $product->orderPivot->sum();
         });
     }

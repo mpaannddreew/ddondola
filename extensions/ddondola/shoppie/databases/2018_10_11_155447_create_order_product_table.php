@@ -22,6 +22,7 @@ class CreateOrderProductTable extends Migration
             $table->boolean('receipt_confirmed')->default(false);
             $table->boolean('delivery_confirmed')->default(false);
             $table->boolean('cancelled')->default(false);
+            $table->text('cancelled_by')->nullable();
             $table->timestamps();
         });
     }

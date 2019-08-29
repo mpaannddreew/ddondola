@@ -9,8 +9,11 @@
 namespace Bank\Processors;
 
 
+use Bank\Bank;
 use Bank\Escrow;
 use Bank\Repositories\EscrowRepository;
+use Shoppie\Order;
+use Shoppie\Product;
 
 class EscrowProcessor
 {
@@ -19,13 +22,48 @@ class EscrowProcessor
      */
     protected $escrows;
 
-    public function __construct(EscrowRepository $escrows)
+    /**
+     * @var Bank
+     */
+    protected $bank;
+
+    /**
+     * EscrowProcessor constructor.
+     * @param EscrowRepository $escrows
+     * @param Bank $bank
+     */
+    public function __construct(EscrowRepository $escrows, Bank $bank)
     {
         $this->escrows = $escrows;
+        $this->bank = $bank;
     }
 
+    public function create(Order $order) {
+        if ($order->sum() > $order->by->account->balance()) {
+            // todo notify about insufficient account balance
+            return;
+        }
+
+        $order->products->each(function (Product $product) use ($order) {
+            $this->escrows->create([
+                'source_account_id' => $order->by->account->getKey(),
+                'destination_account_id' => $product->shop->account->getKey(),
+                'amount' => $product->orderPivot->sum(),
+                'meta' => [
+                    'order' => $order->getKey(),
+                    'product' => $product->getKey()
+                ]
+            ]);
+        });
+    }
+
+    /**
+     * Reverse escrow
+     *
+     * @param Escrow $escrow
+     */
     public function reverse(Escrow $escrow) {
-        if ($escrow->completed || $escrow->reversed) {
+        if ($escrow->settled()) {
             // todo notify about $escrow status
             return;
         }
@@ -34,8 +72,13 @@ class EscrowProcessor
         $this->escrows->update($escrow, ['reversed' => true]);
     }
 
+    /**
+     * Make escrow settlement
+     *
+     * @param Escrow $escrow
+     */
     public function complete(Escrow $escrow) {
-        if ($escrow->completed || $escrow->reversed) {
+        if ($escrow->settled()) {
             // todo notify about $escrow status
             return;
         }

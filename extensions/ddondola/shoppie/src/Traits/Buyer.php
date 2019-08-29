@@ -14,6 +14,7 @@ use Shoppie\Order;
 use Shoppie\Product;
 use Shoppie\Repository\CartRepository;
 use Shoppie\Repository\ProductRepository;
+use Shoppie\Shoppie;
 
 trait Buyer
 {
@@ -24,7 +25,7 @@ trait Buyer
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function cart() {
-        return $this->hasOne(Cart::class, 'user_id');
+        return $this->hasOne(Cart::class, 'buyer_id');
     }
 
     /**
@@ -40,7 +41,7 @@ trait Buyer
      * @return Cart
      */
     public function createCart() {
-        return app(CartRepository::class)->create($this);
+        return app(Shoppie::class)->createCart($this);
     }
 
     /**
@@ -49,7 +50,7 @@ trait Buyer
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function orders() {
-        return $this->hasMany(Order::class, 'user_id');
+        return $this->hasMany(Order::class, 'buyer_id');
     }
 
     public function products() {

@@ -12,6 +12,11 @@ class Payment extends Model
         'data' => 'array'
     ];
 
+    /**
+     * Account that initiated this payment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function account() {
         return $this->belongsTo(Account::class, 'account_id');
     }

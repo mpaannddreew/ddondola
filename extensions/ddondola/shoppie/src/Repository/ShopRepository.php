@@ -56,18 +56,6 @@ class ShopRepository
     }
 
     /**
-     * Check if user manages shop
-     *
-     * @param Model $seller
-     * @param Shop $shop
-     * @return bool
-     */
-    public function manages(Model $seller, Shop $shop)
-    {
-        return $seller->is($shop->owner);
-    }
-
-    /**
      * @return Builder
      */
     public function builder() {

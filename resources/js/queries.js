@@ -1548,7 +1548,7 @@ window.graphql = {
     orderProducts: `query orderProducts($order: String! $shop: String $page: Int! $count: Int!) {
           order(order: $order) {
             paidFor
-            sum
+            sum(shop: $shop)
             currencyCode
             by {
               code
