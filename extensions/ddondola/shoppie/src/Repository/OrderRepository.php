@@ -45,4 +45,18 @@ class OrderRepository
     public function create(Model $buyer, array $attributes) {
         return $buyer->orders()->create($attributes);
     }
+
+    /**
+     * Update order
+     *
+     * @param Order $order
+     * @param array $attributes
+     * @return Order
+     */
+    public function update(Order $order, array $attributes)
+    {
+        $order->update($attributes);
+
+        return $order;
+    }
 }

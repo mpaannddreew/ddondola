@@ -14,7 +14,6 @@ class OrderProduct extends Pivot
         'receipt_confirmed' => 'boolean',
         'delivery_confirmed' => 'boolean',
         'cancelled' => 'boolean',
-        'cancelled_by' => 'array'
     ];
 
     /**
@@ -23,27 +22,24 @@ class OrderProduct extends Pivot
      * @return float|int
      */
     public function sum() {
-        return $this->cancelled ? 0 : $this->price * $this->quantity;
+        return $this->price * $this->quantity;
     }
 
     /**
-     * Compute product discounted price
+     * Compute commission
      *
      * @return float|int
      */
-    protected function commission() {
+    public function commission() {
         return $this->sum() * ((int)config('shoppie.commission')/100);
     }
 
     /**
-     * Calculate denominations
+     * Compute payout
      *
-     * @return array
+     * @return float|int
      */
-    public function denominations() {
-        return [
-            'payout' => $this->sum() - $this->commission(),
-            'commission' => $this->commission()
-        ];
+    public function payout() {
+        return $this->sum() - $this->commission();
     }
 }

@@ -212,6 +212,23 @@ input ShopFilter {
     categoryIds: String
 }
 
+enum Action {
+    CONFIRM @enum(value: "confirm")
+    CANCEL @enum(value: "cancel")
+}
+
+enum Actor {
+    BUYER @enum(value: "buyer")
+    SELLER @enum(value: "seller")
+}
+
+input OrderUpdate {
+    order: String!
+    product: String!
+    action: Action!
+    actor: Actor!
+}
+
 extend type Query {
     shopCategories: [ShopCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@ShopCategories")
     shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
@@ -246,4 +263,5 @@ extend type Mutation {
     addToFavorites(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@addToFavorites")
     removeFromFavorites(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@removeFromFavorites")
     createProductOffer(productId: ID! offer: NewOffer!): ProductOffer @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProductOffer")
+    updateOrder(update: OrderUpdate!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateOrder")
 }

@@ -114,7 +114,7 @@ class Shoppie
 
             $cart->makeEmpty();
 
-//            CreateEscrow::dispatch($order);
+            CreateEscrow::dispatch($order);
 
             return $order;
         }
@@ -133,5 +133,18 @@ class Shoppie
     {
         // todo actual shop management implementation
         return $seller->is($shop->owner);
+    }
+
+    /**
+     * @param Order $order
+     * @param Product $product
+     * @param array $attributes
+     * @return Product
+     */
+    public function updateOrder(Order $order, Product $product, array $attributes) {
+        // todo create observer for pivot
+        $order->products()->updateExistingPivot($product, $attributes);
+
+        return $product;
     }
 }

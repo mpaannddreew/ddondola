@@ -51,7 +51,7 @@
         },
         computed: {
             route() {
-                return this.homeUrl + "/" + this.converser.code;
+                return `${this.homeUrl}/${this.converser.code}`;
             },
             converser() {
                 if(!this.isOwner(this.conversation.initiator.id, this.conversation.initiator.type)) {

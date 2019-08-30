@@ -13,6 +13,9 @@
         <a class="nav-link" href="{{ route('home') }}"><i class="material-icons">public</i> Home</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('products') }}"><i class="material-icons">local_mall</i> Products</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('shops') }}"><i class="material-icons">shop_two</i> Shops</a>
     </li>
     <li class="nav-item @yield('people-active')">

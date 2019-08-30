@@ -32,25 +32,21 @@ class Escrow extends EcryptableModel
     }
 
     /**
-     * Reverse escrow
-     */
-    public function reverse() {
-        app(Bank::class)->reverseEscrow($this);
-    }
-
-    /**
-     * Complete escrow
-     */
-    public function complete() {
-        app(Bank::class)->reverseEscrow($this);
-    }
-
-    /**
      * Check if escrow is settled (reversed or completed)
      *
      * @return bool
      */
     public function settled() {
         return $this->completed || $this->reversed;
+    }
+
+    /**
+     * Get meta item
+     *
+     * @param $item
+     * @return mixed
+     */
+    public function meta($item) {
+        return collect($this->meta)->get($item);
     }
 }

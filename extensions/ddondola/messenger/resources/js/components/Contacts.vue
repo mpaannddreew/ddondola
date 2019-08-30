@@ -3,11 +3,11 @@
         <div class="center-xy" v-if="!loaded || !hasContacts && loaded">
             <div align="center" v-if="!loaded">
                 <div class="loader"></div>
-                <p>loading conversations...</p>
+                <p>loading contacts...</p>
             </div>
             <div align="center" v-else-if="!hasContacts && loaded">
                 <h4 class="m-0"><i class="material-icons">error</i></h4>
-                <p class="m-0">No conversations.</p>
+                <p class="m-0">No contacts.</p>
             </div>
         </div>
         <ul class="contact-list" v-else-if="hasContacts && loaded">

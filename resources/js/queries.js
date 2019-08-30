@@ -1688,5 +1688,12 @@ window.graphql = {
                 }
             }
           }
-        }`
+        }`,
+    updateOrder: `mutation updateOrder($update: OrderUpdate!) {
+          updateOrder(update: $update) {
+            id
+            name
+            code
+          }
+        }`,
 };

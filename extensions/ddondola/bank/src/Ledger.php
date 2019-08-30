@@ -80,21 +80,12 @@ class Ledger
      * @param $amount
      * @param null $note
      * @return Transaction
+     * @throws \Exception
      */
     public function credit(Account $account, $amount, $note = null) {
-        return $this->transactions->create(['account_id' => $account->getKey(), 'amount' => $amount, 'credit' => true, 'note' => $note]);
-    }
+        if ((int)$amount > $account->balance())
+            throw new \Exception("Insufficient balance");
 
-    /**
-     * TRansfer from one account to another
-     *
-     * @param Account $source
-     * @param Account $destination
-     * @param $amount
-     * @param null $note
-     * @return Transaction
-     */
-    public function transfer(Account $source, Account $destination, $amount, $note = null) {
-        // todo transfer implementation
+        return $this->transactions->create(['account_id' => $account->getKey(), 'amount' => $amount, 'credit' => true, 'note' => $note]);
     }
 }

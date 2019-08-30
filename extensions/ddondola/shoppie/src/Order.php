@@ -38,6 +38,18 @@ class Order extends Model
     }
 
     /**
+     * Get product in order
+     *
+     * @param $id
+     * @return Product|null
+     */
+    public function getProduct($id) {
+        return $this->products->first(function (Product $product) use ($id) {
+            return $product->getKey() == $id;
+        });
+    }
+
+    /**
      * Group order lines by shop
      *
      * @return Collection
@@ -59,12 +71,23 @@ class Order extends Model
     }
 
     /**
+     * Active order rows
+     *
+     * @return Collection
+     */
+    protected function activeRows() {
+        return $this->products->reject(function (Product $product) {
+            return $product->orderPivot->cancelled;
+        });
+    }
+
+    /**
      * Total amount of this order
      *
      * @return int
      */
     public function sum() {
-        return $this->products->sum(function (Product $product) {
+        return $this->activeRows()->sum(function (Product $product) {
             return $product->orderPivot->sum();
         });
     }

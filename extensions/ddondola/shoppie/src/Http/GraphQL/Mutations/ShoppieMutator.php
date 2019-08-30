@@ -8,6 +8,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Shoppie\ProductBrand;
 use Shoppie\ProductCategory;
 use Shoppie\ProductSubCategory;
+use Shoppie\Repository\OrderRepository;
 use Shoppie\Repository\ProductBrandRepository;
 use Shoppie\Repository\ProductCategoryRepository;
 use Shoppie\Repository\ProductRepository;
@@ -15,6 +16,7 @@ use Shoppie\Repository\ProductSubCategoryRepository;
 use Shoppie\Repository\ShopCategoryRepository;
 use Shoppie\Repository\ShopRepository;
 use Shoppie\ShopCategory;
+use Shoppie\Shoppie;
 
 class ShoppieMutator
 {
@@ -293,5 +295,35 @@ class ShoppieMutator
         }
 
         throw new AuthorizationException;
+    }
+
+    /**
+     * Return a value for the field.
+     *
+     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
+     * @param array $args The arguments that were passed into the field.
+     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
+     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
+     *
+     * @return mixed
+     */
+    public function updateOrder($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
+    {
+        $update = collect($args['update']);
+        if ($update->get('action') == 'cancel') {
+            $attributes = ['cancelled' => true, 'cancelled_by' => $update->get('actor')];
+        } else {
+            if ($update->get('actor') == 'buyer') {
+                $attributes = ['receipt_confirmed' => true];
+            } else {
+                $attributes = ['delivery_confirmed' => true];
+            }
+        }
+
+        return app(Shoppie::class)->updateOrder(
+            app(OrderRepository::class)->code($update->get('order')),
+            app(ProductRepository::class)->code($update->get('product')),
+            $attributes
+        );
     }
 }

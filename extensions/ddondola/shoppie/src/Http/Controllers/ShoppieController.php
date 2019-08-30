@@ -332,7 +332,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function products() {
-        abort(404);
+//        abort(404);
         return view('shoppie::products');
     }
 

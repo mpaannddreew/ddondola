@@ -14,6 +14,7 @@ class BankController extends Controller
 
     public function __construct()
     {
+        $this->middleware(['web'])->except(['passed', 'failed']);
     }
 
     public function passed(Request $request) {

@@ -42,7 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
 });
 
 Route::prefix('web')->group(function (){
-    Route::match(['get', 'post'], '/api', 'ApiController@query')->name('api');
+    Route::match(['get', 'post'], 'api', 'ApiController@query')->name('api');
 });
 
 Route::prefix('people')->group(function (){

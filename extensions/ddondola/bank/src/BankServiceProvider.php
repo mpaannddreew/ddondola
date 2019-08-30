@@ -23,6 +23,8 @@ class BankServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../databases');
+        $this->loadRoutesFrom(__DIR__. '/../routes/routes.php');
+
         $this->publishes([
             __DIR__.'/../config/bank.php' => config_path('bank.php'),
         ], 'bank.config');
@@ -49,7 +51,7 @@ class BankServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('bank', Bank::class);
+        $this->app->singleton('bank', Bank::class);
     }
 
     public function provides()

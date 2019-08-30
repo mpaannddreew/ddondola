@@ -16,6 +16,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Support\Str;
 use Messenger\Message;
 
 class NewMessage implements ShouldBroadcast, ShouldQueue
@@ -75,7 +76,7 @@ class NewMessage implements ShouldBroadcast, ShouldQueue
 
     private function senderName()
     {
-        if (strtolower($this->message->sender->type()) == 'user') {
+        if (Str::lower($this->message->sender->type()) == 'user') {
             return $this->message->sender->name();
         }
 
