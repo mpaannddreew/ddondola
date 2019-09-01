@@ -111,6 +111,7 @@ type OrderPivot {
     receipt_confirmed: Boolean!
     delivery_confirmed: Boolean!
     cancelled: Boolean!
+    cancelled_by: String
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -176,7 +177,7 @@ type ProductOffer {
     discount: String!
     start_date: Date!
     end_date: Date!
-    cancelled: Boolean! @method(name: "cancelled")
+    cancelled: Boolean!
     active: Boolean! @method(name: "isActive")
     started: Boolean! @method(name: "started")
     ended: Boolean! @method(name: "ended")

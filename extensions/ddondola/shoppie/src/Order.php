@@ -75,9 +75,20 @@ class Order extends Model
      *
      * @return Collection
      */
-    protected function activeRows() {
+    public function activeRows() {
         return $this->products->reject(function (Product $product) {
             return $product->orderPivot->cancelled;
+        });
+    }
+
+    /**
+     * Group order lines by shop
+     *
+     * @return Collection
+     */
+    public function groupActiveRowsByShop() {
+        return $this->activeRows()->groupBy(function (Product $product) {
+            return $product->brand->shop->code;
         });
     }
 
@@ -87,7 +98,7 @@ class Order extends Model
      * @return int
      */
     public function sum() {
-        return $this->activeRows()->sum(function (Product $product) {
+        return $this->products->sum(function (Product $product) {
             return $product->orderPivot->sum();
         });
     }
@@ -119,7 +130,7 @@ class Order extends Model
      * @return string
      */
     public function currencyCode() {
-        return $this->by->country->currencyCode();
+        return $this->firstProduct()->currencyCode();
     }
 
     /**
@@ -129,18 +140,5 @@ class Order extends Model
      */
     public function firstProduct() {
         return $this->products()->first();
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->code = \Illuminate\Support\Str::uuid()->toString();
-        });
-
-        static::deleting(function ($model) {
-            $model->products->detach();
-        });
     }
 }

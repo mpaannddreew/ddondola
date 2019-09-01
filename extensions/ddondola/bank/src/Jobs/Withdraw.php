@@ -41,6 +41,7 @@ class Withdraw implements ShouldQueue
      *
      * @param TransactionProcessor $processor
      * @return void
+     * @throws \Exception
      */
     public function handle(TransactionProcessor $processor)
     {

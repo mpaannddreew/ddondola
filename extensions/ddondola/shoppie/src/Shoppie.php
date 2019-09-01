@@ -9,7 +9,6 @@
 namespace Shoppie;
 
 
-use Bank\Jobs\CreateEscrow;
 use Illuminate\Database\Eloquent\Model;
 use Shoppie\Repository\CartRepository;
 use Shoppie\Repository\OrderRepository;
@@ -113,9 +112,6 @@ class Shoppie
             });
 
             $cart->makeEmpty();
-
-            CreateEscrow::dispatch($order);
-
             return $order;
         }
 

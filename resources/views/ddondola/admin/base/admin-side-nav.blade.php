@@ -50,4 +50,13 @@
             </a>
         </li>
     </ul>
+    <h6 class="main-sidebar__nav-title">Configuration</h6>
+    <ul class="nav nav--no-borders flex-column">
+        <li class="nav-item">
+            <a class="nav-link @yield('settings-active')" href="#">
+                <i class="material-icons">settings</i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
 @endsection

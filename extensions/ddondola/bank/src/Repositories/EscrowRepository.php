@@ -17,6 +17,16 @@ class EscrowRepository
         return Escrow::find($id);
     }
 
+    /**
+     * @param array $meta
+     * @return Escrow
+     */
+    public function findByMeta(array $meta) {
+        return Escrow::where('meta->order', collect($meta)->get('order'))
+            ->where('meta->product', collect($meta)->get('product'))
+            ->first();
+    }
+
     public function create(array $attributes) {
         return Escrow::create($attributes);
     }

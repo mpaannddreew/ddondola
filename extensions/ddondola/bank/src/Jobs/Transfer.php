@@ -55,6 +55,7 @@ class Transfer implements ShouldQueue
      *
      * @param TransactionProcessor $processor
      * @return void
+     * @throws \Exception
      */
     public function handle(TransactionProcessor $processor)
     {

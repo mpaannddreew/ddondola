@@ -428,11 +428,11 @@ class ShoppieController extends Controller
 
         $brand = $this->brands->id($request->input('brand'));
         $category = $this->subcategories->id($request->input('category'));
-
-        $product->editProduct($category, $brand,
-            array_merge($request->only(['name', 'price', 'description', 'quantity']),
-                ['settings' => ['attributes' => json_decode($request->input('attributes'))]])
+        $attributes = array_merge(
+            $request->only(['name', 'price', 'description', 'quantity']),
+            ['settings' => ['attributes' => json_decode($request->input('attributes'))]]
         );
+        $this->products->update($product,$category, $brand, $attributes);
 
         return redirect()->route('product.edit', ['product' => $product]);
     }
@@ -525,12 +525,11 @@ class ShoppieController extends Controller
 
         $brand = $this->brands->id($request->input('brand'));
         $category = $this->subcategories->id($request->input('category'));
-        $product = $this->products->create($category, $brand,
-            array_merge(
-                $request->only(['name', 'price', 'description', 'quantity']),
-                ['settings' => ['attributes' => json_decode($request->input('attributes'))]]
-            )
+        $attributes = array_merge(
+            $request->only(['name', 'price', 'description', 'quantity']),
+            ['settings' => ['attributes' => json_decode($request->input('attributes'))]]
         );
+        $product = $this->products->create($category, $brand, $attributes);
 
         return redirect()->route('product.gallery', ['product' => $product]);
     }

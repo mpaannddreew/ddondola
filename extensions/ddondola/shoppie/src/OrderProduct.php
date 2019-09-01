@@ -2,6 +2,8 @@
 
 namespace Shoppie;
 
+use Bank\Escrow;
+use Bank\Repositories\EscrowRepository;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class OrderProduct extends Pivot
@@ -41,5 +43,15 @@ class OrderProduct extends Pivot
      */
     public function payout() {
         return $this->sum() - $this->commission();
+    }
+
+    /**
+     * @return Escrow|null
+     */
+    public function associatedEscrow() {
+        return app(EscrowRepository::class)->findByMeta([
+            'order' => $this->order_id,
+            'product' => $this->product_id
+        ]);
     }
 }

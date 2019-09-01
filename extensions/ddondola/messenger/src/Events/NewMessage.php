@@ -21,8 +21,15 @@ use Messenger\Message;
 
 class NewMessage implements ShouldBroadcast, ShouldQueue
 {
+    /**
+     * @var Message
+     */
     protected $message;
 
+    /**
+     * NewMessage constructor.
+     * @param Message $message
+     */
     public function __construct(Message $message)
     {
         $this->message = $message;
@@ -56,17 +63,22 @@ class NewMessage implements ShouldBroadcast, ShouldQueue
     public function broadcastWith()
     {
         return [
-            'id' => $this->message->id,
+            'id' => $this->message->getKey(),
             'message' => $this->message->message,
             'sender' => $this->sender(),
             'created_at' => $this->message->created_at->toAtomString()
         ];
     }
 
+    /**
+     * Determine sender's details
+     *
+     * @return array
+     */
     private function sender()
     {
         return [
-            'id' => $this->message->sender->id,
+            'id' => $this->message->sender->getKey(),
             'name' => $this->senderName(),
             'type' => $this->message->sender->type(),
             'code' => $this->message->sender->code,
@@ -74,6 +86,11 @@ class NewMessage implements ShouldBroadcast, ShouldQueue
         ];
     }
 
+    /**
+     * Determine sender's name
+     *
+     * @return string
+     */
     private function senderName()
     {
         if (Str::lower($this->message->sender->type()) == 'user') {

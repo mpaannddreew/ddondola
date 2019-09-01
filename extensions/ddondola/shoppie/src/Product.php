@@ -151,18 +151,6 @@ class Product extends Model implements HasMedia
     }
 
     /**
-     * Create new product offer
-     *
-     * @param $discount
-     * @param Carbon $start_date
-     * @param Carbon $end_date
-     * @return ProductOffer
-     */
-    public function newOffer($discount, Carbon $start_date, Carbon $end_date) {
-        return app(ProductOfferRepository::class)->create($this, $discount, $start_date, $end_date);
-    }
-
-    /**
      * Active product offer
      *
      * @return ProductOffer|null
@@ -216,18 +204,6 @@ class Product extends Model implements HasMedia
      */
     public function settings($item) {
         return collect($this->settings)->get($item, '');
-    }
-
-    /**
-     * Edit a product
-     *
-     * @param ProductSubCategory $category
-     * @param ProductBrand $brand
-     * @param array $attributes
-     * @return \Illuminate\Database\Eloquent\Model|Product
-     */
-    public function editProduct(ProductSubCategory $category, ProductBrand $brand, array $attributes) {
-        return app(ProductRepository::class)->update($this, $category, $brand, $attributes);
     }
 
     public function currencyCode() {

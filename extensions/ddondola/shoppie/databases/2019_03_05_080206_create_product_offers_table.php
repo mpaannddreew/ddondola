@@ -19,7 +19,7 @@ class CreateProductOffersTable extends Migration
             $table->string('discount');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->boolean('cancel')->default(0);
+            $table->boolean('cancelled')->default(false);
             $table->timestamps();
         });
     }

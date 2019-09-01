@@ -45,21 +45,27 @@ class EscrowProcessor
      * @param Order $order
      */
     public function create(Order $order) {
+        if ($order->paid_for) {
+            return;
+        }
+
         if ($order->sum() > $order->by->account->balance()) {
             return;
         }
 
         DB::transaction(function () use ($order) {
-            $order->products->each(function (Product $product) use ($order) {
-                $this->escrows->create([
-                    'source_account_id' => $order->by->account->getKey(),
-                    'destination_account_id' => $product->shop->account->getKey(),
-                    'amount' => $product->orderPivot->sum(),
-                    'meta' => [
-                        'order' => $order->getKey(),
-                        'product' => $product->getKey()
-                    ]
-                ]);
+            $order->activeRows()->each(function (Product $product) use ($order) {
+                if (!$product->orderPivot->associatedEscrow()) {
+                    $this->escrows->create([
+                        'source_account_id' => $order->by->account->getKey(),
+                        'destination_account_id' => $product->shop()->account->getKey(),
+                        'amount' => $product->orderPivot->sum(),
+                        'meta' => [
+                            'order' => $order->getKey(),
+                            'product' => $product->getKey()
+                        ]
+                    ]);
+                }
             });
 
             $this->orders->update($order, ['paid_for' => true]);

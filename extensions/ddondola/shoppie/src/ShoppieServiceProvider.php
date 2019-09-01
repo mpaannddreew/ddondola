@@ -3,6 +3,8 @@
 namespace Shoppie;
 
 use Illuminate\Support\Facades\Route;
+use Shoppie\Observers\OrderObserver;
+use Shoppie\Observers\OrderProductObserver;
 use Shoppie\Observers\ProductObserver;
 use Shoppie\Observers\ProductOfferObserver;
 use Shoppie\Observers\ShopObserver;
@@ -87,5 +89,7 @@ class ShoppieServiceProvider extends ServiceProvider
         Shop::observe(ShopObserver::class);
         Product::observe(ProductObserver::class);
         ProductOffer::observe(ProductOfferObserver::class);
+        Order::observe(OrderObserver::class);
+        OrderProduct::observe(OrderProductObserver::class);
     }
 }

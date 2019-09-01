@@ -7,20 +7,16 @@ use Illuminate\Support\Carbon;
 
 class ProductOffer extends Model
 {
-    protected $fillable = ['start_date', 'end_date', 'cancel', 'discount'];
+    protected $fillable = ['start_date', 'end_date', 'cancelled', 'discount'];
 
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
-        'cancel' => 'boolean'
+        'cancelled' => 'bool'
     ];
 
     public function product() {
         return $this->belongsTo(Product::class, 'product_id');
-    }
-
-    public function cancelled() {
-        return $this->cancel;
     }
 
     public function started() {
@@ -32,6 +28,6 @@ class ProductOffer extends Model
     }
 
     public function isActive() {
-        return !$this->cancelled() && $this->started() && !$this->ended();
+        return !$this->cancelled && $this->started() && !$this->ended();
     }
 }

@@ -5,6 +5,8 @@ namespace Bank;
 
 class Escrow extends EcryptableModel
 {
+    protected $fillable = ['amount', 'source_account_id', 'destination_account_id', 'meta', 'completed', 'reversed'];
+
     protected $encryptable = ['amount'];
 
     protected $casts = [

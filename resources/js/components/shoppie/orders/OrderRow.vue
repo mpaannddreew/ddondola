@@ -17,14 +17,20 @@
             <td class="product-quantity" :class="classDef">{{ product.pivot.quantity }}</td>
             <td class="product-subtotal">{{ product.currencyCode }} {{ product.pivot.sum|commas }}</td>
             <td class="row-close close-2">
-                <!-- todo show status message -->
-                <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group" v-if="showActions">
-                    <a href="javascript:void(0)" class="btn btn-white text-success" @click="confirm" :class="{disabled: !orderPaidFor || otherProcessing}">
-                        <i class="material-icons">check</i>
-                    </a>
-                    <a href="javascript:void(0)" class="btn btn-white text-danger" @click="cancel" :class="{disabled: otherProcessing}">
-                        <i class="material-icons">clear</i>
-                    </a>
+                <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0" role="group">
+                    <template v-if="showActions">
+                        <a href="javascript:void(0)" class="btn btn-white text-success" @click="confirm" :class="{disabled: !orderPaidFor || otherProcessing}">
+                            <i class="material-icons">check</i>
+                        </a>
+                        <a href="javascript:void(0)" class="btn btn-white text-danger" @click="cancel" :class="{disabled: otherProcessing}">
+                            <i class="material-icons">clear</i>
+                        </a>
+                    </template>
+                    <template v-else>
+                        <a href="javascript:void(0)" class="btn btn-white disabled" :class="actionColor">
+                            {{ action }}
+                        </a>
+                    </template>
                 </div>
             </td>
         </template>
@@ -78,6 +84,24 @@
             },
             actor() {
                 return this.shop ? 'SELLER' : 'BUYER';
+            },
+            action() {
+                if(this.product.pivot.cancelled)
+                    return 'Cancelled';
+
+                if (this.shop && this.product.pivot.delivery_confirmed)
+                    return 'Delivered';
+
+                if (!this.shop && this.product.pivot.receipt_confirmed)
+                    return 'Received';
+
+                return null;
+            },
+            actionColor() {
+                return {
+                    'text-danger': this.product.pivot.cancelled,
+                    'text-success': this.shop && this.product.pivot.delivery_confirmed || !this.shop && this.product.pivot.receipt_confirmed
+                }
             }
         },
         methods: {

@@ -11,6 +11,7 @@ use Shoppie\ProductSubCategory;
 use Shoppie\Repository\OrderRepository;
 use Shoppie\Repository\ProductBrandRepository;
 use Shoppie\Repository\ProductCategoryRepository;
+use Shoppie\Repository\ProductOfferRepository;
 use Shoppie\Repository\ProductRepository;
 use Shoppie\Repository\ProductSubCategoryRepository;
 use Shoppie\Repository\ShopCategoryRepository;
@@ -221,8 +222,12 @@ class ShoppieMutator
      */
     public function addToCart($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $context->user()->cart
-            ->addProduct(app(ProductRepository::class)->id($args["id"]), $args["quantity"]);
+        return $context->user()
+            ->cart
+            ->addProduct(
+                app(ProductRepository::class)->id($args["id"]),
+                $args["quantity"]
+            );
     }
 
     /**
@@ -286,12 +291,18 @@ class ShoppieMutator
     public function createProductOffer($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         $product = app(ProductRepository::class)->id($args["productId"]);
+
+        if ($product->hasActiveOffer()) {
+            return null;
+        }
+
         if ($context->user()->can('update', $product)) {
-            return $product->newOffer(
-                $args['offer']['discount'],
-                \Illuminate\Support\Carbon::parse($args['offer']['start_date']),
-                \Illuminate\Support\Carbon::parse($args['offer']['end_date'])
-            );
+            $attributes = [
+                'start_date' => \Illuminate\Support\Carbon::parse($args['offer']['start_date']),
+                'end_date' => \Illuminate\Support\Carbon::parse($args['offer']['end_date']),
+                'discount' => $args['offer']['discount']
+            ];
+            return app(ProductOfferRepository::class)->create($product, $attributes);
         }
 
         throw new AuthorizationException;
