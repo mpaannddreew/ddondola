@@ -52,7 +52,8 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => \Carbon\Carbon::now(),
                 'password' => bcrypt('secret'),
                 'is_staff' => 1,
-                'is_superuser' => 1
+                'is_superuser' => 1,
+                'is_seller' => 1
             ],
             [
                 'first_name' => 'Faridah',

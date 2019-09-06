@@ -10,6 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="auth-state" @guest content="0" @else content="1" @endguest>
+    <meta name="seller-state" @guest content="0" @else @can('create', Shoppie\Shop::class) content="1" @else content="0" @endcan @endguest>
     <title>@section('title'){{ config('app.name', 'Ddondola') }} - @show</title>
 
     <!-- Stylesheets

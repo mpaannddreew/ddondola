@@ -3,7 +3,6 @@ enum TransactionType {
     CREDIT @enum(value: "credit")
 }
 
-
 type Account {
     id: ID!
     holder: Muddondozi!
@@ -45,4 +44,8 @@ type Transaction {
     note: String
     created_at: DateTime!
     updated_at: DateTime!
+}
+
+extend type Query @middleware(checks: ["auth:api"]) {
+    account(id: ID! @eq): Account! @find(model: "Bank\\Account")
 }

@@ -7,9 +7,9 @@
                 <h3 class="h6 no-margin-bottom m-0 text-ellipsis">{{ product.name }}</h3>
             </a>
             <div class="d-flex mt-2">
-                <ul class="price list-inline no-margin my-auto">
-                    <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</li>
-                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price|commas }}</li>
+                <ul class="price list-inline no-margin my-auto" style="line-height: 1 !important;">
+                    <li class="list-inline-item deals_item_price_a">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</li>
+                    <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through; font-size: 10px;" :class="{ 'text-primary': product.discount }" v-if="product.discount">{{ product.currencyCode }} {{ product.price|commas }}</li>
                 </ul>
                 <div class="hover-overlay d-flex align-items-center justify-content-center ml-auto" style="border-radius: 0 !important;" v-if="auth">
                     <div class="CTA d-flex align-items-center justify-content-center">

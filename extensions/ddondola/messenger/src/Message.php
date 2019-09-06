@@ -2,13 +2,15 @@
 
 namespace Messenger;
 
-use Illuminate\Database\Eloquent\Model;
+use Ddondola\EcryptableModel;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Message extends Model implements HasMedia
+class Message extends EcryptableModel implements HasMedia
 {
     use HasMediaTrait;
+
+    protected $encryptable = ['message'];
 
     protected $fillable = ['sender_id', 'sender_type', 'message'];
 

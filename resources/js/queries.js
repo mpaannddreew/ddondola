@@ -1,5 +1,5 @@
 window.graphql = {
-    api: '/web/api',
+    api: '/graphql',
     rowCount: 10,
     columnCount: 12,
     categories: `query categories($count: Int! $page: Int!){
@@ -1485,6 +1485,7 @@ window.graphql = {
                 code
                 sum
                 paidFor
+                cancelled
                 productCount
                 currencyCode
                 created_at
@@ -1515,6 +1516,7 @@ window.graphql = {
                 code
                 sum
                 paidFor
+                cancelled(shop: $shop)
                 productCount
                 currencyCode
                 created_at
@@ -1526,7 +1528,7 @@ window.graphql = {
                     url
                   }
                 }
-                firstProduct {
+                firstProduct(shop: $shop) {
                   images {
                     url
                   }
@@ -1548,6 +1550,7 @@ window.graphql = {
     orderProducts: `query orderProducts($order: String! $shop: String $page: Int! $count: Int!) {
           order(order: $order) {
             paidFor
+            cancelled(shop: $shop)
             sum(shop: $shop)
             currencyCode
             by {

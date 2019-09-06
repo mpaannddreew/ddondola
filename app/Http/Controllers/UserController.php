@@ -13,6 +13,7 @@ class UserController extends Controller
     }
 
     public function index() {
+        abort(404);
         return view('ddondola.users.index');
     }
 

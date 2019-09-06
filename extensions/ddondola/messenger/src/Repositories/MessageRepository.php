@@ -34,12 +34,10 @@ class MessageRepository
      * @return Model|Message
      */
     public function create(Conversation $conversation, Model $sender, $message) {
-        $chat = $conversation->messages()->create([
+        return $conversation->messages()->create([
             'sender_id' => $sender->getKey(),
             'sender_type' => get_class($sender),
             'message' => $message
         ]);
-
-        return $chat;
     }
 }

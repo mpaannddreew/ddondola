@@ -14,14 +14,6 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-12 col-sm-6 d-flex align-items-center">
-                    <div class="btn-group btn-group-sm ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">
-                        <select class="form-control form-control-sm custom-select custom-select-sm" tabindex="-98">
-                            <option value="latest">Name [A-Z]</option>
-                            <option value="oldest">Name [Z-A]</option>
-                        </select>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="card card-small border" v-if="!loaded || (!hasUsers && loaded)">
@@ -39,7 +31,7 @@
         <div class="card card-small lo-stats border" v-if="hasUsers && loaded">
             <table class="table mb-0">
                 <tbody>
-                <tr is="person" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :auth="auth" :indx="indx"></tr>
+                <tr is="person" v-for="(_user, indx) in users" :key="indx" :user="_user" :indx="indx"></tr>
                 </tbody>
             </table>
         </div>
@@ -61,12 +53,6 @@
                 page: 1,
                 loaded: false,
                 paginatorInfo: null
-            }
-        },
-        props: {
-            me: {
-                type: Object,
-                required: false
             }
         },
         computed: {
@@ -97,9 +83,6 @@
             loadPage(page) {
                 this.page = page;
                 this.fetchUsers();
-            },
-            isMe(id) {
-                return parseInt(this.me.id) === parseInt(id);
             }
         }
     }

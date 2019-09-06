@@ -3,5 +3,5 @@
 @section('user-profile-bnr-class', '')
 @section('shops-active', 'active')
 @section('main')
-    <shop-admin-directory></shop-admin-directory>
+
 @endsection

@@ -146,7 +146,7 @@
                         prepare: function(query, settings) {
                             settings.url = `${settings.url}?${$.param({query: graphql.searchProducts, variables: {name: query}})}`;
                             settings.headers = SearchHeaders;
-                            settings.type = "GET";
+                            settings.type = "POST";
                             return settings;
                         },
                         transform: this.transform
@@ -162,7 +162,7 @@
                         prepare: function(query, settings) {
                             settings.url = `${settings.url}?${$.param({query: graphql.searchShops, variables: {name: query}})}`;
                             settings.headers = SearchHeaders;
-                            settings.type = "GET";
+                            settings.type = "POST";
                             return settings;
                         },
                         transform: this.transform
@@ -178,7 +178,7 @@
                         prepare: function(query, settings) {
                             settings.url = `${settings.url}?${$.param({query: graphql.searchUsers, variables: {name: query}})}`;
                             settings.headers = SearchHeaders;
-                            settings.type = "GET";
+                            settings.type = "POST";
                             return settings;
                         },
                         transform: this.transform

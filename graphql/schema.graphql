@@ -81,12 +81,15 @@ type Image {
     url: String!
 }
 
-type Query {
+type Query @middleware(checks: ["auth:api"]) {
     me: User! @auth
+    iFollowUser(id: ID!): Boolean! @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@iFollowUser")
     users(myCountry: Boolean): [User!]! @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedUsers")
+}
+
+extend type Query {
     user(id: ID @eq): User @find(model: "Ddondola\\User")
     userByCode(user: String!): User @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@user")
-    iFollowUser(id: ID!): Boolean! @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@iFollowUser")
     searchUsers(name: String!): [User!] @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@searchUsers")
 }
 

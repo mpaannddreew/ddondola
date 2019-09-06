@@ -20,11 +20,11 @@ type Message {
     updated_at: DateTime!
 }
 
-extend type Query {
+extend type Query @middleware(checks: ["auth:api"]) {
     conversation(initiator: String participant: String!): Conversation @field(resolver: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@conversation")
 }
 
-extend type Mutation {
+extend type Mutation @middleware(checks: ["auth:api"]) {
     startConversation(initiator: String participant: String!): Conversation! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@createConversation")
     sendMessage(initiator: String participant: String! message: String): Message! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@sendMessage")
 }

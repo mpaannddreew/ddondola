@@ -10,6 +10,13 @@ class ShopPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user, $ability)
+    {
+        if ($user->admin() || $user->is_seller) {
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can view the shop.
      *
@@ -30,7 +37,7 @@ class ShopPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->is_seller;
     }
 
     /**

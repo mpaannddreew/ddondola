@@ -1,38 +1,48 @@
 <template>
     <div>
         <div class="products-grid p-0">
-            <header class="d-flex justify-content-between align-items-start mb-2">
-                <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
-                <span class="visible-items" v-else></span>
-                <div class="btn-group">
-                    <select class="form-control custom-select custom-select-sm" tabindex="-98" v-model="ordering">
-                        <option value="latest">Latest</option>
-                        <option value="oldest">Oldest</option>
-                        <option value="lowest-price">Lowest Price</option>
-                        <option value="highest-price">Highest Price</option>
-                    </select>
-                </div>
-            </header>
-            <div class="card card-small border" v-if="!loaded || (!showProducts && loaded)">
-                <div class="card-body">
-                    <div align="center" v-if="!loaded">
-                        <div class="loader"></div>
-                        <p class="m-0">{{ loadingMessage }}</p>
+            <div class="card border-top-radius-0" style="background: none !important;">
+                <div class="card-header p-2 border-bottom bg-white">
+                    <div class="container">
+                        <header class="d-flex justify-content-between align-items-start m-0">
+                            <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
+                            <span class="visible-items" v-else></span>
+                            <div class="btn-group">
+                                <select class="form-control custom-select custom-select-sm" tabindex="-98" v-model="ordering">
+                                    <option value="latest">Latest</option>
+                                    <option value="oldest">Oldest</option>
+                                    <option value="lowest-price">Lowest Price</option>
+                                    <option value="highest-price">Highest Price</option>
+                                </select>
+                            </div>
+                        </header>
                     </div>
-                    <div align="center" v-else-if="!showProducts && loaded">
-                        <h4 class="m-0"><i class="material-icons">error</i></h4>
-                        <p class="m-0">{{ noProductsMessage }}</p>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="card card-small border" v-if="!loaded || (!showProducts && loaded)">
+                            <div class="card-body">
+                                <div align="center" v-if="!loaded">
+                                    <div class="loader"></div>
+                                    <p class="m-0">{{ loadingMessage }}</p>
+                                </div>
+                                <div align="center" v-else-if="!showProducts && loaded">
+                                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                    <p class="m-0">{{ noProductsMessage }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <template v-else-if="showProducts && loaded">
+                            <div class="row">
+                                <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
+                                    <div is="product" :product="product" :key="indx"></div>
+                                </div>
+                            </div>
+                        </template>
+                        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
                     </div>
                 </div>
             </div>
-            <template v-else-if="showProducts && loaded">
-                <div class="row">
-                    <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
-                        <div is="product" :product="product" :key="indx"></div>
-                    </div>
-                </div>
-            </template>
-            <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         </div>
     </div>
 </template>

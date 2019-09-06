@@ -3,6 +3,7 @@
 namespace Activity;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Review extends Model
 {
@@ -23,7 +24,7 @@ class Review extends Model
 
     private function reviewee() {
         $reviewee = ['shop' => null, 'product' => null];
-        $reviewee[strtolower($this->type())] = $this->reviewable;
+        $reviewee[Str::lower($this->type())] = $this->reviewable;
 
         return $reviewee;
     }

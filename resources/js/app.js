@@ -19,7 +19,7 @@ import VueContentPlaceholders from 'vue-content-placeholders';
 Vue.use(VueContentPlaceholders);
 
 import Helper from './helpers';
-Vue.use(Helper, {auth: Auth, csrf: Token.content});
+Vue.use(Helper, {auth: Auth, csrf: Token.content, seller: Seller});
 
 /**
  * The following block of code may be used to automatically register your

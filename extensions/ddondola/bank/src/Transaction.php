@@ -2,6 +2,8 @@
 
 namespace Bank;
 
+use Ddondola\EcryptableModel;
+
 class Transaction extends EcryptableModel
 {
     protected $encryptable = ['amount'];

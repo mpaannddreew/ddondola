@@ -12,8 +12,8 @@
                 <var class="price h5 text-warning">
                     <span class="currency">{{ $product->currencyCode() }}</span> <span class="num">{{ number_format($product->discountedPrice()) }}</span>
                     @if($product->discount())
-                        <span style="text-decoration: line-through">
-                            <span class="currency text-muted">{{ $product->currencyCode() }}</span> <span class="num text-muted">{{ number_format($product->price) }}</span>
+                        <span style="text-decoration: line-through" class="text-primary">
+                            <span class="currency text-primary">{{ $product->currencyCode() }}</span> <span class="num text-primary">{{ number_format($product->price) }}</span>
                         </span>
                     @endif
                 </var>

@@ -9,6 +9,11 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link @yield('edit-offers-active')" href="{{ route('product.offers', ['product' => $product]) }}">
+            <i class="material-icons">date_range</i> Offers
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link @yield('gallery-active')" href="{{ route('product.gallery', ['product' => $product]) }}">
             <i class="material-icons">collections</i> Gallery
         </a>

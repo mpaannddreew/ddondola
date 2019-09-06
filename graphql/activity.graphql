@@ -30,12 +30,12 @@ type Reviewed {
     review: Review
 }
 
-extend type Query {
+extend type Query @middleware(checks: ["auth:api"]) {
     review(id: ID! @eq): Review! @find(model: "Activity\\Review")
     isReviewed(entity: Reviewee!): Reviewed! @field(resolver: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@isReviewed")
 }
 
-extend type Mutation {
+extend type Mutation @middleware(checks: ["auth:api"]) {
     addReview(entity: Reviewee! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@addReview")
     editReview(id: ID! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@editReview")
 }

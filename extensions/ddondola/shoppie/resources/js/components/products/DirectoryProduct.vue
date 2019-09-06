@@ -21,9 +21,9 @@
                             <div class="products-grid p-0">
                                 <div class="product m-0">
                                     <div class="d-flex mt-2">
-                                        <ul class="price list-inline no-margin my-auto">
-                                            <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</li>
-                                            <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="product.discount">{{ product.currencyCode }} {{ product.price|commas }}</li>
+                                        <ul class="price list-inline no-margin my-auto mx-0">
+                                            <li class="list-inline-item deals_item_price_a m-0">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</li>
+                                            <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }" style="text-decoration: line-through; font-size: 10px;" v-if="product.discount">{{ product.currencyCode }} {{ product.price|commas }}</li>
                                         </ul>
                                         <div class="hover-overlay d-flex align-items-center justify-content-center ml-auto" style="border-radius: 0 !important;" v-if="auth">
                                             <div class="CTA d-flex align-items-center justify-content-center">

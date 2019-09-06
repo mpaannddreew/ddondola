@@ -3,5 +3,5 @@
 @section('user-profile-bnr-class', '')
 @section('people-active', 'active')
 @section('main')
-    <user-directory></user-directory>
+
 @endsection

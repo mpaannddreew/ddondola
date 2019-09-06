@@ -9,9 +9,7 @@
 namespace Activity\Traits;
 
 
-use Activity\Repositories\ReviewRepository;
 use Activity\Review;
-use Illuminate\Database\Eloquent\Model;
 
 trait Reviewable
 {
@@ -29,10 +27,6 @@ trait Reviewable
 
     public function reviewCount() {
         return $this->reviews()->count();
-    }
-
-    public function review(Model $reviewer, array $attributes) {
-        return app(ReviewRepository::class)->create($this, $reviewer, $attributes);
     }
 
     public function getReviewCountAttribute()

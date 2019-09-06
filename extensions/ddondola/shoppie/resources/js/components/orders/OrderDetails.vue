@@ -30,7 +30,7 @@
                                     <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop" @click="showInvoice">
                                         <i class="material-icons">description</i> Invoice
                                     </a>
-                                    <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop && !loadedOrder.paidFor">
+                                    <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop && !loadedOrder.paidFor && !loadedOrder.cancelled">
                                         <i class="material-icons">credit_card</i> Make Payment
                                     </a>
                                     <a class="btn btn-white btn-sm" :href="messengerUrl" v-if="shop">
@@ -56,14 +56,14 @@
                                 <div class="_status">
                                     <div>Payment</div>
                                     <div>
-                                        <span class="badge" :class="{'badge-warning': !loadedOrder.paidFor, 'badge-success': loadedOrder.paidFor}">{{ status }}</span>
+                                        <span class="badge" :class="{'badge-warning': !loadedOrder.paidFor, 'badge-success': loadedOrder.paidFor, 'badge-danger': loadedOrder.cancelled}">{{ status }}</span>
                                     </div>
                                 </div>
                             </div>
                             <!-- Order date -->
                             <div class="order-block">
                                 <div class="order-icon">
-                                    <i class="material-icons">date_range</i>
+                                    <i class="material-icons">access_time</i>
                                 </div>
                                 <div class="date">
                                     <div>Date</div>
@@ -154,7 +154,10 @@
         },
         computed: {
             status() {
-                return this.loadedOrder.paidFor ? 'Cleared': 'Pending';
+                if (!this.loadedOrder.cancelled)
+                    return this.loadedOrder.paidFor ? 'Cleared': 'Pending';
+
+                return 'Cancelled';
             },
             hasProducts() {
                 return this.products.length > 0;

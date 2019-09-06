@@ -1,7 +1,14 @@
 <template>
-    <a href="javascript:void(0)" @click="transitionTo" class="list-group-item list-group-item-action warning">
-        <span class="text-uppercase" style="display: block;">{{ order.code }}</span>
-        <small class="text-muted" style="font-weight: bold;"><i class="material-icons">date_range</i> {{ order.created_at|timeSpecific }}</small>
+    <a href="javascript:void(0)" @click="transitionTo" class="list-group-item list-group-item-action d-flex">
+        <div class="sc-stats__image">
+            <img class="border rounded" :src="thumbnail">
+        </div>
+        <div class="ml-2 my-auto">
+            <span class="text-uppercase text-ellipsis" style="display: block;">
+                {{ order.code }}
+            </span>
+            <small class="text-muted" style="font-weight: bold;"><i class="material-icons">access_time</i> {{ order.created_at|day }}</small>
+        </div>
     </a>
 </template>
 
@@ -21,8 +28,11 @@
             }
         },
         computed: {
+            firstProduct() {
+                return this.order.firstProduct;
+            },
             thumbnail() {
-                return this.order.by.avatar.url;
+                return this.firstProduct.images[0].url;
             },
             shopUrl() {
                 return `/shops/${this.$route.params.shop}`;
@@ -32,6 +42,12 @@
             },
             messengerUrl() {
                 return `${this.shopUrl}/messenger/${this.order.by.code}`;
+            },
+            indicator() {
+                return {
+                    'text-success': this.order.paidFor,
+                    'text-warning': !this.order.paidFor
+                };
             }
         },
         methods: {

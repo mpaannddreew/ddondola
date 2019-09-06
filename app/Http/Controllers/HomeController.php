@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Messenger\Facades\Messenger;
+use Shoppie\Repository\ProductRepository;
 use Shoppie\Repository\ShopRepository;
 
 class HomeController extends Controller
@@ -25,12 +26,11 @@ class HomeController extends Controller
 
     /**
      * @param Request $request
-     * @param \Shoppie\Repository\ProductRepository $products
+     * @param ProductRepository $products
      * @param ShopRepository $shops
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request, \Shoppie\Repository\ProductRepository $products,
-                          \Shoppie\Repository\ShopRepository $shops) {
+    public function index(Request $request, ProductRepository $products, ShopRepository $shops) {
         if (Auth::check()) {
             if ($request->user()->hasVerifiedEmail()) {
                 return view('ddondola.home');
@@ -39,7 +39,7 @@ class HomeController extends Controller
             return redirect()->route('verification.notice');
         }
 
-        return redirect()->route('login');
+//        return redirect()->route('login');
         return view('welcome', ['products' => $products->featured(6), 'shops' => $shops->featured(6)]);
     }
 
@@ -67,7 +67,6 @@ class HomeController extends Controller
     }
 
     public function profile(Request $request) {
-//        return response()->json($request->user());
         return view('ddondola.me.profile', ['user' => $request->user()]);
     }
 

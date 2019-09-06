@@ -4,3 +4,4 @@
 @section('tabs')
     @include('layouts.sections.tabs')
 @endsection
+@section('footer', '')

@@ -19,12 +19,14 @@
                 <span>Profile</span>
             </a>
         </li>
+        @can('create', Shoppie\Shop::class)
         <li class="nav-item">
             <a class="nav-link @yield('shops-active')" href="{{ route('my.shops') }}">
                 <i class="material-icons">shop_two</i>
                 <span>Shops</span>
             </a>
         </li>
+        @endcan
     </ul>
     <h6 class="main-sidebar__nav-title">Apps</h6>
     <ul class="nav nav--no-borders flex-column">

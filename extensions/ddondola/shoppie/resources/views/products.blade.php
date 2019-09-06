@@ -2,5 +2,5 @@
 @section('title')@parent Products @endsection
 @section('products-active', 'active')
 @section('main')
-    <product-directory @guest :auth="false" @endguest></product-directory>
+    <product-directory></product-directory>
 @endsection

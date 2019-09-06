@@ -41,12 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function (){
     });
 });
 
-Route::prefix('web')->group(function (){
-    Route::match(['get', 'post'], 'api', 'ApiController@query')->name('api');
-});
-
 Route::prefix('people')->group(function (){
-    Route::get('/', 'UserController@index')->name('users.index')->middleware(['auth', 'verified']);
+    Route::get('/', 'UserController@index')->name('users.index');
     Route::get('{user}', 'UserController@userProfile')->name('user.profile');
     Route::get('{user}/followers', 'UserController@userFollowers')->name('user.followers');
     Route::get('{user}/following', 'UserController@userFollowing')->name('user.following');

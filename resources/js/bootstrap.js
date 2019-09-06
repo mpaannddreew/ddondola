@@ -32,6 +32,9 @@ window.DToast = function(type, title) {
 let auth = document.head.querySelector('meta[name="auth-state"]');
 window.Auth = parseInt(auth.content) === 1;
 
+let seller = document.head.querySelector('meta[name="seller-state"]');
+window.Seller = parseInt(seller.content) === 1;
+
 /**
  * We'll loading the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -59,7 +62,7 @@ if (token) {
 
 window.SearchHeaders = {
     "X-Requested-With": "XMLHttpRequest",
-    "X-CSRF-TOKEN": Token.content,
+    "X-CSRF-TOKEN": token.content,
     "Accept": "application/json"
 };
 

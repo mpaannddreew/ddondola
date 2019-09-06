@@ -3,6 +3,8 @@
 namespace Bank;
 
 
+use Ddondola\EcryptableModel;
+
 class Escrow extends EcryptableModel
 {
     protected $fillable = ['amount', 'source_account_id', 'destination_account_id', 'meta', 'completed', 'reversed'];

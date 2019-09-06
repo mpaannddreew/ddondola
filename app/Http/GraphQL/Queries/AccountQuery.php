@@ -51,8 +51,9 @@ class AccountQuery
      */
     public function paginatedUsers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $builder = app(UserRepository::class)->builder()->whereNotIn('id', [$context->user()->id]);
+        $builder = app(UserRepository::class)->builder();
         if ($context->user()) {
+            $builder = $builder->whereNotIn('id', [$context->user()->id]);
             $myCountry = collect($args)->get('myCountry', true);
             if ($myCountry) {
                 $builder = $builder->whereHas('country', function ($q) use ($context) {

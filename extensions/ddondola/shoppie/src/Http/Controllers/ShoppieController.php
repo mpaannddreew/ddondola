@@ -181,11 +181,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function shopEdit(Request $request, Shop $shop) {
-        if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.shop-info',
-                ['shop' => $shop, 'categories' => $this->categories->all()]);
-
-        abort(404);
+        return view('shoppie::shop.admin.shop-info', ['shop' => $shop, 'categories' => $this->categories->all()]);
     }
 
     /**
@@ -228,10 +224,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function shopDashboard(Request $request, Shop $shop) {
-        if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.dashboard', ['shop' => $shop]);
-
-        abort(404);
+        return view('shoppie::shop.admin.dashboard', ['shop' => $shop]);
     }
 
     /**
@@ -242,10 +235,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function shopInventory(Request $request, Shop $shop) {
-        if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.inventory.index', ['shop' => $shop]);
-
-        abort(404);
+        return view('shoppie::shop.admin.inventory.index', ['shop' => $shop]);
     }
 
     /**
@@ -257,10 +247,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function shopMessenger(Request $request, Shop $shop, User $user = null) {
-        if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.messenger', ['shop' => $shop]);
-
-        abort(404);
+        return view('shoppie::shop.admin.messenger', ['shop' => $shop]);
     }
 
     /**
@@ -274,7 +261,7 @@ class ShoppieController extends Controller
     public function shopOrders(Request $request, Shop $shop, Order $order = null) {
         if ($order)
             if (!$order->isHandledBy($shop))
-                abort(404);
+                abort(403);
 
         if ($request->user()->manages($shop))
             return view('shoppie::shop.admin.orders', ['shop' => $shop]);
@@ -317,11 +304,11 @@ class ShoppieController extends Controller
      * @param Request $request
      * @param Order|null $order
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function myOrders(Request $request, Order $order = null) {
         if ($order)
-            if (!$order->by->is($request->user()))
-                abort(404);
+            $this->authorize('update', $order);
 
         return view('shoppie::me.orders');
     }
@@ -332,7 +319,6 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function products() {
-//        abort(404);
         return view('shoppie::products');
     }
 
@@ -388,10 +374,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function productDashboard(Request $request, Product $product) {
-        if ($request->user()->ownsProduct($product))
-            return view('shoppie::shop.product.admin.dashboard', ['product' => $product]);
-
-        abort(404);
+        return view('shoppie::shop.product.admin.dashboard', ['product' => $product]);
     }
 
     /**
@@ -402,10 +385,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function productEdit(Request $request, Product $product) {
-        if ($request->user()->ownsProduct($product))
-            return view('shoppie::shop.product.admin.edit-product', ['product' => $product]);
-
-        abort(404);
+        return view('shoppie::shop.product.admin.edit-product', ['product' => $product]);
     }
 
     /**
@@ -445,10 +425,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function productEditOffers(Request $request, Product $product) {
-        if ($request->user()->ownsProduct($product))
-            return view('shoppie::shop.product.admin.edit-offers', ['product' => $product]);
-
-        abort(404);
+        return view('shoppie::shop.product.admin.edit-offers', ['product' => $product]);
     }
 
     /**
@@ -459,10 +436,7 @@ class ShoppieController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function productGallery(Request $request, Product $product) {
-        if ($request->user()->ownsProduct($product))
-            return view('shoppie::shop.product.admin.gallery', ['product' => $product]);
-
-        abort(404);
+        return view('shoppie::shop.product.admin.gallery', ['product' => $product]);
     }
 
     /**
@@ -479,31 +453,19 @@ class ShoppieController extends Controller
     }
 
     public function shopCategories(Request $request, Shop $shop) {
-        if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.inventory.categories', ['shop' => $shop]);
-
-        abort(404);
+        return view('shoppie::shop.admin.inventory.categories', ['shop' => $shop]);
     }
 
     public function shopSubCategories(Request $request, Shop $shop) {
-        if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.inventory.sub-categories', ['shop' => $shop]);
-
-        abort(404);
+        return view('shoppie::shop.admin.inventory.sub-categories', ['shop' => $shop]);
     }
 
     public function shopBrands(Request $request, Shop $shop) {
-        if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.inventory.brands', ['shop' => $shop]);
-
-        abort(404);
+        return view('shoppie::shop.admin.inventory.brands', ['shop' => $shop]);
     }
 
     public function newProduct(Request $request, Shop $shop) {
-        if ($request->user()->manages($shop))
-            return view('shoppie::shop.admin.inventory.new-product', ['shop' => $shop]);
-
-        abort(404);
+        return view('shoppie::shop.admin.inventory.new-product', ['shop' => $shop]);
     }
 
     /**

@@ -10,7 +10,5 @@
     </div>
 @endsection
 @section('main')
-    <div class="container py-2">
-        <admin-shop-categories></admin-shop-categories>
-    </div>
+
 @endsection

@@ -8,6 +8,7 @@ use Shoppie\Observers\OrderProductObserver;
 use Shoppie\Observers\ProductObserver;
 use Shoppie\Observers\ProductOfferObserver;
 use Shoppie\Observers\ShopObserver;
+use Shoppie\Policies\OrderPolicy;
 use Shoppie\Policies\ProductBrandPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -27,7 +28,8 @@ class ShoppieServiceProvider extends ServiceProvider
         ProductOffer::class => ProductOfferPolicy::class,
         Product::class => ProductPolicy::class,
         ProductSubCategory::class => ProductSubCategoryPolicy::class,
-        ShopCategory::class => ShopCategoryPolicy::class
+        ShopCategory::class => ShopCategoryPolicy::class,
+        Order::class => OrderPolicy::class
     ];
 
     /**

@@ -98,9 +98,7 @@ class Order extends Model
      * @return int
      */
     public function sum() {
-        return $this->products->sum(function (Product $product) {
-            return $product->orderPivot->sum();
-        });
+        return $this->calculateSum($this->products);
     }
 
     /**
@@ -110,7 +108,15 @@ class Order extends Model
      * @return int
      */
     public function sumByShop($code) {
-        return collect($this->groupByShop()->get($code))->sum(function (Product $product) use($code) {
+        return $this->calculateSum(collect($this->groupByShop()->get($code)));
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $products
+     * @return int
+     */
+    private function calculateSum(\Illuminate\Support\Collection $products) {
+        return $products->sum(function (Product $product) {
             return $product->orderPivot->sum();
         });
     }
@@ -140,5 +146,28 @@ class Order extends Model
      */
     public function firstProduct() {
         return $this->products()->first();
+    }
+
+    /**
+     * First product in order
+     *
+     * @return Product
+     */
+    public function firstProductByShop($code) {
+        return collect($this->groupByShop()->get($code))->first();
+    }
+
+    public function cancelled() {
+        return $this->determineStatus($this->products);
+    }
+
+    public function cancelledByShop($code) {
+        return $this->determineStatus(collect($this->groupByShop()->get($code)));
+    }
+
+    private function determineStatus(\Illuminate\Support\Collection $products) {
+        return $products->filter(function (Product $product) {
+                return !$product->orderPivot->cancelled;
+            })->count() == 0;
     }
 }

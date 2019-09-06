@@ -4,11 +4,13 @@ const Helper = {
             created() {
                 this.auth = options.auth;
                 this.csrf = options.csrf;
+                this.seller = options.seller;
             },
             data() {
                 return {
                     auth: false,
-                    csrf: null
+                    csrf: null,
+                    seller: false
                 }
             },
             methods: {
@@ -48,7 +50,7 @@ const Helper = {
                     if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
                         return 'Yesterday';
 
-                    return Moment(date).format("MM/DD/YY");
+                    return Moment(date).format("MM-DD-YY");
                 },
                 dayOrTime(date) {
                     if (Moment().isSame(Moment(date), 'd'))

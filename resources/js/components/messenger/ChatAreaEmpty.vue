@@ -4,7 +4,7 @@
             <div class="card-body d-flex flex-column">
                 <div class="error">
                     <div class="error__content">
-                        <h4 class="m-0"><i class="material-icons">chat</i></h4>
+                        <h4 class="m-0"><i class="material-icons">error</i></h4>
                         <p class="mb-3">Choose a conversation/contact to start chatting.</p>
                         <button type="button" class="btn btn-success btn-pill" @click="newConversation">
                             <i class="material-icons">add</i> New Conversation

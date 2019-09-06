@@ -1,10 +1,14 @@
 <template>
-    <a href="javascript:void(0)" @click="transitionTo" class="list-group-item list-group-item-action warning">
-        <div class="d-flex">
-            <span class="text-uppercase" style="display: block;">{{ order.code }}</span>
-            <span class="ml-auto">({{ order.productCount }})</span>
+    <a href="javascript:void(0)" @click="transitionTo" class="list-group-item list-group-item-action d-flex">
+        <div class="sc-stats__image">
+            <img class="border rounded" :src="thumbnail">
         </div>
-        <small class="text-muted" style="font-weight: bold;"><i class="material-icons">date_range</i> {{ order.created_at|timeSpecific }}</small>
+        <div class="ml-2 my-auto">
+            <span class="text-uppercase text-ellipsis" style="display: block;">
+                {{ order.code }}
+            </span>
+            <small class="text-muted" style="font-weight: bold;"><i class="material-icons">access_time</i> {{ order.created_at|day }}</small>
+        </div>
     </a>
 </template>
 
@@ -32,6 +36,12 @@
             },
             route() {
                 return `/me/orders/${this.order.code}`;
+            },
+            indicator() {
+                return {
+                    'text-success': this.order.paidFor,
+                    'text-warning': !this.order.paidFor
+                };
             }
         },
         methods: {

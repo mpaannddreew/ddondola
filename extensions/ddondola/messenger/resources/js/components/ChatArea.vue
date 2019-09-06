@@ -11,7 +11,7 @@
                     </div>
                     <div class="error" v-if="loaded && !conversation">
                         <div class="error__content">
-                            <h4 class="m-0"><i class="material-icons">chat</i></h4>
+                            <h4 class="m-0"><i class="material-icons">error</i></h4>
                             <p class="mb-3">You have not started a conversation with this entity.</p>
                             <button type="button" class="btn btn-success btn-pill" @click="startConversation">
                                 <i class="material-icons">check_box</i> Start Conversation
@@ -37,8 +37,8 @@
                             </template>
                             <template v-else-if="!hasMessages && messagesLoaded">
                                 <div align="center" class="p-4">
-                                    <h4 class="m-0"><i class="material-icons">chat</i></h4>
-                                    <p class="mb-0">Empty conversation.</p>
+                                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                                    <p class="mb-0">No Chats!</p>
                                 </div>
                             </template>
                             <div class="chats" v-else-if="hasMessages && messagesLoaded" id="chats">

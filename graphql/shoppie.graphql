@@ -166,7 +166,8 @@ type Order {
     products(shop: String): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@orderProducts")
     productCount: Int! @method(name: "productCount")
     currencyCode: String! @method(name: "currencyCode")
-    firstProduct: Product! @method(name: "firstProduct")
+    firstProduct(shop: String): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@firstProduct")
+    cancelled(shop: String): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@cancelled")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -230,6 +231,17 @@ input OrderUpdate {
     actor: Actor!
 }
 
+extend type Query @middleware(checks: ["auth:api"]) {
+    productCategory(id: ID! @eq): ProductCategory! @find(model: "Shoppie\\ProductCategory")
+    productSubCategory(id: ID! @eq): ProductSubCategory! @find(model: "Shoppie\\ProductSubCategory")
+    iLikeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@iLikeShop")
+    inCart(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@inCart")
+    isFavorite(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@isFavorite")
+    order(order: String!): Order @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@order")
+    featuredProducts(count: Int): [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@featuredProducts")
+    featuredShops(count: Int): [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@featuredShops")
+}
+
 extend type Query {
     shopCategories: [ShopCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@ShopCategories")
     shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
@@ -237,19 +249,11 @@ extend type Query {
     shops(filters: ShopFilter myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
     product(id: ID! @eq): Product! @find(model: "Shoppie\\Product")
     products(category: String filters: ProductFilter myCountry: Boolean): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
-    productCategory(id: ID! @eq): ProductCategory! @find(model: "Shoppie\\ProductCategory")
-    productSubCategory(id: ID! @eq): ProductSubCategory! @find(model: "Shoppie\\ProductSubCategory")
-    iLikeShop(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@iLikeShop")
-    inCart(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@inCart")
-    isFavorite(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@isFavorite")
     searchProducts(name: String!): [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchProducts")
     searchShops(name: String!): [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchShops")
-    order(order: String!): Order @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@order")
-    featuredProducts(count: Int): [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@featuredProducts")
-    featuredShops(count: Int): [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@featuredShops")
 }
 
-extend type Mutation {
+extend type Mutation @middleware(checks: ["auth:api"]) {
     createBrand(shop: String! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createBrand")
     editBrand(brandId: ID! brand: ShopResource!): ProductBrand! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@editBrand")
     createCategory(shop: String! category: ShopResource!): ProductCategory! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createCategory")

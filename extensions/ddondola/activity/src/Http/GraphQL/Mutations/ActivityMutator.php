@@ -25,10 +25,12 @@ class ActivityMutator
     {
         $id = collect($args["entity"])->get('id');
         if (collect($args["entity"])->get('type') == 'shop' ) {
-            return app(ShopRepository::class)->id($id)->review($context->user(), $args["review"]);
+            $reviewable = app(ShopRepository::class)->id($id);
         } else {
-            return app(ProductRepository::class)->id($id)->review($context->user(), $args["review"]);
+            $reviewable = app(ProductRepository::class)->id($id);
         }
+
+        return app(ReviewRepository::class)->create($reviewable, $context->user(), $args["review"]);
     }
 
     /**

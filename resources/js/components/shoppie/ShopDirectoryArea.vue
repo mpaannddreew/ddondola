@@ -11,7 +11,7 @@
                             <option value="asc">Ascending</option>
                             <option value="desc">Descending</option>
                         </select>
-                        <a :href="newShopUrl" class="btn btn-sm btn-success ml-auto">
+                        <a :href="newShopUrl" class="btn btn-sm btn-success ml-auto" v-if="auth && seller">
                             <i class="material-icons">add</i> New Shop
                         </a>
                     </div>

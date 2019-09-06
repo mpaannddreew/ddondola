@@ -13,7 +13,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
             Route::get('wishlist', 'ShoppieController@myWishlist')->name('my.wishlist');
             Route::get('orders/{order?}', 'ShoppieController@myOrders')->name('my.orders');
             Route::get('orders/{order}/invoice', 'ShoppieController@myOrders')->name('my.order.invoice');
-            Route::prefix('shops')->group(function () {
+            Route::prefix('shops')->middleware(['seller'])->group(function () {
                 Route::get('/', 'ShoppieController@myShops')->name('my.shops');
                 Route::get('create', 'ShoppieController@createShop')->name('create.shop');
                 Route::post('save', 'ShoppieController@saveShop')->name('save.shop');
@@ -29,7 +29,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
         Route::get('/', 'ShoppieController@shops')->name('shops');
         Route::get('{shop}', 'ShoppieController@shopProducts')->name('shop');
         Route::get('{shop}/reviews', 'ShoppieController@shopReviews')->name('shop.reviews');
-        Route::middleware(['auth', 'verified'])->group(function () {
+        Route::middleware(['auth', 'verified', 'seller', 'can:update,shop'])->group(function () {
             Route::get('{shop}/dashboard', 'ShoppieController@shopDashboard')->name('my.shop.dashboard');
             Route::prefix('{shop}/inventory')->group(function () {
                 Route::get('/', 'ShoppieController@shopInventory')->name('my.shop.inventory');
@@ -50,11 +50,11 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
         Route::get('/', 'ShoppieController@products')->name('products');
         Route::get('{product}', 'ShoppieController@product')->name('product');
         Route::get('{product}/reviews', 'ShoppieController@productReviews')->name('product.reviews');
-        Route::middleware(['auth', 'verified'])->group(function () {
+        Route::middleware(['auth', 'verified', 'seller', 'can:update,product'])->group(function () {
             Route::get('{product}/dashboard', 'ShoppieController@productDashboard')->name('product.dashboard');
             Route::get('{product}/edit', 'ShoppieController@productEdit')->name('product.edit');
             Route::post('{product}/update', 'ShoppieController@productUpdate')->name('product.update');
-            Route::get('{product}/edit/offers', 'ShoppieController@productEditOffers')->name('product.edit.offers');
+            Route::get('{product}/offers', 'ShoppieController@productEditOffers')->name('product.offers');
             Route::get('{product}/gallery', 'ShoppieController@productGallery')->name('product.gallery');
             Route::post('{product}/gallery', 'ShoppieController@updateProductGallery')->name('product.gallery');
         });
