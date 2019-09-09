@@ -5,12 +5,14 @@ const Helper = {
                 this.auth = options.auth;
                 this.csrf = options.csrf;
                 this.seller = options.seller;
+                this.authCode = options.authCode;
             },
             data() {
                 return {
                     auth: false,
                     csrf: null,
-                    seller: false
+                    seller: false,
+                    authCode: null
                 }
             },
             methods: {
@@ -25,6 +27,9 @@ const Helper = {
                 },
                 commas(num) {
                     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+                },
+                isMe(code) {
+                    return this.lowerCase(code) === this.lowerCase(this.authCode);
                 }
             },
             filters: {
@@ -50,7 +55,7 @@ const Helper = {
                     if (Moment().subtract(1, 'days').isSame(Moment(date), 'd'))
                         return 'Yesterday';
 
-                    return Moment(date).format("MM-DD-YY");
+                    return Moment(date).format("MMM D, YYYY");
                 },
                 dayOrTime(date) {
                     if (Moment().isSame(Moment(date), 'd'))

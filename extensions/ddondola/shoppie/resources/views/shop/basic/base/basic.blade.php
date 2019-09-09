@@ -1,4 +1,4 @@
-@extends('layouts.base.ddondola-no-container')
+@extends('layouts.base.ddondola')
 @section('title'){{ $shop->name }} - @endsection
 @section('meta')
     <meta property="og:type" content="shop"/>

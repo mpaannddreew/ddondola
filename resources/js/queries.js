@@ -607,6 +607,7 @@ window.graphql = {
                 id
                 code
                 name
+                email
                 avatar{
                   url
                 }
@@ -636,6 +637,7 @@ window.graphql = {
                 id
                 code
                 name
+                email
                 avatar{
                   url
                 }
@@ -665,6 +667,7 @@ window.graphql = {
                 id
                 code
                 name
+                email
                 avatar{
                   url
                 }
@@ -694,6 +697,7 @@ window.graphql = {
                 id
                 code
                 name
+                email
                 avatar{
                   url
                 }
@@ -805,6 +809,7 @@ window.graphql = {
             id
             code
             name
+            email
             avatar{
               url
             }

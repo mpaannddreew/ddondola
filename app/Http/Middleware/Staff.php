@@ -16,7 +16,7 @@ class Staff
     public function handle($request, Closure $next)
     {
         if (!$request->user()->is_staff)
-            return redirect()->route('home');
+            return redirect()->route('my.profile');
 
         return $next($request);
     }

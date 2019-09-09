@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/messenger.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('website/welcome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}" />
     <script async defer src="{{ asset('js/buttons.js') }}"></script>
 @endsection
 

@@ -5,10 +5,10 @@
         </td>
         <td class="lo-stats__order-details" :class="{'border-top-0': isFirst}">
             <span>{{ user.name }}</span>
-            <span class="text-uppercase">{{ followers }} | {{ following }}</span>
+            <span>{{ user.email}}</span>
         </td>
         <td :class="{'border-top-0': isFirst}">
-            <div class="btn-group d-table ml-auto" role="group">
+            <div class="btn-group d-table ml-auto" role="group" v-if="!isMe(user.code)">
                 <a href="javascript:void(0)" class="btn btn-sm btn-pill btn-white" title="" v-if="admin" @click="showProfile"><i class="material-icons">account_circle</i> Profile</a>
                 <a :href="userUrl" class="btn btn-sm btn-pill btn-white" title="" v-else><i class="material-icons">account_circle</i> Profile</a>
                 <a v-if="auth && !admin"  href="javascript:void(0)" class="btn btn-sm btn-pill btn-white" @click="performAction" :class="{ disabled: loading }">
@@ -100,5 +100,7 @@
 </script>
 
 <style scoped>
+ td span {
 
+ }
 </style>

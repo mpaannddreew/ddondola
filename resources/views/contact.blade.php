@@ -2,10 +2,9 @@
 @section('title')@parent Contact Us @endsection
 @section('stylesheets')
     @parent
-    <link rel="stylesheet" href="{{ asset('website/contact.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/contact.css') }}" />
 @endsection
 @section('body-class') class="h-100 bg-white" @endsection
-@section('container', '')
 @section('contact-active', 'active')
 @section('main')
     <!-- Map Container -->
@@ -51,8 +50,8 @@
                     <p>Collaboratively administrate channels whereas virtual. Objectively seize scalable metrics whereas proactive e-services.</p>
 
                     <ul class="contact-details">
-                        <li><strong>Phone:</strong> <span>(123) 123-456 </span></li>
-                        <li><strong>E-Mail:</strong> <span><a href="#">office@example.com</a></span></li>
+                        <li><i class="fa fa-phone"></i><strong>Phone:</strong> <span>(123) 123-456 </span></li>
+                        <li><i class="fa fa-envelope-o"></i><strong>E-Mail:</strong> <span><a href="#">office@example.com</a></span></li>
                     </ul>
                 </div>
 

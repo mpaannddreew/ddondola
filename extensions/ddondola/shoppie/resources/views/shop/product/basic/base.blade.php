@@ -1,4 +1,4 @@
-@extends('layouts.base.ddondola-no-container')
+@extends('layouts.base.ddondola')
 @section('title'){{ $product->name }} - @endsection
 @section('body-class') class="h-100" @endsection
 @section('header-navbar-class', '')

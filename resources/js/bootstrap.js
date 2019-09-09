@@ -35,6 +35,8 @@ window.Auth = parseInt(auth.content) === 1;
 let seller = document.head.querySelector('meta[name="seller-state"]');
 window.Seller = parseInt(seller.content) === 1;
 
+window.Code = document.head.querySelector('meta[name="auth-code"]').content;
+
 /**
  * We'll loading the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

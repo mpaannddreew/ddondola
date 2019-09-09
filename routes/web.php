@@ -25,15 +25,15 @@ Auth::routes(['verify' => true]);
 Route::middleware(['auth', 'verified'])->group(function (){
     Route::prefix('me')->group(function (){
         Route::get('/', 'HomeController@profile')->name('my.profile');
-        Route::get('/edit', 'HomeController@profileEdit')->name('my.profile.edit');
-        Route::post('/update', 'HomeController@profileUpdate')->name('my.profile.update');
-        Route::get('/change-password', 'HomeController@showChangePassword')->name('show.change.password');
-        Route::post('/change-password', 'HomeController@updatePassword')->name('update.password');
-        Route::get('/dashboard', 'HomeController@dashboard')->name('my.dashboard');
-        Route::get('/messenger/{participant?}', 'HomeController@messenger')->name('my.messenger');
-        Route::get('/notifications', 'HomeController@notifications')->name('my.notifications');
-        Route::get('/followers', 'HomeController@followers')->name('my.followers');
-        Route::get('/following', 'HomeController@following')->name('my.following');
+        Route::get('edit', 'HomeController@profileEdit')->name('my.profile.edit');
+        Route::post('update', 'HomeController@profileUpdate')->name('my.profile.update');
+        Route::get('change-password', 'HomeController@showChangePassword')->name('show.change.password');
+        Route::post('change-password', 'HomeController@updatePassword')->name('update.password');
+        Route::get('dashboard', 'HomeController@dashboard')->name('my.dashboard');
+        Route::get('messenger/{participant?}', 'HomeController@messenger')->name('my.messenger');
+        Route::get('notifications', 'HomeController@notifications')->name('my.notifications');
+        Route::get('followers', 'HomeController@followers')->name('my.followers');
+        Route::get('following', 'HomeController@following')->name('my.following');
     });
     Route::middleware(['admin.staff'])->prefix('admin')->group(function (){
         Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');

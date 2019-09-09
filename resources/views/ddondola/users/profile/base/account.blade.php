@@ -1,4 +1,4 @@
-@extends('layouts.base.ddondola-no-container')
+@extends('layouts.base.ddondola')
 @section('title') {{ $user->name() }} - @endsection
 @section('stylesheets')
     @parent

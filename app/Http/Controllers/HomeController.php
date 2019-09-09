@@ -26,21 +26,10 @@ class HomeController extends Controller
 
     /**
      * @param Request $request
-     * @param ProductRepository $products
-     * @param ShopRepository $shops
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request, ProductRepository $products, ShopRepository $shops) {
-        if (Auth::check()) {
-            if ($request->user()->hasVerifiedEmail()) {
-                return view('ddondola.home');
-            }
-
-            return redirect()->route('verification.notice');
-        }
-
-//        return redirect()->route('login');
-        return view('welcome', ['products' => $products->featured(6), 'shops' => $shops->featured(6)]);
+    public function index(Request $request) {
+        return view('welcome');
     }
 
     public function dashboard() {

@@ -81,6 +81,17 @@ ul, ol {
     line-height: 24px;
 }
 
+.sidebar-textbox ul.contact-details li i {
+
+    height: 100%;
+    position: absolute;
+    left: 0;
+    font-size: 32px;
+    color: #333;
+    top: 10px;
+
+}
+
 .sidebar-textbox ul.contact-details li strong {
     display: block;
     color: #333;

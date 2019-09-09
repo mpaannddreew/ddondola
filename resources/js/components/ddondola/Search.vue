@@ -45,12 +45,12 @@
                 }
             },
             placeholder() {
-                return 'Search products, shops, categories, brands or people';
+                return 'Search products, shops, categories or brands';
             }
         },
         methods: {
             initSearch() {
-                $('#search').typeahead(this.searchOptions(), this.products(), this.shops(), this.users())
+                $('#search').typeahead(this.searchOptions(), this.products(), this.shops()/*, this.users()*/)
                     .on('typeahead:asyncrequest', this.showSpinner)
                     .on('typeahead:asynccancel typeahead:asyncreceive', this.hideSpinner);
             },
@@ -207,16 +207,14 @@
                         </div>`;
             },
             peopleSuggestion(data) {
-                return this.suggestion(`/people/${data.code}`, data.avatar.url, data.name,
-                    `${data.followerCount} Follower(s) | ${data.followingCount} Following`);
+                return this.suggestion(`/people/${data.code}`, data.avatar.url, data.name, `${data.email}`);
             },
             shopsSuggestion(data) {
-                return this.suggestion(`/shops/${data.code}`, data.avatar.url, data.name,
-                    `${data.category.name} | ${data.reviewCount} Review(s) | ${data.likes} Like(s)`);
+                return this.suggestion(`/shops/${data.code}`, data.avatar.url, data.name, `${data.category.name}`);
             },
             productsSuggestion(data) {
                 return this.suggestion(`/products/${data.code}`, data.images[0].url, data.name,
-                    `${data.reviewCount} Review(s) | ${data.currencyCode} ${this.commas(data.discountedPrice)}`);
+                    `${data.currencyCode} ${this.commas(data.discountedPrice)}`);
             }
         }
     }

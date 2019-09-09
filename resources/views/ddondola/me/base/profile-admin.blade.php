@@ -1,4 +1,5 @@
 @extends('ddondola.me.base.account-admin')
+@section('user-profile-bnr-class', '')
 @section('profile-base-active') active @endsection
 @section('stylesheets')
     @parent
