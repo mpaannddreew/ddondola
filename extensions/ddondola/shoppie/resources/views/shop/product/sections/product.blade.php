@@ -26,7 +26,7 @@
             @yield('product')
         </div>
         <div class="col-md-3 px-1">
-            <shop-information :directory="false" :shop="{{ $product->shop() }}" :with-border="true"></shop-information>
+            <shop-information :directory="false" :shop="{{ $product->shop }}" :with-border="true"></shop-information>
         </div>
     </div>
 </div>

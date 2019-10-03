@@ -23,7 +23,7 @@ class Shop extends Model implements HasMedia
         'active' => 'bool'
     ];
 
-    protected $appends = ['averageRating', 'reviewCount', 'avatar', 'coverPicture'];
+    protected $appends = ['averageRating', 'reviewCount', 'avatar', 'coverPicture', 'brandCount'];
 
     public function getAvatarAttribute() {
         return $this->avatar();
@@ -34,7 +34,7 @@ class Shop extends Model implements HasMedia
     }
 
     public function products() {
-        return $this->hasManyThrough(Product::class, ProductBrand::class, 'shop_id', 'brand_id');
+        return $this->hasMany(Product::class, 'shop_id');
     }
 
     public function productIds() {
@@ -54,7 +54,7 @@ class Shop extends Model implements HasMedia
     }
 
     public function orders() {
-        return Order::whereIn('id', $this->orderIds());
+        return Order::query()->whereIn('id', $this->orderIds());
     }
 
     /**
@@ -105,15 +105,33 @@ class Shop extends Model implements HasMedia
     /**
      * @return int
      */
+    public function categoriesCount() {
+        return $this->categories()->count();
+    }
+
+    /**
+     * @return int
+     */
     public function subCategoriesCount() {
-        return $this->subcategories->count();
+        return $this->subcategories()->count();
     }
 
     /**
      * @return int
      */
     public function productCount() {
-        return $this->products->count();
+        return $this->products()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function brandCount() {
+        return $this->brands()->count();
+    }
+
+    public function getBrandCountAttribute() {
+        return $this->brandCount();
     }
 
     /**

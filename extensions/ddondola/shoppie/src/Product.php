@@ -32,10 +32,10 @@ class Product extends Model implements HasMedia
     /**
      * Shop this product belongs to
      *
-     * @return Shop
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function shop() {
-        return $this->category()->shop;
+        return $this->belongsTo(Shop::class, 'shop_id');
     }
 
     /**
@@ -180,8 +180,8 @@ class Product extends Model implements HasMedia
             return $this->activeOffer()->discount;
         }
 
-        if ($this->shop()->settings('discount')) {
-            return $this->shop()->settings('discount');
+        if ($this->shop->settings('discount')) {
+            return $this->shop->settings('discount');
         }
 
         return 0;
@@ -207,7 +207,7 @@ class Product extends Model implements HasMedia
     }
 
     public function currencyCode() {
-        return $this->shop()->currencyCode();
+        return $this->shop->currencyCode();
     }
 
     /**

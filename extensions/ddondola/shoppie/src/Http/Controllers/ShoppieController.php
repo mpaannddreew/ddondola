@@ -398,7 +398,6 @@ class ShoppieController extends Controller
      */
     public function productUpdate(Request $request, Product $product) {
         $this->validate($request, [
-            'brand' => 'required|numeric',
             'category' => 'required|numeric',
             'name' => 'required|string',
             'price' => 'required|numeric',
@@ -406,7 +405,10 @@ class ShoppieController extends Controller
             'attributes' => 'required|string'
         ]);
 
-        $brand = $this->brands->id($request->input('brand'));
+        $brand = null;
+        if ($request->has('brand') && $request->input('brand'))
+            $brand = $this->brands->id($request->input('brand'));
+
         $category = $this->subcategories->id($request->input('category'));
         $attributes = array_merge(
             $request->only(['name', 'price', 'description', 'quantity']),
@@ -476,7 +478,6 @@ class ShoppieController extends Controller
      */
     public function saveProduct(Request $request, Shop $shop) {
         $this->validate($request, [
-            'brand' => 'required|numeric',
             'category' => 'required|numeric',
             'name' => 'required|string',
             'price' => 'required|numeric',
@@ -485,13 +486,16 @@ class ShoppieController extends Controller
             'description' => 'required|string',
         ]);
 
-        $brand = $this->brands->id($request->input('brand'));
+        $brand = null;
+        if ($request->has('brand') && $request->input('brand'))
+            $brand = $this->brands->id($request->input('brand'));
+
         $category = $this->subcategories->id($request->input('category'));
         $attributes = array_merge(
             $request->only(['name', 'price', 'description', 'quantity']),
             ['settings' => ['attributes' => json_decode($request->input('attributes'))]]
         );
-        $product = $this->products->create($category, $brand, $attributes);
+        $product = $this->products->create($shop, $category, $brand, $attributes);
 
         return redirect()->route('product.gallery', ['product' => $product]);
     }

@@ -33,11 +33,11 @@
                                             <div class="invalid-feedback">{{ $errors->first('name') }}</div>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-12">
                                         <label for="category">Category</label>
                                         <select id="category" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('category') ? ' is-invalid' : '' }}" name="category">
                                             <option></option>
-                                            @foreach($product->shop()->categories as $category)
+                                            @foreach($product->shop->categories as $category)
                                                 <optgroup label="{{ $category->name }}">{{ $category->name }}</optgroup>
                                                 @foreach($category->categories as $subcategory)
                                                     <option value="{{ $subcategory->id }}" @if($subcategory->is($product->subcategory)) selected @endif>{{ $subcategory->name }}</option>
@@ -48,11 +48,12 @@
                                             <div class="invalid-feedback">{{ $errors->first('category') }}</div>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    @if($product->shop->brandCount())
+                                    <div class="form-group col-md-12">
                                         <label for="brand">Brand</label>
                                         <select id="brand" class="form-control form-control-md custom-select custom-select-md {{ $errors->has('brand') ? ' is-invalid' : '' }}" name="brand">
                                             <option></option>
-                                            @foreach($product->shop()->brands as $brand)
+                                            @foreach($product->shop->brands as $brand)
                                                 <option value="{{ $brand->id }}" @if($brand->is($product->brand)) selected @endif>{{ $brand->name }}</option>
                                             @endforeach
                                         </select>
@@ -60,6 +61,7 @@
                                             <div class="invalid-feedback">{{ $errors->first('brand') }}</div>
                                         @endif
                                     </div>
+                                    @endif
                                     <div class="form-group col-md-12">
                                         <label for="price">Price</label>
                                         <input type="text" class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}" id="price" name="price" placeholder="{{ $product->currencyCode() }}" value="{{ $product->price }}">

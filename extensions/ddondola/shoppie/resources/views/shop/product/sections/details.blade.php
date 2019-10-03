@@ -23,10 +23,12 @@
             <strong class="text-muted d-block">Description</strong>
             <span>{{ $product->description }}</span>
         </li>
+        @if($product->brand)
         <li class="list-group-item p-4 d-flex">
             <strong class="text-muted d-block">Brand</strong>
             <span class="ml-auto">{{ $product->brand->name }}</span>
         </li>
+        @endif
         <li class="list-group-item p-4 d-flex">
             <strong class="text-muted d-block">Category</strong>
             <span class="ml-auto">{{ $product->category()->name }}</span>

@@ -23,7 +23,7 @@
                                     <li class="nav-item">
                                         <a href="javascript:void(0)" class="nav-link" :class="{active: categoriesActive}" @click="showCategories"><i class="material-icons">folder_open</i> Categories</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" v-if="shop.brandCount">
                                         <a href="javascript:void(0)" class="nav-link" :class="{active: brandsActive}" @click="showBrands"><i class="material-icons">check_box</i> Brands</a>
                                     </li>
                                 </ul>

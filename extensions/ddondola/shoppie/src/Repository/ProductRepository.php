@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Shoppie\Product;
 use Shoppie\ProductSubCategory as Category;
 use Shoppie\ProductBrand as Brand;
+use Shoppie\Shop;
 
 class ProductRepository
 {
@@ -39,13 +40,19 @@ class ProductRepository
     /**
      * Create a new product
      *
+     * @param Shop $shop
      * @param Category $category
      * @param Brand $brand
      * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model|Product
      */
-    public function create(Category $category, Brand $brand, array $attributes) {
-        $product = $category->products()->create(array_merge($attributes, ['brand_id' => $brand->id]));
+    public function create(Shop $shop, Category $category, Brand $brand = null, array $attributes) {
+        $attributes = array_merge($attributes, ['subcategory_id' => $category->getKey()]);
+        if ($brand) {
+            $attributes['brand_id'] = $brand->getKey();
+        }
+
+        $product = $shop->products()->create($attributes);
         return $product;
     }
 
@@ -58,8 +65,12 @@ class ProductRepository
      * @param array $attributes
      * @return Product
      */
-    public function update(Product $product, Category $category, Brand $brand, array $attributes) {
-        $product->update(array_merge(['subcategory_id' => $category->getKey(), 'brand_id' => $brand->getKey()], $attributes));
+    public function update(Product $product, Category $category, Brand $brand = null, array $attributes) {
+        $attributes = array_merge(['subcategory_id' => $category->getKey()], $attributes);
+        if ($brand) {
+            $attributes['brand_id'] = $brand->getKey();
+        }
+        $product->update($attributes);
 
         return $product;
     }

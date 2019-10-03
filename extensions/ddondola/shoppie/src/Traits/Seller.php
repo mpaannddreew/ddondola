@@ -49,6 +49,6 @@ trait Seller
 
 
     public function ownsProduct(Product $product) {
-        return $this->manages($product->shop());
+        return $this->manages($product->shop);
     }
 }

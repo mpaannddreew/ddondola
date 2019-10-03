@@ -20,7 +20,7 @@
         <a href="{{ route('my.shop.sub-categories', ['shop' => $shop]) }}" class="nav-link @yield('sub-categories-active')"><i class="material-icons">folder_open</i> Sub Categories</a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('my.shop.brands', ['shop' => $shop]) }}" class="nav-link @yield('brands-active')"><i class="material-icons">folder_open</i> Brands</a>
+        <a href="{{ route('my.shop.brands', ['shop' => $shop]) }}" class="nav-link @yield('brands-active')"><i class="material-icons">folder_open</i> Brands (Optional)</a>
     </li>
     <li class="nav-item">
         <a href="{{ route('my.shop.inventory.new-product', ['shop' => $shop]) }}" class="nav-link @yield('new-product-active')"><i class="material-icons">add</i> New Product</a>

@@ -31,6 +31,7 @@ type Shop implements Muddondozi {
     subcategories: [ProductSubCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedSubcategories")
     subCategoriesCount: Int! @method(name: "subCategoriesCount")
     brands: [ProductBrand!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedBrands")
+    brandCount: Int! @method(name: "brandCount")
     reviews: [Review!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@paginatedReviews")
     reviewCount: Int! @method(name: "reviewCount")
     averageRating: String! @method(name: "averageRating")
