@@ -405,10 +405,11 @@ class ShoppieQuery
      */
     public function searchProducts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $value = "%" . collect($args)->get("name") . "%";
-        // todo search including localization
-        return $this->status(app(ProductRepository::class)->builder()->has('media'))
-            ->where("name", "like", $value)
+        return $this->status($this->search(app(ProductRepository::class)->builder()->has('media'), "%" . collect($args)->get("name") . "%"))->get();
+    }
+
+    protected function search($builder, $value) {
+        return $builder->where("name", "like", $value)
             ->orWhereHas('subcategory', function($q) use($value) {
                 $q->where('name', 'like', $value)
                     ->orWhereHas('category', function($q1) use($value) {
@@ -418,12 +419,12 @@ class ShoppieQuery
             ->orWhereHas('brand', function($q) use($value) {
                 $q->where('name', 'like', $value)
                     ->orWhereHas('shop', function($q1) use($value) {
-                    $q1->where('name', 'like', $value)
-                        ->orWhereHas('category', function($q2) use($value) {
-                            $q2->where('name', 'like', $value);
-                        });
-                });
-            })->get();
+                        $q1->where('name', 'like', $value)
+                            ->orWhereHas('category', function($q2) use($value) {
+                                $q2->where('name', 'like', $value);
+                            });
+                    });
+            });
     }
 
     /**
@@ -574,25 +575,33 @@ class ShoppieQuery
             return $builder;
 
         $filters = collect($args["filters"]);
-        $brandIds = json_decode($filters->get('brandIds'));
-        $subCategoryIds = json_decode($filters->get('subCategoryIds'));
-        $categoryIds = json_decode($filters->get('categoryIds'));
         $column = "created_at";
         $order = "desc";
-        if (count($subCategoryIds)) {
-            $builder = $builder->whereIn('subcategory_id', $subCategoryIds);
+
+        if ($filters->has('name')) {
+//            $builder = $builder->where("name", "like", "%" . $filters->get("name") . "%");
         }
 
-        if (count($categoryIds)) {
-            $builder = $builder->whereHas('brand', function($q) use($categoryIds) {
-                $q->whereHas('shop', function($q1) use($categoryIds) {
-                    $q1->whereIn('category_id', $categoryIds);
+        if ($filters->has('subCategoryIds')) {
+            $subCategoryIds = json_decode($filters->get('subCategoryIds'));
+            if (count($subCategoryIds))
+                $builder = $builder->whereIn('subcategory_id', $subCategoryIds);
+        }
+
+        if ($filters->has('categoryIds')) {
+            $categoryIds = json_decode($filters->get('categoryIds'));
+            if (count($categoryIds))
+                $builder = $builder->whereHas('brand', function($q) use($categoryIds) {
+                    $q->whereHas('shop', function($q1) use($categoryIds) {
+                        $q1->whereIn('category_id', $categoryIds);
+                    });
                 });
-            });
         }
 
-        if (count($brandIds)) {
-            $builder = $builder->whereIn('brand_id', $brandIds);
+        if ($filters->has('brandIds')) {
+            $brandIds = json_decode($filters->get('brandIds'));
+            if (count($brandIds))
+                $builder = $builder->whereIn('brand_id', $brandIds);
         }
 
         if ($filters->get('ordering') == 'oldest') {

@@ -91,7 +91,7 @@
                 this.filter = '';
             },
             filter(data) {
-                Bus.$emit("filter-products", data);
+                Bus.$emit("filter-changed", data);
             }
         }
     }

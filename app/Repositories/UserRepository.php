@@ -83,6 +83,6 @@ class UserRepository
     }
 
     public function builder() {
-        return User::select();
+        return User::query();
     }
 }

@@ -59,6 +59,7 @@
                 paginatorInfo: null,
                 brandIds: [],
                 subCategoryIds: [],
+                searchFilter: ''
             }
         },
         props: {
@@ -84,6 +85,17 @@
                     brandIds: JSON.stringify(this.brandIds),
                     subCategoryIds: JSON.stringify(this.subCategoryIds)
                 }
+            },
+            query() {
+                return graphql.shopProducts;
+            },
+            variables() {
+                var variables = {shop: this.shop, filters: this.filters, count: graphql.columnCount, page: this.page};
+                if (this.searchFilter) {
+                    variables['filters']['name'] = this.searchFilter;
+                }
+                variables['inventory'] = false;
+                return variables;
             }
         },
         methods: {
@@ -91,11 +103,12 @@
                 this.products = [];
                 this.loaded = false;
                 axios.post(graphql.api, {
-                    query: graphql.shopProducts,
-                    variables: {shop: this.shop, filters: this.filters, inventory: false, count: graphql.columnCount, page: this.page}
+                    query: this.query,
+                    variables: this.variables
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {
+                console.log(JSON.stringify(response.data));
                 this.loaded = true;
                 this.products = response.data.data.shop.products.data;
                 this.paginatorInfo = response.data.data.shop.products.paginatorInfo;
@@ -113,7 +126,7 @@
             listen() {
                 Bus.$on("sub-category-ids", this.showFromSubcategory);
                 Bus.$on("brand-ids", this.showFromBrands);
-                Bus.$on("filter-products", this.filterProducts);
+                Bus.$on("filter-changed", this.filterChanged);
             },
             showFromSubcategory(ids) {
                 this.subCategoryIds = ids;
@@ -125,14 +138,24 @@
                 this.subCategoryIds = [];
                 this.loadPage(1);
             },
-            filterProducts(filter) {
-
+            filterChanged(filter) {
+                this.searchFilter = filter;
+            },
+            filterProducts() {
+                this.loadPage(1);
             }
         },
         watch: {
             ordering(data) {
                 this.loadPage(1);
-            }
+            },
+            searchFilter: _.debounce(function(data) {
+                if (data) {
+                    this.filterProducts();
+                }else {
+                    this.loadPage(1);
+                }
+            }, 1000)
         }
     }
 </script>

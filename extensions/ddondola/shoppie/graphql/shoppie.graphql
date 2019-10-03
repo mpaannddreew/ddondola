@@ -203,6 +203,7 @@ input NewAttribute {
 }
 
 input ProductFilter {
+    name: String
     ordering: String
     brandIds: String
     subCategoryIds: String
