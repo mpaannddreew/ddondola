@@ -1,8 +1,7 @@
 <?php
 
 namespace Shoppie\Observers;
-use Bank\Jobs\CompleteEscrow;
-use Bank\Jobs\ReverseEscrow;
+use Bank\Bank;
 use Shoppie\OrderProduct;
 use Shoppie\Repository\OrderRepository;
 
@@ -14,12 +13,19 @@ class OrderProductObserver
     protected $orders;
 
     /**
+     * @var Bank
+     */
+    protected $bank;
+
+    /**
      * OrderProductObserver constructor.
      * @param OrderRepository $orders
+     * @param Bank $bank
      */
-    public function __construct(OrderRepository $orders)
+    public function __construct(OrderRepository $orders, Bank $bank)
     {
         $this->orders = $orders;
+        $this->bank = $bank;
     }
 
     /**
@@ -46,7 +52,7 @@ class OrderProductObserver
         if ($product->orderPivot->cancelled) {
             if ($escrow) {
                 if (!$escrow->settled()) {
-                    ReverseEscrow::dispatch($escrow);
+                    $this->bank->reverseEscrow($escrow);
                 }
             }
         }
@@ -64,7 +70,7 @@ class OrderProductObserver
         if ($product->orderPivot->receipt_confirmed && $product->orderPivot->delivery_confirmed) {
             if ($escrow) {
                 if (!$escrow->settled()) {
-                    CompleteEscrow::dispatch($escrow);
+                    $this->bank->completeEscrow($escrow);
                 }
             }
         }

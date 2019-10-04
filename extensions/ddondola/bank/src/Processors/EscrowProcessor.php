@@ -9,7 +9,9 @@
 namespace Bank\Processors;
 
 
+use Bank\Bank;
 use Bank\Escrow;
+use Bank\Jobs\Transfer;
 use Bank\Repositories\EscrowRepository;
 use Illuminate\Support\Facades\DB;
 use Shoppie\Order;
@@ -29,14 +31,21 @@ class EscrowProcessor
     protected $orders;
 
     /**
+     * @var Bank
+     */
+    protected $bank;
+
+    /**
      * EscrowProcessor constructor.
      * @param EscrowRepository $escrows
      * @param OrderRepository $orders
+     * @param Bank $bank
      */
-    public function __construct(EscrowRepository $escrows, OrderRepository $orders)
+    public function __construct(EscrowRepository $escrows, OrderRepository $orders, Bank $bank)
     {
         $this->escrows = $escrows;
         $this->orders = $orders;
+        $this->bank = $bank;
     }
 
     /**
@@ -84,6 +93,8 @@ class EscrowProcessor
 
         DB::transaction(function () use ($escrow) {
             $this->escrows->update($escrow, ['reversed' => true]);
+            // todo broadcast cancellation
+            Transfer::dispatchNow($this->bank->escrowAccount(), $escrow->source, $escrow->amount, "Escrow rollback");
         });
     }
 
@@ -99,6 +110,15 @@ class EscrowProcessor
 
         DB::transaction(function () use ($escrow) {
             $this->escrows->update($escrow, ['completed' => true]);
+
+            $product = $this->orders
+                ->id($escrow->meta('order'))
+                ->getProduct($escrow->meta('product'));
+
+            // todo broadcast payout
+            Transfer::dispatchNow($this->bank->escrowAccount(), $escrow->destination, $product->orderPivot->payout(), "Escrow settlement payout");
+            if ($product->orderPivot->commission())
+                Transfer::dispatchNow($this->bank->escrowAccount(), $this->bank->adminAccount(), $product->orderPivot->commission(), "Escrow settlement commission");
         });
     }
 }

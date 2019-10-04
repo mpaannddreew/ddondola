@@ -18,10 +18,10 @@ class BankController extends Controller
     }
 
     public function passed(Request $request) {
-
+        // todo implement successful payment
     }
 
     public function failed(Request $request) {
-
+        // todo implement failed payment
     }
 }

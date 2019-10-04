@@ -49,19 +49,7 @@ class EscrowObserver
      */
     public function updated(Escrow $escrow)
     {
-        if ($escrow->completed) {
-            $product = $this->orders
-                ->id($escrow->meta('order'))
-                ->getProduct($escrow->meta('product'));
-
-            Transfer::dispatchNow($this->bank->escrowAccount(), $escrow->destination, $product->orderPivot->payout(), "Escrow settlement payout");
-            Transfer::dispatchNow($this->bank->escrowAccount(), $this->bank->adminAccount(), $product->orderPivot->commission(), "Escrow settlement commission");
-        }
-
-        if ($escrow->reversed) {
-            // todo broadcast cancellation
-            Transfer::dispatchNow($this->bank->escrowAccount(), $escrow->source, $escrow->amount, "Escrow rollback");
-        }
+        //
     }
 
     /**

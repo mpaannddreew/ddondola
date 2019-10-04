@@ -33,7 +33,7 @@ class OrderProduct extends Pivot
      * @return float|int
      */
     public function commission() {
-        return $this->sum() * ((int)config('shoppie.commission')/100);
+        return $this->sum() * ((int)config('shoppie.commission', 0)/100);
     }
 
     /**
