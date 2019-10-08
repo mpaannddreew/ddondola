@@ -5,17 +5,17 @@
     <div class="container py-2">
         <div class="row">
             <div class="col-md-8 offset-2">
-                @if(!$shop->brands()->count() || !$shop->categories()->count() || !$shop->subcategories()->count())
+                @if(!$shop->categoriesCount() || !$shop->subCategoriesCount())
                     <div class="card card-small border">
                         <div class="card-body">
                             <div align="center">
                                 <h4 class="m-0"><i class="material-icons">error</i></h4>
                                 <p class="mb-3">
-                                    You have not added any @if(!$shop->brands()->count()) brands @elseif(!$shop->categories()->count()) categories @elseif(!$shop->subcategories()->count()) subcategories @endif yet!
+                                    You have not added any @if(!$shop->categoriesCount()) categories @elseif(!$shop->subCategoriesCount()) subcategories @endif yet!
                                 </p>
-                                <a href="@if(!$shop->brands()->count()) {{ route('my.shop.brands', ['shop' => $shop]) }} @elseif(!$shop->categories()->count()) {{ route('my.shop.categories', ['shop' => $shop]) }} @elseif(!$shop->subcategories()->count()) {{ route('my.shop.sub-categories', ['shop' => $shop]) }} @endif" class="btn btn-success btn-pill">
+                                <a href="@if(!$shop->categoriesCount()) {{ route('my.shop.categories', ['shop' => $shop]) }} @elseif(!$shop->subCategoriesCount()) {{ route('my.shop.sub-categories', ['shop' => $shop]) }} @endif" class="btn btn-success btn-pill">
                                     <i class="fa fa-plus"></i>
-                                    Add @if(!$shop->brands()->count()) brands @elseif(!$shop->categories()->count()) categories @elseif(!$shop->subcategories()->count()) subcategories @endif
+                                    Add @if(!$shop->categoriesCount()) categories @elseif(!$shop->subCategoriesCount()) subcategories @endif
                                 </a>
                             </div>
                         </div>
@@ -76,13 +76,6 @@
                                             <input required type="text" class="form-control {{ $errors->has('price') ? ' is-invalid' : '' }}" id="price" name="price" placeholder="{{ $shop->currencyCode() }}" value="{{ old('price') }}">
                                             @if ($errors->has('price'))
                                                 <div class="invalid-feedback">{{ $errors->first('price') }}</div>
-                                            @endif
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label for="quantity">Quantity</label>
-                                            <input required type="text" class="form-control {{ $errors->has('quantity') ? ' is-invalid' : '' }}" id="quantity" name="quantity" value="{{ old('quantity') }}">
-                                            @if ($errors->has('quantity'))
-                                                <div class="invalid-feedback">{{ $errors->first('quantity') }}</div>
                                             @endif
                                         </div>
                                         <div class="form-group col-md-12">

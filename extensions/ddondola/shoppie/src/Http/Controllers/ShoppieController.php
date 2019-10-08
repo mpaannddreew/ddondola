@@ -119,12 +119,11 @@ class ShoppieController extends Controller
             'address' => 'required'
         ]);
 
-        $request->user()->newShop(
-            $this->categories->id($request->input('category')), [
-            'name' => $request->input('name'),
-            'profile' => $request->only(['phone_number', 'email', 'about', 'address']),
-            'active' => 1
-        ]);
+        $this->shops->create(
+            $request->user(),
+            $this->categories->id($request->input('category')),
+            array_merge($request->only(['name']), ['profile' => $request->only(['phone_number', 'email', 'about', 'address']), 'active' => 1])
+        );
 
         return redirect()->route('my.shops');
     }
@@ -338,7 +337,7 @@ class ShoppieController extends Controller
                 abort(404);
         }
 
-        if (!$product->active())
+        if (!$product->active)
             abort(404);
 
         return view('shoppie::shop.product.basic.index', ['product' => $product]);
@@ -360,7 +359,7 @@ class ShoppieController extends Controller
                 abort(404);
         }
 
-        if (!$product->active())
+        if (!$product->active)
             abort(404);
 
         return view('shoppie::shop.product.basic.reviews', ['product' => $product]);
@@ -401,7 +400,6 @@ class ShoppieController extends Controller
             'category' => 'required|numeric',
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'quantity' => 'required|numeric|min:5',
             'attributes' => 'required|string'
         ]);
 
@@ -411,7 +409,7 @@ class ShoppieController extends Controller
 
         $category = $this->subcategories->id($request->input('category'));
         $attributes = array_merge(
-            $request->only(['name', 'price', 'description', 'quantity']),
+            $request->only(['name', 'price', 'description']),
             ['settings' => ['attributes' => json_decode($request->input('attributes'))]]
         );
         $this->products->update($product,$category, $brand, $attributes);
@@ -428,6 +426,17 @@ class ShoppieController extends Controller
      */
     public function productEditOffers(Request $request, Product $product) {
         return view('shoppie::shop.product.admin.edit-offers', ['product' => $product]);
+    }
+
+    /**
+     * Product stock
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function productStock(Request $request, Product $product) {
+        return view('shoppie::shop.product.admin.stock', ['product' => $product]);
     }
 
     /**
@@ -482,7 +491,6 @@ class ShoppieController extends Controller
             'name' => 'required|string',
             'price' => 'required|numeric',
             'attributes' => 'required|string',
-            'quantity' => 'required|numeric|min:5',
             'description' => 'required|string',
         ]);
 
@@ -492,7 +500,7 @@ class ShoppieController extends Controller
 
         $category = $this->subcategories->id($request->input('category'));
         $attributes = array_merge(
-            $request->only(['name', 'price', 'description', 'quantity']),
+            $request->only(['name', 'price', 'description']),
             ['settings' => ['attributes' => json_decode($request->input('attributes'))]]
         );
         $product = $this->products->create($shop, $category, $brand, $attributes);

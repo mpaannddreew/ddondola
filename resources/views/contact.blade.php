@@ -25,7 +25,7 @@
                     <ul>
                         <li>John Street 304</li>
                         <li>New York</li>
-                        <li>Phone (123) 123-456 </li>
+                        <li>Tel (+256) 1234567</li>
                     </ul>
                 </div>
             </div>
@@ -50,8 +50,8 @@
                     <p>Collaboratively administrate channels whereas virtual. Objectively seize scalable metrics whereas proactive e-services.</p>
 
                     <ul class="contact-details">
-                        <li><i class="fa fa-phone"></i><strong>Phone:</strong> <span>(123) 123-456 </span></li>
-                        <li><i class="fa fa-envelope-o"></i><strong>E-Mail:</strong> <span><a href="#">office@example.com</a></span></li>
+                        <li><i class="fa fa-phone"></i><strong>Tel:</strong> <span>(+256) 1234567 </span></li>
+                        <li><i class="fa fa-envelope-o"></i><strong>E-mail:</strong> <span><a href="mailto:support@ddondola.com">support@ddondola.com</a></span></li>
                     </ul>
                 </div>
 

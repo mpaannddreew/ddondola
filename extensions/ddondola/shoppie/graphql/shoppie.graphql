@@ -117,22 +117,41 @@ type OrderPivot {
     updated_at: DateTime!
 }
 
+type Stock {
+    id: ID!
+    quantity: String!
+    note: String
+    in: Boolean!
+    out: Boolean!
+    product: Product! @belongsTo
+    user: User! @belongsTo
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+input StockUpdate {
+    in: Boolean!
+    out: Boolean!
+    quantity: Int!
+    note: String!
+}
+
 type Product {
     id: ID!
     code: String!
     name: String!
     category: ProductCategory! @method(name: "category")
     subcategory: ProductSubCategory! @belongsTo
-    brand: ProductBrand! @belongsTo
+    brand: ProductBrand @belongsTo
     price: String!
     description: String
     quantity: Int!
     active: Boolean!
-    status: String! @method(name: "status")
     settings: ProductSettings!
     offers(ordering: String): [ProductOffer!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@productOffers")
     relatedProducts: [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@relatedProducts")
     reviews: [Review!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@paginatedReviews")
+    stock(type: String): [Stock] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedStock")
     reviewCount: Int! @method(name: "reviewCount")
     averageRating: String! @method(name: "averageRating")
     orders: [Order!] @belongsToMany(type: "paginator")
@@ -271,4 +290,5 @@ extend type Mutation @middleware(checks: ["auth:api"]) {
     removeFromFavorites(id: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@removeFromFavorites")
     createProductOffer(productId: ID! offer: NewOffer!): ProductOffer @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProductOffer")
     updateOrder(update: OrderUpdate!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateOrder")
+    updateStock(productId: ID! stock: StockUpdate!): Stock! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateStock")
 }

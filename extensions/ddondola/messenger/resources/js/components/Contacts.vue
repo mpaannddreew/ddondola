@@ -7,7 +7,7 @@
             </div>
             <div align="center" v-else-if="!hasContacts && loaded">
                 <h4 class="m-0"><i class="material-icons">error</i></h4>
-                <p class="m-0">No contacts.</p>
+                <p class="m-0">You have no contacts!</p>
             </div>
         </div>
         <ul class="contact-list" v-else-if="hasContacts && loaded">

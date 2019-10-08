@@ -39,7 +39,7 @@
                             </a>
                         </template>
                         <template v-else>
-                            <a href="javascript:void(0)" @click="removeFromCart" class="btn btn-white">
+                            <a href="javascript:void(0)" @click="confirm" class="btn btn-white">
                                 <i class="material-icons">delete</i>
                             </a>
                             <a href="javascript:void(0)" @click="editCart" class="btn btn-white text-info">
@@ -158,6 +158,25 @@
                 if (this.product.id !== id) {
                     this.otherProcessing = false;
                 }
+            },
+            confirm() {
+                this.dialog("Remove from cart").then((result) => {
+                    if (result.value) {
+                        this.removeFromCart();
+                    }
+                });
+            },
+            dialog(title) {
+                return Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action cannot be undone!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#17c671',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: title,
+                    cancelButtonText: "Close"
+                });
             }
         },
         watch: {

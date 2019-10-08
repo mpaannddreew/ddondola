@@ -23,7 +23,7 @@ class Shop extends Model implements HasMedia
         'active' => 'bool'
     ];
 
-    protected $appends = ['averageRating', 'reviewCount', 'avatar', 'coverPicture', 'brandCount'];
+    protected $appends = ['averageRating', 'reviewCount', 'avatar', 'coverPicture', 'brandCount', 'subCategoriesCount'];
 
     public function getAvatarAttribute() {
         return $this->avatar();
@@ -116,6 +116,10 @@ class Shop extends Model implements HasMedia
         return $this->subcategories()->count();
     }
 
+    public function getSubCategoriesCountAttribute() {
+        return $this->subCategoriesCount();
+    }
+
     /**
      * @return int
      */
@@ -138,7 +142,7 @@ class Shop extends Model implements HasMedia
      * @return int
      */
     public function likeCount() {
-        return $this->likers->count();
+        return $this->likers()->count();
     }
 
     public function avatar() {
@@ -173,6 +177,6 @@ class Shop extends Model implements HasMedia
     }
 
     public function contactIds() {
-        return $this->likers->pluck('id');
+        return $this->likers()->pluck('id');
     }
 }

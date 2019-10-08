@@ -7,7 +7,7 @@
             </div>
             <div align="center" v-else-if="!hasConversations && loaded">
                 <h4 class="m-0"><i class="material-icons">error</i></h4>
-                <p class="m-0">No conversations.</p>
+                <p class="m-0">You have no conversations!</p>
             </div>
         </div>
         <ul class="contact-list" v-else-if="hasConversations && loaded">

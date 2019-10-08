@@ -7,7 +7,7 @@
             </div>
             <div align="center" v-else-if="!showCategories && loaded">
                 <h4 class="m-0"><i class="material-icons">error</i></h4>
-                <p class="m-0">No categories.</p>
+                <p class="m-0">Categories not defined yet!</p>
             </div>
         </div>
         <div id="accordion" v-if="loaded && showCategories">

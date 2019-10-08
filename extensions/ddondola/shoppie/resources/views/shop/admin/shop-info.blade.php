@@ -15,7 +15,7 @@
                             <div class="form-row mx-4">
                                 <div class="col-lg-12">
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label for="category">Shop Category</label>
                                             <select class="form-control form-control-md custom-select custom-select-md {{ $errors->has('category') ? ' is-invalid' : '' }}"
                                                     id="category" name="category">
@@ -28,21 +28,21 @@
                                                 <div class="invalid-feedback">{{ $errors->first('category') }}</div>
                                             @endif
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label for="name">Name</label>
                                             <input type="text" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" value="{{ $shop->name }}">
                                             @if ($errors->has('name'))
                                                 <div class="invalid-feedback">{{ $errors->first('name') }}</div>
                                             @endif
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label for="phone_number">Phone Number</label>
                                             <input type="text" class="form-control {{ $errors->has('phone_number') ? ' is-invalid' : '' }}" id="phone_number" name="phone_number" value="{{ $shop->profile('phone_number') }}">
                                             @if ($errors->has('phone_number'))
                                                 <div class="invalid-feedback">{{ $errors->first('phone_number') }}</div>
                                             @endif
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label for="email">Email</label>
                                             <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" value="{{ $shop->profile('email') }}">
                                             @if ($errors->has('email'))

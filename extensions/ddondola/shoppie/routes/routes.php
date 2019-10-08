@@ -55,6 +55,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
             Route::get('{product}/edit', 'ShoppieController@productEdit')->name('product.edit');
             Route::post('{product}/update', 'ShoppieController@productUpdate')->name('product.update');
             Route::get('{product}/offers', 'ShoppieController@productEditOffers')->name('product.offers');
+            Route::get('{product}/stock', 'ShoppieController@productStock')->name('product.stock');
             Route::get('{product}/gallery', 'ShoppieController@productGallery')->name('product.gallery');
             Route::post('{product}/gallery', 'ShoppieController@updateProductGallery')->name('product.gallery');
         });

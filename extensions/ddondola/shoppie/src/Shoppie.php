@@ -62,6 +62,7 @@ class Shoppie
             if ((int)$quantity > $current_quantity) {
                 $quantity_diff = (int)$quantity - $current_quantity;
                 if ($quantity_diff > $product->quantity()) {
+                    // todo notify low quantity
                     return false;
                 }
             }

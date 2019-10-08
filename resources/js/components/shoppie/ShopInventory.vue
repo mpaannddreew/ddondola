@@ -37,7 +37,6 @@
                 <tr>
                     <th>Details</th>
                     <th></th>
-                    <th class="text-center">Status</th>
                     <th class="text-center">Quantity</th>
                     <th class="text-center" v-if="!admin">Brand</th>
                     <th class="text-center" v-if="!admin">Category</th>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Overtrue\LaravelFollow\Traits\CanBeFavorited;
 use Shoppie\Repository\ProductOfferRepository;
 use Shoppie\Repository\ProductRepository;
+use Shoppie\Repository\StockRepository;
 use Shoppie\Traits\Identifier;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -18,13 +19,12 @@ class Product extends Model implements HasMedia
 {
     use CanBeFavorited, Identifier, Reviewable, HasMediaTrait;
 
-    protected $fillable = ['name', 'code', 'brand_id', 'subcategory_id', 'description', 'price', 'active', 'settings', 'quantity'];
+    protected $fillable = ['name', 'code', 'brand_id', 'subcategory_id', 'description', 'price', 'active', 'settings'];
 
     protected $casts = [
         'active' => 'bool',
         'settings' => 'array',
-        'price' => 'integer',
-        'quantity' => 'integer'
+        'price' => 'integer'
     ];
 
     protected $appends = ['averageRating', 'reviewCount', 'firstImageUrl'];
@@ -86,12 +86,33 @@ class Product extends Model implements HasMedia
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stock() {
+        return $this->hasMany(Stock::class, 'product_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function stockIn() {
+        return $this->stock()->where('in', 1)->get();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function stockOut() {
+        return $this->stock()->where('out', 1)->get();
+    }
+
+    /**
      * Product quantity
      *
      * @return int
      */
     public function quantity() {
-        return (int)$this->quantity;
+        return app(StockRepository::class)->quantity($this);
     }
 
     /**
@@ -101,33 +122,6 @@ class Product extends Model implements HasMedia
      */
     public function hasStock() {
         return $this->quantity() > 0;
-    }
-
-    /**
-     * Is product active
-     *
-     * @return bool
-     */
-    public function active() {
-        return $this->hasStock() && $this->active && $this->hasMedia('products');
-    }
-
-    /**
-     * Status label
-     *
-     * @return string
-     */
-    public function status() {
-        if (!$this->hasMedia('products'))
-            return 'draft';
-
-        if (!$this->quantity())
-            return 'depleted';
-
-        if (!$this->active)
-            return 'disabled';
-
-        return 'active';
     }
 
     /**

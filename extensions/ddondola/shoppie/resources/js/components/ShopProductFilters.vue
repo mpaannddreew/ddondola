@@ -18,7 +18,7 @@
                             <div class="col">
                                 <ul class="nav nav-tabs nav-justified border-0 flex-column flex-lg-row">
                                     <li class="nav-item">
-                                        <a href="javascript:void(0)" class="nav-link" :class="{active: infoActive}" @click="showInfo"><i class="material-icons">info</i> About</a>
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: infoActive}" @click="showInfo"><i class="material-icons">info_outline</i> About</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="javascript:void(0)" class="nav-link" :class="{active: categoriesActive}" @click="showCategories"><i class="material-icons">folder_open</i> Categories</a>
@@ -67,6 +67,9 @@
         computed: {
             placeholder() {
                 return "Filter Products";
+            },
+            tabsVisible() {
+                return this.shop.subCategoriesCount || this.shop.brandCount;
             }
         },
         methods: {

@@ -212,7 +212,6 @@ window.graphql = {
                 name
                 code
                 active
-                status
                 quantity
                 price
                 discount
@@ -1704,4 +1703,32 @@ window.graphql = {
             code
           }
         }`,
+    productStock: `query productStock($id: ID! $type: String $count: Int! $page: Int!){
+          product(id: $id) {
+            stock(type: $type count: $count page: $page) {
+              data {
+                quantity
+                in
+                out
+                note
+                user {
+                  name
+                }
+                created_at
+              }
+            }
+          }
+        }`,
+    updateStock: `mutation updateStock($productId: ID!, $stock: StockUpdate!) {
+          stock:updateStock(productId: $productId, stock: $stock) {
+            quantity
+            in
+            out
+            note
+            user {
+              name
+            }
+            created_at
+          }
+        }`
 };

@@ -9,13 +9,8 @@
                 <mini-rating-meter :reviewable="product"></mini-rating-meter>
             </span>
         </td>
-        <td class="lo-stats__status">
-            <div class="d-table mx-auto">
-                <span class="badge badge-pill" :class="statusClass">{{ status|ucFirst }}</span>
-            </div>
-        </td>
         <td class="lo-stats__items text-center">{{ product.quantity }}</td>
-        <td class="lo-stats__items text-center" v-if="!admin">{{ product.brand.name }}</td>
+        <td class="lo-stats__items text-center" v-if="!admin">{{ product.brand ? product.brand.name : '' }}</td>
         <td class="lo-stats__items text-center" v-if="!admin">{{ product.category.name }}</td>
         <td class="lo-stats__items text-center" v-if="!admin">{{ product.subcategory.name }}</td>
         <td class="lo-stats__items text-center">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</td>
@@ -54,16 +49,6 @@
             },
             editUrl() {
                 return `${this.productUrl}/edit`
-            },
-            status() {
-                return this.product.status;
-            },
-            statusClass() {
-                return {
-                    'badge-success': this.status === 'active',
-                    'badge-danger': this.status === 'disabled',
-                    'badge-warning': this.status === 'draft' || this.status === 'depleted'
-                }
             }
         }
     }

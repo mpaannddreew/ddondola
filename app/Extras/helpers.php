@@ -19,7 +19,7 @@ if (!function_exists('media_url')) {
      */
     function media_url(Media $media)
     {
-        // return $media->getFullUrl(); // todo uncomment this
+        // return $media->getFullUrl(); // todo uncomment this in production
         return asset("/storage/$media->order_column/$media->file_name");
     }
 }
