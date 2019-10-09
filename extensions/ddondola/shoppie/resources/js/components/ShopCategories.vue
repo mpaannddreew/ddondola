@@ -11,7 +11,7 @@
                                         <i class="material-icons"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" placeholder="Filter categories" id="search_categories">
+                                <input type="text" class="form-control form-control-sm" placeholder="Filter categories" id="search_categories" v-model="searchFilter">
                             </div>
                         </form>
                     </div>
@@ -107,12 +107,21 @@
                 description: '',
                 error: false,
                 loading: false,
-                paginatorInfo: null
+                paginatorInfo: null,
+                searchFilter: ''
             }
         },
         computed: {
             showCategories() {
                 return this.categories.length > 0;
+            },
+            variables() {
+                var variables = {shop: this.shop, count: graphql.rowCount, page: this.page};
+                if (this.searchFilter) {
+                    variables['name'] = this.searchFilter;
+                }
+
+                return variables;
             }
         },
         props: {
@@ -127,7 +136,7 @@
                 this.categories = [];
                 axios.post(graphql.api, {
                     query: graphql.shopProductCategories,
-                    variables: {shop: this.shop, count: graphql.rowCount, page: this.page}
+                    variables: this.variables
                 }).then(this.loadData).catch(function () {});
             },
             loadData(response) {
@@ -185,7 +194,10 @@
                 if (data.length > 0) {
                     this.clearError("name");
                 }
-            }
+            },
+            searchFilter: _.debounce(function (data) {
+                this.loadPage(1);
+            }, 1000)
         }
     }
 </script>

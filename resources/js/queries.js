@@ -101,9 +101,9 @@ window.graphql = {
             }
           }
         }`,
-    shopProductCategories: `query productCategories($shop: String! $count: Int! $page: Int!){
+    shopProductCategories: `query productCategories($name: String $shop: String! $count: Int! $page: Int!){
           shop:shopByCode(shop: $shop) {
-            categories(count: $count page: $page) {
+            categories(name: $name count: $count page: $page) {
                 data {
                     id
                     name
@@ -124,9 +124,9 @@ window.graphql = {
             }
           }
         }`,
-    shopProductBrands: `query productBrands($shop: String! $count: Int! $page: Int!){
+    shopProductBrands: `query productBrands($name: String $shop: String! $count: Int! $page: Int!){
           shop:shopByCode(shop: $shop) {
-            brands(count: $count page: $page) {
+            brands(name: $name count: $count page: $page) {
                 data {
                     id
                     name
@@ -169,9 +169,9 @@ window.graphql = {
             description
           }
         }`,
-    shopProductSubCategories: `query productSubCategories($shop: String! $count: Int! $page: Int!){
+    shopProductSubCategories: `query productSubCategories($name: String $shop: String! $count: Int! $page: Int!){
           shop:shopByCode(shop: $shop) {
-                categories:subcategories(count: $count page: $page) {
+                categories:subcategories(name: $name count: $count page: $page) {
                     data {
                         id
                         name
@@ -1716,6 +1716,16 @@ window.graphql = {
                 }
                 created_at
               }
+              paginatorInfo {
+                  count
+                  currentPage
+                  firstItem
+                  hasMorePages
+                  lastItem
+                  lastPage
+                  perPage
+                  total
+                }
             }
           }
         }`,

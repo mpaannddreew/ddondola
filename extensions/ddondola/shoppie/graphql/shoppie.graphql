@@ -27,10 +27,10 @@ type Shop implements Muddondozi {
     likes: Int! @method(name: "likeCount")
     avatar: Image! @method(name: "avatar")
     coverPicture: Image! @method(name: "coverPicture")
-    categories: [ProductCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedCategories")
-    subcategories: [ProductSubCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedSubcategories")
+    categories(name: String): [ProductCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedCategories")
+    subcategories(name: String): [ProductSubCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedSubcategories")
     subCategoriesCount: Int! @method(name: "subCategoriesCount")
-    brands: [ProductBrand!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedBrands")
+    brands(name: String): [ProductBrand!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedBrands")
     brandCount: Int! @method(name: "brandCount")
     reviews: [Review!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@paginatedReviews")
     reviewCount: Int! @method(name: "reviewCount")
@@ -145,7 +145,7 @@ type Product {
     brand: ProductBrand @belongsTo
     price: String!
     description: String
-    quantity: Int!
+    quantity: Int! @method(name: "quantity")
     active: Boolean!
     settings: ProductSettings!
     offers(ordering: String): [ProductOffer!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@productOffers")
@@ -231,6 +231,7 @@ input ProductFilter {
 }
 
 input ShopFilter {
+    name: String
     ordering: String
     categoryIds: String
 }

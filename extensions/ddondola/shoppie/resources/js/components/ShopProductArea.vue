@@ -86,15 +86,12 @@
                     subCategoryIds: JSON.stringify(this.subCategoryIds)
                 }
             },
-            query() {
-                return graphql.shopProducts;
-            },
             variables() {
-                var variables = {shop: this.shop, filters: this.filters, count: graphql.columnCount, page: this.page};
+                var variables = {shop: this.shop, inventory: false, filters: this.filters, count: graphql.columnCount, page: this.page};
                 if (this.searchFilter) {
                     variables['filters']['name'] = this.searchFilter;
                 }
-                variables['inventory'] = false;
+
                 return variables;
             }
         },
@@ -103,7 +100,7 @@
                 this.products = [];
                 this.loaded = false;
                 axios.post(graphql.api, {
-                    query: this.query,
+                    query: graphql.shopProducts,
                     variables: this.variables
                 }).then(this.loadProducts).catch(function (error) {});
             },
@@ -140,9 +137,6 @@
             },
             filterChanged(filter) {
                 this.searchFilter = filter;
-            },
-            filterProducts() {
-                this.loadPage(1);
             }
         },
         watch: {
@@ -150,11 +144,7 @@
                 this.loadPage(1);
             },
             searchFilter: _.debounce(function(data) {
-                if (data) {
-                    this.filterProducts();
-                }else {
-                    this.loadPage(1);
-                }
+                this.loadPage(1);
             }, 1000)
         }
     }

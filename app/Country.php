@@ -8,6 +8,8 @@ class Country extends Model
 {
     protected $fillable = ['code', 'name'];
 
+    protected $casts = ['active' => 'bool'];
+
     public function users() {
         return $this->hasMany(User::class, 'country_id');
     }

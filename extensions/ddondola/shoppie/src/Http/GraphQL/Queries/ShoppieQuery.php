@@ -57,6 +57,10 @@ class ShoppieQuery
             if (count($categoryIds)) {
                 $builder = $builder->whereIn('category_id', $categoryIds);
             }
+
+            if ($filters->has('name')) {
+                $builder = $builder->where("name", "like", "%" . $filters->get("name") . "%");
+            }
         }
 
         return $this->orderBy($this->status($builder), 'name', 'asc');
@@ -336,7 +340,12 @@ class ShoppieQuery
      */
     public function paginatedCategories($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($rootValue->categories());
+        $builder = $rootValue->categories();
+        if (collect($args)->has('name')) {
+            $builder = $builder->where('name', 'like', '%' . collect($args)->get('name') . '%');
+        }
+
+        return $this->orderBy($builder);
     }
 
     /**
@@ -351,7 +360,13 @@ class ShoppieQuery
      */
     public function paginatedSubcategories($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($rootValue->subcategories());
+        $builder = $rootValue->subcategories();
+//        todo fix many through
+//        if (collect($args)->has('name')) {
+//            $builder = $builder->where('name', 'like', '%' . collect($args)->get('name') . '%');
+//        }
+
+        return $this->orderBy($builder);
     }
 
     /**
@@ -366,7 +381,12 @@ class ShoppieQuery
      */
     public function paginatedBrands($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($rootValue->brands());
+        $builder = $rootValue->brands();
+        if (collect($args)->has('name')) {
+            $builder = $builder->where('name', 'like', '%' . collect($args)->get('name') . '%');
+        }
+
+        return $this->orderBy($builder);
     }
 
     /**
@@ -600,7 +620,7 @@ class ShoppieQuery
         $order = "desc";
 
         if ($filters->has('name')) {
-//            $builder = $builder->where("name", "like", "%" . $filters->get("name") . "%");
+            $builder = $builder->where("name", "like", "%" . $filters->get("name") . "%");
         }
 
         if ($filters->has('subCategoryIds')) {

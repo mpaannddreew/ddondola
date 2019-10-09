@@ -54,12 +54,21 @@
                 page: 1,
                 ordering: '',
                 paginatorInfo: null,
-                categoryIds: []
+                categoryIds: [],
+                searchFilter: ''
             }
         },
         computed: {
             showProducts() {
                 return this.products.length > 0;
+            },
+            variables() {
+                var variables = {count: graphql.columnCount, filters: {categoryIds: JSON.stringify(this.categoryIds),
+                        ordering: this.ordering}, page: this.page};
+                if (this.searchFilter) {
+                    variables['filters']['name'] = this.searchFilter;
+                }
+                return variables;
             }
         },
         methods: {
@@ -68,8 +77,7 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.products,
-                    variables: {count: graphql.columnCount, filters: {categoryIds: JSON.stringify(this.categoryIds),
-                            ordering: this.ordering}, page: this.page}
+                    variables: this.variables
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {
@@ -89,20 +97,23 @@
             },
             listen() {
                 Bus.$on('category-ids', this.showFromCategory);
-                Bus.$on('directory-filter', this.filterProducts);
+                Bus.$on('directory-filter', this.filterChanged);
             },
             showFromCategory(ids) {
                 this.categoryIds = ids;
                 this.loadPage(1);
             },
-            filterProducts(filter) {
-
+            filterChanged(filter) {
+                this.searchFilter = filter;
             }
         },
         watch: {
             ordering(data) {
                 this.loadPage(1);
-            }
+            },
+            searchFilter: _.debounce(function(data) {
+                this.loadPage(1);
+            }, 1000)
         }
     }
 </script>

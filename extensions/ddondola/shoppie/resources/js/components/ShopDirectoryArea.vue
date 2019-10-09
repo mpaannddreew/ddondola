@@ -64,7 +64,8 @@
                 loaded: false,
                 paginatorInfo: null,
                 ordering: '',
-                categoryIds: []
+                categoryIds: [],
+                searchFilter: ''
             }
         },
         methods: {
@@ -76,8 +77,7 @@
             shopsRequest() {
                 return axios.post(graphql.api, {
                     query: graphql.shops,
-                    variables: {filters: {categoryIds: JSON.stringify(this.categoryIds), ordering: this.ordering},
-                        count: graphql.rowCount, page: this.page}
+                    variables: this.variables
                 });
             },
             loadShops(shops) {
@@ -91,14 +91,14 @@
             },
             listen() {
                 Bus.$on('category-ids', this.showFromCategory);
-                Bus.$on('directory-filter', this.filterShops);
+                Bus.$on('directory-filter', this.filterChanged);
             },
             showFromCategory(ids) {
                 this.categoryIds = ids;
                 this.loadPage(1);
             },
-            filterShops(filter) {
-
+            filterChanged(filter) {
+                this.searchFilter = filter;
             }
         },
         computed: {
@@ -107,12 +107,23 @@
             },
             newShopUrl() {
                 return '/me/shops/create';
+            },
+            variables() {
+                var variables = {filters: {categoryIds: JSON.stringify(this.categoryIds), ordering: this.ordering},
+                    count: graphql.rowCount, page: this.page};
+                if (this.searchFilter) {
+                    variables['filters']['name'] = this.searchFilter;
+                }
+                return variables;
             }
         },
         watch: {
             ordering(data) {
                 this.loadPage(1);
-            }
+            },
+            searchFilter: _.debounce(function(data) {
+                this.loadPage(1);
+            }, 1000)
         }
     }
 </script>

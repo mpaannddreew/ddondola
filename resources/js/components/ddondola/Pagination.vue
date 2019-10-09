@@ -40,9 +40,6 @@
 <script>
     export default {
         name: "Pagination",
-        data() {
-            return {}
-        },
         props: {
             paginatorInfo: {
                 type: Object,

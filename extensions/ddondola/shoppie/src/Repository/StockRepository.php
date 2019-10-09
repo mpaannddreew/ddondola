@@ -9,6 +9,7 @@
 namespace Shoppie\Repository;
 
 
+use Ddondola\User;
 use Shoppie\Cart;
 use Shoppie\Order;
 use Shoppie\Product;
@@ -80,10 +81,11 @@ class StockRepository
      * Create new stock entry
      *
      * @param Product $product
+     * @param User $user
      * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Model|Stock
      */
-    public function create(Product $product, array $attributes) {
-        return $product->stock()->create($attributes);
+    public function create(Product $product, User $user, array $attributes) {
+        return Stock::create(array_merge($attributes, ['user_id' => $user->getKey(), 'product_id' => $product->getKey()]));
     }
 }

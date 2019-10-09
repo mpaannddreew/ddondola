@@ -16,6 +16,7 @@ use Shoppie\Repository\ProductRepository;
 use Shoppie\Repository\ProductSubCategoryRepository;
 use Shoppie\Repository\ShopCategoryRepository;
 use Shoppie\Repository\ShopRepository;
+use Shoppie\Repository\StockRepository;
 use Shoppie\ShopCategory;
 use Shoppie\Shoppie;
 
@@ -58,6 +59,27 @@ class ShoppieMutator
         $brand = app(ProductBrandRepository::class)->id($args['brandId']);
         if ($context->user()->can('update', $brand)) {
             return app(ProductBrandRepository::class)->update($brand, $args['brand']);
+        }
+
+        throw new AuthorizationException;
+    }
+
+    /**
+     * Return a value for the field.
+     *
+     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
+     * @param array $args The arguments that were passed into the field.
+     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
+     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
+     *
+     * @return ProductBrand
+     * @throws \Exception
+     */
+    public function updateStock($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
+    {
+        $product = app(ProductRepository::class)->id($args['productId']);
+        if ($context->user()->can('update', $product)) {
+            return app(StockRepository::class)->create($product, $context->user(), collect($args)->get('stock'));
         }
 
         throw new AuthorizationException;

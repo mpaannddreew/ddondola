@@ -10,7 +10,7 @@
                                     <i class="material-icons"></i>
                                 </div>
                             </div>
-                            <input type="text" class="form-control form-control-sm" placeholder="Filter products">
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter products" v-model="searchFilter">
                         </div>
                     </form>
                 </div>
@@ -84,12 +84,22 @@
                 loaded: false,
                 page: 1,
                 ordering: '',
-                paginatorInfo: null
+                paginatorInfo: null,
+                searchFilter: ''
             }
         },
         computed: {
             showProducts() {
                 return this.products.length > 0;
+            },
+            variables() {
+                var variables = {shop: this.shop, filters: {ordering: this.ordering}, inventory: true,
+                    count: graphql.rowCount, page: this.page};
+                if (this.searchFilter) {
+                    variables['filters']['name'] = this.searchFilter;
+                }
+
+                return variables;
             }
         },
         props: {
@@ -108,11 +118,7 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.shopProducts,
-                    variables: {
-                        shop: this.shop,
-                        filters: {ordering: this.ordering},
-                        inventory: true, count: graphql.rowCount, page: this.page
-                    }
+                    variables: this.variables
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {
@@ -127,6 +133,9 @@
         },
         watch: {
             ordering(data) {
+                this.loadPage(1);
+            },
+            searchFilter(data) {
                 this.loadPage(1);
             }
         }

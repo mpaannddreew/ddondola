@@ -10,7 +10,7 @@
                                     <i class="material-icons"></i>
                                 </div>
                             </div>
-                            <input type="text" class="form-control form-control-sm" placeholder="Filter sub categories">
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter sub categories" v-model="searchFilter">
                         </div>
                     </form>
                 </div>
@@ -127,7 +127,8 @@
                 categoryId: '',
                 loading: false,
                 error: false,
-                paginatorInfo: null
+                paginatorInfo: null,
+                searchFilter: ''
             }
         },
         computed: {
@@ -136,6 +137,14 @@
             },
             requirementsLoaded() {
                 return this.productCategories.length > 0;
+            },
+            variables() {
+                var variables = {shop: this.shop, count: graphql.rowCount, page: this.page};
+                if (this.searchFilter) {
+                    variables['name'] = this.searchFilter;
+                }
+
+                return variables;
             }
         },
         props: {
@@ -158,7 +167,7 @@
             subcategoryRequest() {
                 return axios.post(graphql.api, {
                     query: graphql.shopProductSubCategories,
-                    variables: {shop: this.shop, count: graphql.rowCount, page: this.page}
+                    variables: this.variables
                 });
             },
             loadCategories() {
@@ -242,7 +251,10 @@
                 if (data.length > 0) {
                     this.clearError("category");
                 }
-            }
+            },
+            searchFilter: _.debounce(function (data) {
+                this.loadPage(1);
+            }, 1000)
         }
     }
 </script>
