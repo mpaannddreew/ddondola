@@ -79,7 +79,12 @@ class MessengerQuery
      */
     public function contacts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($rootValue->contacts(), "first_name", "asc");
+        $builder = $rootValue->contacts();
+        if (collect($args)->has('search')) {
+            $builder = $builder->where('name', 'like', '%' . collect($args)->get('search') . '%');
+        }
+        
+        return $this->orderBy($builder, "first_name", "asc");
     }
 
     /**

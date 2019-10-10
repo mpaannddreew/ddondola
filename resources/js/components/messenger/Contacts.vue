@@ -31,7 +31,8 @@
                 loaded: false,
                 paginatorInfo: null,
                 loadingMore: false,
-                count: 0
+                count: 0,
+                searchFilter: ''
             }
         },
         props: {
@@ -57,6 +58,10 @@
                     variables["id"] = this.ownerId;
                 }
 
+                if (this.searchFilter) {
+                    variables["search"] = this.searchFilter;
+                }
+
                 return variables;
             },
             query() {
@@ -72,7 +77,7 @@
                 Bus.$on('filter', this.filter)
             },
             filter(filter) {
-                DToast("success", filter + " contacts");
+                this.searchFilter = filter;
             },
             fetchContacts() {
                 axios.post(graphql.api, {
@@ -95,6 +100,12 @@
                 this.count += graphql.rowCount;
                 this.fetchContacts();
             }
+        },
+        watch: {
+            searchFilter: _.debounce(function (data) {
+                this.count = graphql.rowCount;
+                this.loadMore(false);
+            }, 1000)
         }
     }
 </script>

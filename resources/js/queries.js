@@ -1275,9 +1275,9 @@ window.graphql = {
             }
           }
         }`,
-    shopContacts: `query shopContacts($id: ID! $count: Int! $page: Int!){
+    shopContacts: `query shopContacts($id: ID! $search: String  $count: Int! $page: Int!){
           shop(id: $id) {
-            contacts(count: $count page: $page) {
+            contacts(search: $search count: $count page: $page) {
               data {
                 id
                 code
@@ -1304,9 +1304,9 @@ window.graphql = {
             }
           }
         }`,
-    myContacts: `query myContacts($count: Int! $page: Int!){
+    myContacts: `query myContacts($search: String $count: Int! $page: Int!){
           me {
-            contacts(count: $count page: $page) {
+            contacts(search: $search count: $count page: $page) {
               data {
                 id
                 code

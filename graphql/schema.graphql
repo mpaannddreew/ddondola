@@ -11,7 +11,7 @@ interface Muddondozi @interface(resolveType: "Ddondola\\Http\\GraphQL\\Interface
     coverPicture: Image!
     messages: [Message!]
     conversations: [Conversation!]
-    contacts: [User!]
+    contacts(search: String): [User!]
     profile: Profile!
     account: Account!
 }
@@ -71,7 +71,7 @@ type User implements Muddondozi {
     notifications: [Notification!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@notifications")
     messages: [Message!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@messages")
     conversations: [Conversation!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@conversations")
-    contacts: [User!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@contacts")
+    contacts(search: String): [User!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@contacts")
     activity: [Review!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@communityActivity")
     created_at: DateTime!
     updated_at: DateTime!
