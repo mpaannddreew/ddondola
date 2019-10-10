@@ -61,7 +61,7 @@ type User implements Muddondozi {
     avatar: Image! @method(name: "avatar")
     coverPicture: Image! @method(name: "coverPicture")
     shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
-    orders: [Order!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@buyerOrders")
+    orders(search: String): [Order!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@buyerOrders")
     favouriteProducts(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     recommendedProducts: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@recommendedProducts")
     followers: [User!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedFollowers")

@@ -42,7 +42,7 @@ type Shop implements Muddondozi {
     messages: [Message!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@messages")
     conversations: [Conversation!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@conversations")
     contacts: [User!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@contacts")
-    orders: [Order!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shopOrders")
+    orders(search: String): [Order!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shopOrders")
     orderCount: Int! @method(name: "orderCount")
     created_at: DateTime!
     updated_at: DateTime!

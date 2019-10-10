@@ -262,8 +262,16 @@ class ShoppieQuery
      */
     public function shopOrders($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        // todo add search functionality
-        return $this->orderBy($rootValue->orders());
+        $builder = $rootValue->orders();
+        if (collect($args)->has('search')) {
+            $value = '%' . collect($args)->get('search')  . '%';
+            $builder = $builder->where("code", 'like', $value)
+                ->orWhereHas('by', function ($q) use ($value) {
+                    $q->where('name', 'like', $value)
+                        ->orWhere('email', 'like', $value);
+            });
+        }
+        return $this->orderBy($builder);
     }
 
     /**
@@ -511,7 +519,14 @@ class ShoppieQuery
      */
     public function buyerOrders($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($rootValue->orders());
+        $builder = $rootValue->orders();
+        if (collect($args)->has('search')) {
+            $builder = $builder->where("code", 'like', '%' . collect($args)->get('search')  . '%');
+        }
+
+        // todo add date filter
+
+        return $this->orderBy($builder);
     }
 
     /**

@@ -8,7 +8,7 @@
                             <i class="fa fa-search"></i>
                         </div>
                     </div>
-                    <input class="form-control" type="text" placeholder="Filter orders" aria-label="Search">
+                    <input class="form-control" type="text" placeholder="Filter orders" aria-label="Search" v-model="searchFilter">
                 </div>
             </div>
             <div class="card-body h-100">
@@ -49,11 +49,20 @@
                 loaded: false,
                 showing: 'all',
                 paginatorInfo: null,
+                searchFilter: ''
             }
         },
         computed: {
             hasOrders() {
                 return this.orders.length > 0;
+            },
+            variables() {
+                var variables = {page: this.page, count: graphql.rowCount};
+                if (this.searchFilter) {
+                    variables['search'] = this.searchFilter;
+                }
+
+                return variables;
             }
         },
         methods: {
@@ -61,7 +70,7 @@
                 this.loaded = false;
                 axios.post(graphql.api, {
                     query: graphql.myOrders,
-                    variables: {page: this.page, count: graphql.rowCount}
+                    variables: this.variables
                 }).then(this.loadOrders).catch(function (error) {});
             },
             loadOrders(response) {
@@ -78,7 +87,10 @@
             showing(data) {
                 this.loaded = false;
                 this.loadPage(1);
-            }
+            },
+            searchFilter: _.debounce(function (data) {
+                this.loadPage(1);
+            }, 1000)
         }
     }
 </script>

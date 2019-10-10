@@ -1481,9 +1481,9 @@ window.graphql = {
             }
           }
         }`,
-    myOrders: `query myOrders($page: Int! $count: Int!) {
+    myOrders: `query myOrders($search: String $page: Int! $count: Int!) {
           me {
-            orders(page: $page count: $count) {
+            orders(search: $search page: $page count: $count) {
               data {
                 id
                 code
@@ -1512,9 +1512,9 @@ window.graphql = {
             }
           }
         }`,
-    shopOrders: `query myOrders($shop: String! $page: Int! $count: Int!) {
+    shopOrders: `query myOrders($shop: String! $search: String $page: Int! $count: Int!) {
           shop:shopByCode(shop: $shop) {
-            orders(page: $page count: $count) {
+            orders(search: $search page: $page count: $count) {
               data {
                 id
                 code
