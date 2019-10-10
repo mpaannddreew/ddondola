@@ -36,7 +36,16 @@ class MessengerQuery
      */
     public function conversations($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->orderBy($rootValue->conversations()->has('messages'));
+        $builder = $rootValue->conversations();
+        if (collect($args)->has('search')) {
+            $value = '%' . collect($args)->get('search') . '%';
+            $builder->whereHas('initiator', function ($q) use ($value) {
+                $q->where('name', 'like', $value);
+            })->orWhereHas('participant', function ($q) use ($value) {
+                $q->where('name', 'like', $value);
+            });
+        }
+        return $this->orderBy($builder);
     }
 
     /**

@@ -79,7 +79,11 @@
             filter(filter) {
                 this.searchFilter = filter;
             },
-            fetchContacts() {
+            fetchContacts(loaded=false) {
+                if (!loaded) {
+                    this.contacts = [];
+                    this.loaded = loaded;
+                }
                 axios.post(graphql.api, {
                     query: this.query,
                     variables: this.variables
@@ -98,13 +102,13 @@
             loadMore(indicator=true) {
                 this.loadingMore = indicator;
                 this.count += graphql.rowCount;
-                this.fetchContacts();
+                this.fetchContacts(indicator);
             }
         },
         watch: {
             searchFilter: _.debounce(function (data) {
                 this.count = graphql.rowCount;
-                this.loadMore(false);
+                this.fetchContacts();
             }, 1000)
         }
     }

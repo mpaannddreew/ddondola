@@ -1193,9 +1193,9 @@ window.graphql = {
             }
           }
         }`,
-    myConversations: `query myConversations($count: Int! $page: Int!) {
+    myConversations: `query myConversations($search: String $count: Int! $page: Int!) {
           me {
-            conversations(count: $count page: $page) {
+            conversations(search: $search count: $count page: $page) {
               data {
                 id
                 initiator {
@@ -1234,9 +1234,9 @@ window.graphql = {
             }
           }
         }`,
-    shopConversations: `query shopConversations($id: ID! $count: Int! $page: Int!) {
+    shopConversations: `query shopConversations($id: ID! $search: String $count: Int! $page: Int!) {
           shop(id: $id) {
-            conversations(count: $count page: $page) {
+            conversations(search: $search count: $count page: $page) {
               data {
                 id
                 initiator {

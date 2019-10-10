@@ -108,7 +108,7 @@
         watch: {
             searchFilter: _.debounce(function (data) {
                 this.count = graphql.rowCount;
-                this.loadMore(false);
+                this.fetchContacts();
             }, 1000)
         }
     }

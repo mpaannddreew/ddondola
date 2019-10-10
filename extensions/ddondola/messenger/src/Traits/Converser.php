@@ -58,7 +58,7 @@ trait Converser
      * @return Builder
      */
     public function conversations() {
-        return Conversation::whereIn('id', $this->eitherConversations());//->has('messages');
+        return Conversation::whereIn('id', $this->eitherConversations());
     }
 
     abstract public function contactIds();
