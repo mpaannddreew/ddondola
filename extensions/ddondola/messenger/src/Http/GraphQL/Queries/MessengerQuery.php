@@ -2,10 +2,12 @@
 
 namespace Messenger\Http\GraphQL\Queries;
 
+use Ddondola\User;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Database\Eloquent\Builder;
 use Messenger\Facades\Messenger;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use Shoppie\Shop;
 
 class MessengerQuery
 {
@@ -39,10 +41,27 @@ class MessengerQuery
         $builder = $rootValue->conversations();
         if (collect($args)->has('search')) {
             $value = '%' . collect($args)->get('search') . '%';
-            $builder->whereHas('initiator', function ($q) use ($value) {
-                $q->where('name', 'like', $value);
-            })->orWhereHas('participant', function ($q) use ($value) {
-                $q->where('name', 'like', $value);
+
+            $builder->whereHasMorph('initiator', '*', function ($q, $type) use ($value) {
+                if ($type === Shop::class) {
+                    $q->where('first_name', 'like', $value)
+                        ->orWhere('last_name', 'like', $value)
+                        ->orWhere('email', 'like', $value);
+                }
+
+                if ($type === User::class) {
+
+                }
+            })->orWhereHasMorph('participant', '*', function ($q, $type) use ($value) {
+                if ($type === Shop::class) {
+                    $q->where('first_name', 'like', $value)
+                        ->orWhere('last_name', 'like', $value)
+                        ->orWhere('email', 'like', $value);
+                }
+
+                if ($type === User::class) {
+
+                }
             });
         }
         return $this->orderBy($builder);
@@ -90,7 +109,9 @@ class MessengerQuery
     {
         $builder = $rootValue->contacts();
         if (collect($args)->has('search')) {
-            $builder = $builder->where('name', 'like', '%' . collect($args)->get('search') . '%');
+            $value = '%' . collect($args)->get('search') . '%';
+            $builder = $builder->where('first_name', 'like', $value)
+                ->orWhere('last_name', 'like', $value);
         }
         
         return $this->orderBy($builder, "first_name", "asc");

@@ -42,15 +42,6 @@ class ShoppieQuery
     public function shops($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         $builder = app(ShopRepository::class)->builder();
-        if ($context->user()) {
-            $myCountry = collect($args)->get('myCountry', true);
-            if ($myCountry) {
-                $builder = $builder->whereHas('owner', function ($q) use ($context) {
-                    $q->where('country_id', $context->user()->country->id);
-                });
-            }
-        }
-
         if (collect($args)->has('filters')) {
             $filters = collect($args["filters"]);
             $categoryIds = json_decode($filters->get('categoryIds'));
@@ -79,13 +70,8 @@ class ShoppieQuery
     public function paginatedShops($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         $builder = $rootValue->shops();
-        if ($context->user()) {
-            $myCountry = collect($args)->get('myCountry', true);
-            if ($myCountry) {
-                $builder = $builder->whereHas('owner', function ($q) use ($context) {
-                    $q->where('country_id', $context->user()->country->id);
-                });
-            }
+        if (collect($args)->has('search')) {
+            $builder = $builder->where('name', 'like', '%' . collect($args)->get('search') . '%');
         }
 
         return $this->orderBy($this->status($builder));
@@ -104,25 +90,10 @@ class ShoppieQuery
     public function products($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         $builder = app(ProductRepository::class)->builder()->has('media');
-        if ($context->user()) {
-            $myCountry = collect($args)->get('myCountry', true);
-            if ($myCountry) {
-                $builder = $builder->whereHas('brand', function ($q) use ($context) {
-                    $q->whereHas('shop', function ($q1) use ($context) {
-                        $q1->whereHas('owner', function ($q2) use ($context) {
-                            $q2->where('country_id', $context->user()->country->id);
-                        });
-                    });
-                });
-            }
-        }
-
         if (collect($args)->get("category")) {
-            $category = (app(ShopCategoryRepository::class)->code(collect($args)->get("category")))->id;
-            $builder = $builder->whereHas('brand', function ($q) use ($category) {
-                $q->whereHas('shop', function ($q1) use ($category) {
-                    $q1->whereIn("category_id", [$category]);
-                });
+            $category = (app(ShopCategoryRepository::class)->code(collect($args)->get("category")))->getKey();
+            $builder = $builder->whereHas('shop', function ($q) use ($category) {
+                $q->whereIn("category_id", [$category]);
             });
         }
 

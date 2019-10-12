@@ -21,11 +21,29 @@ class ShopCategory extends Model
     }
 
     /**
+     * Products in this category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function products() {
+        return $this->hasManyThrough(Product::class, Shop::class, 'category_id', 'shop_id');
+    }
+
+    /**
      * Number of shops in this category
      *
      * @return int
      */
     public function shopCount() {
-        return $this->shops->count();
+        return $this->shops()->count();
+    }
+
+    /**
+     * Number of products in this category
+     *
+     * @return int
+     */
+    public function productCount() {
+        return $this->products()->count();
     }
 }

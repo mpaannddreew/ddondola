@@ -26,7 +26,11 @@
                     <li class="list-group-item" v-for="(category, indx) in categories" :key="indx">
                         <div class="custom-control custom-checkbox mb-1">
                             <input type="checkbox" class="custom-control-input" :id="`category-${indx}`" v-model="categoryIds" :value="category.id">
-                            <label class="custom-control-label" :for="`category-${indx}`">{{ category.name }}</label>
+                            <label class="custom-control-label text-ellipsis" :for="`category-${indx}`">
+                                {{ category.name }}
+                                <template v-if="shopDirectory">({{ category.shopCount }})</template>
+                                <template v-else>({{ category.productCount }})</template>
+                            </label>
                         </div>
                     </li>
                 </ul>
@@ -81,6 +85,9 @@
             },
             placeholder() {
                 return `Filter ${this.ucFirst(this.directory)}`;
+            },
+            shopDirectory() {
+                return this.lowerCase(this.directory) === 'shops';
             }
         },
         watch: {

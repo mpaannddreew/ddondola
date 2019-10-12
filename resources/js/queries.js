@@ -10,6 +10,7 @@ window.graphql = {
                 code
                 description
                 shopCount
+                productCount
             }
             paginatorInfo {
                 count
@@ -360,9 +361,9 @@ window.graphql = {
             }
           }
         }`,
-    myShops: `query myShops($count: Int! $page: Int!) {
+    myShops: `query myShops($search: String $count: Int! $page: Int!) {
           me {
-            shops(count: $count page: $page) {
+            shops(search: $search count: $count page: $page) {
               data {
                 id
                 code
@@ -395,9 +396,9 @@ window.graphql = {
             }
           }
         }`,
-    userShops: `query userShops($user: String! $count: Int! $page: Int!) {
+    userShops: `query userShops($user: String! $search: String $count: Int! $page: Int!) {
           user:userByCode(user: $user) {
-            shops(count: $count page: $page) {
+            shops(search: $search count: $count page: $page) {
               data {
                 id
                 code
@@ -1282,6 +1283,7 @@ window.graphql = {
                 id
                 code
                 name
+                email
                 avatar{
                   url
                 }
@@ -1311,6 +1313,7 @@ window.graphql = {
                 id
                 code
                 name
+                email
                 avatar{
                   url
                 }
@@ -1565,6 +1568,10 @@ window.graphql = {
               email
               avatar {
                 url
+              }
+              country {
+                name
+                currency
               }
             }
             created_at

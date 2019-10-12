@@ -54,7 +54,7 @@
                 return graphql.users;
             },
             variables() {
-                return {myCountry: false, count: graphql.columnCount, page: this.page};
+                return {count: graphql.columnCount, page: this.page};
             }
         },
         methods: {

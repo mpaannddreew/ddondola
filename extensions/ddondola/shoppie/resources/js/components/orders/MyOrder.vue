@@ -3,11 +3,11 @@
         <div class="sc-stats__image">
             <img class="border rounded" :src="thumbnail">
         </div>
-        <div class="ml-2 my-auto">
+        <div class="ml-2 my-auto d-flex w-100">
             <span class="text-uppercase text-ellipsis" style="display: block;">
-                {{ order.code }}
+                ORDER - {{ label|upper }}
             </span>
-            <small class="text-muted" style="font-weight: bold;"><i class="material-icons">access_time</i> {{ order.created_at|day }}</small>
+            <small class="text-muted ml-auto">{{ order.created_at|dayOrTime }}</small>
         </div>
     </a>
 </template>
@@ -42,6 +42,9 @@
                     'text-success': this.order.paidFor,
                     'text-warning': !this.order.paidFor
                 };
+            },
+            label() {
+                return _.head(_.split(this.order.code, '-'));
             }
         },
         methods: {

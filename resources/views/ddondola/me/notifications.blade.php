@@ -1,7 +1,6 @@
-@extends('ddondola.me.base.profile-admin')
+@extends('ddondola.me.base.settings')
 @section('title')@parent Notifications @endsection
-@section('banner', '')
-@section('following-settings', 'active')
-@section('profile')
+@section('notifications-active', 'active')
+@section('settings')
     <notifications></notifications>
 @endsection

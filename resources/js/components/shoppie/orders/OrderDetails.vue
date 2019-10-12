@@ -30,7 +30,8 @@
                                     <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop" @click="showInvoice">
                                         <i class="material-icons">description</i> Invoice
                                     </a>
-                                    <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop && !loadedOrder.paidFor && !loadedOrder.cancelled">
+                                    <a class="btn btn-white btn-sm" href="javascript:void(0)"
+                                       v-if="!shop && !loadedOrder.paidFor && !loadedOrder.cancelled" @click="makePayment">
                                         <i class="material-icons">credit_card</i> Make Payment
                                     </a>
                                     <a class="btn btn-white btn-sm" :href="messengerUrl" v-if="shop">
@@ -140,7 +141,8 @@
                 currencyCode: '',
                 buyer: null,
                 loadedOrder: null,
-                details: true
+                details: true,
+                paymentModal: null
             }
         },
         props: {
@@ -225,35 +227,38 @@
             showInvoice() {
                 this.$router.push(this.invoiceRoute);
             },
-            pay() {
-                var x = getpaidSetup({
+            makePayment() {
+                this.paymentModal = this.openPaymentModal();
+            },
+            openPaymentModal() {
+                return getpaidSetup({
                     PBFPubKey: this.ravePublicKey,
                     customer_firstname: this.buyer.first_name,
                     customer_lastname: this.buyer.last_name,
                     customer_email: this.buyer.email,
-                    amount: 2000,
-                    currency: "UGX",
-                    txref: "rave-123456",
+                    amount: this.loadedOrder.sum,
+                    currency: this.buyer.country.currency,
+                    txref: Uuid(),
                     meta: [{
                         metaname: "order",
                         metavalue: this.order
                     }],
                     onclose: function() {},
-                    callback: function(response) {
-                        var txref = response.tx.txRef;
-                        console.log("This is the response returned after a charge", response);
-                        if (
-                            response.tx.chargeResponseCode == "00" ||
-                            response.tx.chargeResponseCode == "0"
-                        ) {
-                            // redirect to a success page
-                        } else {
-                            // redirect to a failure page.
-                        }
-
-                        x.close(); // use this to close the modal immediately after payment.
-                    }
+                    callback: this.raveCallback
                 });
+            },
+            raveCallback(response) {
+                var txref = response.tx.txRef;
+                console.log("This is the response returned after a charge", response);
+                if (response.tx.chargeResponseCode === "00" || response.tx.chargeResponseCode === "0") {
+                    // todo redirect to a success page
+                } else {
+                    // todo redirect to a failure page.
+                }
+
+                if (this.paymentModal) {
+                    this.paymentModal.close(); // use this to close the modal immediately after payment.
+                }
             }
         },
         watch: {

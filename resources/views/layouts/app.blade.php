@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
 
     <!--Favicon-->
-    <link rel="shortcut icon" type="image/png" href="{{ asset('images/logo/favicon.png') }}"/>
+    {{--<link rel="shortcut icon" type="image/png" href="{{ asset('images/logo/favicon.png') }}"/>--}}
 </head>
 <body @yield('body-class') @yield('body-id')>
 

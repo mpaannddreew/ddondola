@@ -143,7 +143,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     }
 
     public function contactIds() {
-        return $this->followings->pluck('id')->merge($this->followers->pluck('id'));
+        return $this->followings()->pluck('id')->merge($this->followers()->pluck('id'))->all();
     }
 
     /**

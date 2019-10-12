@@ -19,6 +19,9 @@ const Helper = {
                 lowerCase(string) {
                     return _.lowerCase(string);
                 },
+                upper(string) {
+                    return _.upperCase(string);
+                },
                 ucFirst(string) {
                     return _.upperFirst(string);
                 },

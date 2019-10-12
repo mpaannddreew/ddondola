@@ -84,4 +84,8 @@ class ConversationRepository
 
         return $conversation;
     }
+
+    public function builder() {
+        return Conversation::query();
+    }
 }

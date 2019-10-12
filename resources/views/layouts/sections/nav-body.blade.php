@@ -17,7 +17,7 @@
                     @endis_staff
                     <a class="dropdown-item" href="{{ route('my.profile') }}"><i class="material-icons">account_circle</i> Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('my.profile.edit') }}"><i class="material-icons">mode_edit</i> Edit Profile</a>
+                    <a class="dropdown-item" href="{{ route('my.profile.edit') }}"><i class="material-icons">settings</i> Settings</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="material-icons text-danger">clear</i> Logout

@@ -49,31 +49,6 @@ class AccountQuery
      *
      * @return mixed
      */
-    public function paginatedUsers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
-    {
-        $builder = app(UserRepository::class)->builder();
-        if ($context->user()) {
-            $builder = $builder->whereNotIn('id', [$context->user()->id]);
-            $myCountry = collect($args)->get('myCountry', true);
-            if ($myCountry) {
-                $builder = $builder->whereHas('country', function ($q) use ($context) {
-                    $q->where('id', $context->user()->country->id);
-                });
-            }
-        }
-        return $this->orderBy($this->status($builder), "first_name", "asc");
-    }
-
-    /**
-     * Return a value for the field.
-     *
-     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
-     * @param array $args The arguments that were passed into the field.
-     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
-     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
-     *
-     * @return mixed
-     */
     public function paginatedFollowers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         return $this->orderBy($this->status($rootValue->followers()), "first_name", "asc");
@@ -107,30 +82,6 @@ class AccountQuery
     public function notifications($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         return $rootValue->notifications();
-    }
-
-    /**
-     * Return a value for the field.
-     *
-     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
-     * @param array $args The arguments that were passed into the field.
-     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
-     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
-     *
-     * @return mixed
-     */
-    public function searchUsers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
-    {
-        $value = "%" . collect($args)->get("name") . "%";
-        $users = $this->status(User::select());
-        if ($context->user()) {
-            $users = $users->whereHas('country', function ($q) use ($context) {
-                $q->where('id', $context->user()->country->id);
-            });
-        }
-        return $users->where("first_name", "like", $value)
-            ->orWhere("last_name", "like", $value)
-            ->where("active", "=", 1)->get();
     }
 
     protected function orderBy($builder, $column="created_at", $order="desc") {

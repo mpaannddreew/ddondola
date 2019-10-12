@@ -25,7 +25,7 @@
             </p>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item p-4" v-for="(p, i) in user.profile" v-if="p.length">
+            <li class="list-group-item p-4" v-for="(p, i) in user.profile" v-if="p">
                 <strong class="text-muted d-block mb-2">{{ i|camel|ucFirst }}</strong>
                 <span>
                     {{ p }}

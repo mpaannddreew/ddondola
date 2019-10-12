@@ -21,6 +21,8 @@ type Country {
     code: String!
     name: String!
     details: String! @method(name: "details")
+    currency: String! @method(name: "currencyCode")
+    users(search: String): [User!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\DdondolaQuery@users")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -60,7 +62,8 @@ type User implements Muddondozi {
     active: Boolean!
     avatar: Image! @method(name: "avatar")
     coverPicture: Image! @method(name: "coverPicture")
-    shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
+    country: Country @belongsTo
+    shops(search: String): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
     orders(search: String): [Order!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@buyerOrders")
     favouriteProducts(filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedProducts")
     recommendedProducts: [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@recommendedProducts")
@@ -84,13 +87,13 @@ type Image {
 type Query @middleware(checks: ["auth:api"]) {
     me: User! @auth
     iFollowUser(id: ID!): Boolean! @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@iFollowUser")
-    users(myCountry: Boolean): [User!]! @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedUsers")
+    users(search: String): [User!]! @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\DdondolaQuery@paginatedUsers")
 }
 
 extend type Query {
     user(id: ID @eq): User @find(model: "Ddondola\\User")
     userByCode(user: String!): User @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@user")
-    searchUsers(name: String!): [User!] @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@searchUsers")
+    searchUsers(name: String!): [User!] @field(resolver: "Ddondola\\Http\\GraphQL\\Queries\\DdondolaQuery@searchUsers")
 }
 
 type Mutation {
@@ -100,7 +103,9 @@ type Mutation {
         email: String @rules(apply: ["required", "email", "unique:users,email"])
         password: String @bcrypt
     ): User @create(model: "Ddondola\\User")
+}
 
+extend type Mutation @middleware(checks: ["auth:api"]) {
     updateUser(
         id: ID @rules(apply: ["required"])
         first_name: String

@@ -27,6 +27,12 @@
             </a>
         </li>
         @endcan
+        <li class="nav-item">
+            <a class="nav-link @yield('settings-active')" href="{{ route('my.profile.edit') }}">
+                <i class="material-icons">settings</i>
+                <span>Settings</span>
+            </a>
+        </li>
     </ul>
     <h6 class="main-sidebar__nav-title">Apps</h6>
     <ul class="nav nav--no-borders flex-column">

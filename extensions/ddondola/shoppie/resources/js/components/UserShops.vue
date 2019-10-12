@@ -10,7 +10,7 @@
                                     <i class="material-icons"></i>
                                 </div>
                             </div>
-                            <input type="text" class="form-control form-control-sm" placeholder="Filter shops">
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter shops" v-model="searchFilter">
                         </div>
                     </form>
                 </div>
@@ -79,7 +79,8 @@
                 loaded: false,
                 page: 1,
                 ordering: '',
-                paginatorInfo: null
+                paginatorInfo: null,
+                searchFilter: ''
             }
         },
         computed: {
@@ -97,6 +98,10 @@
                 var variables = {count: graphql.rowCount, page: this.page};
                 if (this.user) {
                     variables["user"] = this.user;
+                }
+
+                if (this.searchFilter) {
+                    variables["search"] = this.searchFilter;
                 }
 
                 return variables;
@@ -148,7 +153,10 @@
                 if (data) {
                     this.loadPage(1);
                 }
-            }
+            },
+            searchFilter: _.debounce(function (data) {
+                this.loadPage(1);
+            }, 1000)
         }
     }
 </script>

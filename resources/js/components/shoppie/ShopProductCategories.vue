@@ -24,7 +24,7 @@
                             <li class="list-group-item px-4" v-for="(subCategory, _indx) in category.categories" :key="_indx">
                                 <div class="custom-control custom-checkbox mb-1">
                                     <input type="checkbox" class="custom-control-input" :name="`category-${category.id}-${_indx}`" :id="`category-${category.id}-${_indx}`" v-model="subCategoryIds" :value="subCategory.id">
-                                    <label class="custom-control-label" :for="`category-${category.id}-${_indx}`">{{ subCategory.name }} ({{ subCategory.productCount }})</label>
+                                    <label class="custom-control-label text-ellipsis" :for="`category-${category.id}-${_indx}`">{{ subCategory.name }} ({{ subCategory.productCount }})</label>
                                 </div>
                             </li>
                         </ul>

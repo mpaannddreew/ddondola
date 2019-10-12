@@ -7,5 +7,5 @@
  */
 
 return [
-    'contact' => ''
+    'contact' => \Ddondola\User::class,
 ];

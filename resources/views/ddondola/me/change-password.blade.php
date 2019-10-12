@@ -1,7 +1,7 @@
-@extends('ddondola.me.base.profile-admin')
+@extends('ddondola.me.base.settings')
 @section('title')@parent Change Password @endsection
-@section('following-settings', 'active')
-@section('profile')
+@section('password-active', 'active')
+@section('settings')
     <form method="post" action="{{ route('update.password') }}">
         @csrf
         <div class="card border border-radius mb-2">

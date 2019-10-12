@@ -7,7 +7,7 @@ type ShopCategory {
     code: String!
     name: String!
     description: String
-    shops(myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
+    shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
     shopCount: Int! @method(name: "shopCount")
     created_at: DateTime!
     updated_at: DateTime!
@@ -268,9 +268,9 @@ extend type Query {
     shopCategories: [ShopCategory!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@ShopCategories")
     shop(id: ID! @eq): Shop! @find(model: "Shoppie\\Shop")
     shopByCode(shop: String!): Shop! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shop")
-    shops(filters: ShopFilter myCountry: Boolean): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
+    shops(filters: ShopFilter): [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@shops")
     product(id: ID! @eq): Product! @find(model: "Shoppie\\Product")
-    products(category: String filters: ProductFilter myCountry: Boolean): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
+    products(category: String filters: ProductFilter): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@products")
     searchProducts(name: String!): [Product!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchProducts")
     searchShops(name: String!): [Shop!] @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@searchShops")
 }
