@@ -49,29 +49,30 @@ class OrderProductObserver
     {
         $product = $this->orders->id($orderProduct->order_id)->getProduct($orderProduct->product_id);
         $escrow = $product->orderPivot->associatedEscrow();
-        if ($product->orderPivot->cancelled) {
-            if ($escrow) {
-                if (!$escrow->settled()) {
+        if ($escrow) {
+            if (!$escrow->settled()) {
+                if ($product->orderPivot->cancelled) {
                     $this->bank->reverseEscrow($escrow);
+                    // todo notify cancellation
                 }
-            }
-        }
 
-        if ($product->orderPivot->receipt_confirmed && !$product->orderPivot->delivery_confirmed) {
-            // todo notify seller
-            // todo broadcast confirmation
-        }
+                if ($product->orderPivot->receipt_confirmed && !$product->orderPivot->delivery_confirmed) {
+                    // todo notify seller
+                    // todo broadcast confirmation
+                }
 
-        if (!$product->orderPivot->receipt_confirmed && $product->orderPivot->delivery_confirmed) {
-            // todo notify buyer
-            // todo broadcast confirmation
-        }
+                if (!$product->orderPivot->receipt_confirmed && $product->orderPivot->delivery_confirmed) {
+                    // todo notify buyer
+                    // todo broadcast confirmation
+                }
 
-        if ($product->orderPivot->receipt_confirmed && $product->orderPivot->delivery_confirmed) {
-            if ($escrow) {
-                if (!$escrow->settled()) {
+                if ($product->orderPivot->receipt_confirmed && $product->orderPivot->delivery_confirmed) {
                     $this->bank->completeEscrow($escrow);
                 }
+            }
+        } else {
+            if ($product->orderPivot->cancelled) {
+                // todo notify cancellation
             }
         }
     }

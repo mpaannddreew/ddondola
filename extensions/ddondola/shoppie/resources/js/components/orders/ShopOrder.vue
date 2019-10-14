@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        name: "MyOrder",
+        name: "ShopOrder",
         mounted(){},
         data() {
             return {

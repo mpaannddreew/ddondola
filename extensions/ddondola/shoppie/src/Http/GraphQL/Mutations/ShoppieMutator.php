@@ -244,12 +244,7 @@ class ShoppieMutator
      */
     public function addToCart($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $context->user()
-            ->cart
-            ->addProduct(
-                app(ProductRepository::class)->id($args["id"]),
-                $args["quantity"]
-            );
+        return $context->user()->cart->addProduct(app(ProductRepository::class)->id($args["id"]), $args["quantity"]);
     }
 
     /**

@@ -56,7 +56,7 @@ class Order extends Model
      */
     public function groupByShop() {
         return $this->products->groupBy(function (Product $product) {
-            return $product->brand->shop->code;
+            return $product->shop->code;
         });
     }
 
@@ -88,7 +88,7 @@ class Order extends Model
      */
     public function groupActiveRowsByShop() {
         return $this->activeRows()->groupBy(function (Product $product) {
-            return $product->brand->shop->code;
+            return $product->shop->code;
         });
     }
 

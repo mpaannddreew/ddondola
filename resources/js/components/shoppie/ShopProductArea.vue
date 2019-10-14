@@ -105,7 +105,6 @@
                 }).then(this.loadProducts).catch(function (error) {});
             },
             loadProducts(response) {
-                console.log(JSON.stringify(response.data));
                 this.loaded = true;
                 this.products = response.data.data.shop.products.data;
                 this.paginatorInfo = response.data.data.shop.products.paginatorInfo;

@@ -333,7 +333,7 @@ class ShoppieController extends Controller
             if ($request->user()->ownsProduct($product))
                 return view('shoppie::shop.product.admin.index', ['product' => $product]);
 
-            if (!$product->shop()->owner->country->is($request->user()->country))
+            if (!$product->shop->owner->country->is($request->user()->country))
                 abort(404);
         }
 
@@ -355,7 +355,7 @@ class ShoppieController extends Controller
             if ($request->user()->ownsProduct($product))
                 return view('shoppie::shop.product.admin.reviews', ['product' => $product]);
 
-            if (!$product->shop()->owner->country->is($request->user()->country))
+            if (!$product->shop->owner->country->is($request->user()->country))
                 abort(404);
         }
 
@@ -460,7 +460,7 @@ class ShoppieController extends Controller
     public function updateProductGallery(Request $request, Product $product) {
         $media = $product->addMediaFromRequest('images')->toMediaCollection('products');
 
-        return response()->json($media->id);
+        return response()->json($media->getKey());
     }
 
     public function shopCategories(Request $request, Shop $shop) {

@@ -42,7 +42,7 @@ class ProductOfferPolicy
      */
     public function update(User $user, ProductOffer $productOffer)
     {
-        return $user->manages($productOffer->product->shop());
+        return $user->manages($productOffer->product->shop);
     }
 
     /**

@@ -67,7 +67,7 @@ class EscrowProcessor
                 if (!$product->orderPivot->associatedEscrow()) {
                     $this->escrows->create([
                         'source_account_id' => $order->by->account->getKey(),
-                        'destination_account_id' => $product->shop()->account->getKey(),
+                        'destination_account_id' => $product->shop->account->getKey(),
                         'amount' => $product->orderPivot->sum(),
                         'meta' => [
                             'order' => $order->getKey(),
@@ -93,7 +93,6 @@ class EscrowProcessor
 
         DB::transaction(function () use ($escrow) {
             $this->escrows->update($escrow, ['reversed' => true]);
-            // todo broadcast cancellation
             Transfer::dispatchNow($this->bank->escrowAccount(), $escrow->source, $escrow->amount, "Escrow rollback");
         });
     }
@@ -115,10 +114,11 @@ class EscrowProcessor
                 ->id($escrow->meta('order'))
                 ->getProduct($escrow->meta('product'));
 
-            // todo broadcast payout
             Transfer::dispatchNow($this->bank->escrowAccount(), $escrow->destination, $product->orderPivot->payout(), "Escrow settlement payout");
             if ($product->orderPivot->commission())
                 Transfer::dispatchNow($this->bank->escrowAccount(), $this->bank->adminAccount(), $product->orderPivot->commission(), "Escrow settlement commission");
+
+            // todo broadcast payout
         });
     }
 }

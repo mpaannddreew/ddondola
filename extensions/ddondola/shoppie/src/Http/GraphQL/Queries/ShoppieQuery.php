@@ -425,27 +425,27 @@ class ShoppieQuery
      */
     public function searchProducts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $this->status($this->search(app(ProductRepository::class)->builder()->has('media'), "%" . collect($args)->get("name") . "%"))->get();
-    }
+        $value = "%" . collect($args)->get("name") . "%";
 
-    protected function search($builder, $value) {
-        return $builder->where("name", "like", $value)
-            ->orWhereHas('subcategory', function($q) use($value) {
+        return $this->status(app(ProductRepository::class)->builder())
+            ->where("name", "like", $value)
+            ->orWhereHas('subcategory', function ($q) use ($value) {
                 $q->where('name', 'like', $value)
-                    ->orWhereHas('category', function($q1) use($value) {
-                        $q1->where('name', 'like', $value);
+                    ->orWhereHas('category', function ($q) use ($value) {
+                        $q->where('name', 'like', $value);
                     });
             })
-            ->orWhereHas('brand', function($q) use($value) {
+            ->orWhereHas('brand', function ($q) use ($value) {
+                $q->where('name', 'like', $value);
+            })
+            ->orWhereHas('shop', function ($q) use ($value) {
                 $q->where('name', 'like', $value)
-                    ->orWhereHas('shop', function($q1) use($value) {
-                        $q1->where('name', 'like', $value)
-                            ->orWhereHas('category', function($q2) use($value) {
-                                $q2->where('name', 'like', $value);
-                            });
-                    });
-            });
+                    ->orWhereHas('category', function ($q) use ($value) {
+                        $q->where('name', 'like', $value);
+                });
+            })->get();
     }
+
 
     /**
      * Return a value for the field.
@@ -460,20 +460,20 @@ class ShoppieQuery
     public function searchShops($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         $value = "%" . collect($args)->get("name") . "%";
-        // todo search including localization
+
         return $this->status(app(ShopRepository::class)->builder())
             ->where("name", "like", $value)
             ->orWhereHas('category', function($q) use($value) {
                 $q->where('name', 'like', $value);
             })->orWhereHas('brands', function($q) use($value) {
                 $q->where('name', 'like', $value)
-                    ->orWhereHas('products', function($q1) use($value) {
-                        $q1->where('name', 'like', $value);
+                    ->orWhereHas('products', function($q) use($value) {
+                        $q->where('name', 'like', $value);
                 });
             })->orWhereHas('categories', function($q) use($value) {
                 $q->where('name', 'like', $value)
-                    ->orWhereHas('categories', function($q1) use($value) {
-                        $q1->where('name', 'like', $value);
+                    ->orWhereHas('categories', function($q) use($value) {
+                        $q->where('name', 'like', $value);
                 });
             })->get();
     }
