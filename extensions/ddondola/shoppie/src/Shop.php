@@ -25,6 +25,8 @@ class Shop extends Model implements HasMedia
 
     protected $appends = ['averageRating', 'reviewCount', 'avatar', 'coverPicture', 'brandCount', 'subCategoriesCount'];
 
+    protected $hidden = ['reviews', 'media'];
+
     public function getAvatarAttribute() {
         return $this->avatar();
     }
@@ -38,7 +40,7 @@ class Shop extends Model implements HasMedia
     }
 
     public function productIds() {
-        return $this->products->pluck('id');
+        return $this->products()->pluck('id')->all();
     }
 
     public function orderCount() {
@@ -50,7 +52,7 @@ class Shop extends Model implements HasMedia
     public function orderIds() {
         return $this->products()->has('orders')->get()->map(function(Product $product) {
             return $product->orderIds();
-        })->flatten()->all();
+        })->flatten()->unique()->values()->all();
     }
 
     public function orders() {
@@ -176,7 +178,13 @@ class Shop extends Model implements HasMedia
         return $this->owner->country->currencyCode();
     }
 
-    public function contactIds() {
-        return $this->likers()->pluck('id');
+    protected function contactsFromOrders() {
+        return $this->orders()->get()->map(function (Order $order) {
+            return $order->by->id;
+        })->all();
+    }
+
+    public function contacts() {
+        return $this->likers()->pluck('id')->merge($this->contactsFromOrders())->unique()->values()->all();
     }
 }

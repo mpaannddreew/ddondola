@@ -30,10 +30,10 @@ class ShopRepository
      * Get shop from code
      *
      * @param $code
-     * @return Shop
+     * @return Builder|Model|object|Shop
      */
     public function code($code) {
-        return Shop::where('code', "=", $code)->first();
+        return $this->builder()->where('code', "=", $code)->first();
     }
 
     /**

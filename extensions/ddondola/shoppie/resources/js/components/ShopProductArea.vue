@@ -6,20 +6,26 @@
                     <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
                     <span class="visible-items" v-else></span>
                     <div class="d-flex">
-                        <select class="form-control form-control-sm custom-select custom-select-sm mr-2" tabindex="-98" v-model="ordering">
-                            <option value=""></option>
-                            <option value="latest">Latest</option>
-                            <option value="oldest">Oldest</option>
-                            <option value="lowest-price">Lowest Price</option>
-                            <option value="highest-price">Highest Price</option>
-                        </select>
-                        <a :href="newProductUrl" class="btn btn-sm btn-success ml-auto" v-if="admin">
-                            <i class="material-icons">add</i> New Product
-                        </a>
+                        <div class="btn-group btn-group-sm btn-group-toggle d-inline-flex mb-4 mb-sm-0 mx-auto" role="group" aria-label="Page actions">
+                            <a href="javascript:void(0)" @click="showGrid" class="btn btn-white" :class="{active: grid}"><i class="material-icons">view_module</i></a>
+                            <a href="javascript:void(0)" @click="showList" class="btn btn-white" :class="{active: !grid}"><i class="material-icons">view_list</i></a>
+                        </div>
+                        <div class="ml-auto d-flex">
+                            <select class="form-control form-control-sm custom-select custom-select-sm mx-2" tabindex="-98" v-model="ordering">
+                                <option value=""></option>
+                                <option value="latest">Latest</option>
+                                <option value="oldest">Oldest</option>
+                                <option value="lowest-price">Lowest Price</option>
+                                <option value="highest-price">Highest Price</option>
+                            </select>
+                            <a :href="newProductUrl" class="btn btn-sm btn-success ml-auto" v-if="admin">
+                                <i class="material-icons">add</i> New Product
+                            </a>
+                        </div>
                     </div>
                 </header>
             </div>
-            <div class="card-body h-100" :class="{'bg-white': showProducts && loaded}">
+            <div class="card-body h-100" :class="{'bg-white': showProducts && loaded && grid}">
                 <div class="center-xy" v-if="!loaded || (!showProducts && loaded)">
                     <div align="center" v-if="!loaded">
                         <div class="loader"></div>
@@ -30,10 +36,28 @@
                         <p class="m-0">There are no products in this shop yet!</p>
                     </div>
                 </div>
-                <div class="px-2" v-else-if="showProducts && loaded">
+                <div class="px-2" v-else-if="showProducts && loaded && grid">
                     <ul class="products">
                         <li :id="indx" is="directory-product" v-for="(product, indx) in products" :key="indx" :product="product" :class="{'first': first(indx + 1), 'last': last(indx + 1)}"></li>
                     </ul>
+                </div>
+                <div class="card card-small lo-stats border-top-radius-0" style="border-top: 0 !important;"  v-else-if="showProducts && loaded && !grid">
+                    <table class="table mb-0">
+                        <thead class="py-2 bg-light text-semibold">
+                        <tr>
+                            <th class="border-top-0">Details</th>
+                            <th class="border-top-0"></th>
+                            <th class="border-top-0">Brand</th>
+                            <th class="border-top-0">Category</th>
+                            <th class="border-top-0">Subcategory</th>
+                            <th class="border-top-0">Price</th>
+                            <th class="text-right border-top-0"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr is="product-row" v-for="(product, indx) in products" :key="indx" :product="product"></tr>
+                        </tbody>
+                    </table>
                 </div>
                 <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
             </div>
@@ -43,15 +67,17 @@
 
 <script>
     import DirectoryProduct from "./products/DirectoryProduct";
+    import ProductRow from "./products/ProductRow";
     export default {
         name: "ShopProductArea",
-        components: {DirectoryProduct},
+        components: {ProductRow, DirectoryProduct},
         mounted() {
             this.fetchProducts();
             this.listen();
         },
         data() {
             return {
+                grid: true,
                 products: [],
                 loaded: false,
                 page: 1,
@@ -83,19 +109,21 @@
                 return {
                     ordering: this.ordering,
                     brandIds: JSON.stringify(this.brandIds),
-                    subCategoryIds: JSON.stringify(this.subCategoryIds)
+                    subCategoryIds: JSON.stringify(this.subCategoryIds),
+                    name: this.searchFilter
                 }
             },
             variables() {
-                var variables = {shop: this.shop, inventory: false, filters: this.filters, count: graphql.columnCount, page: this.page};
-                if (this.searchFilter) {
-                    variables['filters']['name'] = this.searchFilter;
-                }
-
-                return variables;
+                return {shop: this.shop, inventory: false, filters: this.filters, count: graphql.columnCount, page: this.page};
             }
         },
         methods: {
+            showGrid() {
+                this.grid = true;
+            },
+            showList() {
+                this.grid = false;
+            },
             fetchProducts() {
                 this.products = [];
                 this.loaded = false;

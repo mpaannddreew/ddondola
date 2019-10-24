@@ -40,8 +40,8 @@
                 <div class="card-post__image border-top-left-radius-0 border-bottom-left-radius-0"
                      :style="{backgroundImage: `url(${reviewable.product.images[0].url})`}">
                     <!--<div class="card-post__author d-flex">-->
-                        <!--<a :href="'/shops/' + reviewable.product.shop.code" class="card-post__author-avatar card-post__author-avatar&#45;&#45;small"-->
-                           <!--:style="{backgroundImage: 'url(' + reviewable.product.shop.avatar.url + ')'}">-->
+                        <!--<a :href="`/shops/${reviewable.product.shop.code}`" class="card-post__author-avatar card-post__author-avatar&#45;&#45;small"-->
+                           <!--:style="{backgroundImage: `url(${reviewable.product.shop.avatar.url})`}">-->
                             <!--offered by {{ reviewable.product.shop.name }}</a>-->
                     <!--</div>-->
                 </div>
@@ -53,10 +53,10 @@
                     <span class="text-muted">
                         <ul class="price list-inline no-margin">
                             <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': reviewable.product.discount }">
-                                {{ reviewable.product.currencyCode }} {{ reviewable.product.discountedPrice }}
+                                {{ reviewable.product.currencyCode }} {{ reviewable.product.discountedPrice|commas }}
                             </li>
                             <li class="list-inline-item deals_item_price_a" style="text-decoration: line-through;" v-if="reviewable.product.discount">
-                                {{ reviewable.product.currencyCode }} {{ reviewable.product.price }}
+                                {{ reviewable.product.currencyCode }} {{ reviewable.product.price|commas }}
                             </li>
                         </ul>
                     </span>

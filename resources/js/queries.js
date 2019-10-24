@@ -1560,7 +1560,9 @@ window.graphql = {
             cancelled(shop: $shop)
             sum(shop: $shop)
             currencyCode
+            code
             by {
+              accountBalance
               code
               first_name
               last_name
@@ -1746,6 +1748,18 @@ window.graphql = {
               name
             }
             created_at
+          }
+        }`,
+    account: `query account($accountHolder: String) {
+          account(accountHolder: $accountHolder) {
+            balance
+            holder {
+                code
+                type
+                profile {
+                    email
+                }
+            }
           }
         }`
 };

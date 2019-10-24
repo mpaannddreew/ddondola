@@ -20,8 +20,13 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
             });
         });
         Route::middleware(['admin.staff'])->prefix('admin')->group(function (){
-            Route::get('shops/{shop?}', 'AdminController@shops')->name('admin.shops');
             Route::get('categories', 'AdminController@categories')->name('admin.categories');
+            Route::prefix('shops')->group(function () {
+                Route::get('/', 'AdminController@shops')->name('admin.shops');
+            });
+            Route::prefix('products')->group(function () {
+                Route::get('/', 'AdminController@products')->name('admin.products');
+            });
         });
     });
 

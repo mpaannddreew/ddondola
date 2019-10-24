@@ -59,6 +59,7 @@ class EscrowProcessor
         }
 
         if ($order->sum() > $order->by->account->balance()) {
+            // todo notify insufficient balance
             return;
         }
 

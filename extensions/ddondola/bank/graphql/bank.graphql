@@ -47,5 +47,5 @@ type Transaction {
 }
 
 extend type Query @middleware(checks: ["auth:api"]) {
-    account(id: ID! @eq): Account! @find(model: "Bank\\Account")
+    account(accountHolder: String): Account! @field(resolver: "Bank\\Http\\GraphQL\\Queries\\BankQuery@account")
 }

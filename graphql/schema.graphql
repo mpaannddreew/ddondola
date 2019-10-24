@@ -60,6 +60,7 @@ type User implements Muddondozi {
     account: Account! @hasOne
     settings: UserSettings!
     active: Boolean!
+    accountBalance: Int! @method(name: "accountBalance")
     avatar: Image! @method(name: "avatar")
     coverPicture: Image! @method(name: "coverPicture")
     country: Country @belongsTo

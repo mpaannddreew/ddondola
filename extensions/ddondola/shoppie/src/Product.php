@@ -29,6 +29,8 @@ class Product extends Model implements HasMedia
 
     protected $appends = ['averageRating', 'reviewCount', 'firstImageUrl'];
 
+    protected $hidden = ['media', 'reviews'];
+
     /**
      * Shop this product belongs to
      *
@@ -141,7 +143,7 @@ class Product extends Model implements HasMedia
     }
 
     public function orderCount() {
-        return $this->orders->count();
+        return $this->orders()->count();
     }
 
     /**

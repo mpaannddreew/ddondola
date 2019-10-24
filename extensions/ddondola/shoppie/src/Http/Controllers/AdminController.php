@@ -20,11 +20,15 @@ class AdminController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function shops(Request $request, Shop $shop = null) {
+    public function categories() {
+        return view('shoppie::admin.categories');
+    }
+
+    public function shops(Request $request) {
         return view('shoppie::admin.shops');
     }
 
-    public function categories() {
-        return view('shoppie::admin.categories');
+    public function products(Request $request) {
+        return view('shoppie::admin.products');
     }
 }

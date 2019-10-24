@@ -2,10 +2,12 @@
 
 namespace Messenger\Http\GraphQL\Queries;
 
+use Ddondola\Repositories\UserRepository;
 use Ddondola\User;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Database\Eloquent\Builder;
 use Messenger\Facades\Messenger;
+use Messenger\Repositories\ConversationRepository;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Shoppie\Shop;
 
@@ -38,32 +40,44 @@ class MessengerQuery
      */
     public function conversations($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $builder = $rootValue->conversations();
+        $builder = app(ConversationRepository::class)->builder();
         if (collect($args)->has('search')) {
             $value = '%' . collect($args)->get('search') . '%';
-
-            $builder->whereHasMorph('initiator', '*', function ($q, $type) use ($value) {
-                if ($type === Shop::class) {
-                    $q->where('first_name', 'like', $value)
-                        ->orWhere('last_name', 'like', $value)
-                        ->orWhere('email', 'like', $value);
-                }
-
-                if ($type === User::class) {
-
-                }
-            })->orWhereHasMorph('participant', '*', function ($q, $type) use ($value) {
-                if ($type === Shop::class) {
-                    $q->where('first_name', 'like', $value)
-                        ->orWhere('last_name', 'like', $value)
-                        ->orWhere('email', 'like', $value);
-                }
-
-                if ($type === User::class) {
-
-                }
+            $builder->where(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->conversations())
+                    ->whereHasMorph('initiator', [User::class], function ($q) use ($value) {
+                        $q->where('first_name', 'like', $value);
+                    });
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->conversations())
+                    ->whereHasMorph('initiator', [User::class], function ($q) use ($value) {
+                        $q->where('last_name', 'like', $value);
+                    });
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->conversations())
+                    ->whereHasMorph('participant', [User::class], function ($q) use ($value) {
+                        $q->where('first_name', 'like', $value);
+                    });
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->conversations())
+                    ->whereHasMorph('participant', [User::class], function ($q) use ($value) {
+                        $q->where('last_name', 'like', $value);
+                    });
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->conversations())
+                    ->whereHasMorph('initiator', [Shop::class], function ($q) use ($value) {
+                        $q->where('name', 'like', $value);
+                    });
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->conversations())
+                    ->whereHasMorph('participant', [Shop::class], function ($q) use ($value) {
+                        $q->where('name', 'like', $value);
+                    });
             });
+        }else {
+            $builder->whereIn('id', $rootValue->conversations());
         }
+
         return $this->orderBy($builder);
     }
 
@@ -107,11 +121,18 @@ class MessengerQuery
      */
     public function contacts($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $builder = $rootValue->contacts();
+        $builder = app(UserRepository::class)->builder();
         if (collect($args)->has('search')) {
             $value = '%' . collect($args)->get('search') . '%';
-            $builder = $builder->where('first_name', 'like', $value)
-                ->orWhere('last_name', 'like', $value);
+            $builder->where(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->contacts())
+                    ->where('first_name', 'like', $value);
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->contacts())
+                    ->where('last_name', 'like', $value);
+            });
+        }else {
+            $builder->whereIn('id', $rootValue->contacts());
         }
         
         return $this->orderBy($builder, "first_name", "asc");

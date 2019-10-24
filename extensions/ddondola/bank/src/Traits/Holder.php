@@ -32,4 +32,13 @@ trait Holder
     public function createAccount() {
         return app(Bank::class)->createAccount($this);
     }
+
+    /**
+     * Account balance
+     *
+     * @return int
+     */
+    public function accountBalance() {
+        return $this->account->balance();
+    }
 }

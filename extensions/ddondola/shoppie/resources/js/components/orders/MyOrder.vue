@@ -4,9 +4,12 @@
             <img class="border rounded" :src="thumbnail">
         </div>
         <div class="ml-2 my-auto d-flex w-100">
-            <span class="text-uppercase text-ellipsis" style="display: block;">
-                ORDER - {{ label|upper }}
-            </span>
+            <div>
+                <span class="text-uppercase text-ellipsis" style="display: block;">
+                    ORDER #{{ label }}
+                </span>
+                <span class="badge p-1" :class="indicator">{{ status }}</span>
+            </div>
             <small class="text-muted ml-auto">{{ order.created_at|dayOrTime }}</small>
         </div>
     </a>
@@ -28,6 +31,12 @@
             }
         },
         computed: {
+            status() {
+                if (!this.order.cancelled)
+                    return this.order.paidFor ? 'Paid': 'Unpaid';
+
+                return 'Cancelled';
+            },
             firstProduct() {
                 return this.order.firstProduct;
             },
@@ -38,10 +47,7 @@
                 return `/me/orders/${this.order.code}`;
             },
             indicator() {
-                return {
-                    'text-success': this.order.paidFor,
-                    'text-warning': !this.order.paidFor
-                };
+                return {'badge-warning': !this.order.paidFor, 'badge-success': this.order.paidFor, 'badge-danger': this.order.cancelled};
             },
             label() {
                 return _.head(_.split(this.order.code, '-'));

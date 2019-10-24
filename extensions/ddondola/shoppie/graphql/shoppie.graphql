@@ -9,6 +9,7 @@ type ShopCategory {
     description: String
     shops: [Shop!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@paginatedShops")
     shopCount: Int! @method(name: "shopCount")
+    productCount: Int! @method(name: "productCount")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -24,6 +25,7 @@ type Shop implements Muddondozi {
     account: Account! @hasOne
     settings: ShopSettings!
     active: Boolean! @method(name: "active")
+    accountBalance: Int! @method(name: "accountBalance")
     likes: Int! @method(name: "likeCount")
     avatar: Image! @method(name: "avatar")
     coverPicture: Image! @method(name: "coverPicture")
@@ -160,7 +162,7 @@ type Product {
     discount: Int! @method(name: "discount")
     discountedPrice: Int! @method(name: "discountedPrice")
     currencyCode: String! @method(name: "currencyCode")
-    shop: Shop! @method(name: "shop")
+    shop: Shop! @belongsTo
     images: [Image!] @method(name: "productImages")
     cartPivot: CartPivot
     orderPivot: OrderPivot

@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <div class="center-xy">
                         <div align="center" v-if="!loaded">
-                            <div class="loader"></div>
+                            <loader></loader>
                             <p class="m-0">Loading order...</p>
                         </div>
                         <div align="center" v-if="!hasProducts && loaded">
@@ -19,21 +19,26 @@
             <div class="card card-small main" v-else-if="hasProducts && loaded">
                 <div class="card-body h-100">
                     <div class="p-5">
-                        <div class="row mb-2">
-                            <div class="col-12 col-sm-6 text-center text-sm-left mb-4 mb-sm-0">
-                                <a class="btn btn-white btn-sm text-danger" href="javascript:void(0)" @click="close">
-                                    <i class="material-icons">clear</i>
-                                </a>
-                            </div>
-                            <div class="col-12 col-sm-6 d-flex align-items-center">
+                        <div class="d-flex mb-2 align-items-center">
+                            <div>
                                 <div class="ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">
-                                    <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="!shop" @click="showInvoice">
-                                        <i class="material-icons">description</i> Invoice
+                                    <a class="btn btn-white btn-sm text-danger" href="javascript:void(0)" @click="close">
+                                        <i class="material-icons">clear</i>
                                     </a>
-                                    <a class="btn btn-white btn-sm" href="javascript:void(0)"
-                                       v-if="!shop && !loadedOrder.paidFor && !loadedOrder.cancelled" @click="makePayment">
-                                        <i class="material-icons">credit_card</i> Make Payment
-                                    </a>
+                                </div>
+                            </div>
+                            <div class="ml-auto d-flex align-items-center">
+                                <quick-wallet v-if="!shop" :deposit="true" :deposit-amount="depositAmount"></quick-wallet>
+                                <div class="ml-1 mr-auto mr-sm-0 mt-3 mt-sm-0">
+                                    <template v-if="!shop">
+                                        <a class="btn btn-white btn-sm" href="javascript:void(0)"
+                                           v-if="!loadedOrder.paidFor && !loadedOrder.cancelled" @click="approvePayment">
+                                            <i class="fa fa-check"></i> Approve Payment
+                                        </a>
+                                        <a class="btn btn-white btn-sm" href="javascript:void(0)" @click="showInvoice">
+                                            <i class="material-icons">description</i> Invoice
+                                        </a>
+                                    </template>
                                     <a class="btn btn-white btn-sm" :href="messengerUrl" v-if="shop">
                                         <i class="material-icons">chat</i> Message Buyer
                                     </a>
@@ -41,6 +46,10 @@
                             </div>
                         </div>
                         <div class="flat-card is-auto order-list-card p-4 border bg-white border-radius">
+                            <div class="progress-block">
+                                <!-- Title -->
+                                <h3 class="text-uppercase">ORDER #{{ label }}</h3>
+                            </div>
                             <!-- Orders team member -->
                             <div class="order-block" v-if="shop">
                                 <img :src="buyerAvatar" alt="">
@@ -141,8 +150,7 @@
                 currencyCode: '',
                 buyer: null,
                 loadedOrder: null,
-                details: true,
-                paymentModal: null
+                details: true
             }
         },
         props: {
@@ -155,9 +163,16 @@
             }
         },
         computed: {
+            depositAmount() {
+                if (this.buyer.accountBalance > this.sum || this.loadedOrder.paidFor || this.loadedOrder.cancelled) {
+                    return 0;
+                }
+
+                return this.sum - this.buyer.accountBalance;
+            },
             status() {
                 if (!this.loadedOrder.cancelled)
-                    return this.loadedOrder.paidFor ? 'Cleared': 'Pending';
+                    return this.loadedOrder.paidFor ? 'Paid': 'Unpaid';
 
                 return 'Cancelled';
             },
@@ -196,8 +211,8 @@
 
                 return null;
             },
-            ravePublicKey() {
-                return RavePublicKey;
+            label() {
+                return _.head(_.split(this.loadedOrder.code, '-'));
             }
         },
         methods: {
@@ -227,38 +242,8 @@
             showInvoice() {
                 this.$router.push(this.invoiceRoute);
             },
-            makePayment() {
-                this.paymentModal = this.openPaymentModal();
-            },
-            openPaymentModal() {
-                return getpaidSetup({
-                    PBFPubKey: this.ravePublicKey,
-                    customer_firstname: this.buyer.first_name,
-                    customer_lastname: this.buyer.last_name,
-                    customer_email: this.buyer.email,
-                    amount: this.loadedOrder.sum,
-                    currency: this.buyer.country.currency,
-                    txref: Uuid(),
-                    meta: [{
-                        metaname: "order",
-                        metavalue: this.order
-                    }],
-                    onclose: function() {},
-                    callback: this.raveCallback
-                });
-            },
-            raveCallback(response) {
-                var txref = response.tx.txRef;
-                console.log("This is the response returned after a charge", response);
-                if (response.tx.chargeResponseCode === "00" || response.tx.chargeResponseCode === "0") {
-                    // todo redirect to a success page
-                } else {
-                    // todo redirect to a failure page.
-                }
+            approvePayment() {
 
-                if (this.paymentModal) {
-                    this.paymentModal.close(); // use this to close the modal immediately after payment.
-                }
             }
         },
         watch: {

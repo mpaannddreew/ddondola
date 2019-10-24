@@ -605,7 +605,7 @@ class ShoppieQuery
         $column = "created_at";
         $order = "desc";
 
-        if ($filters->has('name')) {
+        if ($filters->has('name') && $filters->get("name")) {
             $builder = $builder->where("name", "like", "%" . $filters->get("name") . "%");
         }
 

@@ -21,7 +21,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link @yield('categories-active')" href="{{ route('admin.categories') }}">
-                <i class="material-icons">work</i>
+                <i class="material-icons">folder</i>
                 <span>Categories</span>
             </a>
         </li>
@@ -31,11 +31,17 @@
                 <span>Shops</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link @yield('products-active')" href="{{ route('admin.products') }}">
+                <i class="material-icons">local_mall</i>
+                <span>Products</span>
+            </a>
+        </li>
     </ul>
     <h6 class="main-sidebar__nav-title">Financial</h6>
     <ul class="nav nav--no-borders flex-column">
         <li class="nav-item">
-            <a class="nav-link @yield('feedback-active')" href="#">
+            <a class="nav-link @yield('payments-active')" href="#">
                 <i class="material-icons">credit_card</i>
                 <span>Payments</span>
             </a>

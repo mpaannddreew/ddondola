@@ -9,7 +9,6 @@
 namespace Messenger\Traits;
 
 
-use Ddondola\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Messenger\Conversation;
@@ -46,31 +45,11 @@ trait Converser
     }
 
     /**
-     * Conversation ids
-     *
      * @return array
      */
-    private function eitherConversations() {
+    public function conversations() {
         return $this->initiatedConversations()->pluck('id')->merge($this->participatedInConversations()->pluck('id'))->all();
     }
 
-    /**
-     * All conversations builder
-     *
-     * @return Builder
-     */
-    public function conversations() {
-        return app(ConversationRepository::class)->builder()->whereIn('id', $this->eitherConversations());
-    }
-
-    abstract public function contactIds();
-
-    /**
-     * Converser contacts
-     *
-     * @return Builder
-     */
-    public function contacts() {
-        return app(UserRepository::class)->builder()->whereIn('id', $this->contactIds());
-    }
+    abstract public function contacts();
 }

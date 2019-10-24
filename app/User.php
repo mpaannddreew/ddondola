@@ -30,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'code', 'settings', 'profile', 'active'
+        'first_name', 'last_name', 'email', 'password', 'code', 'settings', 'profile', 'active', 'is_seller', 'is_staff', 'is_superuser'
     ];
 
     /**
@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'media'
     ];
 
     protected $appends = ['name', 'avatar', 'coverPicture', /*'followerCount', 'followingCount'*/];
@@ -95,11 +95,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     }
 
     public function followingCount() {
-        return $this->followings->count();
+        return $this->followings()->count();
     }
 
     public function followerCount() {
-        return $this->followers->count();
+        return $this->followers()->count();
     }
 
     public function avatar() {
@@ -111,6 +111,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function coverPicture() {
         return [
             'url' => asset('images/banner1.jpg')
+//            'url' => asset('images/bg/background.jpg')
         ];
     }
 
@@ -142,7 +143,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return "code";
     }
 
-    public function contactIds() {
+    public function contacts() {
         return $this->followings()->pluck('id')->merge($this->followers()->pluck('id'))->all();
     }
 

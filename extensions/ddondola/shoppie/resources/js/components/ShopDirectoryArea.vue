@@ -108,13 +108,11 @@
             newShopUrl() {
                 return '/me/shops/create';
             },
+            filters() {
+                return  {categoryIds: JSON.stringify(this.categoryIds), name: this.searchFilter, ordering: this.ordering}
+            },
             variables() {
-                var variables = {filters: {categoryIds: JSON.stringify(this.categoryIds), ordering: this.ordering},
-                    count: graphql.rowCount, page: this.page};
-                if (this.searchFilter) {
-                    variables['filters']['name'] = this.searchFilter;
-                }
-                return variables;
+                return {filters: this.filters, count: graphql.rowCount, page: this.page};
             }
         },
         watch: {

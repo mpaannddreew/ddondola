@@ -1,6 +1,6 @@
 <?php
 
-namespace Ddondola\Http\GraphQL\Mutations;
+namespace Bank\Http\GraphQL\Mutations;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;

@@ -27,7 +27,7 @@ trait Reviewer
      * @return array
      */
     public function reviewIds() {
-        return $this->reviews->pluck('id');
+        return $this->reviews()->pluck('id')->all();
     }
 
     /**

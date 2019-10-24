@@ -21,8 +21,17 @@
         </li>
         <li class="nav-item">
             <a class="nav-link @yield('settings-active')" href="{{ route('my.shop.edit', ['shop' => $shop]) }}">
-                <i class="material-icons">mode_edit</i>
-                <span>Update</span>
+                <i class="material-icons">settings</i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
+    <h6 class="main-sidebar__nav-title">Apps</h6>
+    <ul class="nav nav--no-borders flex-column">
+        <li class="nav-item">
+            <a class="nav-link @yield('messenger-active')" href="{{ route('my.shop.messenger', ['shop' => $shop]) }}">
+                <i class="material-icons">chat</i>
+                <span>Messenger</span>
             </a>
         </li>
     </ul>
@@ -38,15 +47,6 @@
             <a class="nav-link @yield('orders-active')" href="{{ route('my.shop.orders', ['shop' => $shop]) }}">
                 <i class="material-icons">assignment</i>
                 <span>Orders</span>
-            </a>
-        </li>
-    </ul>
-    <h6 class="main-sidebar__nav-title">Apps</h6>
-    <ul class="nav nav--no-borders flex-column">
-        <li class="nav-item">
-            <a class="nav-link @yield('messenger-active')" href="{{ route('my.shop.messenger', ['shop' => $shop]) }}">
-                <i class="material-icons">chat</i>
-                <span>Messenger</span>
             </a>
         </li>
     </ul>
