@@ -52,8 +52,11 @@
             hasConversations() {
                 return this.conversations.length > 0;
             },
+            converser() {
+                return {id: this.ownerId, type: this.ownerType};
+            },
             variables() {
-                var variables = {count: this.count, page: 1};
+                var variables = {count: this.count, page: 1, converser: this.converser};
                 if (this.ownerType === 'shop') {
                     variables["id"] = this.ownerId;
                 }
@@ -74,7 +77,8 @@
         },
         methods: {
             listen() {
-                Bus.$on('filter', this.filter)
+                Bus.$on('filter', this.filter);
+                // todo listen for new conversations
             },
             filter(filter) {
                 this.searchFilter = filter;

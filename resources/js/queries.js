@@ -925,6 +925,11 @@ window.graphql = {
             }
         }
     }`,
+    unreadMessageCount: `query unreadMessageCount {
+        me {
+            unreadMessageCount
+        }
+    }`,
     myCartProducts: `query myCartProducts {
         me {
           cart {
@@ -1194,7 +1199,7 @@ window.graphql = {
             }
           }
         }`,
-    myConversations: `query myConversations($search: String $count: Int! $page: Int!) {
+    myConversations: `query myConversations($search: String $converser: Converser! $count: Int! $page: Int!) {
           me {
             conversations(search: $search count: $count page: $page) {
               data {
@@ -1219,8 +1224,10 @@ window.graphql = {
                 }
                 latestMessage {
                   message
+                  read_at
                   created_at
                 }
+                unreadCount(converser: $converser)
               }
               paginatorInfo {
                 count
@@ -1235,7 +1242,7 @@ window.graphql = {
             }
           }
         }`,
-    shopConversations: `query shopConversations($id: ID! $search: String $count: Int! $page: Int!) {
+    shopConversations: `query shopConversations($id: ID! $converser: Converser! $search: String $count: Int! $page: Int!) {
           shop(id: $id) {
             conversations(search: $search count: $count page: $page) {
               data {
@@ -1260,8 +1267,10 @@ window.graphql = {
                 }
                 latestMessage {
                   message
+                  read_at
                   created_at
                 }
+                unreadCount(converser: $converser)
               }
               paginatorInfo {
                 count
@@ -1761,5 +1770,8 @@ window.graphql = {
                 }
             }
           }
+        }`,
+    readConversation: `mutation readConversation($conversation: ID! $converser: Converser!) {
+          count:readConversation(conversation: $conversation converser: $converser)
         }`
 };

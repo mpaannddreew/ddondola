@@ -52,4 +52,16 @@ trait Converser
     }
 
     abstract public function contacts();
+
+    /**
+     * @return int
+     */
+    public function unreadMessageCount() {
+        return app(ConversationRepository::class)->builder()
+            ->has('messages')
+            ->whereIn('id', $this->conversations())
+            ->get()->sum(function (Conversation $conversation) {
+                return $conversation->unreadBy($this);
+            });
+    }
 }

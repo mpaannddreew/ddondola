@@ -13,9 +13,13 @@
 
     export default {
         name: "NavMessenger",
+        mounted() {
+            this.fetchUnreadSize();
+            this.listenToMessengerEvents();
+        },
         data() {
             return {
-                unReadCount: 5
+                unReadCount: 0
             }
         },
         props: {
@@ -29,7 +33,26 @@
                 return this.unReadCount > 0;
             },
             icon() {
-                return this.unReadCount > 0 ? 'chat_bubble' : 'chat_bubble_outline'
+                return 'chat_bubble';
+            }
+        },
+        methods: {
+            fetchUnreadSize() {
+                axios.post(graphql.api, {query: graphql.unreadMessageCount})
+                    .then(this.loadUnreadMessageCount).catch(function (error) {});
+            },
+            loadUnreadMessageCount(response) {
+                this.unReadCount = response.data.data.me.unreadMessageCount;
+            },
+            listenToMessengerEvents() {
+                Bus.$on('unread-messages', this.amendSize);
+            },
+            amendSize(event) {
+                if (event.type === 'increase') {
+                    this.unReadCount += event.size;
+                } else {
+                    this.unReadCount -= event.size;
+                }
             }
         },
         watch: {

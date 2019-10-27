@@ -6,8 +6,10 @@ use Ddondola\Repositories\UserRepository;
 use Ddondola\User;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Messenger\Facades\Messenger;
 use Messenger\Repositories\ConversationRepository;
+use Messenger\Repositories\MessageRepository;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Shoppie\Shop;
 
@@ -38,9 +40,24 @@ class MessengerQuery
      *
      * @return mixed
      */
+    public function unreadCount($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
+    {
+        return $rootValue->unreadBy(Messenger::resolveConverser(collect($args)->get('converser')));
+    }
+
+    /**
+     * Return a value for the field.
+     *
+     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
+     * @param array $args The arguments that were passed into the field.
+     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
+     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
+     *
+     * @return mixed
+     */
     public function conversations($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $builder = app(ConversationRepository::class)->builder();
+        $builder = app(ConversationRepository::class)->builder()->has('messages');
         if (collect($args)->has('search')) {
             $value = '%' . collect($args)->get('search') . '%';
             $builder->where(function ($query) use ($rootValue, $value) {
@@ -78,7 +95,13 @@ class MessengerQuery
             $builder->whereIn('id', $rootValue->conversations());
         }
 
-        return $this->orderBy($builder);
+        $latestMessages = app(MessageRepository::class)->builder()
+            ->select('conversation_id', DB::raw('MAX(created_at) as last_message_created_at'))
+            ->groupBy('conversation_id');
+
+        return $builder->joinSub($latestMessages, 'latest_messages', function ($join) {
+            $join->on('conversations.id', '=', 'latest_messages.conversation_id');
+        })->latest('latest_messages.last_message_created_at');
     }
 
     /**

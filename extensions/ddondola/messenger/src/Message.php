@@ -12,9 +12,12 @@ class Message extends EcryptableModel implements HasMedia
 
     protected $encryptable = ['message'];
 
-    protected $fillable = ['sender_id', 'sender_type', 'message'];
+    protected $fillable = ['sender_id', 'sender_type', 'message', 'read_at'];
 
-    protected $casts = ['settings' => 'array'];
+    protected $casts = [
+        'settings' => 'array',
+        'read_at' => 'datetime'
+    ];
 
     /**
      * Conversation message belongs to

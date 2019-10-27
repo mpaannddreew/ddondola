@@ -8,7 +8,6 @@
                 <span class="text-uppercase text-ellipsis" style="display: block;">
                     ORDER #{{ label }}
                 </span>
-                <span class="badge p-1" :class="indicator">{{ status }}</span>
             </div>
             <small class="text-muted ml-auto">{{ order.created_at|dayOrTime }}</small>
         </div>
@@ -53,7 +52,7 @@
                 return `${this.shopUrl}/messenger/${this.order.by.code}`;
             },
             indicator() {
-                return {'badge-warning': !this.order.paidFor, 'badge-success': this.order.paidFor, 'badge-danger': this.order.cancelled};
+                return {'text-warning': !this.order.paidFor, 'text-success': this.order.paidFor, 'text-danger': this.order.cancelled};
             },
             label() {
                 return _.head(_.split(this.order.code, '-'));

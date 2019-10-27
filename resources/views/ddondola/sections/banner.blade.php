@@ -59,11 +59,11 @@
             <div class="col-12 col-sm-6 d-flex align-items-center">
                 <div class="ml-auto">
                     @auth
-                        @if(!Auth::user()->is($user))
+                        @if(!auth()->user()->is($user))
                             <user-actions :user="{{ $user }}" my-messenger-url="{{ route("my.messenger") }}"></user-actions>
                         @else
                             @can('create', Shoppie\Shop::class)
-                                <a href="{{ route('create.shop') }}" class="btn btn-sm btn-success ml-auto btn-pill">
+                                <a href="{{ route('create.shop') }}" class="btn btn-sm btn-success ml-auto">
                                     <i class="material-icons">add</i> New Shop
                                 </a>
                             @endcan

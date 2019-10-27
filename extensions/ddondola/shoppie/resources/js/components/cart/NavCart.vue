@@ -45,6 +45,15 @@
                     this.count -= event.count;
                 }
             }
+        },
+        watch: {
+            count: {
+                handler: function (count) {
+                    if (count < 0) {
+                        this.count = 0;
+                    }
+                }
+            }
         }
     }
 </script>

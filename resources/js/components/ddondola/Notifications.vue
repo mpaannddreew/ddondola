@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="card card-small mb-1 border" style="border-bottom: none !important;">
-            <div class="card-body p-0" :class="{'border-bottom': !hasNotifications}">
+        <div class="card card-small user-activity mb-1 border">
+            <div class="card-body p-0">
                 <div align="center" v-if="!loaded" class="p-3">
                     <div class="loader"></div>
                     <p class="m-0">Loading notifications...</p>
@@ -10,15 +10,9 @@
                     <h4 class="m-0"><i class="material-icons">error</i></h4>
                     <p class="m-0">You have not received any notifications yet!</p>
                 </div>
-                <div class="activity" v-if="hasNotifications && loaded">
-                    <div class="activity-box">
-                        <ul class="activity-list">
-                            <template v-for="(notification, indx) in notifications">
-                                <li class="m-0" is="notification" :key="indx" :notification="notification"></li>
-                            </template>
-                        </ul>
-                    </div>
-                </div>
+                <template v-if="hasNotifications && loaded">
+                    <notification v-for="(notification, indx) in notifications" :key="indx" :notification="notification"></notification>
+                </template>
             </div>
         </div>
         <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>

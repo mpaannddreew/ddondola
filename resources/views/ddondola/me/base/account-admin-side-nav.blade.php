@@ -42,6 +42,12 @@
                 <span>Messenger</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link @yield('wallet-active')" href="{{ route('my.wallet') }}">
+                <i class="material-icons">credit_card</i>
+                <span>Wallet</span>
+            </a>
+        </li>
     </ul>
     <h6 class="main-sidebar__nav-title">Shopping</h6>
     <ul class="nav nav--no-borders flex-column">

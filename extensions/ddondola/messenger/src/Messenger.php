@@ -10,11 +10,14 @@ namespace Messenger;
 
 
 use Ddondola\Repositories\UserRepository;
+use Ddondola\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Messenger\Repositories\ConversationRepository;
 use Messenger\Repositories\MessageRepository;
 use Shoppie\Repository\ShopRepository;
+use Shoppie\Shop;
 
 class Messenger
 {
@@ -66,6 +69,16 @@ class Messenger
             $converser = $this->shops->code($participant);
 
         return $converser;
+    }
+
+    /**
+     * Resolve converser
+     *
+     * @param array $converser
+     * @return User|Shop
+     */
+    public function resolveConverser(array $converser) {
+        return $this->{Str::plural(Str::lower(collect($converser)->get('type')))}->id(collect($converser)->get('id'));
     }
 
     /**

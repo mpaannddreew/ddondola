@@ -3,5 +3,5 @@
 @section('user-profile-bnr-class', '')
 @section('messenger-active', 'active')
 @section('main')
-    <messenger home-url="/shops/{{ $shop->code }}/messenger" owner-id="{{ $shop->id }}" owner-type="shop"></messenger>
+    <messenger home-url="/shops/{{ $shop->code }}/messenger" owner-id="{{ $shop->getKey() }}" owner-type="shop"></messenger>
 @endsection

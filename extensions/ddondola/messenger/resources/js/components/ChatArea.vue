@@ -139,6 +139,19 @@
 
                 return null;
             },
+            current() {
+                if(this.conversation){
+                    if(!this.isConverser(this.conversation.initiator.code)) {
+                        return this.conversation.initiator;
+                    }
+
+                    if(!this.isConverser(this.conversation.participant.code)) {
+                        return this.conversation.participant;
+                    }
+                }
+
+                return null;
+            },
             converserType() {
                 if (this.converser)
                     return this.lowerCase(this.converser.type);
@@ -178,11 +191,19 @@
                 this.conversation = response.data.data.conversation;
                 this.message = null;
                 this.watchConversation();
+                this.readAll();
+            },
+            readAll() {
+                if (this.conversation) {
+                    axios.post(graphql.api, {
+                        query: graphql.readConversation,
+                        variables: {conversation: this.conversation.id, converser: {id: this.current.id, type: this.current.type}}
+                    }).then(function (response) {}).catch(function (e) {});
+                }
             },
             watchConversation() {
                 Echo.private(`conversation.${parseInt(this.conversation.id)}`)
                     .listen('.new.message', (e) => {
-                        console.log(e);
                         this.messages.push(e);
                     });
             },

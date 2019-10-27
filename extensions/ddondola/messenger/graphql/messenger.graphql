@@ -1,9 +1,15 @@
+input Converser {
+    id: ID!
+    type: String!
+}
+
 type Conversation {
     id: ID!
     initiator: Muddondozi!
     participant: Muddondozi!
     messages: [Message!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@messages")
     latestMessage: Message @method(name: "LatestMessage")
+    unreadCount(converser: Converser!): Int! @field(resolver: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@unreadCount")
     settings: String
     created_at: DateTime!
     updated_at: DateTime!
@@ -27,4 +33,5 @@ extend type Query @middleware(checks: ["auth:api"]) {
 extend type Mutation @middleware(checks: ["auth:api"]) {
     startConversation(initiator: String participant: String!): Conversation! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@createConversation")
     sendMessage(initiator: String participant: String! message: String): Message! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@sendMessage")
+    readConversation(conversation: ID! converser: Converser!): Int! @field(resolver: "Messenger\\Http\\GraphQL\\Mutations\\MessengerMutator@readConversation")
 }

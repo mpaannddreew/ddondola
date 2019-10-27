@@ -1,6 +1,6 @@
 <template>
     <div class="ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">
-        <a class="btn btn-link btn-lg" href="javascript:void(0)">
+        <a class="btn btn-link btn-sm" href="javascript:void(0)">
             <template v-if="loaded">
                 Available Bal. {{ depositCurrency }} {{ balance|commas }}
             </template>

@@ -36,11 +36,11 @@ class HomeController extends Controller
         return view('ddondola.me.dashboard');
     }
 
-    public function messenger($participant = null) {
+    public function messenger(Request $request, $participant = null) {
         if ($participant) {
             $converser = Messenger::resolveParticipant($participant);
             if ($converser) {
-                if ($converser->is(Auth::user())) {
+                if ($converser->is($request->user())) {
                     abort(404);
                 }
             } else {
@@ -49,6 +49,10 @@ class HomeController extends Controller
         }
 
         return view('ddondola.me.messenger');
+    }
+
+    public function wallet(Request $request) {
+        return view('ddondola.me.wallet', ['user' => $request->user()]);
     }
 
     public function notifications(Request $request) {

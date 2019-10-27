@@ -42,7 +42,7 @@ class NewMessage implements ShouldBroadcast, ShouldQueue
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('conversation.' . $this->message->conversation->id);
+        return new PrivateChannel('conversation.' . $this->message->conversation->getKey());
     }
 
     /**

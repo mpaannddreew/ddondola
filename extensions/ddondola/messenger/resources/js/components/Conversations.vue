@@ -11,7 +11,9 @@
             </div>
         </div>
         <ul class="contact-list" v-else-if="hasConversations && loaded">
-            <li is="conversation" v-for="(conversation, indx) in conversations" :key="indx" :home-url="homeUrl" :conversation="conversation" :owner-id="ownerId" :owner-type="ownerType"></li>
+            <li is="conversation" v-for="(conversation, indx) in conversations" :key="indx" :home-url="homeUrl"
+                :conversation="conversation" :owner-id="ownerId" :owner-type="ownerType"
+                v-on:update-conversation="updateConversation"></li>
         </ul>
     </div>
 </template>
@@ -52,8 +54,11 @@
             hasConversations() {
                 return this.conversations.length > 0;
             },
+            converser() {
+                return {id: this.ownerId, type: this.ownerType};
+            },
             variables() {
-                var variables = {count: this.count, page: 1};
+                var variables = {count: this.count, page: 1, converser: this.converser};
                 if (this.ownerType === 'shop') {
                     variables["id"] = this.ownerId;
                 }
@@ -74,7 +79,8 @@
         },
         methods: {
             listen() {
-                Bus.$on('filter', this.filter)
+                Bus.$on('filter', this.filter);
+                // todo listen for new conversations
             },
             filter(filter) {
                 this.searchFilter = filter;
@@ -104,6 +110,9 @@
                 this.loadingMore = indicator;
                 this.count += graphql.rowCount;
                 this.fetchConversations(indicator);
+            },
+            updateConversation(conversation) {
+                // todo re order conversations
             }
         },
         watch: {

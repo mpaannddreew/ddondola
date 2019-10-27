@@ -250,6 +250,17 @@ class ShoppieController extends Controller
     }
 
     /**
+     * Shop wallet view
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function shopWallet(Request $request, Shop $shop) {
+        return view('shoppie::shop.admin.wallet', ['shop' => $shop]);
+    }
+
+    /**
      * Shop orders view
      *
      * @param Request $request

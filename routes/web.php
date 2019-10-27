@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::get('notifications', 'HomeController@notifications')->name('my.notifications');
         Route::get('followers', 'HomeController@followers')->name('my.followers');
         Route::get('following', 'HomeController@following')->name('my.following');
+        Route::get('wallet', 'HomeController@wallet')->name('my.wallet');
     });
     Route::middleware(['admin.staff'])->prefix('admin')->group(function (){
         Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');

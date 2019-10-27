@@ -45,6 +45,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
                 Route::post('new-product', 'ShoppieController@saveProduct')->name('my.shop.inventory.save-product');
             });
             Route::get('{shop}/messenger/{user?}', 'ShoppieController@shopMessenger')->name('my.shop.messenger');
+            Route::get('{shop}/wallet', 'ShoppieController@shopWallet')->name('my.shop.wallet');
             Route::get('{shop}/orders/{order?}', 'ShoppieController@shopOrders')->name('my.shop.orders');
             Route::get('{shop}/edit', 'ShoppieController@shopEdit')->name('my.shop.edit');
             Route::post('{shop}/update', 'ShoppieController@shopUpdate')->name('my.shop.update');

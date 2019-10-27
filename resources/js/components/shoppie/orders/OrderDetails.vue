@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="ml-auto d-flex align-items-center">
-                                <quick-wallet v-if="!shop" :deposit="true" :deposit-amount="depositAmount"></quick-wallet>
+                                <quick-wallet :deposit="true" :deposit-amount="depositAmount" v-if="!shop && !loadedOrder.paidFor && !loadedOrder.cancelled"></quick-wallet>
                                 <div class="ml-1 mr-auto mr-sm-0 mt-3 mt-sm-0">
                                     <template v-if="!shop">
                                         <a class="btn btn-white btn-sm" href="javascript:void(0)"

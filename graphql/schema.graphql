@@ -10,6 +10,7 @@ interface Muddondozi @interface(resolveType: "Ddondola\\Http\\GraphQL\\Interface
     avatar: [Image!]
     coverPicture: Image!
     messages: [Message!]
+    unreadMessageCount: Int!
     conversations(search: String): [Conversation!]
     contacts(search: String): [User!]
     profile: Profile!
@@ -74,6 +75,7 @@ type User implements Muddondozi {
     followingCount: Int! @method(name: "followingCount")
     notifications: [Notification!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@notifications")
     messages: [Message!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@messages")
+    unreadMessageCount: Int! @method(name: "unreadMessageCount")
     conversations(search: String): [Conversation!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@conversations")
     contacts(search: String): [User!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@contacts")
     activity: [Review!] @paginate(builder: "Activity\\Http\\GraphQL\\Queries\\ActivityQuery@communityActivity")

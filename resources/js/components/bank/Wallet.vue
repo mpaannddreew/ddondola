@@ -6,8 +6,8 @@
     export default {
         name: "Wallet",
         props: {
-            account: {
-                type: Object,
+            holder: {
+                type: String,
                 required: true
             }
         }

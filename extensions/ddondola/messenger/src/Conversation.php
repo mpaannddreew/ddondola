@@ -2,7 +2,9 @@
 
 namespace Messenger;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Messenger\Repositories\MessageRepository;
 
 class Conversation extends Model
 {
@@ -38,12 +40,45 @@ class Conversation extends Model
     }
 
     /**
+     * @return Builder
+     */
+    public function unreadMessages() {
+        return $this->messages()->whereNull('read_at');
+    }
+
+    /**
      * Number of unread messages in this conversation
      *
      * @return int
      */
-    public function unReadCount() {
-        return $this->messages()->whereNull('read_at')->count();
+    public function unreadCount() {
+        return $this->unreadMessages()->count();
+    }
+
+    public function toBeReadBy(Model $converser) {
+        return $this->unreadMessages()->get()->reject(function (Message $message) use ($converser) {
+            return $message->sender->is($converser);
+        });
+    }
+
+    /**
+     * @param Model $converser
+     * @return int
+     */
+    public function unreadBy(Model $converser) {
+        return $this->toBeReadBy($converser)->count();
+    }
+
+    /**
+     * @param Model $converser
+     * @return int
+     */
+    public function markReadBy(Model $converser) {
+        $count = $this->unreadBy($converser);
+        $this->toBeReadBy($converser)->each(function (Message $message) {
+            app(MessageRepository::class)->update($message, ['read_at' => now()]);
+        });
+        return $count;
     }
 
     /**

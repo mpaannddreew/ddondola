@@ -40,4 +40,15 @@ class MessageRepository
             'message' => $message
         ]);
     }
+
+    public function update(Message $message, array $attributes) {
+        $message->update($attributes);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function builder() {
+        return Message::query();
+    }
 }
