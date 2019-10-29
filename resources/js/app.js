@@ -50,6 +50,9 @@ import UserDetailsEmpty from './components/ddondola/admin/UserAdminEmpty';
 import UsersDetails from './components/ddondola/admin/UserAdmin';
 import ShopAdminEmpty from './components/shoppie/admin/ShopAdminEmpty';
 import ShopAdmin from './components/shoppie/admin/ShopAdmin';
+import Transactions from './components/bank/Transactions';
+import Deposit from './components/bank/Deposit';
+import Withdraw from './components/bank/Withdraw';
 
 const router = new VueRouter({
     mode: 'history',
@@ -67,6 +70,11 @@ const router = new VueRouter({
         {path: '/me/orders/:order', component: OrderDetails, props: true},
         {path: '/me/orders/:order/invoice', component: Invoice, props: true},
 
+        // user wallet app
+        {path: '/me/wallet', component: Transactions},
+        {path: '/me/wallet/deposit', component: Deposit},
+        {path: '/me/wallet/withdraw', component: Withdraw},
+
         // shop messenger app
         {path: '/shops/:initiator/messenger', component: ChatAreaEmpty, props: true},
         {path: '/shops/:initiator/messenger/:participant', component: ChatArea, props: true},
@@ -75,13 +83,18 @@ const router = new VueRouter({
         {path: '/shops/:shop/orders', component: OrderDetailsEmpty, props: true},
         {path: '/shops/:shop/orders/:order', component: OrderDetails, props: true},
 
+        // shop wallet app
+        {path: '/shops/:shop/wallet', component: Transactions},
+        {path: '/shops/:shop/wallet/deposit', component: Deposit},
+        {path: '/shops/:shop/wallet/withdraw', component: Withdraw},
+
         // user admin app
         {path: '/admin/users', component: UserDetailsEmpty},
         {path: '/admin/users/:user', component: UsersDetails, props: true},
 
         // shop admin app
         {path: '/admin/shops', component: ShopAdminEmpty},
-        {path: '/admin/shops/:shop', component: ShopAdmin, props: true}
+        {path: '/admin/shops/:shop', component: ShopAdmin, props: true},
     ]
 });
 

@@ -36,7 +36,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link @yield('wallet-active')" href="{{ route('my.shop.wallet', ['shop' => $shop]) }}">
-                <i class="material-icons">credit_card</i>
+                <i class="material-icons">account_balance_wallet</i>
                 <span>Wallet</span>
             </a>
         </li>

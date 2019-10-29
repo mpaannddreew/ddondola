@@ -5,7 +5,7 @@
                 Available Bal. {{ depositCurrency }} {{ balance|commas }}
             </template>
             <template v-else>
-                Loading available balance ...
+                Loading balance ...
             </template>
         </a>
         <a class="btn btn-white btn-sm" href="javascript:void(0)" v-if="deposit && depositAmount" @click="doDeposit" :class="{disabled: !loaded}">

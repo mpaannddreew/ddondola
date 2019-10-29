@@ -1,5 +1,5 @@
 @extends('layouts.base.admin')
-@section('title') {{ Auth::user()->name() }} - @endsection
+@section('title') {{ auth()->user()->name() }} - @endsection
 @section('name') Account Admin @endsection
 @section('nav-wrapper')
     <h6 class="main-sidebar__nav-title">Dashboards</h6>
@@ -44,7 +44,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link @yield('wallet-active')" href="{{ route('my.wallet') }}">
-                <i class="material-icons">credit_card</i>
+                <i class="material-icons">account_balance_wallet</i>
                 <span>Wallet</span>
             </a>
         </li>

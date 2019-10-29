@@ -954,3 +954,45 @@ footer .logo {
     background-color: #f8f8f8;
     border: 1px solid #e1e5eb;
 }
+
+.skew-shadow {
+    position: relative;
+    overflow: hidden;
+}
+
+.skew-shadow::before {
+    content: '';
+    position: absolute;
+    background: rgba(255,255,255,.1);
+    width: 50%;
+    min-width: 150px;
+    height: 100%;
+    top: 0;
+    right: -25%;
+    transform: skewX(-32.5deg);
+}
+
+.bg-secondary-gradient {
+    background: linear-gradient(-45deg, #ce1d76, #ed1e8e) !important;
+}
+
+.bubble-shadow {
+    position: relative;
+    overflow: hidden;
+}
+
+.bubble-shadow::before {
+    position: absolute;
+    top: -10%;
+    right: -140px;
+    width: 300px;
+    height: 300px;
+    content: "";
+    border-radius: 50%;
+    background: rgba(255,255,255,.05);
+}
+
+.curves-shadow {
+    position: relative;
+    overflow: hidden;
+}

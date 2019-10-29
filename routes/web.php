@@ -34,7 +34,11 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::get('notifications', 'HomeController@notifications')->name('my.notifications');
         Route::get('followers', 'HomeController@followers')->name('my.followers');
         Route::get('following', 'HomeController@following')->name('my.following');
-        Route::get('wallet', 'HomeController@wallet')->name('my.wallet');
+        Route::prefix('wallet')->group(function () {
+            Route::get('/', 'HomeController@wallet')->name('my.wallet');
+            Route::get('deposit', 'HomeController@wallet')->name('my.wallet.deposit');
+            Route::get('withdraw', 'HomeController@wallet')->name('my.wallet.withdraw');
+        });
     });
     Route::middleware(['admin.staff'])->prefix('admin')->group(function (){
         Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');

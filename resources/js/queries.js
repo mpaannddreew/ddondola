@@ -1771,6 +1771,29 @@ window.graphql = {
             }
           }
         }`,
+    AccountTransactions: `query AccountTransactions($accountHolder: String $type: TransactionType $count: Int! $page: Int!) {
+          account(accountHolder: $accountHolder) {
+            transactions(type:$type count: $count page: $page) {
+                data {
+                    amount
+                    debit
+                    credit
+                    note
+                    created_at
+                }
+                paginatorInfo {
+                    count
+                    currentPage
+                    firstItem
+                    hasMorePages
+                    lastItem
+                    lastPage
+                    perPage
+                    total
+                }
+            }
+          }
+        }`,
     readConversation: `mutation readConversation($conversation: ID! $converser: Converser!) {
           count:readConversation(conversation: $conversation converser: $converser)
         }`

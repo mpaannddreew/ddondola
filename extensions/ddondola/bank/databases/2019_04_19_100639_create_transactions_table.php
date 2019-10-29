@@ -16,6 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('account_id');
+            $table->string('code');
             $table->boolean('debit')->default(0);
             $table->boolean('credit')->default(0);
             $table->string('amount');

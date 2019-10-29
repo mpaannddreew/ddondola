@@ -8,7 +8,7 @@ class Transaction extends EcryptableModel
 {
     protected $encryptable = ['amount'];
 
-    protected $fillable = ['account_id', 'debit', 'credit', 'amount', 'note'];
+    protected $fillable = ['account_id', 'debit', 'credit', 'amount', 'note', 'code'];
 
     protected $casts = [
         'debit' => 'bool',
@@ -22,5 +22,14 @@ class Transaction extends EcryptableModel
      */
     public function account() {
         return $this->belongsTo(Account::class, 'account_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->code = \Illuminate\Support\Str::uuid()->toString();
+        });
     }
 }
