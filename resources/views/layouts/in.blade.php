@@ -29,6 +29,7 @@
     <script src="{{ asset('js/typeahead.bundle.js') }}"></script>
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script src="{{ asset('js/jquery.sticky.js') }}"></script>
+    <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js" type="application/javascript"></script>
     <script>
         $(function () {
             $(".input-daterange").datepicker({}).val();

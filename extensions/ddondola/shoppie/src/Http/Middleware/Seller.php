@@ -3,6 +3,7 @@
 namespace Shoppie\Http\Middleware;
 
 use Closure;
+use Shoppie\Shop;
 
 class Seller
 {
@@ -15,7 +16,7 @@ class Seller
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->user()->is_seller)
+        if (!$request->user()->can('create', Shop::class))
             return redirect()->to('/');
 
         return $next($request);

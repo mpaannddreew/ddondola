@@ -58,7 +58,7 @@ class EscrowProcessor
             return;
         }
 
-        if ($order->sum() > $order->by->account->balance()) {
+        if ($order->activeSum() > $order->by->account->balance()) {
             // todo notify insufficient balance
             return;
         }
@@ -94,7 +94,6 @@ class EscrowProcessor
 
         DB::transaction(function () use ($escrow) {
             $this->escrows->update($escrow, ['reversed' => true]);
-            Transfer::dispatchNow($this->bank->escrowAccount(), $escrow->source, $escrow->amount, "Escrow rollback");
         });
     }
 
@@ -115,11 +114,9 @@ class EscrowProcessor
                 ->id($escrow->meta('order'))
                 ->getProduct($escrow->meta('product'));
 
-            Transfer::dispatchNow($this->bank->escrowAccount(), $escrow->destination, $product->orderPivot->payout(), "Escrow settlement payout");
+            Transfer::dispatchNow($escrow->source, $escrow->destination, $escrow->amount, "Purchase (" . $product->name .")");
             if ($product->orderPivot->commission())
-                Transfer::dispatchNow($this->bank->escrowAccount(), $this->bank->adminAccount(), $product->orderPivot->commission(), "Escrow settlement commission");
-
-            // todo broadcast payout
+                Transfer::dispatchNow($escrow->destination, $this->bank->adminAccount(), $product->orderPivot->commission(), "Commission (" . $product->name .")");
         });
     }
 }

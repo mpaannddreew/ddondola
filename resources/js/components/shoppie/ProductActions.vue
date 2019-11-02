@@ -1,9 +1,9 @@
 <template>
     <div class="btn-group d-table ml-auto" role="group" v-if="auth">
-        <a href="javascript:void(0)" @click="favouritesAction" :class="{disabled: favoriteStatusLoading}" class="btn btn-pill btn-outline-primary active">
+        <a href="javascript:void(0)" @click="favouritesAction" :class="{disabled: favoriteStatusLoading}" class="btn btn-outline-primary active">
             <i class="fa fa-heart"></i> {{ favText }}
         </a>
-        <a href="javascript:void(0)" @click="cartAction" :class="{disabled: cartStatusLoading || soldOut}" class="btn btn-pill btn-outline-primary">
+        <a href="javascript:void(0)" @click="cartAction" :class="{disabled: cartStatusLoading || soldOut}" class="btn btn-outline-primary">
             <i class="fa fa-shopping-cart"></i> {{ cartText}}
         </a>
     </div>

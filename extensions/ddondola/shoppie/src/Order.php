@@ -102,6 +102,15 @@ class Order extends Model
     }
 
     /**
+     * Total amount of active products this order
+     *
+     * @return int
+     */
+    public function activeSum() {
+        return $this->calculateSum($this->activeRows());
+    }
+
+    /**
      * Determine sum products of a given shop in cart
      *
      * @param $code
@@ -109,6 +118,16 @@ class Order extends Model
      */
     public function sumByShop($code) {
         return $this->calculateSum(collect($this->groupByShop()->get($code)));
+    }
+
+    /**
+     * Determine sum active products of a given shop in cart
+     *
+     * @param $code
+     * @return int
+     */
+    public function activeSumByShop($code) {
+        return $this->calculateSum(collect($this->groupActiveRowsByShop()->get($code)));
     }
 
     /**

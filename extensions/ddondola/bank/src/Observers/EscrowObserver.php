@@ -2,18 +2,11 @@
 
 namespace Bank\Observers;
 
-use Bank\Bank;
 use Bank\Escrow;
-use Bank\Jobs\Transfer;
 use Shoppie\Repository\OrderRepository;
 
 class EscrowObserver
 {
-    /**
-     * @var Bank
-     */
-    protected $bank;
-
     /**
      * @var OrderRepository
      */
@@ -21,12 +14,10 @@ class EscrowObserver
 
     /**
      * EscrowObserver constructor.
-     * @param Bank $bank
      * @param OrderRepository $orders
      */
-    public function __construct(Bank $bank, OrderRepository $orders)
+    public function __construct(OrderRepository $orders)
     {
-        $this->bank = $bank;
         $this->orders = $orders;
     }
 
@@ -38,7 +29,11 @@ class EscrowObserver
      */
     public function created(Escrow $escrow)
     {
-        Transfer::dispatchNow($escrow->source, $this->bank->escrowAccount(), $escrow->amount, "Escrow payment");
+        $product = $this->orders
+            ->id($escrow->meta('order'))
+            ->getProduct($escrow->meta('product'));
+
+        // todo notify about escrow funds aside
     }
 
     /**
@@ -49,7 +44,7 @@ class EscrowObserver
      */
     public function updated(Escrow $escrow)
     {
-        //
+        // todo notify about escrow update status
     }
 
     /**

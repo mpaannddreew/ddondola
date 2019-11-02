@@ -16,8 +16,16 @@
                                     </span>
                                     </div>
                                 </div>
-                                <p class="text-white mt-4 mb-0" style="font-size: smaller !important;">Available balance</p>
-                                <h3 class="text-white">{{ account.balance|commas }}</h3>
+                                <div class="row mt-4">
+                                    <div class="col-md-6 border-right" align="center">
+                                        <p class="text-white mb-0" style="font-size: smaller !important;">Actual balance</p>
+                                        <h5 class="text-white">{{ account.actualBalance|commas }}</h5>
+                                    </div>
+                                    <div class="col-md-6" align="center">
+                                        <p class="text-white mb-0" style="font-size: smaller !important;">Available balance</p>
+                                        <h5 class="text-white">{{ account.balance|commas }}</h5>
+                                    </div>
+                                </div>
                             </template>
                             <div align="center" v-else>
                                 <loader></loader>
@@ -27,39 +35,51 @@
                     </div>
                     <div class="list-group list-group-flush">
                         <a href="javascript:void(0)" @click="transactions"
-                           class="list-group-item list-group-item-action d-flex" :class="disabled">
+                           class="list-group-item list-group-item-action d-flex">
                             <div class="sc-stats__image">
                                 <img class="rounded" src="/images/wallet/transactions_ico.png">
                             </div>
                             <div class="ml-2 my-auto d-flex w-100">
-                                <span class="text-ellipsis" style="display: block;">
-                                    Transactions
-                                </span>
-                                <small class="text-muted ml-auto"><i class="fa fa-arrow-circle-o-right"></i></small>
+                                <div>
+                                    <p class="text-ellipsis m-0" style="font-weight: normal">Transactions</p>
+                                    <p class="text-ellipsis m-0 text-muted" style="font-size: smaller">Track your transaction history</p>
+                                </div>
                             </div>
                         </a>
                         <a href="javascript:void(0)" @click="deposit"
-                           class="list-group-item list-group-item-action d-flex" :class="disabled">
+                           class="list-group-item list-group-item-action d-flex">
                             <div class="sc-stats__image">
                                 <img class="rounded" src="/images/wallet/deposit_ico.png">
                             </div>
                             <div class="ml-2 my-auto d-flex w-100">
-                                <span class="text-ellipsis" style="display: block;">
-                                    Deposit
-                                </span>
-                                <small class="text-muted ml-auto"><i class="fa fa-arrow-circle-o-right"></i></small>
+                                <div>
+                                    <p class="text-ellipsis m-0" style="font-weight: normal">Deposit</p>
+                                    <p class="text-ellipsis m-0 text-muted" style="font-size: smaller">Top up your wallet balance</p>
+                                </div>
                             </div>
                         </a>
                         <a href="javascript:void(0)" @click="withdraw"
-                           class="list-group-item list-group-item-action d-flex" :class="disabled">
+                           class="list-group-item list-group-item-action d-flex">
                             <div class="sc-stats__image">
                                 <img class="rounded" src="/images/wallet/withdraw_ico.png">
                             </div>
                             <div class="ml-2 my-auto d-flex w-100">
-                                <span class="text-ellipsis" style="display: block;">
-                                    Withdraw
-                                </span>
-                                <small class="text-muted ml-auto"><i class="fa fa-arrow-circle-o-right"></i></small>
+                                <div>
+                                    <p class="text-ellipsis m-0" style="font-weight: normal">Withdraw</p>
+                                    <p class="text-ellipsis m-0 text-muted" style="font-size: smaller">Track your withdraw requests</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="javascript:void(0)" @click="escrow"
+                           class="list-group-item list-group-item-action d-flex">
+                            <div class="sc-stats__image">
+                                <img class="rounded" src="/images/wallet/escrow_ico.png">
+                            </div>
+                            <div class="ml-2 my-auto d-flex w-100">
+                                <div>
+                                    <p class="text-ellipsis m-0" style="font-weight: normal">Escrow</p>
+                                    <p class="text-ellipsis m-0 text-muted" style="font-size: smaller">Monitor your escrow transactions</p>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -79,7 +99,7 @@
         data() {
             return {
                 loaded: false,
-                account: 0
+                account: null
             }
         },
         props: {
@@ -90,16 +110,19 @@
             holderType: {
                 type: String,
                 default: 'user'
+            },
+            admin: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {
             basePath() {
-                return this.holderType === 'user' ? '/me/wallet': `/shops/${this.holder.code}/wallet`;
-            },
-            disabled() {
-                return {
-                    disabled: !this.loaded
+                if (this.admin) {
+                    return '/admin/wallet';
                 }
+
+                return this.holderType === 'user' ? '/me/wallet': `/shops/${this.holder.code}/wallet`;
             },
             variables() {
                 return {accountHolder: this.holder.code};
@@ -114,6 +137,9 @@
             },
             withdraw() {
                 this.$router.push(`${this.basePath}/withdraw`);
+            },
+            escrow() {
+                this.$router.push(`${this.basePath}/escrow`);
             },
             load() {
                 axios.post(graphql.api, {query: graphql.account, variables: this.variables})

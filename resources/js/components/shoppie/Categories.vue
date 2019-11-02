@@ -1,6 +1,6 @@
 <template>
     <div class="directory-list close-directory-list">
-        <div class="card card-small h-100 border-left border-right main">
+        <div class="card card-small h-100 border-right main">
             <div class="card-header border-bottom border-top-radius-0 bg-light">
                 <div class="input-group input-group-seamless">
                     <div class="input-group-prepend">

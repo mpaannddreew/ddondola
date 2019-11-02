@@ -33,6 +33,18 @@ const Helper = {
                 },
                 isMe(code) {
                     return this.lowerCase(code) === this.lowerCase(this.authCode);
+                },
+                openPaymentModal(amount, email, currency, meta, callback) {
+                    return getpaidSetup({
+                        PBFPubKey: RavePublicKey,
+                        customer_email: email,
+                        amount: amount,
+                        currency: currency,
+                        txref: Uuid(),
+                        meta: meta,
+                        onclose: function() {},
+                        callback: callback
+                    });
                 }
             },
             filters: {

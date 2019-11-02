@@ -20,4 +20,13 @@ class Payment extends Model
     public function account() {
         return $this->belongsTo(Account::class, 'account_id');
     }
+
+    /**
+     * Check if payment was initiated for withdraw
+     *
+     * @return bool
+     */
+    public function isWithdraw() {
+        return !is_null($this->withdraw_request_id);
+    }
 }

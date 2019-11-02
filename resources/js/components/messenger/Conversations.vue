@@ -11,7 +11,9 @@
             </div>
         </div>
         <ul class="contact-list" v-else-if="hasConversations && loaded">
-            <li is="conversation" v-for="(conversation, indx) in conversations" :key="indx" :home-url="homeUrl" :conversation="conversation" :owner-id="ownerId" :owner-type="ownerType"></li>
+            <li is="conversation" v-for="(conversation, indx) in conversations" :key="indx" :home-url="homeUrl"
+                :conversation="conversation" :owner-id="ownerId" :owner-type="ownerType"
+                v-on:update-conversation="updateConversation"></li>
         </ul>
     </div>
 </template>
@@ -108,6 +110,9 @@
                 this.loadingMore = indicator;
                 this.count += graphql.rowCount;
                 this.fetchConversations(indicator);
+            },
+            updateConversation(conversation) {
+                // todo re order conversations
             }
         },
         watch: {

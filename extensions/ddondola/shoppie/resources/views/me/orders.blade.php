@@ -4,7 +4,3 @@
 @section('main')
     <my-order-directory></my-order-directory>
 @endsection
-@section('scripts')
-    @parent
-    <script src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js" type="application/javascript"></script>
-@endsection

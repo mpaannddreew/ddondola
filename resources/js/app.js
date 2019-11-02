@@ -21,6 +21,10 @@ Vue.use(VueContentPlaceholders);
 import Helper from './helpers';
 Vue.use(Helper, {auth: Auth, csrf: Token.content, seller: Seller, authCode: Code});
 
+import VueTelInput from 'vue-tel-input'
+
+Vue.use(VueTelInput);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -46,13 +50,10 @@ import Checkout from './components/shoppie/cart/Checkout';
 import OrderDetailsEmpty from './components/shoppie/orders/OrderDetailsEmpty';
 import OrderDetails from './components/shoppie/orders/OrderDetails';
 import Invoice from './components/shoppie/orders/Invoice';
-import UserDetailsEmpty from './components/ddondola/admin/UserAdminEmpty';
-import UsersDetails from './components/ddondola/admin/UserAdmin';
-import ShopAdminEmpty from './components/shoppie/admin/ShopAdminEmpty';
-import ShopAdmin from './components/shoppie/admin/ShopAdmin';
 import Transactions from './components/bank/Transactions';
 import Deposit from './components/bank/Deposit';
 import Withdraw from './components/bank/Withdraw';
+import Escrow from './components/bank/Escrow';
 
 const router = new VueRouter({
     mode: 'history',
@@ -74,6 +75,7 @@ const router = new VueRouter({
         {path: '/me/wallet', component: Transactions},
         {path: '/me/wallet/deposit', component: Deposit},
         {path: '/me/wallet/withdraw', component: Withdraw},
+        {path: '/me/wallet/escrow', component: Escrow},
 
         // shop messenger app
         {path: '/shops/:initiator/messenger', component: ChatAreaEmpty, props: true},
@@ -84,17 +86,16 @@ const router = new VueRouter({
         {path: '/shops/:shop/orders/:order', component: OrderDetails, props: true},
 
         // shop wallet app
-        {path: '/shops/:shop/wallet', component: Transactions},
-        {path: '/shops/:shop/wallet/deposit', component: Deposit},
-        {path: '/shops/:shop/wallet/withdraw', component: Withdraw},
+        {path: '/shops/:shop/wallet', component: Transactions, props: true},
+        {path: '/shops/:shop/wallet/deposit', component: Deposit, props: true},
+        {path: '/shops/:shop/wallet/withdraw', component: Withdraw, props: true},
+        {path: '/shops/:shop/wallet/Escrow', component: Escrow, props: true},
 
-        // user admin app
-        {path: '/admin/users', component: UserDetailsEmpty},
-        {path: '/admin/users/:user', component: UsersDetails, props: true},
-
-        // shop admin app
-        {path: '/admin/shops', component: ShopAdminEmpty},
-        {path: '/admin/shops/:shop', component: ShopAdmin, props: true},
+        // admin wallet app
+        {path: '/admin/wallet', component: Transactions, props: { admin: true }},
+        {path: '/admin/wallet/deposit', component: Deposit, props: { admin: true }},
+        {path: '/admin/wallet/withdraw', component: Withdraw, props: { admin: true }},
+        {path: '/admin/wallet/Escrow', component: Escrow, props: { admin: true }},
     ]
 });
 

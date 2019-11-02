@@ -74,20 +74,6 @@ class Bank
     }
 
     /**
-     * Get admin account
-     *
-     * @return Account
-     */
-    public function escrowAccount() {
-        $escrow = $this->accounts->firstWhere('escrow', true);
-        if (!$escrow) {
-            return $this->accounts->create(['escrow' => true]);
-        }
-
-        return $escrow;
-    }
-
-    /**
      * Start escrow reversing process
      *
      * @param Escrow $escrow

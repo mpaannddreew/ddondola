@@ -10,7 +10,7 @@
                 </div>
                 <div class="contact-info" style="padding: 0 10px 0 50px;">
                     <span class="contact-name text-ellipsis">{{ contact.name }}</span>
-                    <span class="contact-date text-ellipsis">{{ contact.email }}</span>
+                    <span class="contact-date text-ellipsis">{{ extras }}</span>
                 </div>
             </a>
             <div class="contact-action">
@@ -41,6 +41,13 @@
         computed: {
             route() {
                 return `${this.homeUrl}/${this.contact.code}`;
+            },
+            extras() {
+                if (this.contact.email) {
+                    return this.contact.email;
+                }
+
+                return this.contact.category.name;
             }
         },
         methods: {

@@ -27,7 +27,10 @@ class BankAccount extends Command
      */
     protected $bank;
 
-    protected $systemAccounts = ['admin', 'escrow'];
+    /**
+     * @var array
+     */
+    protected $systemAccounts = ['admin'];
 
     /**
      * Create a new command instance.
@@ -54,8 +57,7 @@ class BankAccount extends Command
             $this->error("account type ($accountType) cannot be created!");
             return;
         }
-        $method = $accountType . "Account";
-        $account = $this->bank->{$method}();
+        $account = $this->bank->adminAccount();
         $this->info("<info>$account</info>");
 
         return;

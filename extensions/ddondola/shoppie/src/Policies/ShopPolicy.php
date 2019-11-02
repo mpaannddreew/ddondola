@@ -37,7 +37,7 @@ class ShopPolicy
      */
     public function create(User $user)
     {
-        return $user->is_seller;
+        //
     }
 
     /**

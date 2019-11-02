@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Contracts\Console\Kernel as ConsoleKernelContract;
 
 class UsersTableSeeder extends Seeder
 {
@@ -20,18 +21,25 @@ class UsersTableSeeder extends Seeder
     protected $users;
 
     /**
+     * @var ConsoleKernelContract
+     */
+    protected $artisan;
+
+    /**
      * UsersTableSeeder constructor.
      * @param \Ddondola\Repositories\CountryRepository $countries
      * @param \Shoppie\Repository\ShopCategoryRepository $categories
      * @param \Ddondola\Repositories\UserRepository $users
+     * @param ConsoleKernelContract $artisan
      */
     public function __construct(\Ddondola\Repositories\CountryRepository $countries,
                                 \Shoppie\Repository\ShopCategoryRepository $categories,
-                                \Ddondola\Repositories\UserRepository $users)
+                                \Ddondola\Repositories\UserRepository $users, ConsoleKernelContract $artisan)
     {
         $this->countries = $countries;
         $this->categories = $categories;
         $this->users = $users;
+        $this->artisan = $artisan;
     }
 
     /**
@@ -41,6 +49,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        // creating admin bank account
+        $this->artisan->call('bank:account');
+
         $this->countries->addCountries();
         $country = $this->countries->default();
 
@@ -52,15 +63,15 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => \Carbon\Carbon::now(),
                 'password' => bcrypt('secret'),
                 'is_staff' => 1,
-                'is_superuser' => 1,
-                'is_seller' => 1
+                'is_superuser' => 1
             ],
             [
                 'first_name' => 'Faridah',
                 'last_name' => 'Nankinzi',
                 'email' => 'faridah@ddondola.com',
                 'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => bcrypt('secret')
+                'password' => bcrypt('secret'),
+                'is_seller' => 1
             ],
             [
                 'first_name' => 'Hajara',
@@ -128,7 +139,7 @@ class UsersTableSeeder extends Seeder
             ]
         ];
         $category = $this->categories->id(1);
-        $user = $this->users->id(1);
+        $user = $this->users->id(2);
         foreach ($shops as $shop) {
             $user->newShop($category, $shop);
         }

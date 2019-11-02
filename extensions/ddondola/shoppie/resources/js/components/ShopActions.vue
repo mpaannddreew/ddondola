@@ -1,9 +1,9 @@
 <template>
     <div class="btn-group d-table ml-auto" role="group" aria-label="Table row actions">
-        <a href="javascript:void(0)" @click="performAction" class="btn btn-pill btn-outline-primary active" :class="{ disabled: loading }">
+        <a href="javascript:void(0)" @click="performAction" class="btn btn-outline-primary active" :class="{ disabled: loading }">
             <i class="material-icons">thumb_up</i> {{ text }}
         </a>
-        <a :href="messageUrl" class="btn btn-pill btn-outline-primary">
+        <a :href="messageUrl" class="btn btn-outline-primary">
             <i class="material-icons">message</i> Message
         </a>
     </div>

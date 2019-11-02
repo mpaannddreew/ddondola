@@ -105,6 +105,14 @@
                         Bus.$emit('unread-messages', {type: 'increase', size: 1});
                     }
                 }
+                let conversation = {
+                    id: this.conversation.id,
+                    initiator: this.conversation.initiator,
+                    participant: this.conversation.participant,
+                    latestMessage: this.lastMessage,
+                    unreadCount: this.unreadCount
+                };
+                this.$emit('update-conversation', conversation);
             },
             setLastMessage(message) {
                 this.lastMessage = message;

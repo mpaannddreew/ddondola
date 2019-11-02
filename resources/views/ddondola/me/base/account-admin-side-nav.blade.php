@@ -1,6 +1,8 @@
 @extends('layouts.base.admin')
 @section('title') {{ auth()->user()->name() }} - @endsection
-@section('name') Account Admin @endsection
+@section('logo')
+    <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="{{ auth()->user()->avatar['url'] }}" alt="{{ auth()->user()->name() }}">
+@endsection
 @section('nav-wrapper')
     <h6 class="main-sidebar__nav-title">Dashboards</h6>
     <ul class="nav nav--no-borders flex-column">

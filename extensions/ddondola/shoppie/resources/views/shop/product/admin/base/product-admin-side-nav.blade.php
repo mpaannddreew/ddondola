@@ -1,6 +1,8 @@
 @extends('layouts.base.admin')
 @section('title') {{ $product->name }} - @endsection
-@section('name') Product Admin @endsection
+@section('logo')
+    <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="{{ $product->shop->avatar['url'] }}" alt="{{ $product->shop->name }}">
+@endsection
 @section('nav-wrapper')
     <h6 class="main-sidebar__nav-title">Dashboards</h6>
     <ul class="nav nav--no-borders flex-column">

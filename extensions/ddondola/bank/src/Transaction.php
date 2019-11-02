@@ -3,6 +3,7 @@
 namespace Bank;
 
 use Ddondola\EcryptableModel;
+use Illuminate\Support\Str;
 
 class Transaction extends EcryptableModel
 {
@@ -31,5 +32,9 @@ class Transaction extends EcryptableModel
         static::creating(function ($model) {
             $model->code = \Illuminate\Support\Str::uuid()->toString();
         });
+    }
+
+    public function miniCode() {
+        return Str::upper(collect(explode('-', $this->code))->first());
     }
 }

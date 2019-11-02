@@ -17,7 +17,6 @@ class CreateAccountsTable extends Migration
             $table->increments('id');
             $table->nullableMorphs('holder');
             $table->boolean('admin')->nullable();
-            $table->boolean('escrow')->nullable();
             $table->timestamps();
         });
     }

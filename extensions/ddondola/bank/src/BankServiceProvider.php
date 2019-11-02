@@ -11,6 +11,7 @@ namespace Bank;
 
 use Bank\Commands\BankAccount;
 use Bank\Observers\EscrowObserver;
+use Bank\Observers\WithdrawRequestObserver;
 use Illuminate\Support\ServiceProvider;
 
 class BankServiceProvider extends ServiceProvider
@@ -24,6 +25,7 @@ class BankServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__ . '/../databases');
         $this->loadRoutesFrom(__DIR__. '/../routes/routes.php');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'bank');
 
         $this->publishes([
             __DIR__.'/../config/bank.php' => config_path('bank.php'),
@@ -61,5 +63,6 @@ class BankServiceProvider extends ServiceProvider
 
     protected function registerObservers() {
         Escrow::observe(EscrowObserver::class);
+        WithdrawRequest::observe(WithdrawRequestObserver::class);
     }
 }

@@ -1762,6 +1762,7 @@ window.graphql = {
     account: `query account($accountHolder: String) {
           account(accountHolder: $accountHolder) {
             balance
+            actualBalance
             holder {
                 code
                 type
@@ -1771,14 +1772,61 @@ window.graphql = {
             }
           }
         }`,
-    AccountTransactions: `query AccountTransactions($accountHolder: String $type: TransactionType $count: Int! $page: Int!) {
+    accountTransactions: `query accountTransactions($accountHolder: String $type: TransactionType $count: Int! $page: Int!) {
           account(accountHolder: $accountHolder) {
-            transactions(type:$type count: $count page: $page) {
+            transactions(type: $type count: $count page: $page) {
                 data {
+                    id
+                    code
                     amount
                     debit
                     credit
                     note
+                    created_at
+                }
+                paginatorInfo {
+                    count
+                    currentPage
+                    firstItem
+                    hasMorePages
+                    lastItem
+                    lastPage
+                    perPage
+                    total
+                }
+            }
+          }
+        }`,
+    accountEscrows: `query accountEscrows($accountHolder: String $type: String $count: Int! $page: Int!) {
+          account(accountHolder: $accountHolder) {
+            escrows(type: $type count: $count page: $page) {
+                data {
+                    id
+                    amount
+                    completed
+                    reversed
+                    created_at
+                }
+                paginatorInfo {
+                    count
+                    currentPage
+                    firstItem
+                    hasMorePages
+                    lastItem
+                    lastPage
+                    perPage
+                    total
+                }
+            }
+          }
+        }`,
+    accountWithdrawRequests: `query accountWithdrawRequests($accountHolder: String $type: String $count: Int! $page: Int!) {
+          account(accountHolder: $accountHolder) {
+            withdrawRequests(type: $type count: $count page: $page) {
+                data {
+                    id
+                    amount
+                    processed
                     created_at
                 }
                 paginatorInfo {

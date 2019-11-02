@@ -52,12 +52,53 @@ class Ledger
     }
 
     /**
-     * Balance of account
+     * Pending withdraw sum
+     *
+     * @param Account $account
+     * @return int
+     */
+    protected function pendingWithdrawSum(Account $account) {
+        return $account->withdrawRequests()
+            ->where('processed', false)
+            ->get()
+            ->sum(function (WithdrawRequest $request) {
+                return (int)$request->amount;
+            });
+    }
+
+    /**
+     * Pending outgoing escrow sum
+     *
+     * @param Account $account
+     * @return int
+     */
+    protected function pendingOutgoingEscrowsSum(Account $account) {
+        return $account->outgoingEscrows()
+            ->where('completed', false)
+            ->where('reversed', false)
+            ->get()
+            ->sum(function(Escrow $escrow) {
+                return (int)$escrow->amount;
+            });
+    }
+
+    /**
+     * Available account balance
      *
      * @param Account $account
      * @return int
      */
     public function balance(Account $account) {
+        return $this->actualBalance($account) - ($this->pendingWithdrawSum($account) + $this->pendingOutgoingEscrowsSum($account));
+    }
+
+    /**
+     * Actual account balance
+     *
+     * @param Account $account
+     * @return int
+     */
+    public function actualBalance(Account $account) {
         return $this->debitSum($account) - $this->creditSum($account);
     }
 
@@ -80,12 +121,8 @@ class Ledger
      * @param $amount
      * @param null $note
      * @return Transaction
-     * @throws \Exception
      */
     public function credit(Account $account, $amount, $note = null) {
-        if ((int)$amount > $account->balance())
-            throw new \Exception("Insufficient balance");
-
         return $this->transactions->create(['account_id' => $account->getKey(), 'amount' => $amount, 'credit' => true, 'note' => $note]);
     }
 }

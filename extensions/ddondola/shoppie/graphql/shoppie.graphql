@@ -184,6 +184,7 @@ type Order {
     id: ID!
     code: String!
     sum(shop: String): Int! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@orderSum")
+    activeSum(shop: String): Int! @field(resolver: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@activeSum")
     by: User! @belongsTo
     paidFor: Boolean! @rename(attribute: "paid_for")
     products(shop: String): [Product!] @paginate(builder: "Shoppie\\Http\\GraphQL\\Queries\\ShoppieQuery@orderProducts")

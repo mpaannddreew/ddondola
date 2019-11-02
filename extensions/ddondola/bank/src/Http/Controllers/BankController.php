@@ -2,11 +2,14 @@
 
 namespace Bank\Http\Controllers;
 
+use Bank\Jobs\ProcessCompleted;
+use Bank\Jobs\ProcessFailed;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Laravolt\Avatar\Facade as Avatar;
 
 class BankController extends Controller
 {
@@ -18,10 +21,29 @@ class BankController extends Controller
     }
 
     public function passed(Request $request) {
-        // todo implement successful payment
+        // todo verification first
+        ProcessCompleted::dispatch($request->all());
+        return response();
     }
 
     public function failed(Request $request) {
-        // todo implement failed payment
+        // todo verification first
+        ProcessFailed::dispatch($request->all());
+        return response();
+    }
+
+    public function wallet(Request $request)
+    {
+        $name = "Admin Wallet";
+        return view('bank::admin.wallet', [
+                'holder' => json_encode([
+                    'avatar' => [
+                        'url' => (string)Avatar::create($name)->toBase64()
+                    ],
+                    'code' => "admin",
+                    'name' => $name
+                ])
+            ]
+        );
     }
 }

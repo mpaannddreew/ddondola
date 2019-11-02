@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
             Route::get('/', 'HomeController@wallet')->name('my.wallet');
             Route::get('deposit', 'HomeController@wallet')->name('my.wallet.deposit');
             Route::get('withdraw', 'HomeController@wallet')->name('my.wallet.withdraw');
+            Route::get('escrow', 'HomeController@wallet')->name('my.wallet.escrow');
         });
     });
     Route::middleware(['admin.staff'])->prefix('admin')->group(function (){

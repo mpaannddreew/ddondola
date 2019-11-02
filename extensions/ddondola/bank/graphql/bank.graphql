@@ -5,12 +5,13 @@ enum TransactionType {
 
 type Account {
     id: ID!
-    holder: Muddondozi!
+    holder: Muddondozi
     balance: Int! @method(name: "balance")
-    outgoingEscrows: [Escrow!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@outgoingEscrows")
-    incomingEscrows: [Escrow!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@incomingEscrows")
+    actualBalance: Int! @method(name: "actualBalance")
+    escrows(type: String): [Escrow!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@escrows")
     payments: [Payment!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@payments")
     transactions(type: TransactionType): [Transaction!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@transactions")
+    withdrawRequests(type: String): [WithdrawRequest!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@withdrawRequests")
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -38,6 +39,7 @@ type Payment {
 type Transaction {
     id: ID!
     account: Account! @belongsTo
+    code: String! @method(name: "miniCode")
     amount: String!
     debit: Boolean!
     credit: Boolean!
@@ -46,6 +48,35 @@ type Transaction {
     updated_at: DateTime!
 }
 
+type Recipient {
+    account_bank: String!
+    account_numer: String!
+}
+
+type WithdrawRequest {
+    id: ID!
+    account: Account! @belongsTo
+    amount: String!
+    recipient: Recipient!
+    processed: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+input RecipientInput {
+    account_bank: String!
+    account_numer: String!
+}
+
+input WithdrawInput {
+    recipient: RecipientInput!
+    amount: String!
+}
+
 extend type Query @middleware(checks: ["auth:api"]) {
     account(accountHolder: String): Account! @field(resolver: "Bank\\Http\\GraphQL\\Queries\\BankQuery@account")
+}
+
+extend type Mutation @middleware(checks: ["auth:api"]) {
+    withdrawRequest(accountHolder: String withdraw: WithdrawInput! password: String!): WithdrawRequest! @field(resolver: "Bank\\Http\\GraphQL\\Mutations\\BankMutator@withdrawRequest")
 }

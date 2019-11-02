@@ -53,19 +53,24 @@
                 }
                 return variables;
             },
-            ravePublicKey() {
-                return RavePublicKey;
-            },
             holder() {
                 return this.account ? this.account.holder: null;
             },
             balance() {
                 return this.account? this.account.balance: null;
+            },
+            meta() {
+                return [
+                    {
+                        metaname: "code",
+                        metavalue: this.holder.code
+                    }
+                ];
             }
         },
         methods: {
             doDeposit() {
-                this.paymentModal = this.openPaymentModal();
+                this.paymentModal = this.openPaymentModal(this.depositAmount, this.holder.profile.email, this.depositCurrency, this.meta, this.raveCallback);
             },
             load() {
                 axios.post(graphql.api, {query: graphql.account, variables: this.variables})
@@ -74,27 +79,6 @@
             prepare(response) {
                 this.loaded = true;
                 this.account = response.data.data.account;
-            },
-            openPaymentModal() {
-                return getpaidSetup({
-                    PBFPubKey: this.ravePublicKey,
-                    customer_email: this.holder.profile.email,
-                    amount: this.depositAmount,
-                    currency: this.depositCurrency,
-                    txref: Uuid(),
-                    meta: [
-                        {
-                            metaname: "code",
-                            metavalue: this.holder.code
-                        },
-                        {
-                            metaname: "type",
-                            metavalue: this.holder.type
-                        }
-                    ],
-                    onclose: function() {},
-                    callback: this.raveCallback
-                });
             },
             raveCallback(response) {
                 var txref = response.tx.txRef;
