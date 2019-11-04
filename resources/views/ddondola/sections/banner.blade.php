@@ -64,7 +64,7 @@
                         @else
                             @can('create', Shoppie\Shop::class)
                                 <a href="{{ route('create.shop') }}" class="btn btn-sm btn-success ml-auto">
-                                    <i class="material-icons">add</i> New Shop
+                                    <i class="fa fa-plus"></i> Create Shop
                                 </a>
                             @endcan
                         @endif

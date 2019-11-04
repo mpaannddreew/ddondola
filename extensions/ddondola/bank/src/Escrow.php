@@ -4,10 +4,11 @@ namespace Bank;
 
 
 use Ddondola\EcryptableModel;
+use Illuminate\Support\Str;
 
 class Escrow extends EcryptableModel
 {
-    protected $fillable = ['amount', 'source_account_id', 'destination_account_id', 'meta', 'completed', 'reversed'];
+    protected $fillable = ['amount', 'source_account_id', 'destination_account_id', 'meta', 'completed', 'reversed', 'code'];
 
     protected $encryptable = ['amount'];
 
@@ -52,5 +53,18 @@ class Escrow extends EcryptableModel
      */
     public function meta($item) {
         return collect($this->meta)->get($item);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->code = \Illuminate\Support\Str::uuid()->toString();
+        });
+    }
+
+    public function miniCode() {
+        return Str::upper(collect(explode('-', $this->code))->first());
     }
 }

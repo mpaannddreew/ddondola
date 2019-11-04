@@ -19,7 +19,7 @@
                                 <option value="highest-price">Highest Price</option>
                             </select>
                             <a :href="newProductUrl" class="btn btn-sm btn-success ml-auto" v-if="admin">
-                                <i class="material-icons">add</i> New Product
+                                <i class="fa fa-plus"></i> Add Product
                             </a>
                         </div>
                     </div>

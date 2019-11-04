@@ -17,6 +17,7 @@ class CreateEscrowsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('source_account_id');
             $table->unsignedInteger('destination_account_id');
+            $table->string('code');
             $table->string('amount');
             $table->text('meta');
             $table->boolean('reversed')->default(false);

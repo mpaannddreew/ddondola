@@ -48,6 +48,9 @@ const Helper = {
                 }
             },
             filters: {
+                upper(string) {
+                    return _.upperCase(string);
+                },
                 commas(num) {
                     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
                 },

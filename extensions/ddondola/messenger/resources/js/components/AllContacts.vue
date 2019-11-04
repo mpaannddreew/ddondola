@@ -15,7 +15,7 @@
                                 <i class="material-icons" v-else>search</i>
                             </div>
                         </div>
-                        <input id="contact_search" class="form-control" type="text" placeholder="Search Ddondola" style="margin: 0; padding-left: 1.875rem;">
+                        <input v-model="query" id="contact_search" class="form-control" type="text" placeholder="Search Ddondola" style="margin: 0; padding-left: 1.875rem;">
                     </div>
                 </div>
             </div>
@@ -59,7 +59,8 @@
             return {
                 searching: false,
                 shops: [],
-                users: []
+                users: [],
+                query: ''
             }
         },
         props: {
@@ -185,6 +186,14 @@
                     },
                 });
             }
+        },
+        watch: {
+            query: _.debounce(function (data) {
+                if (data.length === 0) {
+                    this.shops = [];
+                    this.users = [];
+                }
+            }, 100)
         }
     }
 </script>

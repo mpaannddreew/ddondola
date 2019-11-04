@@ -3,19 +3,14 @@
         <div class="directory-list close-directory-list">
             <div class="card card-small h-100 border-right main">
                 <div class="card-body h-100 p-0">
-                    <div class="card card-dark bg-secondary-gradient text-white" style="border-radius: 0px !important;">
-                        <div class="card-body skew-shadow">
+                    <div class="card user-details card-dark bg-secondary-gradient text-white" style="border-radius: 0px !important;">
+                        <div class="card-body skew-shadow" style="margin-top: 0; !important;">
                             <template v-if="loaded">
-                                <div class="d-flex">
-                                    <div class="sc-stats__image">
-                                        <img class="border rounded" :src="holder.avatar.url" style="border: medium solid rgb(255, 255, 255) !important;">
-                                    </div>
-                                    <div class="ml-2 my-auto w-100">
-                                    <span class="text-ellipsis" style="display: block;">
-                                        {{ holder.name }}
-                                    </span>
-                                    </div>
+                                <div class="user-details__avatar mx-auto border lis-border-width-4 bg-white rounded"
+                                     style="border: medium solid rgb(255, 255, 255) !important; width: 70px !important;">
+                                    <img :src="holder.avatar.url" alt="Avatar">
                                 </div>
+                                <h6 class="text-ellipsis text-center m-0 mt-2 mb-4 text-white" style="display: block;">{{ holder.name }}</h6>
                                 <div class="row mt-4">
                                     <div class="col-md-6 border-right" align="center">
                                         <p class="text-white mb-0" style="font-size: smaller !important;">Actual balance</p>

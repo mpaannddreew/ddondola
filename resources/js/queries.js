@@ -1761,6 +1761,7 @@ window.graphql = {
         }`,
     account: `query account($accountHolder: String) {
           account(accountHolder: $accountHolder) {
+            code
             balance
             actualBalance
             holder {
@@ -1802,6 +1803,7 @@ window.graphql = {
             escrows(type: $type count: $count page: $page) {
                 data {
                     id
+                    code
                     amount
                     completed
                     reversed
@@ -1825,6 +1827,7 @@ window.graphql = {
             withdrawRequests(type: $type count: $count page: $page) {
                 data {
                     id
+                    code
                     amount
                     processed
                     created_at
@@ -1844,5 +1847,8 @@ window.graphql = {
         }`,
     readConversation: `mutation readConversation($conversation: ID! $converser: Converser!) {
           count:readConversation(conversation: $conversation converser: $converser)
+        }`,
+    approvePayment: `mutation approvePayment($order: ID!) {
+          approved:approvePayment(order: $order)
         }`
 };

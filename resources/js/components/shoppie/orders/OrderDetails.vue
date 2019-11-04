@@ -243,6 +243,12 @@
                 this.$router.push(this.invoiceRoute);
             },
             approvePayment() {
+                axios.post(graphql.api, {
+                    query: graphql.approvePayment,
+                    variables: {order: this.loadedOrder.id}
+                }).then(this.paymentApproved).catch(function (e) {});
+            },
+            paymentApproved(response) {
 
             }
         },

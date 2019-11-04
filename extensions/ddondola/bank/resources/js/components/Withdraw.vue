@@ -1,7 +1,7 @@
 <template>
     <div class="directory-area">
         <div class="card card-small h-100 main">
-            <div class="card-header p-2 bg-light border-bottom">
+            <div class="card-header p-2 bg-white border-bottom">
                 <header class="d-flex justify-content-between align-items-start m-0">
                     <visible-items :paginator-info="paginatorInfo" v-if="showRequests && loaded && paginatorInfo"></visible-items>
                     <span class="visible-items" v-else></span>
@@ -11,7 +11,7 @@
                             <option value="pending">Pending</option>
                             <option value="successful">Successful</option>
                         </select>
-                        <a class="btn btn-success btn-sm ml-1" data-toggle="modal" href="#withdraw-request">New Request</a>
+                        <a class="btn btn-success btn-sm ml-1" @click="create" href="javascript:void(0)"><i class="fa fa-plus"></i> Create</a>
                     </div>
                 </header>
             </div>
@@ -22,8 +22,8 @@
                             <thead class="bg-light">
                             <tr>
                                 <th scope="col" class="border-0">Ref ID</th>
-                                <th scope="col" class="border-0 text-center">Payment</th>
                                 <th scope="col" class="border-0 text-center">Amount</th>
+                                <th scope="col" class="border-0 text-center">Status</th>
                                 <th scope="col" class="border-0 text-center">Time</th>
                             </tr>
                             </thead>
@@ -36,68 +36,28 @@
                                     </div>
                                     <div align="center" v-if="!showRequests && loaded">
                                         <h4 class="m-0"><i class="material-icons">error</i></h4>
-                                        <p class="m-0">You have not made any requests yet!</p>
+                                        <p class="m-0">You have not made any withdraw requests yet!</p>
                                     </div>
                                 </td>
                             </tr>
+                            <tr v-if="showRequests && loaded" is="withdraw-request" v-for="(request, indx) in requests" :withdraw-request="request" :key="indx"></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <pagination v-if="paginatorInfo" class="my-2" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
-                <div class="modal fade" id="withdraw-request" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-body p-0">
-                                <div class="card card-small">
-                                    <div class="card-header border-bottom">
-                                        Withdraw
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="input-group border-0">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text border-0">
-                                                    <i class="material-icons">dialpad</i>
-                                                </div>
-                                            </div>
-                                            <input class="form-control form-control-lg border-0" v-model="amount" type="text" placeholder="Amount">
-                                        </div>
-                                        <div class="input-group border-0 border-top border-bottom">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text border-0">
-                                                    <i class="material-icons">phone</i>
-                                                </div>
-                                            </div>
-                                            <input class="form-control form-control-lg border-0" v-model="phone" type="text" placeholder="Phone">
-                                        </div>
-                                        <div class="input-group border-0">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text border-0">
-                                                    <i class="material-icons">lock</i>
-                                                </div>
-                                            </div>
-                                            <input class="form-control form-control-lg border-0" v-model="password" type="text" placeholder="Password">
-                                        </div>
-                                        <vue-tel-input v-model="phone" defaultCountry="UG" :onlyCountries="['UG']"></vue-tel-input>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import WithdrawRequest from "./WithdrawRequest";
     export default {
         name: "Withdraw",
+        components: {WithdrawRequest},
         data() {
             return {
-                amount: '',
-                phone: '',
                 password: '',
                 requests: [],
                 page: 1,
@@ -119,6 +79,13 @@
             }
         },
         computed: {
+            basePath() {
+                if (this.admin) {
+                    return '/admin/wallet/withdraw';
+                }
+
+                return this.holderType === 'user' ? '/me/wallet/withdraw': `/shops/${this.shop}/wallet/withdraw`;
+            },
             showRequests() {
                 return this.requests.length > 0;
             },
@@ -156,6 +123,9 @@
             loadPage(page) {
                 this.page = page;
                 this.fetchRequests();
+            },
+            create() {
+                this.$router.push(`${this.basePath}/create`);
             }
         },
         watch: {

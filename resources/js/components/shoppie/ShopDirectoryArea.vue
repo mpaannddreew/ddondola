@@ -12,7 +12,7 @@
                             <option value="desc">Descending</option>
                         </select>
                         <a :href="newShopUrl" class="btn btn-sm btn-success ml-auto" v-if="auth && seller">
-                            <i class="material-icons">add</i> New Shop
+                            <i class="fa fa-plus"></i> Create Shop
                         </a>
                     </div>
                 </header>

@@ -53,6 +53,7 @@ import Invoice from './components/shoppie/orders/Invoice';
 import Transactions from './components/bank/Transactions';
 import Deposit from './components/bank/Deposit';
 import Withdraw from './components/bank/Withdraw';
+import CreateWithdraw from './components/bank/CreateWithdraw';
 import Escrow from './components/bank/Escrow';
 
 const router = new VueRouter({
@@ -75,6 +76,7 @@ const router = new VueRouter({
         {path: '/me/wallet', component: Transactions},
         {path: '/me/wallet/deposit', component: Deposit},
         {path: '/me/wallet/withdraw', component: Withdraw},
+        {path: '/me/wallet/withdraw/create', component: CreateWithdraw},
         {path: '/me/wallet/escrow', component: Escrow},
 
         // shop messenger app
@@ -89,12 +91,14 @@ const router = new VueRouter({
         {path: '/shops/:shop/wallet', component: Transactions, props: true},
         {path: '/shops/:shop/wallet/deposit', component: Deposit, props: true},
         {path: '/shops/:shop/wallet/withdraw', component: Withdraw, props: true},
+        {path: '/shops/:shop/wallet/withdraw/create', component: CreateWithdraw, props: true},
         {path: '/shops/:shop/wallet/Escrow', component: Escrow, props: true},
 
         // admin wallet app
         {path: '/admin/wallet', component: Transactions, props: { admin: true }},
         {path: '/admin/wallet/deposit', component: Deposit, props: { admin: true }},
         {path: '/admin/wallet/withdraw', component: Withdraw, props: { admin: true }},
+        {path: '/admin/wallet/withdraw/create', component: CreateWithdraw, props: { admin: true }},
         {path: '/admin/wallet/Escrow', component: Escrow, props: { admin: true }},
     ]
 });

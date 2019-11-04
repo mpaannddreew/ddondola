@@ -7,7 +7,7 @@
         <a href="{{ route('my.shops') }}" class="nav-link @yield('mine-active')"><i class="material-icons">shop_two</i> Shops</a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('create.shop') }}" class="nav-link @yield('new-active')"><i class="material-icons">add</i> New Shop</a>
+        <a href="{{ route('create.shop') }}" class="nav-link @yield('new-active')"><i class="material-icons">add</i> Create Shop</a>
     </li>
 @endsection
 

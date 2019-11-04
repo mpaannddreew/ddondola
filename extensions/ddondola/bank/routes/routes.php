@@ -16,7 +16,10 @@ Route::namespace('Bank\Http\Controllers')->group(function () {
         Route::prefix('wallet')->group(function () {
             Route::get('/', 'BankController@wallet')->name('admin.wallet');
             Route::get('deposit', 'BankController@wallet')->name('admin.wallet.deposit');
-            Route::get('withdraw', 'BankController@wallet')->name('admin.wallet.withdraw');
+            Route::prefix('withdraw')->group(function () {
+                Route::get('/', 'BankController@wallet')->name('admin.wallet.withdraw');
+                Route::get('create', 'BankController@wallet')->name('admin.wallet.withdraw.create');
+            });
             Route::get('escrow', 'BankController@wallet')->name('admin.wallet.escrow');
         });
     });

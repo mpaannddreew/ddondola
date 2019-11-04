@@ -10,7 +10,9 @@
                                     <i class="material-icons" style="font-size: 40px;">dialpad</i>
                                 </div>
                             </div>
-                            <input class="form-control form-control-lg border-0 border-bottom-radius-0 border-top-left-radius-0" v-model="amount" type="text">
+                            <input class="bg-light border-left form-control form-control-lg border-0
+                            border-bottom-radius-0 border-top-left-radius-0" v-model="amount"
+                                   type="text" placeholder="Deposit amount">
                         </div>
                     </div>
                     <div class="card-body h-100 p-0">

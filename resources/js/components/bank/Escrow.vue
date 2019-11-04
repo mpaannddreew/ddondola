@@ -1,7 +1,7 @@
 <template>
     <div class="directory-area">
         <div class="card card-small h-100 main">
-            <div class="card-header p-2 bg-light border-bottom">
+            <div class="card-header p-2 bg-white border-bottom">
                 <header class="d-flex justify-content-between align-items-start m-0">
                     <visible-items :paginator-info="paginatorInfo" v-if="showEscrows && loaded && paginatorInfo"></visible-items>
                     <span class="visible-items" v-else></span>
@@ -21,8 +21,8 @@
                             <thead class="bg-light">
                             <tr>
                                 <th scope="col" class="border-0">Ref ID</th>
-                                <th scope="col" class="border-0 text-center">Payment</th>
                                 <th scope="col" class="border-0 text-center">Amount</th>
+                                <th scope="col" class="border-0 text-center">Status</th>
                                 <th scope="col" class="border-0 text-center">Time</th>
                             </tr>
                             </thead>
@@ -39,6 +39,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr v-if="showEscrows && loaded" is="escrow-row" v-for="(escrow, indx) in escrows" :escrow="escrow" :key="indx"></tr>
                             </tbody>
                         </table>
                     </div>
@@ -50,8 +51,10 @@
 </template>
 
 <script>
+    import EscrowRow from "./EscrowRow";
     export default {
         name: "Escrow",
+        components: {EscrowRow},
         data() {
             return {
                 escrows: [],

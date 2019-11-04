@@ -1,7 +1,7 @@
 <template>
     <div class="directory-area">
         <div class="card card-small h-100 main">
-            <div class="card-header p-2 border-bottom bg-light">
+            <div class="card-header p-2 border-bottom bg-white">
                 <header class="d-flex justify-content-between align-items-start m-0">
                     <visible-items :paginator-info="paginatorInfo" v-if="showTransactions && loaded && paginatorInfo"></visible-items>
                     <span class="visible-items" v-else></span>

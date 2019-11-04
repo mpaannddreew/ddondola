@@ -296,4 +296,5 @@ extend type Mutation @middleware(checks: ["auth:api"]) {
     createProductOffer(productId: ID! offer: NewOffer!): ProductOffer @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@createProductOffer")
     updateOrder(update: OrderUpdate!): Product! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateOrder")
     updateStock(productId: ID! stock: StockUpdate!): Stock! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@updateStock")
+    approvePayment(order: ID!): Boolean! @field(resolver: "Shoppie\\Http\\GraphQL\\Mutations\\ShoppieMutator@approvePayment")
 }

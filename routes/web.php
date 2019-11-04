@@ -37,7 +37,10 @@ Route::middleware(['auth', 'verified'])->group(function (){
         Route::prefix('wallet')->group(function () {
             Route::get('/', 'HomeController@wallet')->name('my.wallet');
             Route::get('deposit', 'HomeController@wallet')->name('my.wallet.deposit');
-            Route::get('withdraw', 'HomeController@wallet')->name('my.wallet.withdraw');
+            Route::prefix('withdraw')->group(function () {
+                Route::get('/', 'HomeController@wallet')->name('my.wallet.withdraw');
+                Route::get('create', 'HomeController@wallet')->name('my.wallet.withdraw.create');
+            });
             Route::get('escrow', 'HomeController@wallet')->name('my.wallet.escrow');
         });
     });

@@ -4,12 +4,13 @@ namespace Bank;
 
 use Bank\Traits\Ledgerable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Account extends Model
 {
     use Ledgerable;
 
-    protected $fillable = ['admin'];
+    protected $fillable = ['admin', 'code'];
 
     protected $casts = [
         'admin' => 'bool'
@@ -68,5 +69,18 @@ class Account extends Model
      */
     public function withdrawRequests() {
         return $this->hasMany(WithdrawRequest::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->code = \Illuminate\Support\Str::uuid()->toString();
+        });
+    }
+
+    public function miniCode() {
+        return Str::upper(collect(explode('-', $this->code))->first());
     }
 }

@@ -48,7 +48,10 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
             Route::prefix('{shop}/wallet')->group(function () {
                 Route::get('/', 'ShoppieController@shopWallet')->name('my.shop.wallet');
                 Route::get('deposit', 'ShoppieController@shopWallet')->name('my.shop.wallet.deposit');
-                Route::get('withdraw', 'ShoppieController@shopWallet')->name('my.shop.wallet.withdraw');
+                Route::prefix('withdraw')->group(function () {
+                    Route::get('/', 'ShoppieController@shopWallet')->name('my.shop.wallet.withdraw');
+                    Route::get('create', 'ShoppieController@shopWallet')->name('my.shop.wallet.withdraw.create');
+                });
                 Route::get('escrow', 'ShoppieController@shopWallet')->name('my.shop.wallet.escrow');
             });
             Route::get('{shop}/orders/{order?}', 'ShoppieController@shopOrders')->name('my.shop.orders');

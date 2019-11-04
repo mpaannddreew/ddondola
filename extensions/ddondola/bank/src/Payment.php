@@ -3,6 +3,7 @@
 namespace Bank;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Payment extends Model
 {
@@ -28,5 +29,9 @@ class Payment extends Model
      */
     public function isWithdraw() {
         return !is_null($this->withdraw_request_id);
+    }
+
+    public function miniCode() {
+        return Str::upper(collect(explode('-', $this->reference))->first());
     }
 }

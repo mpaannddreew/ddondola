@@ -16,6 +16,7 @@ class CreateWithdrawRequestsTable extends Migration
         Schema::create('withdraw_requests', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('account_id');
+            $table->string('code');
             $table->string('amount');
             $table->text('recipient');
             $table->boolean('processed')->default(false);

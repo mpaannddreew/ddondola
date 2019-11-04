@@ -6,6 +6,7 @@ enum TransactionType {
 type Account {
     id: ID!
     holder: Muddondozi
+    code: String! @method(name: "miniCode")
     balance: Int! @method(name: "balance")
     actualBalance: Int! @method(name: "actualBalance")
     escrows(type: String): [Escrow!] @paginate(builder: "Bank\\Http\\GraphQL\\Queries\\BankQuery@escrows")
@@ -20,6 +21,7 @@ type Escrow {
     id: ID!
     source: Account! @belongsTo
     destination: Account! @belongsTo
+    code: String! @method(name: "miniCode")
     amount: String!
     completed: Boolean!
     reversed: Boolean!
@@ -30,6 +32,7 @@ type Escrow {
 type Payment {
     id: ID!
     account: Account! @belongsTo
+    code: String! @method(name: "miniCode")
     reference: String!
     status: String
     created_at: DateTime!
@@ -56,6 +59,7 @@ type Recipient {
 type WithdrawRequest {
     id: ID!
     account: Account! @belongsTo
+    code: String! @method(name: "miniCode")
     amount: String!
     recipient: Recipient!
     processed: Boolean!
