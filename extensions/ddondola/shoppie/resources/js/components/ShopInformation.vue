@@ -60,7 +60,7 @@
         },
         computed: {
             text() {
-                return this.shop.reviewCount === 1 ? 'rating': 'ratings';
+                return this.shop.reviewCount === 1 ? 'review': 'reviews';
             },
             url() {
                 return `/shops/${this.shop.code}`;

@@ -1,5 +1,17 @@
 <template>
     <div>
+        <header class="d-flex justify-content-between align-items-start m-0 mb-2">
+            <div>
+                <a class="btn btn-white btn-sm ml-auto" :href="productDirectoryPath">
+                    <i class="fa fa-shopping-basket"></i> Ddondola
+                </a>
+            </div>
+            <div class="ml-auto" v-if="hasProducts && loaded">
+                <a class="btn btn-white btn-sm ml-auto" @click="toCheckout" href="javascript:void(0)">
+                    <i class="fa fa-check-circle-o"></i> Checkout
+                </a>
+            </div>
+        </header>
         <div class="card card-small border" v-if="!loaded || (!hasProducts && loaded)">
             <div class="card-body">
                 <div align="center" v-if="!loaded">
@@ -31,22 +43,11 @@
                             <tr is="cart-entry" :key="indx" :product="product" v-on:deleted="removedFromCart" v-on:cart-updated="fetchCartProducts"></tr>
                         </template>
                         <tr class="row-6">
-                            <td class="text-left border-bottom-0 text-uppercase" colspan="4">Cart Total</td>
+                            <td class="text-left border-bottom-0 text-uppercase border-0" colspan="4">Cart Total</td>
                             <td class="product-subtotal border-0 text-muted">{{ currencyCode }} {{ sum|commas }}</td>
                             <td></td>
                         </tr>
                         </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="6" class="py-3 px-4">
-                                <div class="d-flex">
-                                    <a href="javascript:void(0)" @click="toCheckout" class="btn btn-lg btn-pill btn-outline-primary text-uppercase ml-auto">
-                                        <i class="fa fa-check-circle-o"></i> Checkout
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        </tfoot>
                     </table>
                 </div>
             </section>
@@ -82,6 +83,9 @@
             },
             checkoutRoute() {
                 return '/me/cart/checkout';
+            },
+            productDirectoryPath() {
+                return '/products';
             }
         },
         methods: {

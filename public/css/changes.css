@@ -1005,3 +1005,41 @@ footer .logo {
     position: relative;
     overflow: hidden;
 }
+
+#review_summary {
+    text-align: center;
+    background-color: #ce1d76;
+    color: #fff;
+    padding: 20px 10px;
+    -webkit-border-radius: 3px 3px 3px 0;
+    -moz-border-radius: 3px 3px 3px 0;
+    -ms-border-radius: 3px 3px 3px 0;
+    border-radius: 3px 3px 3px 0
+}
+
+@media (max-width: 991px) {
+    #review_summary {
+        margin-bottom: 15px
+    }
+}
+
+#review_summary strong {
+    font-size: 42px;
+    font-size: 2.625rem;
+    display: block;
+    line-height: 1
+}
+
+#review_summary em {
+    font-style: normal;
+    font-weight: 500;
+    display: block
+}
+
+.reviews-container .progress {
+    margin-bottom: 12px
+}
+
+.reviews-container .progress-bar {
+    background-color: #ce1d76
+}

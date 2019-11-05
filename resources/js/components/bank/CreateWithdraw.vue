@@ -84,7 +84,11 @@
                     return '/admin/wallet';
                 }
 
-                return this.holderType === 'user' ? '/me/wallet': `/shops/${this.shop}/wallet`;
+                if (this.shop) {
+                    return `/shops/${this.shop}/wallet`;
+                }
+
+                return '/me/wallet';
             },
             variables() {
                 var variables = {};

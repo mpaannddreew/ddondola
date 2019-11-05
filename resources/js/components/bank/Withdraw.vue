@@ -84,7 +84,11 @@
                     return '/admin/wallet/withdraw';
                 }
 
-                return this.holderType === 'user' ? '/me/wallet/withdraw': `/shops/${this.shop}/wallet/withdraw`;
+                if (this.shop) {
+                    return `/shops/${this.shop}/wallet/withdraw`;
+                }
+
+                return '/me/wallet/withdraw';
             },
             showRequests() {
                 return this.requests.length > 0;

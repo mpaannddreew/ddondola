@@ -20,7 +20,7 @@
         },
         computed: {
             text() {
-                return this.reviewable.reviewCount === 1 ? 'rating': 'ratings';
+                return this.reviewable.reviewCount === 1 ? 'review': 'reviews';
             }
         }
     }

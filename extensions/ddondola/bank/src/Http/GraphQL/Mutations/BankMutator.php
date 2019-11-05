@@ -27,7 +27,6 @@ class BankMutator
         if (collect($args)->has('accountHolder')) {
             $holder = collect($args)->get('accountHolder');
             if ($holder == 'admin') {
-                $holder = $holder . "Account";
                 $account = app(Bank::class)->adminAccount();
             }
 

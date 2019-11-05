@@ -369,6 +369,10 @@ class ShoppieMutator
     public function approvePayment($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         $order = app(OrderRepository::class)->id(collect($args)->get('order'));
+        if ($order->paid_for) {
+            return false;
+        }
+
         if ($order->activeSum() > $context->user()->account->balance()) {
             return false;
         }

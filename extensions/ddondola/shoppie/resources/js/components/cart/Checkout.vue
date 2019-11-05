@@ -9,6 +9,22 @@
             </div>
         </div>
         <template v-else-if="loaded && hasProducts">
+            <header class="d-flex justify-content-between align-items-start m-0 mb-2">
+                <div>
+                    <a class="btn btn-white" href="javascript:void(0)" @click="toCart">
+                        <i class="fa fa-edit"></i> Edit Cart
+                    </a>
+                </div>
+                <div class="ml-auto">
+                    <a class="btn btn-white" :href="checkoutUrl"
+                       onclick="event.preventDefault(); document.getElementById('checkout').submit();">
+                        <i class="fa fa-check-circle"></i> Confirm
+                    </a>
+                    <form id="checkout" :action="checkoutUrl" method="POST" style="display: none;">
+                        <input type="hidden" name="_token" v-model="token"/>
+                    </form>
+                </div>
+            </header>
             <section class="cart-section card border">
                 <div class="cart-table table-responsive">
                     <table class="table table-bordered text-center">
@@ -27,35 +43,17 @@
                                 <td class="row-img lo-stats__image">
                                     <img class="border rounded" :src="product.images[0].url" alt="cart-img">
                                 </td>
-                                <td class="product-name"><a :href="'/products/' + product.code">{{ product.name }}</a></td>
+                                <td class="product-name"><a :href="`${productDirectoryUrl}/${product.code}`">{{ product.name }}</a></td>
                                 <td class="product-price"><p>{{ product.currencyCode }} {{ product.pivot.price|commas }}</p></td>
                                 <td class="product-quantity">{{ product.pivot.quantity }}</td>
                                 <td class="product-total"><p>{{ product.currencyCode }} {{ product.pivot.sum|commas }}</p></td>
                             </tr>
                         </template>
                         <tr class="row-6">
-                            <td class="text-left text-uppercase" colspan="4">Cart Total</td>
+                            <td class="text-left text-uppercase border-0" colspan="4">Cart Total</td>
                             <td class="product-subtotal text-muted">{{ currencyCode }} {{ cartSubtotal|commas }}</td>
                         </tr>
                         </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="5" class="py-3 px-4">
-                                <div class="d-flex">
-                                    <a class="btn btn-lg btn-pill btn-outline-primary text-uppercase" href="javascript:void(0)" @click="toCart">
-                                        <i class="fa fa-edit"></i> Edit Cart
-                                    </a>
-                                    <a class="btn btn-lg btn-pill btn-outline-primary ml-auto text-uppercase" :href="checkoutUrl"
-                                       onclick="event.preventDefault(); document.getElementById('checkout').submit();">
-                                        <i class="fa fa-check-circle"></i> Confirm
-                                    </a>
-                                    <form id="checkout" :action="checkoutUrl" method="POST" style="display: none;">
-                                        <input type="hidden" name="_token" v-model="token"/>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        </tfoot>
                     </table>
                 </div>
             </section>
@@ -94,6 +92,9 @@
             },
             checkoutUrl() {
                 return `${this.cartRoute}/checkout`;
+            },
+            productDirectoryUrl() {
+                return '/products';
             }
         },
         methods: {

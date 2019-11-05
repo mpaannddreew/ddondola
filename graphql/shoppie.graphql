@@ -173,7 +173,7 @@ type Product {
 
 type Cart {
     id: ID!
-    products: [Product!] @hasMany
+    products: [Product!] @belongsToMany
     productCount: Int! @method(name: "productCount")
     sum: Int! @method(name: "sum")
     created_at: DateTime!

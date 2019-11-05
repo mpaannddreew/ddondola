@@ -9,17 +9,26 @@
 namespace Bank\Processors;
 
 
+use Bank\Repositories\PaymentRepository;
 use Bank\WithdrawRequest;
 
 class PaymentProcessor
 {
+    /**
+     * @var PaymentRepository
+     */
     protected $payments;
 
-    public function __construct() {
+    /**
+     * PaymentProcessor constructor.
+     * @param PaymentRepository $payments
+     */
+    public function __construct(PaymentRepository $payments) {
+        $this->payments = $payments;
     }
 
     public function withdraw(WithdrawRequest $request) {
-        // todo rave api calls
+        // todo rave api calls and create payment entry
     }
 
     public function deposit() {

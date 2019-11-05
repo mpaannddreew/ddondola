@@ -23,7 +23,8 @@ class Shop extends Model implements HasMedia
         'active' => 'bool'
     ];
 
-    protected $appends = ['averageRating', 'reviewCount', 'avatar', 'coverPicture', 'brandCount', 'subCategoriesCount'];
+    protected $appends = ['averageRating', 'reviewCount', 'avatar', 'coverPicture', 'brandCount', 'subCategoriesCount',
+        'oneStarCount', 'twoStarCount', 'threeStarCount', 'fourStarCount', 'fiveStarCount'];
 
     protected $hidden = ['reviews', 'media'];
 

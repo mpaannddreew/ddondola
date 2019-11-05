@@ -22,11 +22,9 @@
             <table class="table mb-0">
                 <thead class="py-2 bg-light text-semibold border-bottom">
                 <tr>
-                    <th scope="col" class="border-0">Quantity</th>
-                    <th scope="col" class="border-0">In</th>
-                    <th scope="col" class="border-0">Out</th>
-                    <th scope="col" class="border-0">Note</th>
-                    <th scope="col" class="border-0">Date</th>
+                    <th scope="col" class="border-0 text-center">Quantity</th>
+                    <th scope="col" class="border-0 text-center">Note</th>
+                    <th scope="col" class="border-0 text-center">Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,15 +44,14 @@
                 </template>
                 <template v-else-if="showStock && loaded">
                     <tr v-for="(_stock, indx) in stock" :key="indx" :title="`Added by ${_stock.user.name}`" data-toggle="tooltip">
-                        <td>{{ _stock.quantity }}</td>
-                        <td>
-                            <i class="fa" :class="{'fa-check-circle text-success': _stock.in, 'fa-times-circle text-danger': _stock.out}"></i>
+                        <td class="text-center">
+                            <span :class="{'text-danger': _stock.out, 'text-success': _stock.in}">
+                                <i class="material-icons">{{ _stock.out ? 'arrow_downward':'arrow_upward' }}</i>
+                            </span>
+                            {{ _stock.quantity }}
                         </td>
-                        <td>
-                            <i class="fa" :class="{'fa-check-circle text-success': _stock.out, 'fa-times-circle text-danger': _stock.in}"></i>
-                        </td>
-                        <td>{{ _stock.note }}</td>
-                        <td>{{ humanize(_stock.created_at) }}</td>
+                        <td class="text-center">{{ _stock.note }}</td>
+                        <td class="text-center">{{ humanize(_stock.created_at) }}</td>
                     </tr>
                 </template>
                 </tbody>

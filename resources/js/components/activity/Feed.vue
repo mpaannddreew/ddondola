@@ -4,7 +4,7 @@
             <div class="card-body p-0">
                 <template v-if="!loaded || (!hasActivities && loaded)">
                     <div align="center" class="p-3" v-if="!loaded">
-                        <loader></loader>
+                        <div class="loader"></div>
                         <p class="m-0">Loading ...</p>
                     </div>
                     <div align="center" class="p-3" v-if="!hasActivities && loaded">
