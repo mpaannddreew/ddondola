@@ -8,7 +8,7 @@
             </div>
             <div class="ml-auto" v-if="hasProducts && loaded">
                 <a class="btn btn-white btn-sm ml-auto" @click="toCheckout" href="javascript:void(0)">
-                    <i class="fa fa-check-circle-o"></i> Checkout
+                    <i class="fa fa-check-circle"></i> Checkout
                 </a>
             </div>
         </header>

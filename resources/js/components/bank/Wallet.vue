@@ -6,12 +6,12 @@
                     <div class="card user-details card-dark bg-secondary-gradient text-white" style="border-radius: 0px !important;">
                         <div class="card-body skew-shadow" style="margin-top: 0; !important;">
                             <template v-if="loaded">
-                                <div class="user-details__avatar mx-auto border lis-border-width-4 bg-white rounded"
-                                     style="border: medium solid rgb(255, 255, 255) !important; width: 70px !important;">
-                                    <img :src="holder.avatar.url" alt="Avatar">
-                                </div>
-                                <h6 class="text-ellipsis text-center m-0 mt-2 mb-4 text-white" style="display: block;">{{ holder.name }}</h6>
-                                <div class="row mt-4">
+                                <!--<div class="user-details__avatar mx-auto border lis-border-width-4 bg-white rounded"-->
+                                     <!--style="border: medium solid rgb(255, 255, 255) !important; width: 70px !important;">-->
+                                    <!--<img :src="holder.avatar.url" alt="Avatar">-->
+                                <!--</div>-->
+                                <!--<h6 class="text-ellipsis text-center m-0 mt-2 mb-4 text-white" style="display: block;">{{ holder.name }}</h6>-->
+                                <div class="row">
                                     <div class="col-md-6 border-right" align="center">
                                         <p class="text-white mb-0" style="font-size: smaller !important;">Actual balance</p>
                                         <h5 class="text-white">{{ account.actualBalance|commas }}</h5>
@@ -98,13 +98,8 @@
             }
         },
         props: {
-            holder: {
-                type: Object,
-                required: true
-            },
-            holderType: {
+            shop: {
                 type: String,
-                default: 'user'
             },
             admin: {
                 type: Boolean,
@@ -117,10 +112,22 @@
                     return '/admin/wallet';
                 }
 
-                return this.holderType === 'user' ? '/me/wallet': `/shops/${this.holder.code}/wallet`;
+                if (this.shop) {
+                    return `/shops/${this.shop}/wallet`;
+                }
+
+                return '/me/wallet';
             },
             variables() {
-                return {accountHolder: this.holder.code};
+                if (this.admin) {
+                    return {accountHolder: 'admin'};
+                }
+
+                if (this.shop) {
+                    return {accountHolder: this.shop};
+                }
+
+                return {};
             },
         },
         methods: {

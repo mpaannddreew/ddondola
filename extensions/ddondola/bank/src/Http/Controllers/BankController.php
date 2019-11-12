@@ -34,16 +34,6 @@ class BankController extends Controller
 
     public function wallet(Request $request)
     {
-        $name = "Admin Wallet";
-        return view('bank::admin.wallet', [
-                'holder' => json_encode([
-                    'avatar' => [
-                        'url' => (string)Avatar::create($name)->toBase64()
-                    ],
-                    'code' => "admin",
-                    'name' => $name
-                ])
-            ]
-        );
+        return view('bank::admin.wallet');
     }
 }

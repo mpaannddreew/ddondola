@@ -1,16 +1,16 @@
 <template>
     <div class="directory">
-        <categories :directory="directory"></categories>
+        <directory-filters :directory="directory"></directory-filters>
         <shop-directory-area></shop-directory-area>
     </div>
 </template>
 
 <script>
-    import Categories from "./Categories";
     import ShopDirectoryArea from "./ShopDirectoryArea";
+    import DirectoryFilters from "./DirectoryFilters";
     export default {
         name: "ShopDirectory",
-        components: {ShopDirectoryArea, Categories},
+        components: {DirectoryFilters, ShopDirectoryArea},
         computed: {
             directory() {
                 return 'shops';

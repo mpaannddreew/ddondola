@@ -33,11 +33,9 @@
                             </div>
                         </div>
                         <template v-else-if="showProducts && loaded">
-                            <div class="row">
-                                <div class="item col-xl-3 col-md-6" v-for="(product, indx) in products">
-                                    <div is="product" :product="product" :key="indx"></div>
-                                </div>
-                            </div>
+                            <ul class="directory-products border-left">
+                                <li is="directory-product" v-for="(product, indx) in products" :key="indx" :product="product"  class="directory-product"></li>
+                            </ul>
                         </template>
                         <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
                     </div>
@@ -49,9 +47,10 @@
 
 <script>
     import Product from "./products/Product";
+    import DirectoryProduct from "./products/DirectoryProduct";
     export default {
         name: "WishList",
-        components: {Product},
+        components: {DirectoryProduct, Product},
         mounted() {
             this.fetchProducts();
         },

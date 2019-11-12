@@ -20,7 +20,7 @@
                     </div>
                 </header>
             </div>
-            <div class="card-body h-100" :class="{'bg-white': showProducts && loaded && grid}">
+            <div class="card-body h-100">
                 <div class="center-xy" v-if="!loaded || (!showProducts && loaded)">
                     <div align="center" v-if="!loaded">
                         <div class="loader"></div>
@@ -31,11 +31,11 @@
                         <p class="m-0">There are no products in the directory yet!</p>
                     </div>
                 </div>
-                <div class="px-2" v-else-if="showProducts && loaded && grid">
-                    <ul class="products">
-                        <li :id="indx" is="directory-product" v-for="(product, indx) in products" :key="indx" :product="product" :class="{'first': first(indx + 1), 'last': last(indx + 1)}"></li>
+                <template v-else-if="showProducts && loaded && grid">
+                    <ul class="directory-products">
+                        <li is="directory-product" v-for="(product, indx) in products" :key="indx" :product="product"  class="directory-product"></li>
                     </ul>
-                </div>
+                </template>
                 <div class="card card-small lo-stats border-top-radius-0" style="border-top: 0 !important;"  v-else-if="showProducts && loaded && !grid">
                     <table class="table mb-0">
                         <thead class="py-2 bg-light text-semibold">
@@ -72,6 +72,7 @@
         },
         data() {
             return {
+                test: 20,
                 grid: true,
                 products: [],
                 loaded: false,

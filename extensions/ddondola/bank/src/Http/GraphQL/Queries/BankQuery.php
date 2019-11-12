@@ -23,14 +23,14 @@ class BankQuery
     {
         if (collect($args)->has('accountHolder')) {
             $holder = collect($args)->get('accountHolder');
-            if ($holder == 'admin') {
-                return app(Bank::class)->adminAccount();
-            }
+            if ($holder) {
+                if ($holder == 'admin') {
+                    return app(Bank::class)->adminAccount();
+                }
 
-            if (app(ShopRepository::class)->code($holder)) {
-                return app(ShopRepository::class)->code($holder)->account;
-            } else if(app(UserRepository::class)->code($holder)) {
-                return app(UserRepository::class)->code($holder)->account;
+                if (app(ShopRepository::class)->code($holder)) {
+                    return app(ShopRepository::class)->code($holder)->account;
+                }
             }
         }
 

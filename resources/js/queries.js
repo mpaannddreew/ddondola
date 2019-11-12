@@ -1,7 +1,7 @@
 window.graphql = {
     api: '/graphql',
     rowCount: 10,
-    columnCount: 12,
+    columnCount: 20,
     categories: `query categories($count: Int! $page: Int!){
           categories:shopCategories(count: $count page: $page) {
             data {

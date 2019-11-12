@@ -83,4 +83,5 @@ extend type Query @middleware(checks: ["auth:api"]) {
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
     withdrawRequest(accountHolder: String withdraw: WithdrawInput! password: String!): WithdrawRequest! @field(resolver: "Bank\\Http\\GraphQL\\Mutations\\BankMutator@withdrawRequest")
+    makeDeposit(accountHolder: String reference: String!): Payment! @field(resolver: "Bank\\Http\\GraphQL\\Mutations\\BankMutator@makeDeposit")
 }

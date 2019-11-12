@@ -1,5 +1,5 @@
 <template>
-    <div class="contacts h-100">
+    <div class="contacts h-100" style="height: calc(99.9vh - 10.4rem - 1px) !important;">
         <div class="center-xy" v-if="!loaded || (!hasConversations && loaded)">
             <div align="center" v-if="!loaded">
                 <div class="loader"></div>

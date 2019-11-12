@@ -4,7 +4,7 @@
             <div class="card-header p-2 bg-white border-bottom">
                 <div class="ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">
                     <a class="btn btn-white btn-sm text-danger" href="javascript:void(0)" @click="back">
-                        <i class="material-icons">clear</i>
+                        <i class="fa fa-chevron-left"></i> Back
                     </a>
                 </div>
             </div>

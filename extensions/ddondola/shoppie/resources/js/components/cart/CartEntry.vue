@@ -63,7 +63,7 @@
         },
         data() {
             return {
-                quantity: null,
+                quantity: 1,
                 stock: null,
                 deleting: false,
                 editing: false,
@@ -182,6 +182,8 @@
         watch: {
             quantity(data) {
                 if (data < 1) {
+                    this.quantity = 1;
+                }else if (data === '') {
                     this.quantity = 1;
                 }else if (data > this.stock) {
                     this.quantity = this.stock;

@@ -12,7 +12,7 @@
             <header class="d-flex justify-content-between align-items-start m-0 mb-2">
                 <div>
                     <a class="btn btn-white" href="javascript:void(0)" @click="toCart">
-                        <i class="fa fa-edit"></i> Edit Cart
+                        <i class="fa fa-pencil"></i> Edit Cart
                     </a>
                 </div>
                 <div class="ml-auto">

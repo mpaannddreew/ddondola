@@ -3,5 +3,5 @@
 @section('wallet-active', 'active')
 @section('user-profile-bnr-class', '')
 @section('main')
-    <wallet :holder="{{ $holder }}" :admin="true"></wallet>
+    <wallet :admin="true"></wallet>
 @endsection

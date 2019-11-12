@@ -1,47 +1,46 @@
 <template>
-    <li class="product">
-        <div class="product-outer" style="height: 363px;">
-            <div class="product-inner">
-                <span class="loop-product-categories" style="display: unset !important;">
-                    <a href="javascript:void(0)" rel="tag">{{ product.category.name }}</a>
-                </span>
-                <a :href="productUrl">
-                    <h3 class="text-ellipsis">{{ product.name }}</h3>
-                    <div class="my-3">
-                        <mini-rating-meter :reviewable="product"></mini-rating-meter>
-                        <small class="text-muted">{{ product.averageRating }} average based on {{ product.reviewCount }} {{ text }}</small>
-                    </div>
-                    <div class="product-thumbnail">
-                        <main-slide :product="product"></main-slide>
-                    </div>
+    <li class="directory-product">
+        <div class="card card-small card-post card-post--1 h-100">
+            <div class="card-post__image border-top-radius-0" :style="`background-image: url('${product.images[0].url}');`">
+                <a href="javascript:void(0)" class="card-post__category badge badge-pill badge-light">
+                    <ul class="price list-inline no-margin my-auto mx-0">
+                        <li class="list-inline-item deals_item_price_a m-0" style="font-size: 10px;">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</li>
+                        <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }" style="text-decoration: line-through; font-size: 10px;" v-if="product.discount">{{ product.currencyCode }} {{ product.price|commas }}</li>
+                    </ul>
                 </a>
-                <div class="price-add-to-cart m-0 pt-3">
-                    <span class="price w-100">
-                        <span class="electro-price">
-                            <div class="products-grid p-0">
-                                <div class="product m-0">
-                                    <div class="d-flex mt-2">
-                                        <ul class="price list-inline no-margin my-auto mx-0">
-                                            <li class="list-inline-item deals_item_price_a m-0">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</li>
-                                            <li class="list-inline-item deals_item_price_a" :class="{ 'text-primary': product.discount }" style="text-decoration: line-through; font-size: 10px;" v-if="product.discount">{{ product.currencyCode }} {{ product.price|commas }}</li>
-                                        </ul>
-                                        <div class="hover-overlay d-flex align-items-center justify-content-center ml-auto" style="border-radius: 0 !important;" v-if="auth">
-                                            <div class="CTA d-flex align-items-center justify-content-center">
-                                                <a class="border-radius" href="javascript:void(0)" @click="cartAction"
-                                                   :class="{disabled: cartStatusLoading || soldOut, 'border-primary text-primary': inCart}">
-                                                    <i class="fa fa-shopping-cart" :class="{'text-primary': inCart}"></i>
-                                                </a>
-                                                <a href="javascript:void(0)" @click="favouritesAction"
-                                                   :class="{disabled: favoriteStatusLoading, 'border-primary text-primary': isFavorite}" class="border-radius ml-1">
-                                                    <i class="fa fa-heart" :class="{'text-primary': isFavorite}"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                <!--<div class="card-post__author d-flex">-->
+                <!--<a href="#" class="card-post__author-avatar card-post__author-avatar&#45;&#45;small" style="background-image: url('/images/testimonial/happy-client-01.jpg');">Written by James Jamerson</a>-->
+                <!--</div>-->
+            </div>
+            <div class="card-body p-2">
+                <a :href="productUrl">
+                    <p class="text-ellipsis m-0" style="line-height: 1.286em;">{{ product.name }}</p>
+                </a>
+                <strong>
+                    <mini-rating-meter :reviewable="product"></mini-rating-meter>
+                </strong>
+                <small class="text-muted">{{ product.averageRating }} average based on {{ product.reviewCount }} {{ text }}</small>
+            </div>
+            <div class="card-footer p-0 border-top">
+                <div class="header-navbar collapse d-lg-flex p-0 bg-light border-bottom">
+                    <div class="container p-0">
+                        <div class="row">
+                            <div class="col">
+                                <ul class="nav nav-tabs nav-justified border-0 flex-column flex-lg-row">
+                                    <li class="nav-item">
+                                        <a href="javascript:void(0)" @click="cartAction" class="nav-link" :class="{disabled: cartStatusLoading || soldOut || !auth, active: inCart}">
+                                            <i class="material-icons">add_shopping_cart</i>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="javascript:void(0)" @click="favouritesAction" class="nav-link":class="{disabled: favoriteStatusLoading || !auth, active: isFavorite}">
+                                            <i class="material-icons">favorite_border</i>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                        </span>
-                    </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,10 +48,8 @@
 </template>
 
 <script>
-    import MainSlide from "./MainSlide";
     export default {
         name: "DirectoryProduct",
-        components: {MainSlide},
         mounted() {
             this.loadProduct();
         },
@@ -72,7 +69,7 @@
         },
         computed: {
             text() {
-                return this.product.reviewCount === 1 ? 'rating': 'ratings';
+                return this.product.reviewCount === 1 ? 'review': 'reviews';
             },
             productUrl() {
                 return `/products/${this.product.code}`;
@@ -125,31 +122,35 @@
                 });
             },
             cartAction() {
-                this.cartStatusLoading = true;
-                if (this.inCart) {
-                    axios.post(graphql.api, {
-                        query: graphql.removeFromCart,
-                        variables: {id: this.product.id}
-                    }).then(this.cartStatusWithEvents).catch(function (error) {});
-                } else {
-                    axios.post(graphql.api, {
-                        query: graphql.addToCart,
-                        variables: {id: this.product.id, quantity: 1}
-                    }).then(this.cartStatusWithEvents).catch(function (error) {});
+                if (this.auth) {
+                    this.cartStatusLoading = true;
+                    if (this.inCart) {
+                        axios.post(graphql.api, {
+                            query: graphql.removeFromCart,
+                            variables: {id: this.product.id}
+                        }).then(this.cartStatusWithEvents).catch(function (error) {});
+                    } else {
+                        axios.post(graphql.api, {
+                            query: graphql.addToCart,
+                            variables: {id: this.product.id, quantity: 1}
+                        }).then(this.cartStatusWithEvents).catch(function (error) {});
+                    }
                 }
             },
             favouritesAction() {
-                this.favoriteStatusLoading = true;
-                if (this.isFavorite) {
-                    axios.post(graphql.api, {
-                        query: graphql.removeFromFavorites,
-                        variables: {id: this.product.id}
-                    }).then(this.favoritesStatus).catch(function (error) {});
-                } else {
-                    axios.post(graphql.api, {
-                        query: graphql.addToFavorites,
-                        variables: {id: this.product.id}
-                    }).then(this.favoritesStatus).catch(function (error) {});
+                if (this.auth) {
+                    this.favoriteStatusLoading = true;
+                    if (this.isFavorite) {
+                        axios.post(graphql.api, {
+                            query: graphql.removeFromFavorites,
+                            variables: {id: this.product.id}
+                        }).then(this.favoritesStatus).catch(function (error) {});
+                    } else {
+                        axios.post(graphql.api, {
+                            query: graphql.addToFavorites,
+                            variables: {id: this.product.id}
+                        }).then(this.favoritesStatus).catch(function (error) {});
+                    }
                 }
             }
         }
@@ -157,5 +158,15 @@
 </script>
 
 <style scoped>
+    .nav-link {
+        margin: 0 !important;
+    }
 
+    .nav-item {
+        border-right: 1px solid #e1e5eb!important;
+    }
+
+    .nav-item:last-child {
+        border-right: none !important;
+    }
 </style>

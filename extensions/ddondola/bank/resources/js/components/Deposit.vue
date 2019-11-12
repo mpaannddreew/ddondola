@@ -1,7 +1,7 @@
 <template>
     <div class="directory-area">
         <div class="card card-small h-100 main">
-            <div class="card-body h-100 p-5" style="overflow: hidden">
+            <div class="card-body h-100 p-5">
                 <div class="card card-small h-100 border">
                     <div class="card-header bg-light p-0 border-bottom">
                         <div class="input-group border-0 border-bottom-radius-0">
@@ -17,7 +17,7 @@
                     </div>
                     <div class="card-body h-100 p-0">
                         <ul class="number m-0 p-0 h-100">
-                            <li class="pad" v-for="(button, i) in buttons">
+                            <li class="pad" v-for="button in 9">
                                 <a class="btn btn-white d-flex" href="javascript:void(0)" @click="typeNumber(button)">
                                     <span style="display: block !important;" class="my-auto mx-auto">{{ button }}</span>
                                 </a>
@@ -25,15 +25,15 @@
                             <a class="btn btn-danger d-flex clear" :class="clearDisabled" href="javascript:void(0)" @click="clear">
                                 <span style="display: block !important;" class="my-auto mx-auto"><i class="fa fa-times-circle"></i> Clear</span>
                             </a>
-                        </li><li class="pad border-left border-right border-bottom">
-                            <a class="btn btn-white d-flex" href="javascript:void(0)"@click="typeNumber(0)">
-                                <span style="display: block !important;" class="my-auto mx-auto">0</span>
-                            </a>
-                        </li><li class="pad border-top">
-                            <a class="btn btn-success d-flex initiate" :class="initiateDisabled" href="javascript:void(0)" @click="initiate">
-                                <span style="display: block !important;" class="my-auto mx-auto"><i class="fa fa-check-circle"></i> Initiate</span>
-                            </a>
-                        </li>
+                            </li><li class="pad border-left border-right border-bottom">
+                                <a class="btn btn-white d-flex" href="javascript:void(0)" @click="typeNumber(0)">
+                                    <span style="display: block !important;" class="my-auto mx-auto">0</span>
+                                </a>
+                            </li><li class="pad border-top">
+                                <a class="btn btn-success d-flex initiate" :class="initiateDisabled" href="javascript:void(0)" @click="initiate">
+                                    <span style="display: block !important;" class="my-auto mx-auto"><i class="fa fa-check-circle"></i> Initiate</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -70,21 +70,24 @@
             canInitiate() {
                 return _.toNumber(this.amount) > 5000;
             },
-            buttons() {
-                return [1, 2, 3, 4, 5, 6, 7, 8, 9];
-            },
             clearDisabled() {
                 return {
                     disabled: this.amount.length === 0
                 }
             },
+            metaValue() {
+                if (this.admin) {
+                    return 'admin';
+                }
+
+                if (this.shop) {
+                    return this.shop;
+                }
+
+                return this.authCode;
+            },
             meta() {
-                return [
-                    {
-                        metaname: "code",
-                        metavalue: 'admin'
-                    }
-                ];
+                return [{metaname: "code", metavalue: this.metaValue}];
             }
         },
         methods: {
