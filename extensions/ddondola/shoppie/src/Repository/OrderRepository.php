@@ -59,4 +59,8 @@ class OrderRepository
 
         return $order;
     }
+
+    public function builder() {
+        return Order::query();
+    }
 }

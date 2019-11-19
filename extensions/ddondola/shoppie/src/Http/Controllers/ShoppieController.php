@@ -324,6 +324,16 @@ class ShoppieController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param Order $order
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function myOrderPayment(Request $request, Order $order) {
+        return $this->myOrders($request, $order);
+    }
+
+    /**
      * Products view
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

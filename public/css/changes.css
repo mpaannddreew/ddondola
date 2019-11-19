@@ -1043,3 +1043,80 @@ footer .logo {
 .reviews-container .progress-bar {
     background-color: #ce1d76
 }
+
+.order-payment-method {
+    background-color: #f7f7f7;
+    padding: 40px 20px 30px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991.98px),
+only screen and (max-width: 767.98px) {
+    .order-payment-method {
+        padding: 32px 20px 36px;
+    }
+}
+
+.single-payment-method {
+    margin-bottom: 20px;
+}
+
+.single-payment-method:last-child {
+    margin-bottom: 0;
+}
+
+.single-payment-method:first-child .payment-method-details {
+    display: block;
+}
+
+.single-payment-method label,
+.single-payment-method .custom-control-label {
+    font-weight: 500;
+}
+
+.single-payment-method .paypal-card {
+    max-width: 150px;
+    height: 50px;
+    margin-top: 10px;
+    display: block;
+}
+
+.single-payment-method .payment-method-details {
+    background-color: #f1f1f1;
+    color: #242424;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 10px;
+    position: relative;
+    margin-top: 20px;
+}
+
+.single-payment-method .payment-method-details:after {
+    content: '';
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #f1f1f1;
+    bottom: 100%;
+}
+
+.single-payment-method .payment-method-details * {
+    margin: 0;
+}
+
+.header-navbar.profile .nav-link {
+    margin: 0 !important;
+    padding-left: .75rem!important;
+    padding-right: .75rem!important;
+}
+
+.header-navbar.profile .nav-item {
+    border-right:1px solid #e1e5eb!important;
+}
+
+.header-navbar.profile .nav-item:last-child {
+    border-right: none !important;
+}
+
+.header-navbar.profile .nav-link.active {
+    background: unset !important;
+}

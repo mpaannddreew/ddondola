@@ -28,33 +28,29 @@
                                 </div>
                             </div>
                             <div class="ml-auto d-flex align-items-center">
-                                <quick-wallet :deposit="true" :deposit-amount="depositAmount" v-if="!shop && !loadedOrder.paidFor && !loadedOrder.cancelled"></quick-wallet>
-                                <div class="ml-1 mr-auto mr-sm-0 mt-3 mt-sm-0">
-                                    <template v-if="!shop">
-                                        <a class="btn btn-white btn-sm" href="javascript:void(0)"
-                                           v-if="!loadedOrder.paidFor && !loadedOrder.cancelled" @click="approvePayment">
-                                            <i class="fa fa-check"></i> Approve Payment
-                                        </a>
-                                        <a class="btn btn-white btn-sm" href="javascript:void(0)" @click="showInvoice">
-                                            <i class="material-icons">description</i> Invoice
-                                        </a>
-                                    </template>
-                                    <a class="btn btn-white btn-sm" :href="messengerUrl" v-if="shop">
-                                        <i class="material-icons">chat</i> Message Buyer
-                                    </a>
-                                </div>
+                                <a class="btn btn-white btn-sm" href="javascript:void(0)" @click="showInvoice" v-if="!shop">
+                                    Invoice
+                                </a>
+                                <a class="btn btn-white btn-sm" :href="messengerUrl" v-else>
+                                    <i class="material-icons">chat</i> Message Buyer
+                                </a>
                             </div>
                         </div>
                         <div class="flat-card is-auto order-list-card p-4 border bg-white border-radius">
-                            <div class="progress-block">
-                                <!-- Title -->
-                                <h3 class="text-uppercase">ORDER #{{ label }}</h3>
+                            <div class="order-block">
+                                <div class="order-icon">
+                                    <i class="material-icons">description</i>
+                                </div>
+                                <div class="handled-by">
+                                    <div>Order</div>
+                                    <div class="text-uppercase">Order #{{ label }}</div>
+                                </div>
                             </div>
                             <!-- Orders team member -->
                             <div class="order-block" v-if="shop">
                                 <img :src="buyerAvatar" alt="">
                                 <div class="handled-by">
-                                    <div>Placed by</div>
+                                    <div>Buyer</div>
                                     <div>{{ buyer.name }}</div>
                                 </div>
                             </div>
@@ -64,10 +60,21 @@
                                     <i class="material-icons">credit_card</i>
                                 </div>
                                 <div class="_status">
-                                    <div>Payment</div>
-                                    <div>
-                                        <span class="badge" :class="{'badge-warning': !loadedOrder.paidFor, 'badge-success': loadedOrder.paidFor, 'badge-danger': loadedOrder.cancelled}">{{ status }}</span>
-                                    </div>
+                                    <template v-if="shop">
+                                        <div>Payment</div>
+                                        <div>
+                                            <span class="badge" :class="paymentIndicator">{{ status }}</span>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <div v-if="loadedOrder.paidFor || loadedOrder.cancelled">Payment</div>
+                                        <div>
+                                            <a @click="payment" class="btn btn-white btn-sm text-primary" href="javascript:void(0)" v-if="!shop && !loadedOrder.paidFor && !loadedOrder.cancelled">
+                                                Choose payment method
+                                            </a>
+                                            <span class="badge" :class="paymentIndicator" v-if="loadedOrder.paidFor || loadedOrder.cancelled">{{ status }}</span>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                             <!-- Order date -->
@@ -77,7 +84,7 @@
                                 </div>
                                 <div class="date">
                                     <div>Date</div>
-                                    <div class="is-date">{{ loadedOrder.created_at|timeSpecific }}</div>
+                                    <div class="is-date">{{ loadedOrder.created_at|day }}</div>
                                 </div>
                             </div>
                             <!-- Order total -->
@@ -197,6 +204,9 @@
             invoiceRoute() {
                 return `${this.ordersRoute}/${this.order}/invoice`
             },
+            paymentRoute() {
+                return `${this.ordersRoute}/${this.order}/payment`
+            },
             messengerUrl() {
                 if (this.loaded) {
                     return `/shops/${this.shop}/messenger/${this.buyer.code}`;
@@ -213,6 +223,17 @@
             },
             label() {
                 return _.head(_.split(this.loadedOrder.code, '-'));
+            },
+            paymentIndicator() {
+                if (this.loadedOrder) {
+                    return {
+                        'badge-warning': !this.loadedOrder.paidFor,
+                        'badge-success': this.loadedOrder.paidFor,
+                        'badge-danger': this.loadedOrder.cancelled
+                    };
+                }
+
+                return {};
             }
         },
         methods: {
@@ -241,6 +262,9 @@
             },
             showInvoice() {
                 this.$router.push(this.invoiceRoute);
+            },
+            payment() {
+                this.$router.push(this.paymentRoute);
             },
             approvePayment() {
                 axios.post(graphql.api, {

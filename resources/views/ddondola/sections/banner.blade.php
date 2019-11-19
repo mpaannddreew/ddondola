@@ -4,31 +4,19 @@
     <div class="holder-image"> <img src="{{ $user->coverPicture()['url'] }}" alt="" class="img-fluid d-none"> </div>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-6 mb-4 mb-lg-0">
+            <div class="col-12 col-md-12 mb-4 mb-lg-0">
                 <a href="javascript:void(0)" class="text-white">
                     <div class="media d-block d-md-flex text-md-left text-center">
                         <img style="width: 100px; height: 100px;" src="{{ $user->avatar()['url'] }}" class="img-fluid d-md-flex mr-4 border border-white lis-border-width-4 mb-4 mb-md-0 rounded" alt="" />
 
                         <div class="media-body align-self-center">
-                            <h5 class="text-white lis-font-weight-500 lis-line-height-1">{{ $user->name }}</h5>
+                            <h5 class="text-white lis-font-weight-500 lis-line-height-1 m-0">{{ $user->name }}</h5>
+                            <p class="m-0">
+                                {{ $user->email }}
+                            </p>
                         </div>
                     </div>
                 </a>
-            </div>
-            <div class="col-12 col-md-6 align-self-center">
-                <ul class="list-unstyled mb-0 lis-line-height-2 text-md-right text-center">
-                    @if($user->profile("phone_number"))
-                    <li><i class="fa fa-phone pr-2"></i> {{ $user->profile("phone_number") }}</li>
-                    @endif
-                    <li>
-                        <a href="javascript:void(0)" class="text-white"><i class="fa fa-envelope pr-2"></i> {{ $user->email }}</a>
-                    </li>
-                    @if($user->profile("address"))
-                    <li>
-                        <a href="javascript:void(0)" class="text-white"><i class="fa fa-map-o pr-2"></i> {{ $user->profile("address") }}</a>
-                    </li>
-                    @endif
-                </ul>
             </div>
         </div>
     </div>

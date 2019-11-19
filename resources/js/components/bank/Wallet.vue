@@ -4,7 +4,7 @@
             <div class="card card-small h-100 border-right main">
                 <div class="card-body h-100 p-0">
                     <div class="card user-details card-dark bg-secondary-gradient text-white" style="border-radius: 0px !important;">
-                        <div class="card-body skew-shadow" style="margin-top: 0; !important;">
+                        <div class="card-body skew-shadow py-5" style="margin-top: 0; !important;">
                             <template v-if="loaded">
                                 <!--<div class="user-details__avatar mx-auto border lis-border-width-4 bg-white rounded"-->
                                      <!--style="border: medium solid rgb(255, 255, 255) !important; width: 70px !important;">-->

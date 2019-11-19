@@ -1,7 +1,7 @@
-@extends('ddondola.me.base.settings')
+@extends('ddondola.me.base.profile-admin')
 @section('info-active', 'active')
 @section('title')@parent Edit @endsection
-@section('settings')
+@section('profile')
     <form method="post" action="{{ route('my.profile.update') }}">
         @csrf
         <div class="card border border-radius mb-2">
@@ -40,14 +40,14 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label for="about">About</label>
-                        <textarea name="about" class="form-control {{ $errors->has('about') ? ' is-invalid' : '' }}" id="about">{{ $user->profile('about') }}</textarea>
+                        <textarea rows="10" name="about" class="form-control {{ $errors->has('about') ? ' is-invalid' : '' }}" id="about">{{ $user->profile('about') }}</textarea>
                         @if ($errors->has('about'))
                             <div class="invalid-feedback">{{ $errors->first('about') }}</div>
                         @endif
                     </div>
                     <div class="form-group col-md-12">
                         <label for="address">Address</label>
-                        <textarea name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address">{{ $user->profile('address') }}</textarea>
+                        <textarea rows="10" name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address">{{ $user->profile('address') }}</textarea>
                         @if ($errors->has('address'))
                             <div class="invalid-feedback">{{ $errors->first('address') }}</div>
                         @endif

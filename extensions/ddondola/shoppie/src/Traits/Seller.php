@@ -47,7 +47,10 @@ trait Seller
         return app(Shoppie::class)->manages($this, $shop);
     }
 
-
+    /**
+     * @param Product $product
+     * @return bool
+     */
     public function ownsProduct(Product $product) {
         return $this->manages($product->shop);
     }

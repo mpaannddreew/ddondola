@@ -30,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'code', 'settings', 'profile', 'active', 'is_seller', 'is_staff', 'is_superuser'
+        'first_name', 'last_name', 'email', 'password', 'code', 'settings', 'profile', 'active', 'is_staff', 'is_superuser'
     ];
 
     /**
@@ -190,5 +190,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         $this->createAccount();
         $this->createCart();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'role_user',
+            'user_id', 'role_id')->as('rolePivot')
+            ->withTimestamps()->using(RoleUser::class);
     }
 }

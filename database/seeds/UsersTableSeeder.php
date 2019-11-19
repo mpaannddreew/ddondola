@@ -21,6 +21,11 @@ class UsersTableSeeder extends Seeder
     protected $users;
 
     /**
+     * @var \Ddondola\Repository\RoleRepository
+     */
+    protected $roles;
+
+    /**
      * @var ConsoleKernelContract
      */
     protected $artisan;
@@ -31,15 +36,18 @@ class UsersTableSeeder extends Seeder
      * @param \Shoppie\Repository\ShopCategoryRepository $categories
      * @param \Ddondola\Repositories\UserRepository $users
      * @param ConsoleKernelContract $artisan
+     * @param \Ddondola\Repository\RoleRepository $roles
      */
     public function __construct(\Ddondola\Repositories\CountryRepository $countries,
                                 \Shoppie\Repository\ShopCategoryRepository $categories,
-                                \Ddondola\Repositories\UserRepository $users, ConsoleKernelContract $artisan)
+                                \Ddondola\Repositories\UserRepository $users,
+                                ConsoleKernelContract $artisan, \Ddondola\Repository\RoleRepository $roles)
     {
         $this->countries = $countries;
         $this->categories = $categories;
         $this->users = $users;
         $this->artisan = $artisan;
+        $this->roles = $roles;
     }
 
     /**
@@ -54,94 +62,46 @@ class UsersTableSeeder extends Seeder
 
         $this->countries->addCountries();
         $country = $this->countries->default();
+        $vendor_role = $this->roles->create(['name' => 'Vendor', 'tag' => 'vendor', 'description' => 'Enables user to sell on the platform']);
 
-        $users = [
-            [
-                'first_name' => 'Andrew',
-                'last_name' => 'Mpande',
-                'email' => 'andrew@ddondola.com',
-                'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => bcrypt('secret'),
-                'is_staff' => 1,
-                'is_superuser' => 1
-            ],
-            [
-                'first_name' => 'Faridah',
-                'last_name' => 'Nankinzi',
-                'email' => 'faridah@ddondola.com',
-                'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => bcrypt('secret'),
-                'is_seller' => 1
-            ],
-            [
-                'first_name' => 'Hajara',
-                'last_name' => 'Naluwalo',
-                'email' => 'hajara@ddondola.com',
-                'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => bcrypt('secret')
-            ],
-            [
-                'first_name' => 'Joze',
-                'last_name' => 'Ddiba',
-                'email' => 'joze@ddondola.com',
-                'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => bcrypt('secret')
-            ],
-            [
-                'first_name' => 'Mikel',
-                'last_name' => 'Terzz',
-                'email' => 'mikel@ddondola.com',
-                'email_verified_at' => \Carbon\Carbon::now(),
-                'password' => bcrypt('secret')
+        $this->users->create($country, [
+            'first_name' => 'Andrew',
+            'last_name' => 'Mpande',
+            'email' => 'andrew@ddondola.com',
+            'email_verified_at' => \Carbon\Carbon::now(),
+            'password' => bcrypt('secret'),
+            'is_staff' => 1,
+            'is_superuser' => 1
+        ]);
+
+        $vendor = $this->users->create($country, [
+            'first_name' => 'Faridah',
+            'last_name' => 'Nankinzi',
+            'email' => 'faridah@ddondola.com',
+            'email_verified_at' => \Carbon\Carbon::now(),
+            'password' => bcrypt('secret')
+        ]);
+
+        $this->roles->assignRole($vendor, $vendor_role);
+
+        $this->users->create($country, [
+            'first_name' => 'Hajara',
+            'last_name' => 'Naluwalo',
+            'email' => 'hajara@ddondola.com',
+            'email_verified_at' => \Carbon\Carbon::now(),
+            'password' => bcrypt('secret')
+        ]);
+
+        $category = $this->categories->create(["name" => 'Consumer Electronics/Home Appliances']);
+
+        $vendor->newShop($category, [
+            'name' => 'Electro',
+            'profile' => [
+                'email' => 'info@electro.com',
+                'phone_number' => '0700000001',
+                'about' => 'This is an electronics shop',
+                'address' => 'Kiira, Mulawa'
             ]
-        ];
-
-        foreach ($users as $user) {
-            $country->users()->create($user);
-        }
-
-        $shop_categories = [
-            'Machinery/Mechanical Parts/Tools', 'Consumer Electronics/Home Appliances', 'Auto/Transportation',
-            'Apparel/Textiles/Timepieces', 'Home & Garden/Construction/Lights', 'Beauty & Personal Care/Health'
-        ];
-
-        foreach ($shop_categories as $category) {
-            $this->categories->create(["name" => $category]);
-        }
-
-        $shops = [
-            [
-                'name' => 'Apex Beauty Parlour',
-                'profile' => [
-                    'email' => 'info@apex.com',
-                    'phone_number' => '0700000000',
-                    'about' => 'This is a beauty shop',
-                    'address' => 'Kiira, Bulindo'
-                ]
-            ],
-            [
-                'name' => 'Electro',
-                'profile' => [
-                    'email' => 'info@electro.com',
-                    'phone_number' => '0700000001',
-                    'about' => 'This is an electronics shop',
-                    'address' => 'Kiira, Mulawa'
-                ]
-            ],
-            [
-                'name' => 'Duplex Mechanics',
-                'profile' => [
-                    'email' => 'info@duplex.com',
-                    'phone_number' => '0700000002',
-                    'about' => 'This is a mechanics shop',
-                    'address' => 'Kiira, Nsasa'
-                ]
-            ]
-        ];
-        $category = $this->categories->id(1);
-        $user = $this->users->id(2);
-        foreach ($shops as $shop) {
-            $user->newShop($category, $shop);
-        }
+        ]);
     }
 }

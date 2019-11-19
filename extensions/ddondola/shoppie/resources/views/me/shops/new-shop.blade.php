@@ -47,14 +47,14 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="description">About</label>
-                                            <textarea style="min-height: 87px;" id="about" name="about" class="form-control {{ $errors->has('about') ? ' is-invalid' : '' }}">{{ old('about') }}</textarea>
+                                            <textarea rows="10" id="about" name="about" class="form-control {{ $errors->has('about') ? ' is-invalid' : '' }}">{{ old('about') }}</textarea>
                                             @if ($errors->has('about'))
                                                 <div class="invalid-feedback">{{ $errors->first('about') }}</div>
                                             @endif
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="address">Address</label>
-                                            <textarea style="min-height: 87px;" id="address" name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}">{{ old('address') }}</textarea>
+                                            <textarea rows="10" id="address" name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}">{{ old('address') }}</textarea>
                                             @if ($errors->has('address'))
                                                 <div class="invalid-feedback">{{ $errors->first('address') }}</div>
                                             @endif

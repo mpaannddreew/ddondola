@@ -12,7 +12,7 @@
                 <!--<a href="#" class="card-post__author-avatar card-post__author-avatar&#45;&#45;small" style="background-image: url('/images/testimonial/happy-client-01.jpg');">Written by James Jamerson</a>-->
                 <!--</div>-->
             </div>
-            <div class="card-body p-2">
+            <div class="card-body p-2" align="center">
                 <a :href="productUrl">
                     <p class="text-ellipsis m-0" style="line-height: 1.286em;">{{ product.name }}</p>
                 </a>

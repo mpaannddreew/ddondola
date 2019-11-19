@@ -9,8 +9,8 @@
 namespace Ddondola\Repositories;
 
 
+use Ddondola\Country;
 use Ddondola\User;
-use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository
 {
@@ -37,14 +37,19 @@ class UserRepository
     /**
      * Create new user
      *
-     * @param $data
+     * @param Country $country
+     * @param array $attributes
      * @return User
      */
-    public function create($data) {
-        return User::create($data)->createCart();
+    public function create(Country $country, array $attributes) {
+        return User::create(array_merge($attributes, ['country_id' => $country->getKey()]));
     }
 
-    public function update(User $user, $attributes) {
+    /**
+     * @param User $user
+     * @param array $attributes
+     */
+    public function update(User $user, array $attributes) {
         $user->update($attributes);
     }
 

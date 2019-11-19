@@ -252,13 +252,27 @@ class ShoppieQuery
      */
     public function shopOrders($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $builder = $rootValue->orders();
+        $builder = app(OrderRepository::class)->builder();
         if (collect($args)->has('search')) {
             $value = '%' . collect($args)->get('search')  . '%';
-            $builder = $builder->where("code", 'like', $value)
-                ->orWhereHas('by', function ($q) use ($value) {
-                    $q->where('name', 'like', $value)
-                        ->orWhere('email', 'like', $value);
+            $builder->where(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->orderIds())
+                    ->where("code", 'like', $value);
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->orderIds())
+                    ->whereHas('by', function ($q) use ($value) {
+                        $q->where('first_name', 'like', $value);
+                    });
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->orderIds())
+                    ->whereHas('by', function ($q) use ($value) {
+                        $q->where('last_name', 'like', $value);
+                    });
+            })->orWhere(function ($query) use ($rootValue, $value) {
+                $query->whereIn('id', $rootValue->orderIds())
+                    ->whereHas('by', function ($q) use ($value) {
+                        $q->where('email', 'like', $value);
+                    });
             });
         }
         return $this->orderBy($builder);

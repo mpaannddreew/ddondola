@@ -2,7 +2,8 @@
 
 namespace Shoppie\Policies;
 
-use Illuminate\Database\Eloquent\Model as User;
+use Ddondola\Repository\RoleRepository;
+use Ddondola\User;
 use Shoppie\Shop;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -10,9 +11,16 @@ class ShopPolicy
 {
     use HandlesAuthorization;
 
+    protected $roles;
+
+    public function __construct(RoleRepository $roles)
+    {
+        $this->roles = $roles;
+    }
+
     public function before(User $user, $ability)
     {
-        if ($user->admin() || $user->is_seller) {
+        if ($this->roles->hasRole($user, $this->roles->tag('vendor'))) {
             return true;
         }
     }

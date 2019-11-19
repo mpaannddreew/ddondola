@@ -50,6 +50,7 @@ import Checkout from './components/shoppie/cart/Checkout';
 import OrderDetailsEmpty from './components/shoppie/orders/OrderDetailsEmpty';
 import OrderDetails from './components/shoppie/orders/OrderDetails';
 import Invoice from './components/shoppie/orders/Invoice';
+import Payment from './components/shoppie/orders/Payment';
 import Transactions from './components/bank/Transactions';
 import Deposit from './components/bank/Deposit';
 import Withdraw from './components/bank/Withdraw';
@@ -71,6 +72,7 @@ const router = new VueRouter({
         {path: '/me/orders', component: OrderDetailsEmpty},
         {path: '/me/orders/:order', component: OrderDetails, props: true},
         {path: '/me/orders/:order/invoice', component: Invoice, props: true},
+        {path: '/me/orders/:order/payment', component: Payment, props: true},
 
         // user wallet app
         {path: '/me/wallet', component: Transactions},

@@ -25,15 +25,15 @@
                             <a class="btn btn-danger d-flex clear" :class="clearDisabled" href="javascript:void(0)" @click="clear">
                                 <span style="display: block !important;" class="my-auto mx-auto"><i class="fa fa-times-circle"></i> Clear</span>
                             </a>
-                        </li><li class="pad border-left border-right border-bottom">
-                            <a class="btn btn-white d-flex" href="javascript:void(0)" @click="typeNumber(0)">
-                                <span style="display: block !important;" class="my-auto mx-auto">0</span>
-                            </a>
-                        </li><li class="pad border-top">
-                            <a class="btn btn-success d-flex initiate" :class="initiateDisabled" href="javascript:void(0)" @click="initiate">
-                                <span style="display: block !important;" class="my-auto mx-auto"><i class="fa fa-check-circle"></i> Initiate</span>
-                            </a>
-                        </li>
+                            </li><li class="pad border-left border-right border-bottom">
+                                <a class="btn btn-white d-flex" href="javascript:void(0)" @click="typeNumber(0)">
+                                    <span style="display: block !important;" class="my-auto mx-auto">0</span>
+                                </a>
+                            </li><li class="pad border-top">
+                                <a class="btn btn-success d-flex initiate" :class="initiateDisabled" href="javascript:void(0)" @click="initiate">
+                                    <span style="display: block !important;" class="my-auto mx-auto"><i class="fa fa-check-circle"></i> Initiate</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
