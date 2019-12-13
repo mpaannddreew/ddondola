@@ -338,3 +338,8 @@ a.btn-view:hover {
     color: #fff;
     transform: translate(-50%, -50%) rotate(360deg);
 }
+
+.card-header.border-radius-0.profile-header {
+    background: #f5f6f8;
+    background: linear-gradient(rgba(248,248,248,.9), rgba(248,248,248,.9)), url("../images/bg/ddondola_doodle.jpg") repeat fixed;
+}

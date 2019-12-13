@@ -65,7 +65,7 @@
             },
             noActivityMessage() {
                 if (this.admin)
-                    return 'It looks like you have no activity. Follow other people or make reviews to start building your activity pool.';
+                    return 'Follow people or make shop/product reviews to start building your activity pool.';
 
                 return 'This user has no activity yet.';
             },

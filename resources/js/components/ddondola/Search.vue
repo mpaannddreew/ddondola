@@ -45,12 +45,12 @@
                 }
             },
             placeholder() {
-                return 'Search products, shops, categories or brands';
+                return 'Search products, shops, categories, brands or people';
             }
         },
         methods: {
             initSearch() {
-                $('#search').typeahead(this.searchOptions(), this.products(), this.shops()/*, this.users()*/)
+                $('#search').typeahead(this.searchOptions(), this.products(), this.shops(), this.users())
                     .on('typeahead:asyncrequest', this.showSpinner)
                     .on('typeahead:asynccancel typeahead:asyncreceive', this.hideSpinner);
             },

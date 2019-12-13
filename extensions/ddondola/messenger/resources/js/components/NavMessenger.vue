@@ -45,14 +45,9 @@
                 this.unReadCount = response.data.data.me.unreadMessageCount;
             },
             listenToMessengerEvents() {
-                Bus.$on('unread-messages', this.amendSize);
-            },
-            amendSize(event) {
-                if (event.type === 'increase') {
-                    this.unReadCount += event.size;
-                } else {
-                    this.unReadCount -= event.size;
-                }
+                Bus.$on('unread-messages', (count) => {
+                    this.unReadCount += count;
+                });
             }
         },
         watch: {

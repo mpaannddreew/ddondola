@@ -39,8 +39,26 @@
         <div class="row">
             <div class="col-12 col-sm-6 text-center text-sm-left mb-4 mb-sm-0">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row @yield('shop-nav-fill')">
-                    <li class="nav-item"><a title="Shop" href="{{ route('shop', ['shop' => $shop]) }}" class="nav-link @yield('products-active')"><i class="material-icons">shop_two</i> Shop</a></li>
-                    <li class="nav-item"><a title="Reviews" href="{{ route('shop.reviews', ['shop' => $shop]) }}" class="nav-link @yield('reviews-active')"><i class="material-icons">rate_review</i> Reviews</a></li>
+                    <li class="nav-item">
+                        <a title="Shop" href="{{ route('shop', ['shop' => $shop]) }}" class="nav-link @yield('products-active')">
+                            <i class="material-icons">shop_two</i> Shop
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a title="Reviews" href="{{ route('shop.reviews', ['shop' => $shop]) }}" class="nav-link @yield('reviews-active')">
+                            <i class="material-icons">rate_review</i> Reviews
+                        </a>
+                    </li>
+                    @auth
+                        @if(auth()->user()->manages($shop))
+                        <li class="nav-item">
+                            <a href="{{ route('my.shop.edit', ['shop' => $shop]) }}" class="nav-link @yield('info-active')">
+                                <i class="material-icons">mode_edit</i>
+                                <span>Edit Info</span>
+                            </a>
+                        </li>
+                        @endif
+                    @endauth
                 </ul>
             </div>
             <div class="col-12 col-sm-6 d-flex align-items-center">

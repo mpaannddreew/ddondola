@@ -36,7 +36,7 @@
                     <th></th>
                     <th class="text-center">Status</th>
                     <th>Category</th>
-                    <th class="text-center">products</th>
+                    <th class="text-center">Products</th>
                     <th class="text-right"></th>
                 </tr>
                 </thead>

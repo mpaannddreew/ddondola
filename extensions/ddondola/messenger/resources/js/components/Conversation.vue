@@ -25,15 +25,11 @@
     export default {
         name: "Conversation",
         mounted() {
-            this.watchConversation();
-            this.setLastMessage(this.conversation.latestMessage);
             this.setUnreadCount(this.conversation.unreadCount);
         },
         data() {
             return {
-                lastMessage: null,
-                unreadCount: 0,
-                isOpen: false
+                unreadCount: 0
             }
         },
         props: {
@@ -67,6 +63,16 @@
                 }
 
                 return null;
+            },
+            lastMessage() {
+                return this.conversation.latestMessage;
+            },
+            opened() {
+                if (this.$route.params.participant) {
+                    return this.$route.params.participant === this.converser.code;
+                }
+
+                return false;
             }
         },
         methods: {
@@ -76,50 +82,23 @@
             readAll() {
                 if (this.unreadCount) {
                     if (this.ownerType !== 'shop') {
-                        Bus.$emit('unread-messages', {type: 'decrease', size: this.unreadCount});
+                        Bus.$emit('unread-messages', -this.unreadCount);
                     }
                     this.setUnreadCount(0);
                 }
             },
             transitionTo() {
                 this.$router.push(this.route);
-                this.open();
                 this.readAll();
             },
-            open() {
-                Bus.$emit('is-open', this.conversation.id);
-            },
-            watchConversation() {
-                Echo.private(`conversation.${parseInt(this.conversation.id)}`)
-                    .listen('.new.message', this.makeConversationChanges);
-                Bus.$on('is-open', this.isOpened);
-            },
-            isOpened(id) {
-                this.isOpen = this.conversation.id === id;
-            },
-            makeConversationChanges(message) {
-                this.setLastMessage(message);
-                if (!this.isOpen) {
-                    if (!this.isOwner(this.lastMessage.sender.id, this.lastMessage.sender.type)) {
-                        this.setUnreadCount(this.unreadCount++);
-                        Bus.$emit('unread-messages', {type: 'increase', size: 1});
-                    }
-                }
-                let conversation = {
-                    id: this.conversation.id,
-                    initiator: this.conversation.initiator,
-                    participant: this.conversation.participant,
-                    latestMessage: this.lastMessage,
-                    unreadCount: this.unreadCount
-                };
-                this.$emit('update-conversation', conversation);
-            },
-            setLastMessage(message) {
-                this.lastMessage = message;
-            },
             setUnreadCount(count) {
-                this.unreadCount = count;
+                if (!this.opened) {
+                    this.unreadCount = count;
+                }
             }
+        },
+        watch: {
+            'conversation.unreadCount': 'setUnreadCount'
         }
     }
 </script>

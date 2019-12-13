@@ -18,18 +18,25 @@
                             <div class="col">
                                 <ul class="nav nav-tabs nav-justified border-0 flex-column flex-lg-row">
                                     <li class="nav-item">
-                                        <a href="javascript:void(0)" class="nav-link" :class="{active: featured}" @click="showingFeatured"><i class="material-icons">{{ icon }}</i> Featured</a>
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: !featured}" @click="showingCategories"><i class="material-icons">folder_open</i> Categories</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:void(0)" class="nav-link" :class="{active: !featured}" @click="showingCategories"><i class="material-icons">folder_open</i> Categories</a>
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: featured}" @click="showingFeatured"><i class="material-icons">{{ icon }}</i> Featured</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="h-100" style="overflow-y: auto; overflow-x: hidden; height: calc(99.9vh - 13.7rem - 1px) !important;" v-if="featured"></div>
-                <categories :directory="directory" v-else></categories>
+                <categories :directory="directory" v-if="!featured"></categories>
+                <div class="h-100" style="overflow-y: auto; overflow-x: hidden; height: calc(99.9vh - 13.7rem - 1px) !important;" v-else>
+                    <div class="center-xy">
+                        <div align="center">
+                            <h4 class="m-0"><i class="material-icons">error</i></h4>
+                            <p class="m-0">No featured {{ directory|lowerCase }} yet!</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -46,7 +53,7 @@
         data() {
             return {
                 query: '',
-                featured: true
+                featured: false
             }
         },
         props: {

@@ -1,7 +1,7 @@
 @extends('layouts.base.admin')
 @section('title') {{ $shop->name }} - @endsection
 @section('logo')
-    <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="{{ $shop->avatar['url'] }}" alt="{{ $shop->name }}">
+    <img id="main-logo" class="d-inline-block align-top mr-1 rounded" style="max-width: 25px;" src="{{ $shop->avatar['url'] }}" alt="{{ $shop->name }}">
 @endsection
 @section('nav-wrapper')
     <h6 class="main-sidebar__nav-title">Dashboards</h6>
@@ -19,12 +19,6 @@
             <a class="nav-link @yield('profile-base-active')" href="{{ route('shop', ['shop' => $shop]) }}">
                 <i class="material-icons">shop_two</i>
                 <span>Shop</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link @yield('settings-active')" href="{{ route('my.shop.edit', ['shop' => $shop]) }}">
-                <i class="material-icons">settings</i>
-                <span>Settings</span>
             </a>
         </li>
     </ul>

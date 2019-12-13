@@ -79,6 +79,13 @@
                                             @endif
                                         </div>
                                         <div class="form-group col-md-12">
+                                            <label for="price">Quantity</label>
+                                            <input required type="text" class="form-control {{ $errors->has('quantity') ? ' is-invalid' : '' }}" id="quantity" name="quantity" value="{{ old('quantity') }}">
+                                            @if ($errors->has('quantity'))
+                                                <div class="invalid-feedback">{{ $errors->first('quantity') }}</div>
+                                            @endif
+                                        </div>
+                                        <div class="form-group col-md-12">
                                             <label for="description">Description</label>
                                             <textarea required style="min-height: 87px;" id="description" class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}" name="description">{{ old('description') }}</textarea>
                                             @if ($errors->has('description'))

@@ -1117,6 +1117,15 @@ only screen and (max-width: 767.98px) {
     border-right: none !important;
 }
 
-.header-navbar.profile .nav-link.active {
-    background: unset !important;
+/*.header-navbar.profile .nav-link.active {*/
+    /*background: unset !important;*/
+/*}*/
+
+.dataTables_wrapper {
+    border: 1px solid #e1e5eb !important;
+    box-shadow: none !important;
+}
+
+.dataTables_wrapper table.dataTable tbody tr td:last-child {
+    border-right: none !important;
 }

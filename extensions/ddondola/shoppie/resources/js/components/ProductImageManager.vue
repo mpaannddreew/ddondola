@@ -13,7 +13,7 @@
                 image-crop-aspect-ratio="1:1"
                 allow-image-transform="true"
                 allow-image-edit="true"
-                max-files="6"
+                :max-files="maxFiles"
                 v-bind:files="myFiles"
                 instant-upload="false"
                 v-on:processfile="fileUploaded"
@@ -46,6 +46,10 @@
             url: {
                 type: String,
                 required: true
+            },
+            maxFiles: {
+                type: String,
+                default: '6'
             }
         },
         computed: {
@@ -89,7 +93,7 @@
                     this.removeFile(file)
             },
             filesUploaded() {
-                window.location = this.url;
+                window.location.href = this.url;
             }
         }
     }

@@ -145,6 +145,7 @@
         name: "OrderDetails",
         components: {OrderRow},
         mounted(){
+            this.listen();
             this.fetchOrderProducts();
         },
         data() {
@@ -237,6 +238,12 @@
             }
         },
         methods: {
+            listen() {
+                Echo.private(`order.${this.order}`)
+                    .listen('.update.order', (e) => {
+                        console.log(e);
+                    });
+            },
             fetchOrderProducts() {
                 this.loaded = false;
                 axios.post(graphql.api, {

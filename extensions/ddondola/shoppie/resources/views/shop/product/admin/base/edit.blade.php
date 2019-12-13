@@ -1,25 +1,10 @@
 @extends('shoppie::shop.product.admin.base.admin')
 @section('edit-active', 'active')
-@section('header-navbar-class', 'border-bottom')
-@section('tabs')
-    <li class="nav-item">
-        <a class="nav-link @yield('edit-product-active')" href="{{ route('product.edit', ['product' => $product]) }}">
-            <i class="material-icons">info_outline</i> Info
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link @yield('edit-offers-active')" href="{{ route('product.offers', ['product' => $product]) }}">
-            <i class="material-icons">date_range</i> Offers
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link @yield('stock-active')" href="{{ route('product.stock', ['product' => $product]) }}">
-            <i class="material-icons">local_offer</i> Stock
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link @yield('gallery-active')" href="{{ route('product.gallery', ['product' => $product]) }}">
-            <i class="material-icons">collections</i> Gallery
-        </a>
-    </li>
+@section('page-header')
+    <div class="page-header row no-gutters py-4">
+        <div class="col">
+            <span class="text-uppercase page-subtitle"><i class="material-icons">local_mall</i> Product</span>
+            <h3 class="page-title">@yield('page-title')</h3>
+        </div>
+    </div>
 @endsection

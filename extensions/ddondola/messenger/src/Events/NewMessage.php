@@ -42,7 +42,22 @@ class NewMessage implements ShouldBroadcast, ShouldQueue
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('conversation.' . $this->message->conversation->getKey());
+        $channels = [
+            new PrivateChannel('conversation.' . $this->message->conversation->getKey()),
+            $this->participantChannel($this->message->conversation->initiator),
+            $this->participantChannel($this->message->conversation->participant)
+        ];
+
+        return $channels;
+    }
+
+    protected function participantType($participant) {
+        $path = explode('\\', get_class($participant));
+        return Str::lower(array_pop($path));
+    }
+
+    protected function participantChannel($participant) {
+        return new PrivateChannel($this->participantType($participant) . '.' . $participant->code);
     }
 
     /**
@@ -64,8 +79,22 @@ class NewMessage implements ShouldBroadcast, ShouldQueue
     {
         return [
             'id' => $this->message->getKey(),
+            'conversation' => [
+                'id' => $this->message->conversation->getKey(),
+                'initiator' => [
+                    'id' => $this->message->conversation->initiator->getKey(),
+                    'type' => $this->message->conversation->initiator->type(),
+                    'code' => $this->message->conversation->initiator->code
+                ],
+                'participant' => [
+                    'id' => $this->message->conversation->participant->getKey(),
+                    'type' => $this->message->conversation->participant->type(),
+                    'code' => $this->message->conversation->participant->code
+                ]
+            ],
             'message' => $this->message->message,
             'sender' => $this->sender(),
+            'read_at' => $this->message->read_at ? $this->message->read_at->toAtomString(): null,
             'created_at' => $this->message->created_at->toAtomString()
         ];
     }

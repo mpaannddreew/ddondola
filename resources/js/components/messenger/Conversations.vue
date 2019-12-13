@@ -12,8 +12,7 @@
         </div>
         <ul class="contact-list" v-else-if="hasConversations && loaded">
             <li is="conversation" v-for="(conversation, indx) in conversations" :key="indx" :home-url="homeUrl"
-                :conversation="conversation" :owner-id="ownerId" :owner-type="ownerType"
-                v-on:update-conversation="updateConversation"></li>
+                :conversation="conversation" :owner-id="ownerId" :owner-type="ownerType"></li>
         </ul>
     </div>
 </template>
@@ -75,12 +74,53 @@
                 }
 
                 return graphql.myConversations;
+            },
+            channel() {
+                if (this.ownerType === 'shop') {
+                    return `shop.${this.$route.params.initiator}`;
+                }
+
+                return `user.${this.authCode}`;
             }
         },
         methods: {
             listen() {
                 Bus.$on('filter', this.filter);
-                // todo listen for new conversations
+                Echo.private(this.channel)
+                    .listen('.new.message', (e) => {
+                        var conversation = _.head(_.filter(this.conversations, (item) => {
+                            return item.id.toString() === e.conversation.id.toString()
+                        }));
+
+                        if (conversation) {
+                            var refreshed = _.filter(this.conversations, (item) => {
+                                return item.id.toString() !== e.conversation.id.toString();
+                            });
+
+                            var participant = this.ownerId.toString() === conversation.initiator.id.toString() &&
+                            this.ownerType.toString() === this.lowerCase(conversation.initiator.type.toString()) ? conversation.participant : conversation.initiator;
+
+                            if (this.$route.params.participant && this.$route.params.participant === participant.code) {} else {
+                                ++ conversation.unreadCount;
+                                if (this.ownerType === 'user') {
+                                    Bus.$emit('unread-messages', 1);
+                                }
+                            }
+
+                            conversation.latestMessage = {
+                                created_at: e.created_at,
+                                read_at: e.read_at,
+                                message: e.message
+                            };
+
+                            refreshed.push(conversation);
+                            this.conversations = _.orderBy(refreshed, (item) => {
+                                return Moment(item.latestMessage.created_at);
+                            }, 'desc');
+                        } else {
+                            this.fetchConversations();
+                        }
+                    });
             },
             filter(filter) {
                 this.searchFilter = filter;
@@ -110,9 +150,6 @@
                 this.loadingMore = indicator;
                 this.count += graphql.rowCount;
                 this.fetchConversations(indicator);
-            },
-            updateConversation(conversation) {
-                // todo re order conversations
             }
         },
         watch: {

@@ -2,7 +2,7 @@
     <div>
         <div class="chat-area">
             <div class="card card-small h-100 main" style="border-radius: 0; box-shadow: none;" v-if="!loaded || (loaded && !conversation)">
-                <div class="card-body d-flex flex-column">
+                <div class="card-body d-flex flex-column" :class="{'chat-body-loading': !loaded}">
                     <div class="center-xy" v-if="!loaded">
                         <div align="center">
                             <div class="loader"></div>
@@ -204,7 +204,8 @@
             watchConversation() {
                 Echo.private(`conversation.${parseInt(this.conversation.id)}`)
                     .listen('.new.message', (e) => {
-                        this.messages.push(e);
+                        this.messages.push({created_at: e.created_at, id: e.id, message: e.message, sender: e.sender});
+                        this.readAll();
                     });
             },
             startConversation() {

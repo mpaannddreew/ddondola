@@ -1,11 +1,8 @@
-<div class="card card-small edit-user-details mb-4 border-radius-0" style="background: unset !important;">
-    <div class="card-header p-0 border-radius-0">
-        <div class="edit-user-details__bg border-radius-0">
-            <img src="{{ $user->coverPicture()['url'] }}" alt="User Details Background Image">
-        </div>
+<div class="card card-small border-radius-0" style="background: unset !important;">
+    <div class="card-header border-radius-0 profile-header" style="height: 150px !important;">
     </div>
-    <div class="card-body p-0" style="background: unset !important;">
-        <div class="container" style="position: relative; top: -100px !important;">
+    <div class="card-body p-0 profile-body bg-white border-top">
+        <div class="container" style="position: relative; top: -134px !important;">
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
@@ -15,7 +12,7 @@
                                 <div class="col-12 col-md-6 mb-4 mb-lg-0">
                                     <a href="javascript:void(0)">
                                         <div class="media d-block d-md-flex text-md-left text-center">
-                                            <img style="width: 100px; height: 100px;" src="{{ $user->avatar()['url'] }}" class="img-fluid d-md-flex mr-4 border border-white lis-border-width-4 mb-4 mb-md-0 round" alt="" />
+                                            <img style="width: 100px; height: 100px;" src="{{ $user->avatar()['url'] }}" class="img-fluid d-md-flex mr-4 border border-white mb-4 mb-md-0 rounded" alt="" />
 
                                             <div class="media-body align-self-center">
                                                 <h5 class="lis-font-weight-500 lis-line-height-1 m-0">{{ $user->name }}</h5>
@@ -71,7 +68,7 @@
                                                 </li>
                                                 <li class="nav-item">
                                                     <a href="{{ route('my.profile.edit') }}" class="nav-link @yield('info-active')">
-                                                        <i class="material-icons">mode_edit</i> Account Info
+                                                        <i class="material-icons">mode_edit</i> Edit Info
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">

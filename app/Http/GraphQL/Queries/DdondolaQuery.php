@@ -20,12 +20,10 @@ class DdondolaQuery
      */
     public function searchUsers($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $builder = app(UserRepository::class)->builder();
         $value = "%" . collect($args)->get("name") . "%";
-        if ($context->user()) {
-            $builder = $builder->whereNotIn('id', [$context->user()->getKey()]);
-        }
-        return $builder->where("first_name", "like", $value)
+
+        return app(UserRepository::class)->builder()
+            ->where("first_name", "like", $value)
             ->orWhere("last_name", "like", $value)
             ->orWhere("email", "like", $value)
             ->where("active", "=", 1)->get();

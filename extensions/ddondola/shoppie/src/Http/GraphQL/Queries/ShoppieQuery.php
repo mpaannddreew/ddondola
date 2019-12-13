@@ -230,14 +230,12 @@ class ShoppieQuery
         $builder = $rootValue->products();
         if (collect($args)->get('shop')) {
             $shop = app(ShopRepository::class)->code(collect($args)->get('shop'));
-            $builder = $builder->whereHas('brand', function ($q) use ($shop) {
-                $q->whereHas('shop', function ($q1) use ($shop) {
-                    $q1->where('shop_id', $shop->id);
-                });
+            $builder = $builder->whereHas('shop', function ($q1) use ($shop) {
+                $q1->where('shop_id', $shop->getKey());
             });
         }
 
-        return $this->orderBy($builder, 'name', 'asc');
+        return $builder;
     }
 
     /**
@@ -461,21 +459,30 @@ class ShoppieQuery
         $value = "%" . collect($args)->get("name") . "%";
 
         return $this->status(app(ProductRepository::class)->builder())
-            ->where("name", "like", $value)
-            ->orWhereHas('subcategory', function ($q) use ($value) {
-                $q->where('name', 'like', $value)
-                    ->orWhereHas('category', function ($q) use ($value) {
+            ->where(function ($query) use ($value) {
+                $query->has('media')
+                    ->where("name", "like", $value);
+            })->orWhere(function ($query) use ($value) {
+                $query->has('media')
+                    ->whereHas('subcategory', function ($q) use ($value) {
+                        $q->where('name', 'like', $value)
+                            ->orWhereHas('category', function ($q) use ($value) {
+                                $q->where('name', 'like', $value);
+                            });
+                    });
+            })->orWhere(function ($query) use ($value) {
+                $query->has('media')
+                    ->whereHas('brand', function ($q) use ($value) {
                         $q->where('name', 'like', $value);
                     });
-            })
-            ->orWhereHas('brand', function ($q) use ($value) {
-                $q->where('name', 'like', $value);
-            })
-            ->orWhereHas('shop', function ($q) use ($value) {
-                $q->where('name', 'like', $value)
-                    ->orWhereHas('category', function ($q) use ($value) {
-                        $q->where('name', 'like', $value);
-                });
+            })->orWhere(function ($query) use ($value) {
+                $query->has('media')
+                    ->whereHas('shop', function ($q) use ($value) {
+                        $q->where('name', 'like', $value)
+                            ->orWhereHas('category', function ($q) use ($value) {
+                                $q->where('name', 'like', $value);
+                            });
+                    });
             })->get();
     }
 
@@ -651,10 +658,8 @@ class ShoppieQuery
         if ($filters->has('categoryIds')) {
             $categoryIds = json_decode($filters->get('categoryIds'));
             if (count($categoryIds))
-                $builder = $builder->whereHas('brand', function($q) use($categoryIds) {
-                    $q->whereHas('shop', function($q1) use($categoryIds) {
-                        $q1->whereIn('category_id', $categoryIds);
-                    });
+                $builder = $builder->whereHas('shop', function($q1) use($categoryIds) {
+                    $q1->whereIn('category_id', $categoryIds);
                 });
         }
 

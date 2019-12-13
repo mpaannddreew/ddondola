@@ -1,4 +1,8 @@
 @extends('layouts.in')
+@section('stylesheets')
+    @parent
+    <link rel="stylesheet" href="{{ asset('datatables/css/responsive.dataTables.min.css') }}"/>
+@endsection
 @section('container-fluid')
     <!-- Main Sidebar -->
     @include('layouts.sections.admin.aside')
@@ -12,4 +16,9 @@
         </div>
 {{--        @include('layouts.sections.footer')--}}
     </main>
+@endsection
+@section('javascripts')
+    @parent
+    <script src="{{ asset('datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('datatables/js/dataTables.responsive.min.js') }}"></script>
 @endsection

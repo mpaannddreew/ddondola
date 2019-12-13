@@ -18,6 +18,7 @@ use Shoppie\Repository\ProductRepository;
 use Shoppie\Repository\ProductSubCategoryRepository;
 use Shoppie\Repository\ShopCategoryRepository;
 use Shoppie\Repository\ShopRepository;
+use Shoppie\Repository\StockRepository;
 use Shoppie\Shop;
 
 class ShoppieController extends Controller
@@ -55,6 +56,11 @@ class ShoppieController extends Controller
     protected $subcategories;
 
     /**
+     * @var StockRepository
+     */
+    protected $stock;
+
+    /**
      * ShoppieController constructor.
      * @param ShopCategoryRepository $categories
      * @param ShopRepository $shops
@@ -62,10 +68,11 @@ class ShoppieController extends Controller
      * @param ProductCategoryRepository $productCategories
      * @param ProductBrandRepository $brands
      * @param ProductSubCategoryRepository $subcategories
+     * @param StockRepository $stock
      */
     public function __construct(ShopCategoryRepository $categories, ShopRepository $shops, ProductRepository $products,
                                 ProductCategoryRepository $productCategories, ProductBrandRepository $brands,
-                                ProductSubCategoryRepository $subcategories)
+                                ProductSubCategoryRepository $subcategories, StockRepository $stock)
     {
         $this->categories = $categories;
         $this->shops = $shops;
@@ -73,6 +80,7 @@ class ShoppieController extends Controller
         $this->productCategories = $productCategories;
         $this->brands = $brands;
         $this->subcategories = $subcategories;
+        $this->stock = $stock;
     }
 
     /**
@@ -484,18 +492,46 @@ class ShoppieController extends Controller
         return response()->json($media->getKey());
     }
 
+    /**
+     * Show shop categories
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopCategories(Request $request, Shop $shop) {
         return view('shoppie::shop.admin.inventory.categories', ['shop' => $shop]);
     }
 
+    /**
+     * Show shop subcategories
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopSubCategories(Request $request, Shop $shop) {
         return view('shoppie::shop.admin.inventory.sub-categories', ['shop' => $shop]);
     }
 
+    /**
+     * Show shop brands
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function shopBrands(Request $request, Shop $shop) {
         return view('shoppie::shop.admin.inventory.brands', ['shop' => $shop]);
     }
 
+    /**
+     * Add new shop product
+     *
+     * @param Request $request
+     * @param Shop $shop
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function newProduct(Request $request, Shop $shop) {
         return view('shoppie::shop.admin.inventory.new-product', ['shop' => $shop]);
     }
@@ -511,6 +547,7 @@ class ShoppieController extends Controller
             'category' => 'required|numeric',
             'name' => 'required|string',
             'price' => 'required|numeric',
+            'quantity' => 'required|numeric',
             'attributes' => 'required|string',
             'description' => 'required|string',
         ]);
@@ -525,6 +562,7 @@ class ShoppieController extends Controller
             ['settings' => ['attributes' => json_decode($request->input('attributes'))]]
         );
         $product = $this->products->create($shop, $category, $brand, $attributes);
+        $this->stock->create($product, $request->user(), ['quantity' => $request->input('quantity'), 'note' => 'Initial stock', 'in' => true]);
 
         return redirect()->route('product.gallery', ['product' => $product]);
     }

@@ -1,10 +1,13 @@
-@extends('shoppie::shop.admin.base.edit')
-@section('title')@parent Shop Information @endsection
+@extends('shoppie::shop.admin.base.shop')
+@section('title')@parent Edit Info @endsection
 @section('info-active', 'active')
-@section('main')
+@section('shop-profile')
     <div class="container py-2">
         <div class="row">
-            <div class="col-md-8 offset-2">
+            <div class="col-md-3 px-1">
+                <about-shop :shop="{{ $shop }}"></about-shop>
+            </div>
+            <div class="col-md-6 px-1">
                 <form method="post" action="{{ route('my.shop.update', ['shop' => $shop]) }}">
                     @csrf
                     <div class="card mb-2 border border-radius">
@@ -12,11 +15,11 @@
                             @if (session('success'))
                                 @include('layouts.sections.alert', ['class' => 'alert-success', 'message' => session('success')])
                             @endif
-                            <div class="form-row mx-4">
+                            <div class="form-row">
                                 <div class="col-lg-12">
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
-                                            <label for="category">Shop Category</label>
+                                            <label for="category">Category</label>
                                             <select class="form-control form-control-md custom-select custom-select-md {{ $errors->has('category') ? ' is-invalid' : '' }}"
                                                     id="category" name="category">
                                                 <option></option>
@@ -74,6 +77,9 @@
                         </button>
                     </div>
                 </form>
+            </div>
+            <div class="col-md-3 px-1">
+                <rating-meter :reviewable="{{ $shop }}"></rating-meter>
             </div>
         </div>
     </div>

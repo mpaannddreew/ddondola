@@ -181,6 +181,7 @@
         },
         watch: {
             quantity(data) {
+                this.quantity = _.replace(data, /[^\d]/,'');
                 if (data < 1) {
                     this.quantity = 1;
                 }else if (data === '') {

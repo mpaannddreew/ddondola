@@ -45,6 +45,7 @@
         name: "ShopOrders",
         components: {ShopOrder},
         mounted() {
+            this.listen();
             this.fetchOrders();
         },
         data() {
@@ -70,6 +71,12 @@
             }
         },
         methods: {
+            listen() {
+                Echo.private(`shop.${this.$route.params.shop}`)
+                    .listen('.new.order', (e) => {
+                        console.log(e);
+                    });
+            },
             fetchOrders() {
                 this.loaded = false;
                 axios.post(graphql.api, {

@@ -2,6 +2,7 @@
 
 namespace Shoppie\Observers;
 
+use Shoppie\Events\NewOrder;
 use Shoppie\Order;
 
 class OrderObserver
@@ -14,7 +15,7 @@ class OrderObserver
      */
     public function created(Order $order)
     {
-        //
+        broadcast(new NewOrder($order));
     }
 
     /**

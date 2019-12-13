@@ -9,6 +9,7 @@
 namespace Shoppie\Traits;
 
 
+use Shoppie\Order;
 use Shoppie\Product;
 use Shoppie\Repository\ShopRepository;
 use Shoppie\Shop;
@@ -48,10 +49,24 @@ trait Seller
     }
 
     /**
+     * Check if seller owns a product via shop they manage
+     *
      * @param Product $product
      * @return bool
      */
     public function ownsProduct(Product $product) {
         return $this->manages($product->shop);
+    }
+
+    /**
+     * Check if seller handles an order through a shop they manage
+     *
+     * @param Order $order
+     * @return bool
+     */
+    public function handlesOrderViaShop(Order $order) {
+        return !is_null($order->handlers()->first(function (Shop $shop) {
+            return $this->manages($shop);
+        }));
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.base.ddondola')
 @section('title') {{ $user->name() }} - @endsection
-{{--@section('body-class') class="h-100 bg-white" @endsection--}}
+@section('body-class') class="h-100 bg-white" @endsection
 @section('meta')
     <meta property="og:type" content="user"/>
     <meta property="og:title" content="{{ $user->name() }}"/>

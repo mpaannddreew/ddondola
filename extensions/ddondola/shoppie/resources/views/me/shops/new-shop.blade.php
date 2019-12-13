@@ -8,7 +8,7 @@
                     @csrf
                     <div class="card mb-2 border border-radius">
                         <div class="card-body p-4">
-                            <div class="form-row mx-4">
+                            <div class="form-row">
                                 <div class="col-lg-12">
                                     <div class="form-row">
                                         <div class="form-group col-md-12">

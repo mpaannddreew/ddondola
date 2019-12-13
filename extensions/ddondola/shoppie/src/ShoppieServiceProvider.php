@@ -58,6 +58,8 @@ class ShoppieServiceProvider extends ServiceProvider
         $this->registerObservers();
         $this->registerPolicies();
         $this->bindExplicitly();
+
+        require __DIR__. '/../routes/channels.php';
     }
 
     /**

@@ -61,6 +61,17 @@ class Order extends Model
     }
 
     /**
+     * Shops that handle this order
+     *
+     * @return Collection
+     */
+    public function handlers() {
+        return $this->products->map(function (Product $product) {
+            return $product->shop;
+        });
+    }
+
+    /**
      * Check if shop holds products in this order
      *
      * @param Shop $shop

@@ -1,5 +1,6 @@
 @extends('shoppie::shop.product.admin.base.edit')
 @section('title')@parent Gallery @endsection
+@section('page-title') Gallery @endsection
 @section('gallery-active', 'active')
 @section('main')
     @if(has_media($product, 'products'))

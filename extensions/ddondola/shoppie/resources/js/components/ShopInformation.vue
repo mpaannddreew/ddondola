@@ -23,7 +23,7 @@
                     <small class="text-muted">{{ shop.averageRating }} average based on {{ shop.reviewCount }} {{ text }}</small>
                 </p>
             </div>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" v-if="showInfo">
                 <li class="list-group-item p-4" v-for="(p, i) in shop.profile" v-if="p.length">
                     <strong class="text-muted d-block mb-2">{{ i|camel|ucFirst }}</strong>
                     <span>
@@ -50,6 +50,10 @@
             withBorder: {
                 type: Boolean,
                 default: false
+            },
+            showInfo: {
+                type: Boolean,
+                default: true
             }
         },
         filters: {

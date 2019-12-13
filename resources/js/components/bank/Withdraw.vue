@@ -15,8 +15,8 @@
                     </div>
                 </header>
             </div>
-            <div class="card-body h-100 p-2">
-                <div class="card card-small border lo-stats border-top-radius-0">
+            <div class="card-body h-100 p-0">
+                <div class="card card-small border-bottom lo-stats border-top-radius-0">
                     <div class="card-body p-0" style="min-height: unset !important;">
                         <table class="table mb-0">
                             <thead class="bg-light">

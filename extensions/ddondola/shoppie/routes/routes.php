@@ -35,7 +35,7 @@ Route::namespace('Shoppie\Http\Controllers')->middleware(['web'])->group(functio
         Route::get('/', 'ShoppieController@shops')->name('shops');
         Route::get('{shop}', 'ShoppieController@shopProducts')->name('shop');
         Route::get('{shop}/reviews', 'ShoppieController@shopReviews')->name('shop.reviews');
-        Route::middleware(['auth', 'verified', 'seller', 'can:update,shop'])->group(function () {
+        Route::middleware(['auth', 'verified', 'can:update,shop'])->group(function () {
             Route::get('{shop}/dashboard', 'ShoppieController@shopDashboard')->name('my.shop.dashboard');
             Route::prefix('{shop}/inventory')->group(function () {
                 Route::get('/', 'ShoppieController@shopInventory')->name('my.shop.inventory');

@@ -22,11 +22,11 @@
 </div>
 <div class="container py-2">
     <div class="row">
-        <div class="col-md-9 px-1">
-            @yield('product')
+        <div class="col-md-4 px-1">
+            <shop-information :directory="false" :shop="{{ $product->shop }}" :with-border="true" :show-info="false"></shop-information>
         </div>
-        <div class="col-md-3 px-1">
-            <shop-information :directory="false" :shop="{{ $product->shop }}" :with-border="true"></shop-information>
+        <div class="col-md-8 px-1">
+            @yield('product')
         </div>
     </div>
 </div>

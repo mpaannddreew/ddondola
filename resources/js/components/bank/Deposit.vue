@@ -1,8 +1,8 @@
 <template>
     <div class="directory-area">
         <div class="card card-small h-100 main">
-            <div class="card-body h-100 p-5">
-                <div class="card card-small h-100 border">
+            <div class="card-body h-100 p-0">
+                <div class="card card-small h-100">
                     <div class="card-header bg-light p-0 border-bottom">
                         <div class="input-group border-0 border-bottom-radius-0">
                             <div class="input-group-prepend">
@@ -117,7 +117,7 @@
         },
         watch: {
             amount(data) {
-                this.amount = data.replace(/[^\d]/,'');
+                this.amount = _.replace(data, /[^\d]/,'');
                 if (_.toNumber(data) === 0) {
                     this.amount = '';
                 }

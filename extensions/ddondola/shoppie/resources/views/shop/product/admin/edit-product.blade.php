@@ -1,5 +1,6 @@
 @extends('shoppie::shop.product.admin.base.edit')
-@section('title')@parent Info @endsection
+@section('title')@parent Update Info @endsection
+@section('page-title') Update Info @endsection
 @section('edit-product-active', 'active')
 @section('main')
     <div class="container py-2">
