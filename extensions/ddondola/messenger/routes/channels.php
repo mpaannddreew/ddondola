@@ -7,3 +7,4 @@
  */
 
 Broadcast::channel('conversation.{conversation}', \Messenger\Broadcasting\ConversationChannel::class);
+Broadcast::channel('online.{conversation}', \Messenger\Broadcasting\OnlineChannel::class);

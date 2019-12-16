@@ -78,7 +78,7 @@ class Order extends Model
      * @return bool
      */
     public function isHandledBy(Shop $shop) {
-        return $this->groupByShop()->keys()->contains($shop->code);
+        return $this->handlers()->contains($shop);
     }
 
     /**

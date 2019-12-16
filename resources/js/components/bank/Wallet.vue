@@ -31,51 +31,43 @@
                     <div class="list-group list-group-flush">
                         <a href="javascript:void(0)" @click="transactions"
                            class="list-group-item list-group-item-action d-flex">
-                            <div class="sc-stats__image">
-                                <img class="rounded" src="/images/wallet/transactions_ico.png">
-                            </div>
-                            <div class="ml-2 my-auto d-flex w-100">
+                            <div class="my-auto w-100">
                                 <div>
                                     <p class="text-ellipsis m-0" style="font-weight: normal">Transactions</p>
                                     <p class="text-ellipsis m-0 text-muted" style="font-size: smaller">Track your transaction history</p>
                                 </div>
                             </div>
+                            <i class="material-icons my-auto d-flex">payment</i>
                         </a>
                         <a href="javascript:void(0)" @click="deposit"
                            class="list-group-item list-group-item-action d-flex">
-                            <div class="sc-stats__image">
-                                <img class="rounded" src="/images/wallet/deposit_ico.png">
-                            </div>
-                            <div class="ml-2 my-auto d-flex w-100">
+                            <div class="my-auto w-100">
                                 <div>
                                     <p class="text-ellipsis m-0" style="font-weight: normal">Deposit</p>
                                     <p class="text-ellipsis m-0 text-muted" style="font-size: smaller">Top up your wallet balance</p>
                                 </div>
                             </div>
+                            <i class="material-icons my-auto d-flex">trending_up</i>
                         </a>
                         <a href="javascript:void(0)" @click="withdraw"
                            class="list-group-item list-group-item-action d-flex">
-                            <div class="sc-stats__image">
-                                <img class="rounded" src="/images/wallet/withdraw_ico.png">
-                            </div>
-                            <div class="ml-2 my-auto d-flex w-100">
+                            <div class="my-auto w-100">
                                 <div>
                                     <p class="text-ellipsis m-0" style="font-weight: normal">Withdraw</p>
                                     <p class="text-ellipsis m-0 text-muted" style="font-size: smaller">Track your withdraw requests</p>
                                 </div>
                             </div>
+                            <i class="material-icons my-auto d-flex">trending_down</i>
                         </a>
                         <a href="javascript:void(0)" @click="escrow"
                            class="list-group-item list-group-item-action d-flex">
-                            <div class="sc-stats__image">
-                                <img class="rounded" src="/images/wallet/escrow_ico.png">
-                            </div>
-                            <div class="ml-2 my-auto d-flex w-100">
+                            <div class="my-auto w-100">
                                 <div>
                                     <p class="text-ellipsis m-0" style="font-weight: normal">Escrow</p>
                                     <p class="text-ellipsis m-0 text-muted" style="font-size: smaller">Monitor your escrow transactions</p>
                                 </div>
                             </div>
+                            <i class="material-icons my-auto d-flex">hourglass_empty</i>
                         </a>
                     </div>
                 </div>

@@ -24,7 +24,7 @@
                 </div>
                 <div class="flat-card is-auto list-card" v-else-if="hasOrders && loaded">
                     <div class="list-group">
-                        <template v-for="(order, indx) in orders">
+                        <template v-for="(order, indx) in ordered">
                             <my-order :order="order" :key="indx"></my-order>
                         </template>
                     </div>
@@ -41,6 +41,7 @@
         components: {MyOrder},
         mounted() {
             this.fetchOrders();
+            this.watchOrders();
         },
         data() {
             return {
@@ -63,6 +64,11 @@
                 }
 
                 return variables;
+            },
+            ordered() {
+                return _.orderBy(this.orders, (order) => {
+                    return Moment(order.created_at);
+                }, 'desc');
             }
         },
         methods: {
@@ -81,6 +87,13 @@
             loadPage(page) {
                 this.page = page;
                 this.fetchOrders();
+            },
+            watchOrders() {
+                Echo.private(`user.${this.authCode}`)
+                    .listen('.new.order', (e) => {
+                        this.orders.push(e);
+                        this.readAll();
+                    })
             }
         },
         watch: {

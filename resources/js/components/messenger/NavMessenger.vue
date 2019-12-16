@@ -45,6 +45,13 @@
                 this.unReadCount = response.data.data.me.unreadMessageCount;
             },
             listenToMessengerEvents() {
+                Echo.private(`user.${this.authCode}`)
+                    .listen('.new.message', (e) => {
+                        if (!_.includes(this.$route.path, this.homeUrl)) {
+                            ++this.unReadCount;
+                        }
+                    });
+
                 Bus.$on('unread-messages', (count) => {
                     this.unReadCount += count;
                 });

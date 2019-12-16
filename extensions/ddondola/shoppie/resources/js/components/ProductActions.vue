@@ -66,16 +66,6 @@
                 this.cartStatusLoading = false;
                 this.inCart = response.data.data.inCart;
             },
-            cartStatusWithEvents(response) {
-                this.cartStatus(response);
-                if (this.inCart) {
-                    Bus.$emit('cart-size', {type: 'increase', count: 1});
-                    DToast("success", "Product added to cart");
-                }else {
-                    Bus.$emit('cart-size', {type: 'decrease', count: 1});
-                    DToast("success", "Product removed from cart");
-                }
-            },
             favoritesStatus(response) {
                 this.favoriteStatusLoading = false;
                 this.isFavorite = response.data.data.isFavorite;
@@ -100,27 +90,20 @@
                     axios.post(graphql.api, {
                         query: graphql.removeFromCart,
                         variables: {id: this.product.id}
-                    }).then(this.cartStatusWithEvents).catch(function (error) {});
+                    }).then(this.cartStatus).catch(function (error) {});
                 } else {
                     axios.post(graphql.api, {
                         query: graphql.addToCart,
                         variables: {id: this.product.id, quantity: 1}
-                    }).then(this.cartStatusWithEvents).catch(function (error) {});
+                    }).then(this.cartStatus).catch(function (error) {});
                 }
             },
             favouritesAction() {
                 this.favoriteStatusLoading = true;
-                if (this.isFavorite) {
-                    axios.post(graphql.api, {
-                        query: graphql.removeFromFavorites,
-                        variables: {id: this.product.id}
-                    }).then(this.favoritesStatus).catch(function (error) {});
-                } else {
-                    axios.post(graphql.api, {
-                        query: graphql.addToFavorites,
-                        variables: {id: this.product.id}
-                    }).then(this.favoritesStatus).catch(function (error) {});
-                }
+                axios.post(graphql.api, {
+                    query: graphql.favourite,
+                    variables: {id: this.product.id}
+                }).then(this.favoritesStatus).catch(function (error) {});
             }
         }
     }

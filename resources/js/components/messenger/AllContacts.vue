@@ -144,18 +144,17 @@
 
                 return [];
             },
-            rejectSelf(data, type) {
+            rejectSelf(contacts, type) {
                 if (this.lowerCase(this.ownerType.toString()) === type.toString()) {
-                    return Collect(data).reject(this.reject).all();
+                    return _.reject(contacts, (contact) => {
+                        return (contact.id).toString() === (this.ownerId).toString();
+                    });
                 }
 
-                return data;
-            },
-            reject(contact) {
-                return (contact.id).toString() === (this.ownerId).toString();
+                return contacts;
             },
             shopSource() {
-                return new Bloodhound({
+                return this.hound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     remote: {
@@ -171,7 +170,7 @@
                 });
             },
             userSource() {
-                return new Bloodhound({
+                return this.hound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     remote: {
@@ -185,6 +184,9 @@
                         transform: this.transform
                     },
                 });
+            },
+            hound(options) {
+                return new Bloodhound(options);
             }
         },
         watch: {

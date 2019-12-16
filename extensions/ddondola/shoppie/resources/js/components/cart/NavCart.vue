@@ -36,14 +36,10 @@
                 this.count = response.data.data.me.cart.productCount;
             },
             listenToCartEvents() {
-                Bus.$on('cart-size', this.amendSize);
-            },
-            amendSize(event) {
-                if (event.type === 'increase') {
-                    this.count += event.count;
-                } else {
-                    this.count -= event.count;
-                }
+                Echo.private(`user.${this.authCode}`)
+                    .listen('.cart.update', (e) => {
+                        this.count = e.count;
+                    });
             }
         },
         watch: {

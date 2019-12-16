@@ -56,11 +56,20 @@
             },
             label() {
                 return _.head(_.split(this.order.code, '-'));
+            },
+            opened() {
+                if (this.$route.params.order) {
+                    return this.$route.params.order === this.order.code;
+                }
+
+                return false;
             }
         },
         methods: {
             transitionTo() {
-                this.$router.push(this.route);
+                if (!this.opened) {
+                    this.$router.push(this.route);
+                }
             }
         }
     }

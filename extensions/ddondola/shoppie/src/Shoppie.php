@@ -9,7 +9,10 @@
 namespace Shoppie;
 
 
+use Ddondola\User;
 use Illuminate\Database\Eloquent\Model;
+use Shoppie\Events\CartUpdated;
+use Shoppie\Events\NewOrder;
 use Shoppie\Repository\CartRepository;
 use Shoppie\Repository\OrderRepository;
 
@@ -63,22 +66,23 @@ class Shoppie
                 $quantity_diff = (int)$quantity - $current_quantity;
                 if ($quantity_diff > $product->quantity()) {
                     // todo notify low quantity
-                    return false;
                 }
             }
 
             $cart->products()->updateExistingPivot($product, ['quantity' => $quantity]);
-            return true;
         }else {
             if ($product->quantity() >= (int)$quantity) {
                 $cart->products()->attach($product, [
                     'quantity' => $quantity,
                     'price' => $product->discountedPrice()
                 ]);
-                return true;
             }
         }
-        return false;
+
+        $cart = $this->carts->id($cart->getKey());
+        broadcast(new CartUpdated($cart));
+
+        return $cart->hasProduct($product);
     }
 
     /**
@@ -93,7 +97,10 @@ class Shoppie
             $cart->products()->detach($product);
         }
 
-        return false;
+        $cart = $this->carts->id($cart->getKey());
+        broadcast(new CartUpdated($cart));
+
+        return $cart->hasProduct($product);
     }
 
     /**
@@ -113,6 +120,9 @@ class Shoppie
             });
 
             $cart->makeEmpty();
+            $order = $this->orders->id($order->getKey());
+            broadcast(new NewOrder($order));
+
             return $order;
         }
 
@@ -122,11 +132,11 @@ class Shoppie
     /**
      * Check if user manages shop
      *
-     * @param Model $seller
+     * @param User $seller
      * @param Shop $shop
      * @return bool
      */
-    public function manages(Model $seller, Shop $shop)
+    public function manages(User $seller, Shop $shop)
     {
         // todo actual shop management implementation
         return $seller->is($shop->owner);
@@ -143,5 +153,54 @@ class Shoppie
         $order->products()->updateExistingPivot($product, $attributes);
 
         return $product;
+    }
+
+    /**
+     * @param User $user
+     * @param Shop $shop
+     * @return bool
+     * @throws \Exception
+     */
+    public function like(User $user, Shop $shop) {
+        if (!$this->likeStatus($user, $shop)) {
+            $user->like($shop);
+        } else {
+            $user->unlike($shop);
+        }
+
+        return $this->likeStatus($user, $shop);
+    }
+
+    /**
+     * @param User $user
+     * @param Shop $shop
+     * @return bool
+     */
+    public function likeStatus(User $user, Shop $shop) {
+        return $user->hasLiked($shop);
+    }
+
+    /**
+     * @param User $user
+     * @param Product $product
+     * @return bool
+     */
+    public function favourite(User $user, Product $product) {
+        if (!$this->favouriteStatus($user, $product)) {
+            $user->favorite($product);
+        } else {
+            $user->unfavorite($product);
+        }
+
+        return $this->favouriteStatus($user, $product);
+    }
+
+    /**
+     * @param User $user
+     * @param Product $product
+     * @return bool
+     */
+    public function favouriteStatus(User $user, Product $product) {
+        return $user->hasFavorited($product);
     }
 }

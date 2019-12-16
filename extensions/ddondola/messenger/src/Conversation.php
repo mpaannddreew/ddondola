@@ -99,4 +99,12 @@ class Conversation extends Model
     public function settings($item) {
         return collect($this->settings)->get($item, '');
     }
+
+    /**
+     * @param Model $participant
+     * @return bool
+     */
+    public function participates(Model $participant) {
+        return $participant->is($this->participant) || $participant->is($this->initiator);
+    }
 }

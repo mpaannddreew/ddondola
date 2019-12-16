@@ -5,7 +5,6 @@
                 <div class="pull-left user-img m-r-10">
                     <a href="javascript:void(0)" :title="contact.name">
                         <img :src="contact.avatar.url" alt="" class="w-40 rounded-circle">
-                        <span class="status online"></span>
                     </a>
                 </div>
                 <div class="contact-info" style="padding: 0 10px 0 50px;">
@@ -48,11 +47,20 @@
                 }
 
                 return this.contact.category.name;
+            },
+            opened() {
+                if (this.$route.params.participant) {
+                    return this.$route.params.participant === this.contact.code;
+                }
+
+                return false;
             }
         },
         methods: {
             transitionTo() {
-                this.$router.push(this.route);
+                if (!this.opened) {
+                    this.$router.push(this.route);
+                }
             }
         }
     }

@@ -35,16 +35,43 @@
                                     <p>Loading messages...</p>
                                 </div>
                             </template>
-                            <template v-else-if="!hasMessages && messagesLoaded">
-                                <div align="center" class="p-4">
-                                    <h4 class="m-0"><i class="material-icons">error</i></h4>
-                                    <p class="mb-0">No Chats!</p>
+                            <div class="chats" id="chats" v-if="messagesLoaded">
+                                <template v-if="hasMessages">
+                                    <chat-group v-for="(group, indx) in groupedMessages" :key="indx" :group="group" :initiator="initiator" :participant="participant"></chat-group>
+                                </template>
+                                <div class="chat chat-left" v-if="typing">
+                                    <div class="chat-avatar">
+                                        <a :href="converserProfile" class="avatar">
+                                            <img alt="John Doe" :src="converser.avatar.url" class="img-fluid rounded-circle">
+                                        </a>
+                                    </div>
+                                    <div class="chat-body">
+                                        <div class="chat-bubble">
+                                            <div class="chat-content">
+                                                <p>Typing ...</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </template>
-                            <div class="chats" v-else-if="hasMessages && messagesLoaded" id="chats">
-                                <chat-group v-for="(group, indx) in groupedMessages" :key="indx" :group="group" :initiator="initiator" :participant="participant"></chat-group>
                             </div>
                         </div>
+                        <!--<div class="card-footer px-3 pt-1 pb-3 border-radius-0" id="chat-footer">-->
+                            <!--<form @submit.prevent="sendMessage" class="d-flex">-->
+                                <!--<div class="input-group m-0">-->
+                                    <!--<div class="input-group input-group-seamless">-->
+                                        <!--<input class="form-control" type="text" style="border-radius: 500px;" v-model="text" placeholder="Type a message here">-->
+                                        <!--<span class="input-group-append">-->
+                                          <!--<span class="input-group-text">-->
+                                            <!--<button class="btn btn-link p-0" type="button"><i class="material-icons">attach_file</i></button>-->
+                                          <!--</span>-->
+                                        <!--</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<button type="submit" class="btn btn-primary btn-pill my-auto ml-3" :class="{disabled: !hasText || sending}">-->
+                                    <!--<i class="fa fa-send"></i>-->
+                                <!--</button>-->
+                            <!--</form>-->
+                        <!--</div>-->
                         <div class="card-footer border-top p-0">
                             <div class="typing-msg border-0 py-4">
                                 <form>
@@ -69,9 +96,6 @@
     export default {
         name: "ChatArea",
         components: {ChatGroup},
-        mounted() {
-            this.listen();
-        },
         data() {
             return {
                 message: "",
@@ -83,11 +107,15 @@
                 count: 0,
                 paginatorInfo: null,
                 text: '',
-                sending: false
+                sending: false,
+                typing: false
             }
         },
         created () {
             this.fetchConversation()
+        },
+        beforeDestroy() {
+            Echo.leave(this.channel);
         },
         props: {
             participant: {
@@ -99,6 +127,9 @@
             }
         },
         computed: {
+            converserProfile() {
+                return `/${this.shopConverser ? 'shops':'people'}/${this.converser.code}`;
+            },
             home() {
                 return this.initiator ? `/shops/${this.initiator}/messenger` : '/me/messenger'
             },
@@ -161,14 +192,79 @@
                 return this.text.length > 0;
             },
             groupedMessages() {
-                return _.groupBy(_.sortBy(this.messages, function (message) {
+                let sorted = _.sortBy(this.messages, (message) => {
                     return Moment(message.created_at);
-                }), function(message){
+                });
+
+                let grouped = _.groupBy(sorted, (message) => {
                     return Moment(message.created_at).format("MMMM Do YYYY");
+                });
+
+                let groups = _.map(_.keys(grouped), (group) => {
+                    return {label: group, date: null, chats: []};
+                });
+
+                return _.map(groups, (group) => {
+                    let messages = grouped[group.label];
+                    group.date = _.head(messages).created_at;
+                    var chat = null;
+
+                    _.forEach(messages, (message, key) => {
+                        // if message is first and last
+                        if (key === 0 && key === messages.length - 1) {
+                            group.chats.push({sender: message.sender, bubbles: [message]});
+                        } else {
+                            // if message is first and not last
+                            if (key === 0 && key !== messages.length - 1) {
+                                // get following message after current
+                                let next = messages[key + 1];
+                                if (next.sender.code === message.sender.code) {
+                                    chat = {sender: message.sender, bubbles: [message]};
+                                } else {
+                                    group.chats.push({sender: message.sender, bubbles: [message]});
+                                }
+                                // if message is not first and not last
+                            }else if (key !== 0 && key !== messages.length - 1) {
+                                if (chat) {
+                                    let previous = messages[key - 1];
+                                    if (previous.sender.code === message.sender.code) {
+                                        chat.bubbles.push(message);
+                                    } else {
+                                        group.chats.push(chat);
+                                        chat = {sender: message.sender, bubbles: [message]};
+                                    }
+                                } else {
+                                    chat = {sender: message.sender, bubbles: [message]};
+                                }
+                                // if message is last
+                            }else if (key === messages.length - 1) {
+                                if (chat) {
+                                    let previous = messages[key - 1];
+                                    if (previous.sender.code === message.sender.code) {
+                                        chat.bubbles.push(message);
+                                        group.chats.push(chat);
+                                    } else {
+                                        group.chats.push(chat);
+                                        group.chats.push({sender: message.sender, bubbles: [message]});
+                                    }
+                                } else {
+                                    group.chats.push({sender: message.sender, bubbles: [message]});
+                                }
+                            }
+                        }
+                    });
+
+                    return group;
                 });
             },
             shopConverser() {
                 return this.converserType === 'shop';
+            },
+            channel() {
+                if (this.converser)
+                    return `conversation.${this.conversation.id}`;
+
+                return null;
             }
         },
         methods: {
@@ -202,10 +298,16 @@
                 }
             },
             watchConversation() {
-                Echo.private(`conversation.${parseInt(this.conversation.id)}`)
+                Echo.private(this.channel)
                     .listen('.new.message', (e) => {
                         this.messages.push({created_at: e.created_at, id: e.id, message: e.message, sender: e.sender});
                         this.readAll();
+                    })
+                    .listenForWhisper('typing', (e) => {
+                        this.typing = true;
+                        setTimeout(() => {
+                            this.typing = false
+                        }, 2000);
                     });
             },
             startConversation() {
@@ -245,9 +347,6 @@
             messageSent(response) {
                 this.sending = false;
                 this.text = '';
-            },
-            listen() {
-
             }
         },
         watch: {
@@ -260,14 +359,15 @@
             },
             text(data) {
                 if (data) {
-                    // todo show typing indicators to others
+                    Echo.private(this.channel)
+                        .whisper('typing', {
+                            converser: {
+                                id: this.converser.id,
+                                code: this.converser.code,
+                                type: this.converser.type
+                            }
+                        });
                 }
-            },
-            message: {
-                handler(data) {
-
-                },
-                deep: true
             }
         }
     }

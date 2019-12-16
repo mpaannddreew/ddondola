@@ -6,10 +6,36 @@
             </a>
         </div>
         <div class="chat-body">
-            <div class="chat-bubble">
-                <div class="chat-content">
-                    <p>{{ chat.message }}</p>
-                    <span class="chat-time">{{ chat.created_at|time }}</span>
+            <div class="chat-bubble" v-for="(bubble, indx) in chat.bubbles">
+                <div class="chat-content" v-if="!bubble.images">
+                    <p>{{ bubble.message }}</p>
+                    <span class="chat-time">{{ bubble.created_at|time }}</span>
+                </div>
+                <div class="chat-content img-content" v-else>
+                    <div class="chat-img-group clearfix">
+                        <p v-if="bubble.message">{{ bubble.message }}</p>
+                        <a class="chat-img-attach" href="#">
+                            <img alt="" src="assets/img/placeholder.jpg" width="182" height="137">
+                            <div class="chat-placeholder">
+                                <div class="chat-img-name">placeholder.jpg</div>
+                                <div class="chat-file-desc">842 KB</div>
+                            </div>
+                        </a>
+                        <a class="chat-img-attach" href="#">
+                            <img alt="" src="assets/img/placeholder.jpg" width="182" height="137">
+                            <div class="chat-placeholder">
+                                <div class="chat-img-name">842 KB</div>
+                            </div>
+                        </a>
+                        <a class="chat-img-attach" href="#">
+                            <img alt="" src="assets/img/placeholder.jpg" width="182" height="137">
+                            <div class="chat-placeholder">
+                                <div class="chat-img-name">placeholder.jpg</div>
+                                <div class="chat-file-desc">842 KB</div>
+                            </div>
+                        </a>
+                    </div>
+                    <span class="chat-time">{{ bubble.created_at|time }}</span>
                 </div>
             </div>
         </div>
@@ -38,7 +64,7 @@
             },
             url() {
                 return `/${this.type === 'shop' ? 'shops':'people'}/${this.sender.code}`;
-            },
+            }
         }
     }
 </script>

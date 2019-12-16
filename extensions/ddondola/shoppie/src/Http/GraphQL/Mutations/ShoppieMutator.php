@@ -223,14 +223,8 @@ class ShoppieMutator
      */
     public function likeShop($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $shop = app(ShopRepository::class)->id($args["id"]);
-        if ($context->user()->hasLiked($shop)) {
-            $context->user()->unlike($shop);
-            return false;
-        }
-
-        $context->user()->like($shop);
-        return true;
+        return app(Shoppie::class)
+            ->like($context->user(), app(ShopRepository::class)->id($args["id"]));
     }
 
     /**
@@ -273,26 +267,10 @@ class ShoppieMutator
      *
      * @return mixed
      */
-    public function addToFavorites($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
+    public function favourite($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $context->user()->favorite(app(ProductRepository::class)->id($args["id"]));
-        return true;
-    }
-
-    /**
-     * Return a value for the field.
-     *
-     * @param null $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
-     * @param array $args The arguments that were passed into the field.
-     * @param GraphQLContext|null $context Arbitrary data that is shared between all fields of a single query.
-     * @param ResolveInfo $resolveInfo Information about the query itself, such as the execution state, the field name, path to the field from the root, and more.
-     *
-     * @return mixed
-     */
-    public function removeFromFavorites($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
-    {
-        $context->user()->unfavorite(app(ProductRepository::class)->id($args["id"]));
-        return false;
+        return app(Shoppie::class)
+            ->favourite($context->user(), app(ProductRepository::class)->id($args["id"]));
     }
 
     /**

@@ -11,7 +11,7 @@
             </div>
         </div>
         <ul class="contact-list" v-else-if="hasConversations && loaded">
-            <li is="conversation" v-for="(conversation, indx) in conversations" :key="indx" :home-url="homeUrl"
+            <li is="conversation" v-for="(conversation, indx) in ordered" :key="indx" :home-url="homeUrl"
                 :conversation="conversation" :owner-id="ownerId" :owner-type="ownerType"></li>
         </ul>
     </div>
@@ -81,6 +81,11 @@
                 }
 
                 return `user.${this.authCode}`;
+            },
+            ordered() {
+                return _.orderBy(this.conversations, (item) => {
+                    return Moment(item.latestMessage.created_at);
+                }, 'desc');
             }
         },
         methods: {
@@ -114,9 +119,7 @@
                             };
 
                             refreshed.push(conversation);
-                            this.conversations = _.orderBy(refreshed, (item) => {
-                                return Moment(item.latestMessage.created_at);
-                            }, 'desc');
+                            this.conversations = refreshed;
                         } else {
                             this.fetchConversations();
                         }

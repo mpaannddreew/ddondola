@@ -545,8 +545,8 @@ window.graphql = {
     isFavorite: `query isFavorite($id: ID!) {
           isFavorite(id: $id)
         }`,
-    addToFavorites: `mutation addToFavorites($id: ID!) {
-          isFavorite:addToFavorites(id: $id)
+    favourite: `mutation favouriteProduct($id: ID!) {
+          isFavorite:favouriteProduct(id: $id)
         }`,
     removeFromFavorites: `mutation removeFromFavorites($id: ID!) {
           isFavorite:removeFromFavorites(id: $id)

@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="chat-line">
-            <span class="chat-date border px-2 py-1 border-radius bg-white text-primary">{{ date|day }}</span>
+            <span class="chat-date border px-2 py-1 border-radius bg-white text-primary">{{ group.date|day }}</span>
         </div>
-        <template v-for="(chat, indx) in group">
+        <template v-for="(chat, indx) in group.chats">
             <chat-right :chat="chat" v-if="mine(chat)" :key="indx + '_right'"></chat-right>
             <chat-left :chat="chat" v-else :key="indx + '_left'"></chat-left>
         </template>
@@ -31,14 +31,9 @@
                 type: String
             },
             group: {
-                type: Array,
+                type: Object,
                 required: true
             }
-        },
-        computed: {
-            date() {
-                return this.group[0].created_at;
-            },
         },
         methods: {
             mine(chat) {

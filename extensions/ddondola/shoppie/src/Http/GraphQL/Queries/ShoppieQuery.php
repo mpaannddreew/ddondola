@@ -11,6 +11,7 @@ use Shoppie\Repository\OrderRepository;
 use Shoppie\Repository\ProductRepository;
 use Shoppie\Repository\ShopCategoryRepository;
 use Shoppie\Repository\ShopRepository;
+use Shoppie\Shoppie;
 
 class ShoppieQuery
 {
@@ -411,7 +412,8 @@ class ShoppieQuery
      */
     public function iLikeShop($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $context->user()->hasLiked(app(ShopRepository::class)->id($args["id"]));
+        return app(Shoppie::class)
+            ->likeStatus($context->user(), app(ShopRepository::class)->id($args["id"]));
     }
 
     /**
@@ -441,7 +443,8 @@ class ShoppieQuery
      */
     public function isFavorite($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $context->user()->hasFavorited(app(ProductRepository::class)->id($args["id"]));
+        return app(Shoppie::class)
+            ->favouriteStatus($context->user(), app(ProductRepository::class)->id($args["id"]));
     }
 
     /**

@@ -105,9 +105,6 @@
                 if (!response.data.data.inCart) {
                     this.$emit('cart-updated');
                     this.$emit('deleted', this.product.id);
-                    Bus.$emit('deleted', this.product.id);
-                    Bus.$emit('cart-size', {type: 'decrease', count: 1});
-                    DToast("success", "Product removed from cart");
                 }
             },
             editCart() {

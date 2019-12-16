@@ -36,7 +36,8 @@ class AccountQuery
      */
     public function iFollowUser($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        return $context->user()->isFollowing(app(UserRepository::class)->id($args["id"]));
+        return app(UserRepository::class)
+            ->followStatus($context->user(), app(UserRepository::class)->id($args["id"]));
     }
 
     /**

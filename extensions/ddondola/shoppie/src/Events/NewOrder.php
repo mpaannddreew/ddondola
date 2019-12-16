@@ -41,9 +41,12 @@ class NewOrder implements ShouldBroadcast, ShouldQueue
      */
     public function broadcastOn()
     {
-        $channels = $this->order->handlers()->map(function (Shop $shop) {
-            return new PrivateChannel('shop.' . $shop->code);
-        })->all();
+        $channels = array_merge(
+            $this->order->handlers()->map(function (Shop $shop) {
+                return new PrivateChannel('shop.' . $shop->code);
+            })->all(),
+            [new PrivateChannel('user.' . $this->order->by->code)]
+        );
 
         return $channels;
     }
@@ -65,6 +68,17 @@ class NewOrder implements ShouldBroadcast, ShouldQueue
      */
     public function broadcastWith()
     {
-        return [];
+        return array_merge(
+            $this->order->only(['id', 'code', 'created_at']), [
+                'cancelled' => $this->order->cancelled(),
+                'currencyCode' => $this->order->currencyCode(),
+                'paidFor' => $this->order->paid_for,
+                'productCount' => $this->order->productCount(),
+                'sum' => $this->order->sum(),
+                'firstProduct' => [
+                    'images' => $this->order->firstProduct()->productImages()
+                ]
+            ]
+        );
     }
 }

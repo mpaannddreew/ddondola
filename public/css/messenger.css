@@ -42,7 +42,7 @@
     overflow-x: hidden;
 }
 
-#chat-body, .chat-body-loading {
+#chat-body, .chat-body-loading, #chat-footer {
     background: #f5f6f8;
     background: linear-gradient(rgba(248,248,248,.9), rgba(248,248,248,.9)), url("../images/bg/ddondola_doodle.jpg") repeat fixed;
 }
@@ -150,9 +150,8 @@
 }
 
 .typing-text {
-    color: #5c66bf;
+    color: #888;
     font-size: 12px;
-    text-transform: lowercase;
 }
 
 .last-seen {
@@ -213,7 +212,7 @@
 }
 
 .chats {
-    padding: 30px;
+    padding: 30px 15px;
 }
 
 .chat-body {

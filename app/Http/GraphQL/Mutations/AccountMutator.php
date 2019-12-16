@@ -20,11 +20,7 @@ class AccountMutator
      */
     public function followUser($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $user = app(UserRepository::class)->id($args["id"]);
-        if ($context->user()->isFollowing($user)) {
-            return app(UserRepository::class)->unFollow($context->user(), $user);
-        }
-
-        return app(UserRepository::class)->follow($context->user(), $user);
+        return app(UserRepository::class)
+            ->follow($context->user(), app(UserRepository::class)->id($args["id"]));
     }
 }

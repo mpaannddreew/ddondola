@@ -59,32 +59,20 @@ class UserRepository
      * @param User $follower
      * @param User $followable
      * @return bool
+     * @throws \Exception
      */
     public function follow(User $follower, User $followable) {
-        if (!$follower->isFollowing($followable)) {
-            try {
-                $follower->follow($followable);
-                return true;
-            } catch (\Exception $e) {}
+        if (!$this->followStatus($follower, $followable)) {
+            $follower->follow($followable);
+        } else {
+            $follower->unfollow($followable);
         }
 
-        return false;
+        return $this->followStatus($follower, $followable);
     }
 
-    /**
-     * Un follow a user
-     *
-     * @param User $follower
-     * @param User $followable
-     * @return bool
-     */
-    public function unFollow(User $follower, User $followable) {
-        if ($follower->isFollowing($followable)) {
-            $follower->unfollow($followable);
-            return false;
-        }
-
-        return false;
+    public function followStatus(User $follower, User $followable) {
+        return $follower->isFollowing($followable);
     }
 
     public function builder() {
