@@ -2,5 +2,5 @@
 @section('title')@parent Following @endsection
 @section('following-active', 'active')
 @section('profile')
-    <following :user="{{ $user }}" @auth :me="{{ Auth::user() }}" @endauth></following>
+    <following :user="{{ $user }}" @auth :me="{{ auth()->user() }}" @endauth></following>
 @endsection

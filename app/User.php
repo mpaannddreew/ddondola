@@ -39,10 +39,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'media'
+        'password', 'remember_token', 'media', 'followings', 'followers'
     ];
 
-    protected $appends = ['name', 'avatar', 'coverPicture', /*'followerCount', 'followingCount'*/];
+    protected $appends = ['name', 'avatar', 'coverPicture', 'followerCount', 'followingCount'];
 
     protected $casts = [
         'settings' => 'array',
@@ -200,5 +200,22 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->belongsToMany(Role::class, 'role_user',
             'user_id', 'role_id')->as('rolePivot')
             ->withTimestamps()->using(RoleUser::class);
+    }
+
+    /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'user.'.$this->code;
+    }
+
+    /**
+     * @return int
+     */
+    public function unreadNotificationCount() {
+        return $this->unreadNotifications()->count();
     }
 }

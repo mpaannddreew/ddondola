@@ -40,6 +40,6 @@ class ReviewRepository
     public function update(Review $review, array $attributes) {
         $review->update($attributes);
 
-        return $review;
+        return $this->id($review->getKey());
     }
 }

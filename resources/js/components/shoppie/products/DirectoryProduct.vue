@@ -16,10 +16,7 @@
                 <a :href="productUrl">
                     <p class="text-ellipsis m-0" style="line-height: 1.286em;">{{ product.name }}</p>
                 </a>
-                <strong>
-                    <mini-rating-meter :reviewable="product"></mini-rating-meter>
-                </strong>
-                <small class="text-muted">{{ product.averageRating }} average based on {{ product.reviewCount }} {{ text }}</small>
+                <mini-rating-meter :reviewable="product"></mini-rating-meter>
             </div>
             <div class="card-footer p-0 border-top">
                 <div class="header-navbar collapse d-lg-flex p-0 bg-light border-bottom">
@@ -68,9 +65,6 @@
             }
         },
         computed: {
-            text() {
-                return this.product.reviewCount === 1 ? 'review': 'reviews';
-            },
             productUrl() {
                 return `/products/${this.product.code}`;
             },

@@ -7,11 +7,10 @@
             <span>{{ user.name }}</span>
             <span>{{ user.email}}</span>
         </td>
-        <td :class="{'border-top-0': isFirst && !admin}">
-            <div class="btn-group d-table ml-auto" role="group" v-if="!isMe(user.code)">
-                <a href="javascript:void(0)" class="btn btn-sm btn-white" title="" v-if="admin" @click="showProfile"><i class="material-icons">account_circle</i> Profile</a>
-                <a :href="userUrl" class="btn btn-sm btn-white" title="" v-else><i class="material-icons">account_circle</i> Profile</a>
-                <a v-if="auth && !admin"  href="javascript:void(0)" class="btn btn-sm btn-white" @click="performAction" :class="{ disabled: loading }">
+        <td :class="{'border-top-0': isFirst}">
+            <div class="btn-group d-table ml-auto" role="group">
+                <a :href="userUrl" class="btn btn-sm btn-white" title="Profile"><i class="material-icons">account_circle</i> Profile</a>
+                <a v-if="auth && !isMe(user.code)"  href="javascript:void(0)" class="btn btn-sm btn-white" @click="performAction" :class="{ disabled: loading }">
                     <i class="material-icons">person_add</i> {{ text }}
                 </a>
             </div>
@@ -39,10 +38,6 @@
             },
             indx: {
                 type: Number
-            },
-            admin: {
-                type: Boolean,
-                default: false
             }
         },
         methods: {
@@ -71,9 +66,6 @@
                 this.follow = response.data.data.follow;
                 this.loaded = true;
                 this.loading = false;
-            },
-            showProfile() {
-                this.$router.push(`/admin/users/${this.user.code}`);
             }
         },
         computed: {

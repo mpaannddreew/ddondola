@@ -13,6 +13,7 @@ use Ddondola\User;
 use Illuminate\Database\Eloquent\Model;
 use Shoppie\Events\CartUpdated;
 use Shoppie\Events\NewOrder;
+use Shoppie\Events\ProductUnfavorited;
 use Shoppie\Repository\CartRepository;
 use Shoppie\Repository\OrderRepository;
 
@@ -185,14 +186,15 @@ class Shoppie
      * @param Product $product
      * @return bool
      */
-    public function favourite(User $user, Product $product) {
-        if (!$this->favouriteStatus($user, $product)) {
+    public function favorite(User $user, Product $product) {
+        if (!$this->favoriteStatus($user, $product)) {
             $user->favorite($product);
         } else {
             $user->unfavorite($product);
+            broadcast(new ProductUnfavorited($user, $product));
         }
 
-        return $this->favouriteStatus($user, $product);
+        return $this->favoriteStatus($user, $product);
     }
 
     /**
@@ -200,7 +202,7 @@ class Shoppie
      * @param Product $product
      * @return bool
      */
-    public function favouriteStatus(User $user, Product $product) {
+    public function favoriteStatus(User $user, Product $product) {
         return $user->hasFavorited($product);
     }
 }

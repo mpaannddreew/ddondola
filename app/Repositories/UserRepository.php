@@ -10,6 +10,8 @@ namespace Ddondola\Repositories;
 
 
 use Ddondola\Country;
+use Ddondola\Events\UserFollowed;
+use Ddondola\Events\UserUnfollowed;
 use Ddondola\User;
 
 class UserRepository
@@ -64,8 +66,10 @@ class UserRepository
     public function follow(User $follower, User $followable) {
         if (!$this->followStatus($follower, $followable)) {
             $follower->follow($followable);
+            broadcast(new UserFollowed($follower, $followable));
         } else {
             $follower->unfollow($followable);
+            broadcast(new UserUnfollowed($follower, $followable));
         }
 
         return $this->followStatus($follower, $followable);

@@ -10,9 +10,9 @@
                         <img style="width: 100px; height: 100px;" src="{{ $shop->avatar()['url'] }}" class="img-fluid d-md-flex mr-4 border border-white lis-border-width-4 mb-4 mb-md-0 rounded" alt="" />
 
                         <div class="media-body align-self-center">
-                            <h5 class="text-white lis-font-weight-500 lis-line-height-1">{{ $shop->name }}</h5>
+                            <h5 class="text-white lis-font-weight-500 lis-line-height-1 mb-2">{{ $shop->name }}</h5>
                             {{--<p class="mb-0">{{ $shop->likeCount() }} {{ $shop->likeCount() > 1 || $shop->likeCount() == 0 ? "likes": "like"  }}</p>--}}
-                            <p class="mb-0"><mini-rating-meter :reviewable="{{ $shop }}"></mini-rating-meter></p>
+                            <p class="mb-0"><mini-rating-meter :reviewable="{{ $shop }}" :show-base="false"></mini-rating-meter></p>
                         </div>
                     </div>
                 </a>

@@ -1,25 +1,19 @@
 <template>
     <div>
-        <div class="card card-small lo-stats border">
+        <div v-if="!loaded || (!hasUsers && loaded)" class="border p-3">
+            <div align="center" v-if="!loaded">
+                <div class="loader"></div>
+                <p class="m-0">Loading followers...</p>
+            </div>
+            <div align="center" v-if="!hasUsers && loaded">
+                <h4 class="m-0"><i class="material-icons">error</i></h4>
+                <p class="m-0">No followers yet!</p>
+            </div>
+        </div>
+        <div class="card card-small lo-stats border border-top-radius-0" v-else-if="hasUsers && loaded">
             <table class="table mb-0">
                 <tbody>
-                <template v-if="!loaded || (!hasUsers && loaded)">
-                    <tr>
-                        <td style="border-top: none !important;" class="p-3">
-                            <div align="center" v-if="!loaded">
-                                <div class="loader"></div>
-                                <p class="m-0">Loading followers...</p>
-                            </div>
-                            <div align="center" v-if="!hasUsers && loaded">
-                                <h4 class="m-0"><i class="material-icons">error</i></h4>
-                                <p class="m-0">No followers yet!</p>
-                            </div>
-                        </td>
-                    </tr>
-                </template>
-                <template v-else-if="hasUsers && loaded">
-                    <tr is="person" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :indx="indx" :admin="admin"></tr>
-                </template>
+                    <tr is="person" v-for="(_user, indx) in users" :key="indx" :user="_user" :is-me="isMe(_user.id)" :indx="indx"></tr>
                 </tbody>
             </table>
         </div>
@@ -34,6 +28,7 @@
         components: {Person},
         mounted() {
             this.fetchUsers();
+            this.watchFollowers();
         },
         data() {
             return {
@@ -75,6 +70,9 @@
                 }
 
                 return variables;
+            },
+            channel() {
+                return `user.${this.user ? this.user.code: this.me.code}.followers`;
             }
         },
         methods: {
@@ -105,6 +103,19 @@
                     return parseInt(this.me.id) === parseInt(id);
 
                 return false;
+            },
+            watchFollowers() {
+                Echo.channel(this.channel)
+                    .listen('.user.followed', (e) => {
+                        if(this.users.length !== graphql.columnCount) {
+                            this.users.push(e.follower);
+                        }
+                    })
+                    .listen('.user.unfollowed', (e) => {
+                        this.users = _.reject(this.users, (user) => {
+                            return user.id.toString() === e.follower.id.toString();
+                        });
+                    });
             }
         }
     }

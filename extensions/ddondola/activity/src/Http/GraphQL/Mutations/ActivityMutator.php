@@ -30,7 +30,9 @@ class ActivityMutator
             $reviewable = app(ProductRepository::class)->id($id);
         }
 
-        return app(ReviewRepository::class)->create($reviewable, $context->user(), $args["review"]);
+        app(ReviewRepository::class)->create($reviewable, $context->user(), $args["review"]);
+
+        return $context->user()->hasReviewed($reviewable);
     }
 
     /**
@@ -48,7 +50,9 @@ class ActivityMutator
     {
         $review = app(ReviewRepository::class)->id($args["id"]);
         if ($context->user()->can('update', $review)) {
-            return app(ReviewRepository::class)->update($review, $args["review"]);
+            app(ReviewRepository::class)->update($review, $args["review"]);
+
+            return $context->user()->hasReviewed($review->reviewable);
         }
 
         throw new AuthorizationException;

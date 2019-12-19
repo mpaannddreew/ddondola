@@ -13,7 +13,7 @@
                 </div>
             </a>
             <div class="contact-action">
-                <span class="posted_time"><i class="material-icons">chevron_right</i></span>
+                <span class="posted_time"><i class="material-icons">forum</i></span>
             </div>
         </div>
     </li>

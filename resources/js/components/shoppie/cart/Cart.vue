@@ -3,7 +3,7 @@
         <header class="d-flex justify-content-between align-items-start m-0 mb-2">
             <div>
                 <a class="btn btn-white btn-sm ml-auto" :href="productDirectoryPath">
-                    <i class="fa fa-shopping-basket"></i> Ddondola
+                    <i class="fa fa-shopping-basket"></i> Shopping
                 </a>
             </div>
             <div class="ml-auto" v-if="hasProducts && loaded">

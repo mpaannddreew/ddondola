@@ -1,6 +1,7 @@
 @extends('shoppie::shop.admin.inventory.base')
 @section('title')@parent New Product @endsection
 @section('new-product-active', 'active')
+@section('body-class') class="h-100" @endsection
 @section('main')
     <div class="container py-2">
         <div class="row">

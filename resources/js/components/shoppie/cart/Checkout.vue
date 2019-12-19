@@ -1,5 +1,21 @@
 <template>
     <div>
+        <header class="d-flex justify-content-between align-items-start m-0 mb-2">
+            <div>
+                <a class="btn btn-white btn-sm ml-auto" href="javascript:void(0)" @click="toCart">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+            </div>
+            <div class="ml-auto" v-if="loaded && hasProducts">
+                <a class="btn btn-white btn-sm ml-auto" :href="checkoutUrl"
+                   onclick="event.preventDefault(); document.getElementById('checkout').submit();">
+                    <i class="fa fa-check-circle"></i> Confirm
+                </a>
+                <form id="checkout" :action="checkoutUrl" method="POST" style="display: none;">
+                    <input type="hidden" name="_token" v-model="token"/>
+                </form>
+            </div>
+        </header>
         <div class="card card-small border" v-if="!loaded">
             <div class="card-body">
                 <div align="center">
@@ -9,22 +25,6 @@
             </div>
         </div>
         <template v-else-if="loaded && hasProducts">
-            <header class="d-flex justify-content-between align-items-start m-0 mb-2">
-                <div>
-                    <a class="btn btn-white" href="javascript:void(0)" @click="toCart">
-                        <i class="fa fa-pencil"></i> Edit Cart
-                    </a>
-                </div>
-                <div class="ml-auto">
-                    <a class="btn btn-white" :href="checkoutUrl"
-                       onclick="event.preventDefault(); document.getElementById('checkout').submit();">
-                        <i class="fa fa-check-circle"></i> Confirm
-                    </a>
-                    <form id="checkout" :action="checkoutUrl" method="POST" style="display: none;">
-                        <input type="hidden" name="_token" v-model="token"/>
-                    </form>
-                </div>
-            </header>
             <section class="cart-section card border">
                 <div class="cart-table table-responsive">
                     <table class="table table-bordered text-center">

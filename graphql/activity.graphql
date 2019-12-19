@@ -36,6 +36,6 @@ extend type Query @middleware(checks: ["auth:api"]) {
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]) {
-    addReview(entity: Reviewee! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@addReview")
-    editReview(id: ID! review: ReviewData!): Review! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@editReview")
+    addReview(entity: Reviewee! review: ReviewData!): Reviewed! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@addReview")
+    editReview(id: ID! review: ReviewData!): Reviewed! @field(resolver: "Activity\\Http\\GraphQL\\Mutations\\ActivityMutator@editReview")
 }

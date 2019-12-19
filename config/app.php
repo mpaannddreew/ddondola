@@ -156,7 +156,7 @@ return [
          */
         Ddondola\Providers\AppServiceProvider::class,
         Ddondola\Providers\AuthServiceProvider::class,
-         Ddondola\Providers\BroadcastServiceProvider::class,
+        Ddondola\Providers\BroadcastServiceProvider::class,
         Ddondola\Providers\EventServiceProvider::class,
         Ddondola\Providers\RouteServiceProvider::class,
 

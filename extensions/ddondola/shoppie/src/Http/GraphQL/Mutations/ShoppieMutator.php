@@ -267,10 +267,10 @@ class ShoppieMutator
      *
      * @return mixed
      */
-    public function favourite($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
+    public function favorite($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         return app(Shoppie::class)
-            ->favourite($context->user(), app(ProductRepository::class)->id($args["id"]));
+            ->favorite($context->user(), app(ProductRepository::class)->id($args["id"]));
     }
 
     /**

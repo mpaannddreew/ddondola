@@ -17,7 +17,7 @@ class Review extends Model
         return $this->belongsTo(config('activity.reviewer'), 'reviewer_id');
     }
 
-    private function type() {
+    public function type() {
         $path = explode('\\', get_class($this->reviewable));
         return array_pop($path);
     }

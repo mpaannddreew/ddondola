@@ -53,10 +53,12 @@ class ActivityQuery
     {
         $id = collect($args["entity"])->get('id');
         if (collect($args["entity"])->get('type') == 'shop' ) {
-            return $context->user()->hasReviewed(app(ShopRepository::class)->id($id));
+            $reviewable = app(ShopRepository::class)->id($id);
         } else {
-            return $context->user()->hasReviewed(app(ProductRepository::class)->id($id));
+            $reviewable = app(ProductRepository::class)->id($id);
         }
+
+        return $context->user()->hasReviewed($reviewable);
     }
 
     protected function orderBy($builder, $column="created_at", $order="desc") {

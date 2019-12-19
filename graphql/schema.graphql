@@ -74,6 +74,7 @@ type User implements Muddondozi {
     following: [User!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@paginatedFollowing")
     followingCount: Int! @method(name: "followingCount")
     notifications: [Notification!] @paginate(builder: "Ddondola\\Http\\GraphQL\\Queries\\AccountQuery@notifications")
+    unreadNotificationCount: Int! @method(name: "unreadNotificationCount")
     messages: [Message!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@messages")
     unreadMessageCount: Int! @method(name: "unreadMessageCount")
     conversations(search: String): [Conversation!] @paginate(builder: "Messenger\\Http\\GraphQL\\Queries\\MessengerQuery@conversations")

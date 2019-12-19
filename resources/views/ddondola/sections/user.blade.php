@@ -117,7 +117,7 @@
                     </div>
                     <div class="row my-2">
                         <div class="col-md-4 pr-1">
-                            <user-information :with-cover="false" :with-border="true" :user="{{ $user }}"></user-information>
+                            <user-information class="border-top-radius-0" :with-cover="false" :with-border="true" :user="{{ $user }}"></user-information>
                         </div>
                         <div class="col-md-8 pl-1">
                             @yield('profile')

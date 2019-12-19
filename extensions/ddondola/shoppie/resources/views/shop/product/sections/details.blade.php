@@ -3,17 +3,17 @@
         <li class="list-group-item p-4">
             <strong class="text-muted d-block mb-2 d-flex">
                 {{ $product->name }}
-                <mini-rating-meter :reviewable="{{ $product }}" class="ml-auto"></mini-rating-meter>
+                <mini-rating-meter :reviewable="{{ $product }}" :show-base="false" class="ml-auto"></mini-rating-meter>
             </strong>
         </li>
         <li class="list-group-item p-4 d-flex">
             <strong class="text-muted d-block">Price</strong>
             <span class="ml-auto">
-                <var class="price h5 text-warning">
+                <var class="price h5 text-primary">
                     <span class="currency">{{ $product->currencyCode() }}</span> <span class="num">{{ number_format($product->discountedPrice()) }}</span>
                     @if($product->discount())
-                        <span style="text-decoration: line-through" class="text-primary">
-                            <span class="currency text-primary">{{ $product->currencyCode() }}</span> <span class="num text-primary">{{ number_format($product->price) }}</span>
+                        <span style="text-decoration: line-through" class="text-muted">
+                            <span class="currency text-muted">{{ $product->currencyCode() }}</span> <span class="num text-muted">{{ number_format($product->price) }}</span>
                         </span>
                     @endif
                 </var>

@@ -2,7 +2,10 @@
 
 namespace Activity\Observers;
 
+use Activity\Events\NewReview;
+use Activity\Events\ReviewUpdate;
 use Activity\Review;
+use Activity\Events\UpdateReviews;
 
 class ReviewObserver
 {
@@ -14,7 +17,8 @@ class ReviewObserver
      */
     public function created(Review $review)
     {
-        //
+        broadcast(new NewReview($review));
+        broadcast(new UpdateReviews($review->reviewable));
     }
 
     /**
@@ -25,7 +29,8 @@ class ReviewObserver
      */
     public function updated(Review $review)
     {
-        //
+        broadcast(new ReviewUpdate($review));
+        broadcast(new UpdateReviews($review->reviewable));
     }
 
     /**

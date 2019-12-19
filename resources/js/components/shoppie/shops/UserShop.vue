@@ -6,7 +6,7 @@
         <td class="lo-stats__order-details">
             <span>{{ shop.name }}</span>
             <span class="text-uppercase">
-                <mini-rating-meter :reviewable="shop"></mini-rating-meter>
+                <mini-rating-meter :reviewable="shop" :show-base="false"></mini-rating-meter>
             </span>
         </td>
         <td class="lo-stats__status" v-if="!directory">

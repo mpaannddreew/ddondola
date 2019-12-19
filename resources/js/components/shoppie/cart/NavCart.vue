@@ -2,7 +2,7 @@
     <li class="nav-item border-right dropdown notifications">
         <a class="nav-link nav-link-icon text-center" :href="cartUrl" role="button">
             <div class="nav-link-icon__wrapper">
-                <i class="material-icons">shopping_cart</i>
+                <i class="material-icons">{{ icon }}</i>
                 <span class="badge badge-pill badge-danger" v-show="showCount">{{ count }}</span>
             </div>
         </a>
@@ -25,6 +25,9 @@
         computed: {
             showCount() {
                 return this.count > 0;
+            },
+            icon() {
+                return this.showCount ? 'shopping_cart': 'remove_shopping_cart';
             }
         },
         methods: {

@@ -18,7 +18,6 @@
                 <image-carousel :images="product.images" :slides-to-show="1" class="bg-light"></image-carousel>
                 <figcaption class="info-wrap">
                     <mini-rating-meter :reviewable="product"></mini-rating-meter>
-                    <small>{{ product.averageRating }} average based on {{ product.reviewCount }} {{ text }}</small>
                     <h4 class="title text-ellipsis"><a :href="productUrl">{{ product.name }}</a></h4>
                     <p class="desc m-0">
                         {{ product.description }}
@@ -62,9 +61,6 @@
             }
         },
         computed: {
-            text() {
-                return this.product.reviewCount === 1 ? 'rating': 'ratings';
-            },
             shopUrl() {
                 return `/shops/${this.product.shop.code}`;
             },

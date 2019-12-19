@@ -444,7 +444,7 @@ class ShoppieQuery
     public function isFavorite($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
         return app(Shoppie::class)
-            ->favouriteStatus($context->user(), app(ProductRepository::class)->id($args["id"]));
+            ->favoriteStatus($context->user(), app(ProductRepository::class)->id($args["id"]));
     }
 
     /**

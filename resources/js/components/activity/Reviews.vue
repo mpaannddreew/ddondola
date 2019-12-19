@@ -24,7 +24,9 @@
                     <h4 class="m-0"><i class="material-icons">error</i></h4>
                     <p class="m-0">No reviews about this entity have been added. Be the first!</p>
                 </div>
-                <review v-else-if="hasReviews && loaded" v-for="(review, indx) in reviews" :review="review" :key="indx"></review>
+                <template v-else-if="hasReviews && loaded" >
+                    <review v-for="(review, indx) in orderedReviews" :review="review" :key="indx"></review>
+                </template>
             </div>
         </div>
         <!--<a href="javascript:void(0)" class="btn-view btn-load-more border"></a>-->
@@ -105,6 +107,7 @@
         name: "Reviews",
         mounted() {
             this.loadAll();
+            this.watchReviews();
         },
         data() {
             return {
@@ -145,6 +148,14 @@
                 if (this.isReviewed)
                     return {id: this.review.id, review: {rating: this.review.rating, body: this.review.body}};
                 return {};
+            },
+            channel() {
+                return `reviews.${this.reviewable.code}`;
+            },
+            orderedReviews() {
+                return _.orderBy(this.reviews, (review) => {
+                    return Moment(review.created_at);
+                }, 'desc');
             }
         },
         methods: {
@@ -181,9 +192,9 @@
                 this.loaded = false;
                 this.reviewRequest().then(this.loadReviews).catch(function (error) {});
             },
-            spreadResponse(reviewsRes, isRevRes) {
-                this.loadReviews(reviewsRes);
-                this.loadIsReviewed(isRevRes);
+            spreadResponse(response, _response) {
+                this.loadReviews(response);
+                this.loadIsReviewed(_response);
             },
             loadReviews(response) {
                 this.loaded = true;
@@ -212,12 +223,7 @@
             },
             loadReview(response) {
                 this.loading = false;
-                this.loadAll();
-                if (this.isReviewed) {
-                    DToast("success", "Your review has been updated");
-                } else {
-                    DToast("success", "Your review has been added");
-                }
+                this.loadIsReviewed(response);
                 $("#review-form").modal("hide");
             },
             editReview() {
@@ -263,6 +269,25 @@
                 $(`#${id}_feedback`).text(message).show();
                 this.error = true;
                 this.loading = false;
+            },
+            watchReviews() {
+                Echo.channel(this.channel)
+                    .listen('.new.review', (e) => {
+                        this.reviews.push(e);
+                    })
+                    .listen('.review.update', (e) => {
+                        let reviews = _.filter(this.reviews, (review) => {
+                            return review.id.toString() === e.id.toString();
+                        });
+
+                        if (_.head(reviews)) {
+                            this.reviews = _.reject(this.reviews, (review) => {
+                                return review.id.toString() === e.id.toString();
+                            });
+
+                            this.reviews.push(e);
+                        }
+                    });
             }
         },
         watch: {

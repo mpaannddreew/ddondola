@@ -6,7 +6,7 @@
         <td class="lo-stats__order-details">
             <span>{{ product.name }}</span>
             <span class="text-uppercase">
-                <mini-rating-meter :reviewable="product"></mini-rating-meter>
+                <mini-rating-meter :reviewable="product" :show-base="false"></mini-rating-meter>
             </span>
         </td>
         <td class="lo-stats__items text-center">{{ product.quantity }}</td>

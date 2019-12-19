@@ -1,5 +1,6 @@
 @extends('shoppie::me.shops.base')
 @section('new-active', 'active')
+@section('body-class') class="h-100" @endsection
 @section('main')
     <div class="container py-2">
         <div class="row">

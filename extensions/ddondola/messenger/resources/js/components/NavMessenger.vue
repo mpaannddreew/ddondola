@@ -15,7 +15,7 @@
         name: "NavMessenger",
         mounted() {
             this.fetchUnreadSize();
-            this.listenToMessengerEvents();
+            this.listenForMessengerEvents();
         },
         data() {
             return {
@@ -33,22 +33,21 @@
                 return this.unReadCount > 0;
             },
             icon() {
-                return 'chat_bubble';
+                return this.showUnReadCount ? 'chat':'chat_bubble';
             }
         },
         methods: {
             fetchUnreadSize() {
                 axios.post(graphql.api, {query: graphql.unreadMessageCount})
-                    .then(this.loadUnreadMessageCount).catch(function (error) {});
+                    .then((response) => {
+                        this.unReadCount = response.data.data.me.unreadMessageCount;
+                    }).catch(function (error) {});
             },
-            loadUnreadMessageCount(response) {
-                this.unReadCount = response.data.data.me.unreadMessageCount;
-            },
-            listenToMessengerEvents() {
+            listenForMessengerEvents() {
                 Echo.private(`user.${this.authCode}`)
                     .listen('.new.message', (e) => {
                         if (!_.includes(this.$route.path, this.homeUrl)) {
-                            ++this.unReadCount;
+                            this.unReadCount++;
                         }
                     });
 

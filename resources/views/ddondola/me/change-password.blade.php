@@ -4,7 +4,7 @@
 @section('profile')
     <form method="post" action="{{ route('update.password') }}">
         @csrf
-        <div class="card border border-radius mb-2">
+        <div class="card border border-top-radius-0 border-radius mb-2">
             <div class="card-body p-4">
                 @if (session('success'))
                     @include('layouts.sections.alert', ['class' => 'alert-success', 'message' => session('success')])

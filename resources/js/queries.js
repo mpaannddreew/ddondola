@@ -545,11 +545,8 @@ window.graphql = {
     isFavorite: `query isFavorite($id: ID!) {
           isFavorite(id: $id)
         }`,
-    favourite: `mutation favouriteProduct($id: ID!) {
-          isFavorite:favouriteProduct(id: $id)
-        }`,
-    removeFromFavorites: `mutation removeFromFavorites($id: ID!) {
-          isFavorite:removeFromFavorites(id: $id)
+    favourite: `mutation favoriteProduct($id: ID!) {
+          isFavorite:favoriteProduct(id: $id)
         }`,
     userByCode: `query user($user: String!) {
           user:userByCode(user: $user) {
@@ -831,24 +828,22 @@ window.graphql = {
             }
         }`,
     addReview: `mutation addReview($entity: Reviewee! $review: ReviewData!) {
-            review:addReview(entity: $entity review: $review) {
-                id
-                rating
-                body
-                created_at
-                reviewer {
-                    name
+            isReviewed:addReview(entity: $entity review: $review) {
+                isReviewed
+                review {
+                    id
+                    rating
+                    body
                 }
             }
         }`,
     editReview: `mutation editReview($id: ID! $review: ReviewData!) {
-            review:editReview(id: $id review: $review) {
-                id
-                rating
-                body
-                created_at
-                reviewer {
-                    name
+            isReviewed:editReview(id: $id review: $review) {
+                isReviewed
+                review {
+                    id
+                    rating
+                    body
                 }
             }
         }`,
@@ -863,9 +858,6 @@ window.graphql = {
                     reviewer {
                         name
                         avatar{
-                          url
-                        }
-                        coverPicture {
                           url
                         }
                         code
@@ -897,9 +889,6 @@ window.graphql = {
                         avatar{
                           url
                         }
-                        coverPicture {
-                          url
-                        }
                         code
                     }
                 }
@@ -928,6 +917,11 @@ window.graphql = {
     unreadMessageCount: `query unreadMessageCount {
         me {
             unreadMessageCount
+        }
+    }`,
+    unreadNotificationCount: `query unreadNotificationCount {
+        me {
+            unreadNotificationCount
         }
     }`,
     myCartProducts: `query myCartProducts {

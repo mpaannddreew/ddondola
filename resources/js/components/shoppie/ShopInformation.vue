@@ -17,10 +17,7 @@
                     </a>
                 </h4>
                 <p class="text-center text-light m-0 mb-2">
-                    <strong>
-                        <mini-rating-meter :reviewable="shop"></mini-rating-meter>
-                    </strong>
-                    <small class="text-muted">{{ shop.averageRating }} average based on {{ shop.reviewCount }} {{ text }}</small>
+                    <mini-rating-meter :reviewable="shop"></mini-rating-meter>
                 </p>
             </div>
             <ul class="list-group list-group-flush" v-if="showInfo">

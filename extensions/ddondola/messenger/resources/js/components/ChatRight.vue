@@ -2,7 +2,7 @@
     <div class="chat chat-right">
         <div class="chat-body">
             <div class="chat-bubble" v-for="(bubble, indx) in chat.bubbles">
-                <div class="chat-content" v-if="!bubble.images">
+                <div class="chat-content border" v-if="!bubble.images">
                     <p>{{ bubble.message }}</p>
                     <span class="chat-time">{{ bubble.created_at|time }}</span>
                 </div>
@@ -78,5 +78,7 @@
 </script>
 
 <style scoped>
-
+    .border {
+        border: 1px solid #cccccc54 !important;
+    }
 </style>

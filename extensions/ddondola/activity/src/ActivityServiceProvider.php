@@ -35,6 +35,8 @@ class ActivityServiceProvider extends ServiceProvider
         
         $this->registerObservers();
         $this->registerPolicies();
+
+        require __DIR__. '/../routes/channels.php';
     }
 
     /**

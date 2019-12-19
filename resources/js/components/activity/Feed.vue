@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card card-small border">
+        <div class="card card-small border border-top-radius-0">
             <div class="card-body p-0">
                 <template v-if="!loaded || (!hasActivities && loaded)">
                     <div align="center" class="p-3" v-if="!loaded">

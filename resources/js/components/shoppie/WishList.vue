@@ -1,46 +1,36 @@
 <template>
-    <div>
-        <div class="products-grid p-0">
-            <div class="card border-top-radius-0" style="background: none !important;">
-                <div class="card-header p-2 border-bottom bg-white">
-                    <div class="container">
-                        <header class="d-flex justify-content-between align-items-start m-0">
-                            <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
-                            <span class="visible-items" v-else></span>
-                            <div class="btn-group">
-                                <select class="form-control custom-select custom-select-sm" tabindex="-98" v-model="ordering">
-                                    <option value="latest">Latest</option>
-                                    <option value="oldest">Oldest</option>
-                                    <option value="lowest-price">Lowest Price</option>
-                                    <option value="highest-price">Highest Price</option>
-                                </select>
-                            </div>
-                        </header>
-                    </div>
+    <div class="card">
+        <div class="card-header p-2 border bg-white">
+            <header class="d-flex justify-content-between align-items-start m-0">
+                <visible-items :paginator-info="paginatorInfo" v-if="showProducts && loaded && paginatorInfo"></visible-items>
+                <span class="visible-items" v-else></span>
+                <div class="btn-group">
+                    <select class="form-control custom-select custom-select-sm" tabindex="-98" v-model="ordering">
+                        <option value="latest">Latest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="lowest-price">Lowest Price</option>
+                        <option value="highest-price">Highest Price</option>
+                    </select>
                 </div>
-                <div class="card-body">
-                    <div class="container">
-                        <div class="card card-small border" v-if="!loaded || (!showProducts && loaded)">
-                            <div class="card-body">
-                                <div align="center" v-if="!loaded">
-                                    <div class="loader"></div>
-                                    <p class="m-0">{{ loadingMessage }}</p>
-                                </div>
-                                <div align="center" v-else-if="!showProducts && loaded">
-                                    <h4 class="m-0"><i class="material-icons">error</i></h4>
-                                    <p class="m-0">{{ noProductsMessage }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <template v-else-if="showProducts && loaded">
-                            <ul class="directory-products border-left">
-                                <li is="directory-product" v-for="(product, indx) in products" :key="indx" :product="product"  class="directory-product"></li>
-                            </ul>
-                        </template>
-                        <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
-                    </div>
+            </header>
+        </div>
+        <div class="card-body p-0">
+            <div class="p-4 border-bottom border-right border-left" v-if="!loaded || (!showProducts && loaded)">
+                <div align="center" v-if="!loaded">
+                    <div class="loader"></div>
+                    <p class="m-0">{{ loadingMessage }}</p>
+                </div>
+                <div align="center" v-else-if="!showProducts && loaded">
+                    <h4 class="m-0"><i class="material-icons">error</i></h4>
+                    <p class="m-0">{{ noProductsMessage }}</p>
                 </div>
             </div>
+            <template v-else-if="showProducts && loaded">
+                <ul class="directory-products border-left">
+                    <li is="directory-product" v-for="(product, indx) in products" :key="indx" :product="product"  class="directory-product"></li>
+                </ul>
+            </template>
+            <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
         </div>
     </div>
 </template>
@@ -53,6 +43,7 @@
         components: {DirectoryProduct, Product},
         mounted() {
             this.fetchProducts();
+            this.watchWishlist();
         },
         data() {
             return {
@@ -82,6 +73,9 @@
             },
             noProductsMessage() {
                 return "Your wishlist is empty!"
+            },
+            channel() {
+                return `user.${this.authCode}`;
             }
         },
         methods: {
@@ -101,6 +95,14 @@
             loadPage(page) {
                 this.page = page;
                 this.fetchProducts();
+            },
+            watchWishlist() {
+                Echo.private(this.channel)
+                    .listen('.product.unfavorited', (e) => {
+                        this.products = _.reject(this.products, (product) => {
+                            return product.id.toString() === e.id.toString();
+                        });
+                    })
             }
         },
         watch: {
