@@ -320,5 +320,7 @@
 </script>
 
 <style scoped>
-
+    .central-meta:first-child {
+        border-top: #e1e5eb !important;
+    }
 </style>

@@ -110,9 +110,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
 
     public function coverPicture() {
         return [
-            'url' => asset('images/bg/user_1.jpg')
-//            'url' => asset('images/banner1.jpg')
-//            'url' => asset('images/bg/background.jpg')
+            'url' => asset('images/bg/background.jpg')
         ];
     }
 

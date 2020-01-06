@@ -102,6 +102,13 @@
                     'text-danger': this.product.pivot.cancelled,
                     'text-success': this.shop && this.product.pivot.delivery_confirmed || !this.shop && this.product.pivot.receipt_confirmed
                 }
+            },
+            channel() {
+                if (this.shop) {
+                    return `order.${this.shop}.${this.order}.${this.product.code}`;
+                }
+
+                return `order.${this.order}.${this.product.code}`;
             }
         },
         methods: {
@@ -144,11 +151,14 @@
             updated(response) {
                 this.updating = false;
                 Bus.$emit('updated', this.product.id);
-                this.$emit('updated');
             },
             listen() {
                 Bus.$on('updating', this.isUpdating);
                 Bus.$on('updated', this.isUpdated);
+                Echo.private(this.channel)
+                    .listen('.order.row.updated', (e) => {
+                        this.$emit('updated');
+                    });
             },
             isUpdating(id) {
                 if (this.product.id !== id) {

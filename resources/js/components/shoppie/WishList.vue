@@ -27,7 +27,7 @@
             </div>
             <template v-else-if="showProducts && loaded">
                 <ul class="directory-products border-left">
-                    <li is="directory-product" v-for="(product, indx) in products" :key="indx" :product="product"  class="directory-product"></li>
+                    <li is="directory-product" v-for="(product, indx) in products" :key="indx" :product="product" class="directory-product"></li>
                 </ul>
             </template>
             <pagination v-if="paginatorInfo" class="my-4" :paginator-info="paginatorInfo" v-on:page="loadPage"></pagination>
@@ -57,7 +57,6 @@
         props: {
             myFavorites: {
                 type: Boolean,
-                required: false,
                 default: false
             }
         },

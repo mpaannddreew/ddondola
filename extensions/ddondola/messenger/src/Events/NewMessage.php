@@ -79,19 +79,7 @@ class NewMessage implements ShouldBroadcast, ShouldQueue
     {
         return [
             'id' => $this->message->getKey(),
-            'conversation' => [
-                'id' => $this->message->conversation->getKey(),
-                'initiator' => [
-                    'id' => $this->message->conversation->initiator->getKey(),
-                    'type' => $this->message->conversation->initiator->type(),
-                    'code' => $this->message->conversation->initiator->code
-                ],
-                'participant' => [
-                    'id' => $this->message->conversation->participant->getKey(),
-                    'type' => $this->message->conversation->participant->type(),
-                    'code' => $this->message->conversation->participant->code
-                ]
-            ],
+            'conversation' => $this->message->conversation->only(['id']),
             'message' => $this->message->message,
             'sender' => $this->sender(),
             'read_at' => $this->message->read_at ? $this->message->read_at->toAtomString(): null,

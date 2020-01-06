@@ -74,7 +74,9 @@
             listen() {
                 Echo.private(`shop.${this.$route.params.shop}`)
                     .listen('.new.order', (e) => {
-                        console.log(e);
+                        if (!this.searchFilter) {
+                            this.loadPage(1);
+                        }
                     });
             },
             fetchOrders() {

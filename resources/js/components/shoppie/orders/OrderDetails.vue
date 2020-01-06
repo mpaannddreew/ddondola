@@ -28,11 +28,8 @@
                                 </div>
                             </div>
                             <div class="ml-auto d-flex align-items-center">
-                                <a class="btn btn-white btn-sm" href="javascript:void(0)" @click="showInvoice" v-if="!shop">
+                                <a class="btn btn-white btn-sm" href="javascript:void(0)" @click="showInvoice">
                                     Invoice
-                                </a>
-                                <a class="btn btn-white btn-sm" :href="messengerUrl" v-else>
-                                    <i class="material-icons">chat</i> Message Buyer
                                 </a>
                             </div>
                         </div>
@@ -46,35 +43,19 @@
                                     <div class="text-uppercase">Order #{{ label }}</div>
                                 </div>
                             </div>
-                            <!-- Orders team member -->
-                            <div class="order-block" v-if="shop">
-                                <img :src="buyerAvatar" alt="">
-                                <div class="handled-by">
-                                    <div>Buyer</div>
-                                    <div>{{ buyer.name }}</div>
-                                </div>
-                            </div>
                             <!-- Order status -->
                             <div class="order-block">
                                 <div class="order-icon">
                                     <i class="material-icons">credit_card</i>
                                 </div>
                                 <div class="_status">
-                                    <template v-if="shop">
-                                        <div>Payment</div>
-                                        <div>
-                                            <span class="badge" :class="paymentIndicator">{{ status }}</span>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <div v-if="loadedOrder.paidFor || loadedOrder.cancelled">Payment</div>
-                                        <div>
-                                            <a @click="payment" class="btn btn-white btn-sm text-primary" href="javascript:void(0)" v-if="!shop && !loadedOrder.paidFor && !loadedOrder.cancelled">
-                                                Choose payment method
-                                            </a>
-                                            <span class="badge" :class="paymentIndicator" v-if="loadedOrder.paidFor || loadedOrder.cancelled">{{ status }}</span>
-                                        </div>
-                                    </template>
+                                    <div v-if="loadedOrder.paidFor || loadedOrder.cancelled">Payment</div>
+                                    <div>
+                                        <a @click="payment" class="btn btn-white btn-sm text-primary" href="javascript:void(0)" v-if="!loadedOrder.paidFor && !loadedOrder.cancelled">
+                                            Choose payment method
+                                        </a>
+                                        <span class="badge" :class="paymentIndicator" v-if="loadedOrder.paidFor || loadedOrder.cancelled">{{ status }}</span>
+                                    </div>
                                 </div>
                             </div>
                             <!-- Order date -->
@@ -88,7 +69,7 @@
                                 </div>
                             </div>
                             <!-- Order total -->
-                            <div class="order-block" v-if="!shop">
+                            <div class="order-block">
                                 <div class="order-icon">
                                     <i class="material-icons">attach_money</i>
                                 </div>
@@ -117,7 +98,6 @@
                                                 :key="indx"
                                                 :order-paid-for="loadedOrder.paidFor"
                                                 :product="product"
-                                                :shop="shop"
                                                 :order="order">
                                             </tr>
                                         </template>
@@ -165,12 +145,12 @@
             order: {
                 type: String,
                 required: true
-            },
-            shop: {
-                type: String
             }
         },
         computed: {
+            channel() {
+                return `order.${this.order}`;
+            },
             depositAmount() {
                 if (this.buyer.accountBalance > this.sum || this.loadedOrder.paidFor || this.loadedOrder.cancelled) {
                     return 0;
@@ -188,18 +168,9 @@
                 return this.products.length > 0;
             },
             variables() {
-                var variables = {order: this.order, page: this.page, count: graphql.rowCount};
-                if (this.shop) {
-                    variables["shop"] = this.shop;
-                }
-
-                return variables;
+                return  {order: this.order, page: this.page, count: graphql.rowCount};
             },
             ordersRoute() {
-                if (this.shop) {
-                    return `/shops/${this.shop}/orders`;
-                }
-
                 return '/me/orders';
             },
             invoiceRoute() {
@@ -207,20 +178,6 @@
             },
             paymentRoute() {
                 return `${this.ordersRoute}/${this.order}/payment`
-            },
-            messengerUrl() {
-                if (this.loaded) {
-                    return `/shops/${this.shop}/messenger/${this.buyer.code}`;
-                }
-
-                return null;
-            },
-            buyerAvatar() {
-                if (this.loaded) {
-                    return this.buyer.avatar.url;
-                }
-
-                return null;
             },
             label() {
                 return _.head(_.split(this.loadedOrder.code, '-'));
@@ -239,9 +196,9 @@
         },
         methods: {
             listen() {
-                Echo.private(`order.${this.order}`)
-                    .listen('.update.order', (e) => {
-                        console.log(e);
+                Echo.private(this.channel)
+                    .listen('.order.updated', (e) => {
+                        this.fetchOrderProducts();
                     });
             },
             fetchOrderProducts() {
@@ -255,7 +212,7 @@
                 this.loaded = true;
                 this.loadedOrder = response.data.data.order;
                 this.products = this.loadedOrder.products.data;
-                this.sum = this.loadedOrder.sum;
+                this.sum = this.loadedOrder.activeSum;
                 this.currencyCode = this.loadedOrder.currencyCode;
                 this.buyer = this.loadedOrder.by;
                 this.paginatorInfo = this.loadedOrder.products.paginatorInfo;
@@ -272,15 +229,6 @@
             },
             payment() {
                 this.$router.push(this.paymentRoute);
-            },
-            approvePayment() {
-                axios.post(graphql.api, {
-                    query: graphql.approvePayment,
-                    variables: {order: this.loadedOrder.id}
-                }).then(this.paymentApproved).catch(function (e) {});
-            },
-            paymentApproved(response) {
-
             }
         },
         watch: {

@@ -43,6 +43,9 @@
                 Echo.private(`user.${this.authCode}`)
                     .notification((notification) => {
                         this.unReadCount++;
+                        if (!_.includes(this.$route.path, this.trayUrl)) {
+                            // DToast("success", e.message);
+                        }
                     });
             }
         },

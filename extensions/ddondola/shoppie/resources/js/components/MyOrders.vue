@@ -91,8 +91,9 @@
             watchOrders() {
                 Echo.private(`user.${this.authCode}`)
                     .listen('.new.order', (e) => {
-                        this.orders.push(e);
-                        this.readAll();
+                        if (!this.searchFilter) {
+                            this.loadPage(1);
+                        }
                     })
             }
         },

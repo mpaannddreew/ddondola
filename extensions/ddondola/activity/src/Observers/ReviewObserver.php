@@ -6,6 +6,8 @@ use Activity\Events\NewReview;
 use Activity\Events\ReviewUpdate;
 use Activity\Review;
 use Activity\Events\UpdateReviews;
+use Ddondola\Notifications\UserNotification;
+use Illuminate\Support\Facades\Notification;
 
 class ReviewObserver
 {
@@ -19,6 +21,7 @@ class ReviewObserver
     {
         broadcast(new NewReview($review));
         broadcast(new UpdateReviews($review->reviewable));
+        Notification::send($review->reviewer->followers, new UserNotification($review->reviewer, $review->reviewable, 'review'));
     }
 
     /**

@@ -35,6 +35,12 @@
     <h6 class="main-sidebar__nav-title">Financial</h6>
     <ul class="nav nav--no-borders flex-column">
         <li class="nav-item">
+            <a class="nav-link @yield('wallets-active')" href="{{ route('admin.wallets') }}">
+                <i class="material-icons">account_balance_wallet</i>
+                <span>Wallets</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link @yield('payments-active')" href="#">
                 <i class="material-icons">credit_card</i>
                 <span>Payments</span>
@@ -46,7 +52,7 @@
         <li class="nav-item">
             <a class="nav-link @yield('wallet-active')" href="{{ route('admin.wallet') }}">
                 <i class="material-icons">account_balance_wallet</i>
-                <span>Wallet</span>
+                <span>Admin Wallet</span>
             </a>
         </li>
     </ul>

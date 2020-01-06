@@ -2,6 +2,7 @@
 
 namespace Shoppie\Observers;
 use Bank\Bank;
+use Shoppie\Events\OrderRowUpdated;
 use Shoppie\OrderProduct;
 use Shoppie\Repository\OrderRepository;
 
@@ -47,7 +48,8 @@ class OrderProductObserver
      */
     public function updated(OrderProduct $orderProduct)
     {
-        $product = $this->orders->id($orderProduct->order_id)->getProduct($orderProduct->product_id);
+        $order = $this->orders->id($orderProduct->order_id);
+        $product = $order->getProduct($orderProduct->product_id);
         $escrow = $product->orderPivot->associatedEscrow();
         if ($escrow) {
             if (!$escrow->settled()) {
@@ -75,6 +77,8 @@ class OrderProductObserver
                 // todo notify cancellation
             }
         }
+
+        broadcast(new OrderRowUpdated($order, $product));
     }
 
     /**

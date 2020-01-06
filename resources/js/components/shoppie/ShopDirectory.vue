@@ -1,5 +1,5 @@
 <template>
-    <div class="directory">
+    <div class="directory border-left border-right">
         <directory-filters :directory="directory"></directory-filters>
         <shop-directory-area></shop-directory-area>
     </div>

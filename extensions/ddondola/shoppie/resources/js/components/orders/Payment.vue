@@ -28,7 +28,7 @@
                                     <div class="single-payment-method">
                                         <div class="payment-method-name">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" id="mobile-money" value="mobile-money" class="custom-control-input" v-model="method">
+                                                <input type="radio" id="mobile-money" value="mobilemoneyuganda" class="custom-control-input" v-model="method">
                                                 <label class="custom-control-label" for="mobile-money">Pay with Mobile Money</label>
                                             </div>
                                         </div>
@@ -54,7 +54,7 @@
                                             <label class="custom-control-label" for="terms">I have read and agree to
                                                 the <a href="javascript:void(0)">terms and conditions.</a></label>
                                         </div>
-                                        <a href="javascript:void(0)" class="btn btn-outline-primary btn-pill btn-lg mt-4" :class="{disabled: !agreed}">Make Payment</a>
+                                        <a href="javascript:void(0)" @click="makePayment" class="btn btn-outline-primary btn-pill btn-lg mt-4" :class="{disabled: !agreed}">Make Payment</a>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,9 @@
         data() {
             return {
                 method: 'wallet',
-                agreed: false
+                agreed: false,
+                paymentModal: null,
+                amount: 0
             }
         },
         props: {
@@ -92,15 +94,50 @@
                 return this.method === 'wallet';
             },
             mobileMoney() {
-                return this.method === 'mobile-money';
+                return this.method === 'mobilemoneyuganda';
             },
             card() {
                 return this.method === 'card';
+            },
+            meta() {
+                return [{metaname: "order", metavalue: this.order}];
             }
         },
         methods: {
             transitionBack() {
                 this.$router.push(this.orderRoute);
+            },
+            makePayment() {
+                if (this.method === 'wallet') {
+                    this.approvePayment();
+                }else {
+                    this.initiate();
+                }
+            },
+            approvePayment() {
+                axios.post(graphql.api, {
+                    query: graphql.approvePayment,
+                    variables: {order: this.order}
+                }).then(this.paymentApproved).catch(function (e) {});
+            },
+            paymentApproved(response) {
+
+            },
+            initiate() {
+                this.paymentModal = this.openPaymentModal(this.amount, 'me@ddondola.com', 'UGX', this.method, this.meta, this.raveCallback);
+            },
+            raveCallback(response) {
+                var txref = response.tx.txRef;
+                console.log("This is the response returned after a charge", response);
+                if (response.tx.chargeResponseCode === "00" || response.tx.chargeResponseCode === "0") {
+                    // todo redirect to a success page
+                } else {
+                    // todo redirect to a failure page.
+                }
+
+                if (this.paymentModal) {
+                    this.paymentModal.close();
+                }
             }
         }
     }

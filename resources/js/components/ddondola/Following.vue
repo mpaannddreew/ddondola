@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!loaded || (!hasUsers && loaded)" class="border p-3">
+        <div v-if="!loaded || (!hasUsers && loaded)" class="border p-3 border-radius border-top-radius-0">
             <div align="center" v-if="!loaded">
                 <div class="loader"></div>
                 <p class="m-0">Loading following...</p>

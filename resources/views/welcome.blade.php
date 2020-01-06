@@ -1,4 +1,6 @@
 @extends('base')
 @section('title')@parent Welcome @endsection
-@section('header-navbar-class', '')
-@section('tabs', '')
+@section('home-active', 'active')
+@section('main')
+
+@endsection

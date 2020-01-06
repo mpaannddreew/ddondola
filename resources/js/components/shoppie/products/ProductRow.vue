@@ -8,11 +8,10 @@
             <span class="text-uppercase">
                 <mini-rating-meter :reviewable="product" :show-base="false"></mini-rating-meter>
             </span>
+            <span>
+                {{ product.currencyCode }} {{ product.discountedPrice|commas }}
+            </span>
         </td>
-        <td class="lo-stats__items">{{ product.brand ? product.brand.name : '' }}</td>
-        <td class="lo-stats__items">{{ product.category.name }}</td>
-        <td class="lo-stats__items">{{ product.subcategory.name }}</td>
-        <td class="lo-stats__items">{{ product.currencyCode }} {{ product.discountedPrice|commas }}</td>
         <td>
             <div class="btn-group d-table ml-auto" role="group">
                 <a :href="productUrl" class="btn btn-sm btn-white" title="">

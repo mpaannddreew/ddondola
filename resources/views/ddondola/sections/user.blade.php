@@ -45,7 +45,7 @@
                                 <div class="container p-0">
                                     <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                                         @auth
-                                            @if(Auth::user()->is($user))
+                                            @if(auth()->user()->is($user))
                                                 <li class="nav-item">
                                                     <a href="{{ route('my.profile') }}" class="nav-link @yield('profile-active')">
                                                         <i class="material-icons">view_day</i> Activity
@@ -116,9 +116,7 @@
                         </div>
                     </div>
                     <div class="row my-2">
-                        <div class="col-md-4 pr-1">
-                            <user-information class="border-top-radius-0" :with-cover="false" :with-border="true" :user="{{ $user }}"></user-information>
-                        </div>
+                        <div class="col-md-4 pr-1"></div>
                         <div class="col-md-8 pl-1">
                             @yield('profile')
                         </div>

@@ -25,7 +25,7 @@
                     </li>
                     @if($shop->profile("address"))
                     <li>
-                        <a href="javascript:void(0)" class="text-white"><i class="fa fa-map-o pr-2"></i> {{ $shop->profile("address") }}</a>
+                        <a href="javascript:void(0)" class="text-white"><i class="fa fa-map-marker pr-2"></i> {{ $shop->profile("address") }}</a>
                     </li>
                     @endif
                 </ul>

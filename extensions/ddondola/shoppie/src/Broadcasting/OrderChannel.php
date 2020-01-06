@@ -33,6 +33,6 @@ class OrderChannel
      */
     public function join(User $user, Order $order)
     {
-        return $user->is($order->by) || $user->handlesOrderViaShop($order);
+        return $user->is($order->by);
     }
 }

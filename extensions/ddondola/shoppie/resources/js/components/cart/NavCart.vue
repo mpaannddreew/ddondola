@@ -40,7 +40,7 @@
             },
             listenToCartEvents() {
                 Echo.private(`user.${this.authCode}`)
-                    .listen('.cart.update', (e) => {
+                    .listen('.cart.updated', (e) => {
                         this.count = e.count;
                     });
             }

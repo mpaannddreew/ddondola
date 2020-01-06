@@ -39,11 +39,39 @@ type UserSettings {
     discount: String
 }
 
+type NotificationActor {
+    id: ID!
+    type: String!
+    code: String!
+    name: String!
+}
+
+type NotificationSubject {
+    id: ID!
+    type: String!
+    code: String!
+    name: String
+}
+
+type NotificationData {
+    type: String!
+    actor: NotificationActor
+    subject: NotificationSubject
+}
+
 type Notification {
     id: ID!
-    notifiable: Muddondozi
-    data: String! @method(name: "translatedData")
+    data: NotificationData! @method(name: "translatedData")
     read_at: DateTime
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Role {
+    id: ID!
+    name: String!
+    tag: String!
+    description: String
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -86,6 +114,11 @@ type User implements Muddondozi {
 
 type Image {
     url: String!
+}
+
+type Media {
+    id:ID!
+    url: String! @method(name: "url")
 }
 
 type Query @middleware(checks: ["auth:api"]) {

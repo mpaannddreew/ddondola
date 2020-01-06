@@ -68,17 +68,8 @@ class NewOrder implements ShouldBroadcast, ShouldQueue
      */
     public function broadcastWith()
     {
-        return array_merge(
-            $this->order->only(['id', 'code', 'created_at']), [
-                'cancelled' => $this->order->cancelled(),
-                'currencyCode' => $this->order->currencyCode(),
-                'paidFor' => $this->order->paid_for,
-                'productCount' => $this->order->productCount(),
-                'sum' => $this->order->sum(),
-                'firstProduct' => [
-                    'images' => $this->order->firstProduct()->productImages()
-                ]
-            ]
-        );
+        return [
+            'order' => $this->order->code
+        ];
     }
 }

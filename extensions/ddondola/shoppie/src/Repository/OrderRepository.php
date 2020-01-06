@@ -29,10 +29,10 @@ class OrderRepository
      * Get order from code
      *
      * @param $code
-     * @return Order
+     * @return \Illuminate\Database\Eloquent\Builder|Model|object|Order
      */
     public function code($code) {
-        return Order::where('code', $code)->first();
+        return $this->builder()->where('code', $code)->first();
     }
 
     /**

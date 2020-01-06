@@ -188,4 +188,8 @@ class Shop extends Model implements HasMedia
     public function contacts() {
         return $this->likers()->pluck('id')->merge($this->contactsFromOrders())->unique()->values()->all();
     }
+
+    public function managers() {
+        return collect([$this->owner]);
+    }
 }

@@ -19,12 +19,12 @@ class UserChannel
     /**
      * Authenticate the user's access to the channel.
      *
-     * @param User $muddondozi
+     * @param User $current
      * @param  \Ddondola\User $user
      * @return bool
      */
-    public function join(User $muddondozi, User $user)
+    public function join(User $current, User $user)
     {
-        return $muddondozi->is($user);
+        return $current->is($user);
     }
 }

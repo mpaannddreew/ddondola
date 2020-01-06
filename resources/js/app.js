@@ -49,6 +49,7 @@ import Cart from './components/shoppie/cart/Cart';
 import Checkout from './components/shoppie/cart/Checkout';
 import OrderDetailsEmpty from './components/shoppie/orders/OrderDetailsEmpty';
 import OrderDetails from './components/shoppie/orders/OrderDetails';
+import ShopOrderDetails from './components/shoppie/orders/ShopOrderDetails';
 import Invoice from './components/shoppie/orders/Invoice';
 import Payment from './components/shoppie/orders/Payment';
 import Transactions from './components/bank/Transactions';
@@ -87,7 +88,7 @@ const router = new VueRouter({
 
         // shop orders app
         {path: '/shops/:shop/orders', component: OrderDetailsEmpty, props: true},
-        {path: '/shops/:shop/orders/:order', component: OrderDetails, props: true},
+        {path: '/shops/:shop/orders/:order', component: ShopOrderDetails, props: true},
 
         // shop wallet app
         {path: '/shops/:shop/wallet', component: Transactions, props: true},

@@ -7,7 +7,7 @@
  */
 
 use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\Models\Media;
+use Ddondola\Media;
 
 if (!function_exists('media_url')) {
 
@@ -48,6 +48,6 @@ if (!function_exists('media_placeholder')) {
      */
     function media_placeholder()
     {
-        return asset('images/product/placeholder.jpg');
+        return asset('/images/product/placeholder.jpg');
     }
 }

@@ -346,12 +346,14 @@ class ShoppieMutator
      */
     public function approvePayment($rootValue, array $args, GraphQLContext $context = null, ResolveInfo $resolveInfo)
     {
-        $order = app(OrderRepository::class)->id(collect($args)->get('order'));
+        $order = app(OrderRepository::class)->code(collect($args)->get('order'));
         if ($order->paid_for) {
+            // todo notify already paid for
             return false;
         }
 
         if ($order->activeSum() > $context->user()->account->balance()) {
+            // todo notify insufficient balance
             return false;
         }
 

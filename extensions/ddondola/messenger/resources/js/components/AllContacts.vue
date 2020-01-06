@@ -15,7 +15,7 @@
                                 <i class="material-icons" v-else>search</i>
                             </div>
                         </div>
-                        <input v-model="query" id="contact_search" class="form-control" type="text" placeholder="Search Ddondola" style="margin: 0; padding-left: 1.875rem;">
+                        <input v-model="query" id="contact_search" class="form-control" type="text" :placeholder="placeholder" style="margin: 0; padding-left: 1.875rem;">
                     </div>
                 </div>
             </div>
@@ -82,6 +82,13 @@
             },
             hasUsers() {
                 return this.users.length > 0;
+            },
+            placeholder() {
+                if (this.lowerCase(this.ownerType.toString()) === 'user') {
+                    return 'Search for shops or people';
+                }
+
+                return 'Search for people';
             }
         },
         methods: {

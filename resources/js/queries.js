@@ -1167,18 +1167,23 @@ window.graphql = {
             notifications(count: $count page: $page) {
               data {
                 id
-                notifiable {
-                  id
-                  name
-                  type
-                  code
-                  avatar {
-                    url
-                  }
+                data {
+                    type
+                    actor {
+                        id
+                        type
+                        code
+                        name
+                    }
+                    actor {
+                        id
+                        type
+                        code
+                        name
+                    }
                 }
                 read_at
                 created_at
-                data
               }
               paginatorInfo {
                 count
@@ -1562,6 +1567,7 @@ window.graphql = {
             paidFor
             cancelled(shop: $shop)
             sum(shop: $shop)
+            activeSum(shop: $shop)
             currencyCode
             code
             by {
@@ -1842,7 +1848,7 @@ window.graphql = {
     readConversation: `mutation readConversation($conversation: ID! $converser: Converser!) {
           count:readConversation(conversation: $conversation converser: $converser)
         }`,
-    approvePayment: `mutation approvePayment($order: ID!) {
+    approvePayment: `mutation approvePayment($order: String!) {
           approved:approvePayment(order: $order)
         }`
 };

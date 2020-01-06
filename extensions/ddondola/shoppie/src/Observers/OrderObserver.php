@@ -3,6 +3,7 @@
 namespace Shoppie\Observers;
 
 use Shoppie\Events\NewOrder;
+use Shoppie\Events\OrderUpdated;
 use Shoppie\Order;
 
 class OrderObserver
@@ -26,7 +27,7 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-        // todo broadcast order update
+        broadcast(new OrderUpdated($order));
     }
 
     /**

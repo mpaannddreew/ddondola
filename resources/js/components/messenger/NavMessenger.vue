@@ -48,6 +48,7 @@
                     .listen('.new.message', (e) => {
                         if (!_.includes(this.$route.path, this.homeUrl)) {
                             this.unReadCount++;
+                            DToast("success", e.message);
                         }
                     });
 

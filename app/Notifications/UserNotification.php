@@ -3,6 +3,8 @@
 namespace Ddondola\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,31 +14,30 @@ class UserNotification extends Notification implements ShouldQueue
     use Queueable;
 
     /**
-     * @var $title
+     * @var Model|null
      */
-    protected $title;
+    protected $actor;
 
     /**
-     * @var $body
+     * @var Model|null
      */
-    protected $body;
+    protected $subject;
 
     /**
-     * @var $type
+     * @var
      */
     protected $type;
 
     /**
      * Create a new notification instance.
-     *
-     * @param $title
-     * @param $body
+     * @param Model|null $actor
+     * @param Model|null $subject
      * @param $type
      */
-    public function __construct($title, $body, $type)
+    public function __construct(Model $actor = null, Model $subject = null, $type)
     {
-        $this->title = $title;
-        $this->body = $body;
+        $this->actor = $actor;
+        $this->subject = $subject;
         $this->type = $type;
     }
 
@@ -48,21 +49,7 @@ class UserNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
-    }
-
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return ['database'];
     }
 
     /**
@@ -74,9 +61,17 @@ class UserNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'type' => $this->type,
-            'title' => $this->title,
-            'body' => $this->body
+            'actor' => $this->affiliate($this->actor),
+            'subject' => $this->affiliate($this->subject),
+            'type' => $this->type
         ];
+    }
+
+    private function affiliate(Model $affiliate = null)
+    {
+        return $affiliate ? [
+            'id' => $affiliate->getKey(),
+            'type' => get_class($affiliate)
+        ] : null;
     }
 }

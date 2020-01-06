@@ -124,16 +124,20 @@
         },
         methods: {
             transactions() {
-                this.$router.push(this.basePath);
+                if (this.$route.path !== this.basePath)
+                    this.$router.push(this.basePath);
             },
             deposit() {
-                this.$router.push(`${this.basePath}/deposit`);
+                if (!_.includes(this.$route.path, `${this.basePath}/deposit`))
+                    this.$router.push(`${this.basePath}/deposit`);
             },
             withdraw() {
-                this.$router.push(`${this.basePath}/withdraw`);
+                if (this.$route.path !== `${this.basePath}/withdraw`)
+                    this.$router.push(`${this.basePath}/withdraw`);
             },
             escrow() {
-                this.$router.push(`${this.basePath}/escrow`);
+                if (!_.includes(this.$route.path, `${this.basePath}/escrow`))
+                    this.$router.push(`${this.basePath}/escrow`);
             },
             load() {
                 axios.post(graphql.api, {query: graphql.account, variables: this.variables})

@@ -45,7 +45,7 @@
                 }
             },
             placeholder() {
-                return 'Search products, shops, categories, brands or people';
+                return 'Search for products, categories, brands, shops or people';
             }
         },
         methods: {
@@ -207,10 +207,10 @@
                         </div>`;
             },
             peopleSuggestion(data) {
-                return this.suggestion(`/people/${data.code}`, data.avatar.url, data.name, `${data.email}`);
+                return this.suggestion(`/people/${data.code}`, data.avatar.url, data.name, data.email);
             },
             shopsSuggestion(data) {
-                return this.suggestion(`/shops/${data.code}`, data.avatar.url, data.name, `${data.category.name}`);
+                return this.suggestion(`/shops/${data.code}`, data.avatar.url, data.name, data.category.name);
             },
             productsSuggestion(data) {
                 return this.suggestion(`/products/${data.code}`, data.images[0].url, data.name,

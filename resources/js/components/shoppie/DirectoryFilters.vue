@@ -18,25 +18,36 @@
                             <div class="col">
                                 <ul class="nav nav-tabs nav-justified border-0 flex-column flex-lg-row">
                                     <li class="nav-item">
-                                        <a href="javascript:void(0)" class="nav-link" :class="{active: !featured}" @click="showingCategories"><i class="material-icons">folder_open</i> Categories</a>
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: featured}" @click="showingFeatured"><i class="material-icons">{{ icon }}</i> Featured</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:void(0)" class="nav-link" :class="{active: featured}" @click="showingFeatured"><i class="material-icons">{{ icon }}</i> Featured</a>
+                                        <a href="javascript:void(0)" class="nav-link" :class="{active: !featured}" @click="showingCategories"><i class="material-icons">folder_open</i> Categories</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <categories :directory="directory" v-if="!featured"></categories>
-                <div class="h-100" style="overflow-y: auto; overflow-x: hidden; height: calc(99.9vh - 13.7rem - 1px) !important;" v-else>
+                <div class="h-100" style="overflow-y: auto; overflow-x: hidden; height: calc(99.9vh - 13.7rem - 1px) !important;"  v-if="featured">
                     <div class="center-xy">
                         <div align="center">
                             <h4 class="m-0"><i class="material-icons">error</i></h4>
                             <p class="m-0">No featured {{ directory|lowerCase }} yet!</p>
                         </div>
                     </div>
+                    <!--<div class="friend-card">-->
+                        <!--<img src="/images/hero_in_shop_detail.jpg" alt="profile-cover" class="img-responsive cover">-->
+                        <!--<div class="card-info">-->
+                            <!--<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABkUlEQVR4nO3dMUpjURSA4aPYuYrpBXdhPwvRDUzvBmxEcAWCu7CZRhBhdjHlwIgaCysbMZLkfcX/QcrkHvi5771cAtlbXc5qwthfeoB8VBBMQTAFwRQEUxBMQTAFwRQEUxBMQTAFwRQEUxBMQTAFwRQEUxBMQTAFwRQEUxBMQTAFwRQEUxBMQTAFwRQEUxBMQTAFwRzsZJWT25kfPzf3edeHM8//1l/r8WLm7mxzc2xBOwRTEExBMAXB7Oam/pmX/zOvT0tPwVg+yJ8r/slnl7pkYQqCKQimIJiCYAqCWf6x9+j0/fVVN8czfx+2N8/C2iGYgmAKgikIZvmb+rqHi6vX7c0CWD5Ih4sfdMnCFARTEExBMAXBFARTEExBMMt/MVz3+H3m89/2bnqtmZnfv2buz9d/3ze0QzAFwRQEUxBMQTB7/eWRpR2CKQimIJiCYAqCKQimIJiCYAqCKQimIJiCYAqCKQimIJiCYAqCKQimIJiCYAqCKQimIJiCYAqCKQimIJiCYAqCKQimIJiCYN4Ax84ohhqXJPEAAAAASUVORK5CYII=" alt="user" class="profile-photo-lg">-->
+                            <!--<div class="friend-info">-->
+                                <!--<a href="#" class="pull-right text-green">My Friend</a>-->
+                                <!--<h5><a href="javascript:void(0)" class="profile-link">Sophia Lee</a></h5>-->
+                                <!--<p>Student at Harvard</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
+                <categories :directory="directory" v-else></categories>
             </div>
         </div>
     </div>
@@ -53,7 +64,7 @@
         data() {
             return {
                 query: '',
-                featured: false
+                featured: true
             }
         },
         props: {

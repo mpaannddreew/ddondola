@@ -36,4 +36,9 @@ class BankController extends Controller
     {
         return view('bank::admin.wallet');
     }
+
+    public function wallets(Request $request)
+    {
+        return view('bank::admin.wallets');
+    }
 }

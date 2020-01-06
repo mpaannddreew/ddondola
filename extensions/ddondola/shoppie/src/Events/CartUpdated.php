@@ -50,7 +50,7 @@ class CartUpdated implements ShouldBroadcast, ShouldQueue
      */
     public function broadcastAs()
     {
-        return 'cart.update';
+        return 'cart.updated';
     }
 
     /**

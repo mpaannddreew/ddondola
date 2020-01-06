@@ -12,6 +12,7 @@ namespace Ddondola\Repositories;
 use Ddondola\Country;
 use Ddondola\Events\UserFollowed;
 use Ddondola\Events\UserUnfollowed;
+use Ddondola\Notifications\UserNotification;
 use Ddondola\User;
 
 class UserRepository
@@ -67,9 +68,11 @@ class UserRepository
         if (!$this->followStatus($follower, $followable)) {
             $follower->follow($followable);
             broadcast(new UserFollowed($follower, $followable));
+            $followable->notify(new UserNotification($follower, null, 'follow'));
         } else {
             $follower->unfollow($followable);
             broadcast(new UserUnfollowed($follower, $followable));
+            $followable->notify(new UserNotification($follower, null, 'unfollow'));
         }
 
         return $this->followStatus($follower, $followable);

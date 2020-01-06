@@ -50,6 +50,14 @@ class Order extends Model
     }
 
     /**
+     * @param Product $product
+     * @return bool
+     */
+    public function hasProduct(Product $product) {
+        return !is_null($this->getProduct($product->getKey()));
+    }
+
+    /**
      * Group order lines by shop
      *
      * @return Collection

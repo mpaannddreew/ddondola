@@ -42,10 +42,6 @@
                         <tr>
                             <th class="border-top-0">Details</th>
                             <th class="border-top-0"></th>
-                            <th class="border-top-0">Brand</th>
-                            <th class="border-top-0">Category</th>
-                            <th class="border-top-0">Subcategory</th>
-                            <th class="border-top-0">Price</th>
                             <th class="text-right border-top-0"></th>
                         </tr>
                         </thead>

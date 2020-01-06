@@ -67,7 +67,7 @@ class Bank
     public function adminAccount() {
         $admin = $this->accounts->firstWhere('admin', true);
         if (!$admin) {
-            return $this->accounts->create(['admin' => true]);
+            $admin = $this->accounts->create(['admin' => true]);
         }
 
         return $admin;
